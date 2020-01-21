@@ -7,14 +7,20 @@ export function Header() {
     <header className="header">
       <h1>Rating Empresas</h1>
       <nav>
-        <Link to="/account/login">
-          <p>/account/login
+        <ul>
+          <li>
+            <Link to="/account/login">
+              <p>Sign In
                     </p>
-        </Link>
-        <Link to="/account/create">
-          <p>/account/create
+            </Link>
+          </li>
+          <li>
+            <Link to="/account/create">
+              <p>--Sign Up
                     </p>
-        </Link>
+            </Link>
+          </li>
+        </ul>
       </nav>
     </header>
   );

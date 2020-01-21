@@ -4,3 +4,12 @@
   padding: var(--space-md);
   background-color: lightgray;
 }
+
+.header nav ul{
+  display: flex;
+  align-items: center;
+  padding: var(--space-md);
+  background-color: lightgray;
+}
+
+
