@@ -1,9 +1,21 @@
 import React from "react";
 
+import { Link } from "react-router-dom";
+
 export function Header() {
   return (
-    <React.Fragment>
-      <h1>This is the Header</h1>
-    </React.Fragment>
+    <header className="header">
+      <h1>Rating Empresas</h1>
+      <nav>
+        <Link to="/account/login">
+          <p>/account/login
+                    </p>
+        </Link>
+        <Link to="/account/create">
+          <p>/account/create
+                    </p>
+        </Link>
+      </nav>
+    </header>
   );
 }

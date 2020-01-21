@@ -1,16 +1,8 @@
 /* Importar en index.js debido a un bug en codesandbox */
 
 @import './theme.css';
-@import './buttons.css';
-@import './forms.css';
-@import './utils.css';
 @import './header.css';
-@import './tag-list.css';
-@import './note.css';
-@import './dashboard.css';
-@import './note-list.css';
-@import './dialog.css';
-@import './tags-input.css';
+@import './footer.css';
 
 html {
   box-sizing: border-box;
@@ -36,10 +28,16 @@ body,
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  border: 1px solid rebeccapurple;
 }
 
-.gutter-horizontal {
-  cursor: ew-resize;
+main {
+  border: 2px solid black;
+  flex-grow: 1;
+}
+
+section#info {
+    background-color: yellow;
 }
 
 h1,
@@ -106,15 +104,38 @@ ul > li {
   cursor: pointer;
 }
 
-::-webkit-scrollbar {
-  width: 3px;
+/**
+CSS autocompletamiento
+**/
+.autocompletamiento {
+  display: flex;
 }
-::-webkit-scrollbar-track {
-  background: var(--dark);
+
+.busqueda {
+  position: relative;
+  width: 100vw;
+  height: 2rem;
 }
-::-webkit-scrollbar-thumb {
-  background: var(--primary);
+
+.resBusqueda {
+  position: absolute;
+  height: 7rem;
+	width: 12rem;
+	border: 1px solid #ddd;
+	background: #f1f1f1;
+  overflow-y: scroll;
+  top: 1.4rem;
+  right: -1;
 }
-::-webkit-scrollbar-thumb:hover {
-  background: var(--bright);
+
+
+@media (min-width: 1000px) {
+
+main {
+  max-width: 1000px;
+  margin: 0 auto;
 }
+ 
+}
+
+

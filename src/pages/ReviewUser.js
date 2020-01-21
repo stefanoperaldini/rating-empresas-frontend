@@ -12,7 +12,9 @@ export function ReviewUser() {
   return (
     <React.Fragment>
       <Header />
-      <h1>{i18n.t("This is Review User")}</h1>
+      <main>
+        <h2>{i18n.t("This is Review User")}</h2>
+      </main>
       <Footer />
     </React.Fragment>
   );

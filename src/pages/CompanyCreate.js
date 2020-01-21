@@ -12,7 +12,9 @@ export function CompanyCreate() {
   return (
     <React.Fragment>
       <Header />
-      <h1>{i18n.t("This is Company Create")}</h1>
+      <main>
+        <h2>{i18n.t("This is Company Create")}</h2>
+      </main>
       <Footer />
     </React.Fragment>
   );

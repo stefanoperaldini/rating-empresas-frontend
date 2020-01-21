@@ -12,7 +12,9 @@ export function UserUpdate() {
   return (
     <React.Fragment>
       <Header />
-      <h1>{i18n.t("This is User Update")}</h1>
+      <main>
+        <h2>{i18n.t("This is User Update")}</h2>
+      </main>
       < Footer />
     </React.Fragment>
   );

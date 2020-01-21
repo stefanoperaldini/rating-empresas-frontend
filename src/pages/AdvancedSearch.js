@@ -12,7 +12,9 @@ export function AdvancedSearch() {
   return (
     <React.Fragment>
       <Header />
-      <h1>{i18n.t("This is Advanced Search")}</h1>
+      <main>
+        <h2>{i18n.t("This is Advanced Search")}</h2>
+      </main>
       <Footer />
     </React.Fragment>
   );
