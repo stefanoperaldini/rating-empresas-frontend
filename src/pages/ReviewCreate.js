@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Header } from "./Header";
-import { Footer } from "./Footer";
-import { Cities } from "./Cities";
 import i18n from "i18next";
+
+import { Header } from "../components/Header";
+import { Footer } from "../components/Footer";
+
+import { Cities } from "../components/Cities";
 
 export function ReviewCreate() {
   const [lang, setLang] = useState("en");
-
-  console.log("fkjdgjśdkfjn");
 
   useEffect(() => {
     const langStored = localStorage.getItem("re:lang");
