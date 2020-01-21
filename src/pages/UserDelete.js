@@ -12,7 +12,9 @@ export function UserDelete() {
   return (
     <React.Fragment>
       <Header />
-      <h1>{i18n.t("This is User Delete")}</h1>
+      <main>
+        <h2>{i18n.t("This is User Delete")}</h2>
+      </main>
       < Footer />
     </React.Fragment>
   );

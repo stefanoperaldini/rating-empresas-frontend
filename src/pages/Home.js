@@ -12,7 +12,18 @@ export function Home() {
   return (
     <React.Fragment>
       <Header />
-      <h1>{i18n.t("This is the home")}</h1>
+      <main>
+        <section id="info">
+          <h2>{i18n.t("This is the home")}</h2>
+          <div>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente perspiciatis nobis unde tempore
+                    blanditiis. </p>
+            <p> Similique quae
+                ducimus nostrum voluptatibus culpa dolore reprehenderit vero voluptatum temporibus reiciendis!
+                    Obcaecati.</p>
+          </div>
+        </section>
+      </main>
       <Footer />
     </React.Fragment>
   );

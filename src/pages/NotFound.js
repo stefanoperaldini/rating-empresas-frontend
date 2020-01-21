@@ -7,8 +7,8 @@ import i18n from "i18next";
 
 export function NotFound() {
     return (
-        <div>
-            <h1>{i18n.t("Not found")}</h1>
-        </div>
+        <main>
+            <h2>{i18n.t("Not found")}</h2>
+        </main>
     );
 }

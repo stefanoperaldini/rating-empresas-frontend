@@ -12,7 +12,9 @@ export function AccountPasswordChange() {
   return (
     <React.Fragment>
       <Header />
-      <h1>{i18n.t("This is Account Password Change")}</h1>
+      <main>
+        <h2>{i18n.t("This is Account Password Change")}</h2>
+      </main>
       <Footer />
     </React.Fragment>
   );

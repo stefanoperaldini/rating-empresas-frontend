@@ -37,56 +37,58 @@ export function ReviewCreate() {
   return (
     <React.Fragment>
       <Header />
-      <fieldset>
-        <ul>
-          <li>
-            <label>
-              English
+      <main>
+        <fieldset>
+          <ul>
+            <li>
+              <label>
+                English
               <input
-                type="radio"
-                name="language"
-                value="en"
-                checked={lang === "en"}
-                onChange={e => {
-                  setLang(e.target.value);
-                  localStorage.setItem("re:lang", "en");
-                }}
-              />
-            </label>
-          </li>
-          <li>
-            <label>
-              Spanish
+                  type="radio"
+                  name="language"
+                  value="en"
+                  checked={lang === "en"}
+                  onChange={e => {
+                    setLang(e.target.value);
+                    localStorage.setItem("re:lang", "en");
+                  }}
+                />
+              </label>
+            </li>
+            <li>
+              <label>
+                Spanish
               <input
-                type="radio"
-                name="language"
-                value="es"
-                checked={lang === "es"}
-                onChange={e => {
-                  setLang(e.target.value);
-                  localStorage.setItem("re:lang", "es");
-                }}
-              />
-            </label>
-          </li>
-          <li>
-            <label>
-              Italian
+                  type="radio"
+                  name="language"
+                  value="es"
+                  checked={lang === "es"}
+                  onChange={e => {
+                    setLang(e.target.value);
+                    localStorage.setItem("re:lang", "es");
+                  }}
+                />
+              </label>
+            </li>
+            <li>
+              <label>
+                Italian
               <input
-                type="radio"
-                name="language"
-                value="it"
-                checked={lang === "it"}
-                onChange={e => {
-                  setLang(e.target.value);
-                  localStorage.setItem("re:lang", "it");
-                }}
-              />
-            </label>
-          </li>
-        </ul>
-      </fieldset>
-      <Cities />
+                  type="radio"
+                  name="language"
+                  value="it"
+                  checked={lang === "it"}
+                  onChange={e => {
+                    setLang(e.target.value);
+                    localStorage.setItem("re:lang", "it");
+                  }}
+                />
+              </label>
+            </li>
+          </ul>
+        </fieldset>
+        <Cities />
+      </main>
       <Footer />
     </React.Fragment>
   );

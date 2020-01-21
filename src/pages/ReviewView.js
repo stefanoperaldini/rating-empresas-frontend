@@ -12,7 +12,9 @@ export function ReviewView() {
   return (
     <React.Fragment>
       <Header />
-      <h1>{i18n.t("This is Review View")}</h1>
+      <main>
+        <h2>{i18n.t("This is Review View")}</h2>
+      </main>
       <Footer />
     </React.Fragment>
   );
