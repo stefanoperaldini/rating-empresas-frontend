@@ -1,5 +1,9 @@
 import React from "react";
 import i18n from "i18next";
+import { Link, useHistory } from "react-router-dom";
+import { useForm } from "react-hook-form";
+
+import "../css/account-password-recovery.css";
 
 import { Header } from "../components/Header";
 
@@ -8,11 +12,80 @@ import { Header } from "../components/Header";
  */
 
 export function AccountPasswordRecovery() {
+  // const [backendErrorMessage, setBackendErrorMessage] = useState('')
+  const {
+    handleSubmit,
+    register,
+    errors,
+    watch,
+    formState,
+    setError,
+    setValue
+  } = useForm({
+    mode: "onBlur"
+  });
+
+  const history = useHistory();
+
+  const handleRecoveryPassword = formData => {
+    console.log(formData);
+    history.push("/home");
+  };
+
+  // console.log('WATCH: ', watch());
+  // console.log('ERROR: ', errors);
+  // console.log('FORMSTATE: ', formState);
+
   return (
     <React.Fragment>
       <Header />
-      <main>
-        <h2>{i18n.t("This is Account Password Recovery")}</h2>
+      <main className="centered-container">
+        <h3>{i18n.t("Password recovery")}</h3>
+        {/* {backendErrorMessage && !formState.isValid && (
+          <p className="alert">
+            {backendErrorMessage}
+            <span onClick={() => setBackendErrorMessage('')}>close</span>
+          </p>
+        )} */}
+        <form onSubmit={handleSubmit(handleRecoveryPassword)} noValidate>
+          <div
+            className={`form-control ${
+              errors.email ? "ko" : formState.touched.email && "ok"
+            }`}
+          >
+            <label htmlFor="email">{i18n.t("Email")}</label>
+            <input
+              ref={register({
+                required: "The email is mandatory",
+                pattern: {
+                  value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                  message: "The email is not valid"
+                }
+              })}
+              name="email"
+              id="email"
+              type="email"
+              placeholder={i18n.t("Please enter your email")}
+            ></input>
+            {errors.email && (
+              <span className="errorMessage">
+                {i18n.t(errors.email.message)}
+              </span>
+            )}
+          </div>
+          <div className="btn-container">
+            <button
+              type="submit"
+              className="btn"
+              disabled={formState.isSubmitting}
+            >
+              {i18n.t("Send")}
+            </button>
+            <div className="m-t-lg btn-container">
+              <Link to="/account/login">{i18n.t("Sign in")}</Link>
+            </div>
+          </div>
+        </form>
       </main>
     </React.Fragment>
   );
