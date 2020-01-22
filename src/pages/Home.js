@@ -12,7 +12,7 @@ export function Home() {
   return (
     <React.Fragment>
       <Header />
-      <main>
+      <main className="centered-container">
         <section id="info">
           <h2>{i18n.t("This is the home")}</h2>
           <div>

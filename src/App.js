@@ -17,7 +17,6 @@ import { CompanyCreate } from "./pages/CompanyCreate";
 import { EmailActivationRecovery } from "./pages/EmailActivationRecovery";
 import { ReviewCreate } from "./pages/ReviewCreate";
 import { ReviewUser } from "./pages/ReviewUser";
-import { ReviewView } from "./pages/ReviewView";
 import { UserUpdate } from "./pages/UserUpdate";
 import { UserDelete } from "./pages/UserDelete";
 import { LinksTemporal } from "./pages/LinksTemporal";
@@ -36,7 +35,7 @@ function App() {
             <Route exact path="/home">
               <Home />
             </Route>
-            <Route path="/account/activate">
+            <Route path="/account/activate/:verification_code">
               <AccountActivate />
             </Route>
             <Route path="/account/create">
@@ -69,9 +68,6 @@ function App() {
             <Route path="/review/user">
               <ReviewUser />
             </Route>
-            <Route path="/review/view">
-              <ReviewView />
-            </Route>
             <Route path="/user/update">
               <UserUpdate />
             </Route>
@@ -82,7 +78,7 @@ function App() {
               <NotFound />
             </Route>
             <Route path="*">
-              <Redirect to="/home" />
+              <Redirect to="/not-found" />
             </Route>
           </Switch>
         </ReProvider>
