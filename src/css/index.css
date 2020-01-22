@@ -3,6 +3,11 @@
 @import './theme.css';
 @import './header.css';
 @import './footer.css';
+@import './buttons.css';
+@import './forms.css';
+@import './utils.css';
+@import './dialog.css';
+
 
 html {
   box-sizing: border-box;
@@ -28,12 +33,6 @@ body,
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  border: 1px solid rebeccapurple;
-}
-
-main {
-  border: 2px solid black;
-  flex-grow: 1;
 }
 
 section#info {
@@ -126,16 +125,6 @@ CSS autocompletamiento
   overflow-y: scroll;
   top: 1.4rem;
   right: -1;
-}
-
-
-@media (min-width: 1000px) {
-
-main {
-  max-width: 1000px;
-  margin: 0 auto;
-}
- 
 }
 
 
