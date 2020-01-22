@@ -12,7 +12,7 @@ export function CompanyCreate() {
   return (
     <React.Fragment>
       <Header />
-      <main>
+      <main className="centered-container">
         <h2>{i18n.t("This is Company Create")}</h2>
       </main>
       <Footer />

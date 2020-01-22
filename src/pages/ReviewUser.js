@@ -12,7 +12,7 @@ export function ReviewUser() {
   return (
     <React.Fragment>
       <Header />
-      <main>
+      <main className="centered-container">
         <h2>{i18n.t("This is Review User")}</h2>
       </main>
       <Footer />
