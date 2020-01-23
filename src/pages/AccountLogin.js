@@ -26,24 +26,29 @@ export function AccountLogin() {
     mode: 'onBlur'
   });
   const history = useHistory();
-  const { setRole, setCurrentUserId } = useAuth();
+  const { setToken, setRole, setCurrentUserId } = useAuth();
 
   const handleLogin = formData => {
     return signIn(formData)
       .then(response => {
         const userData = jwt.decode(response.data.accessToken);
+        setToken(response.data.accessToken);
         setRole(userData.role)
         setCurrentUserId(userData.userId);
+        localStorage.setItem('token', response.data.accessToken);
         localStorage.setItem('role', userData.role);
         localStorage.setItem('userId', userData.userId);
         history.push('/home');
       })
       .catch(error => {
-        // setBackendErrorMessage('The credentials are invalid');
         setValue('password', '');
-        let messageResponse = error.response.data;
-        if (error.response.status === "500") {
-          messageResponse = "Internal server error";
+        let messageResponse = "Server down";
+        if (error.response) {
+          // Server up
+          messageResponse = error.response.data;
+          if (error.response.status === "500") {
+            messageResponse = "Internal server error";
+          }
         }
         setError('password', 'backend', messageResponse);
       });
