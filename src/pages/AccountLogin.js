@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import i18n from "i18next";
+import jwt from "jsonwebtoken"
 import { Link, useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { signIn } from '../http/authService';
+import { useAuth } from '../context/auth-context';
 
 import { Header } from "../components/Header";
 
@@ -23,10 +26,27 @@ export function AccountLogin() {
     mode: 'onBlur'
   });
   const history = useHistory();
+  const { setRole, setCurrentUserId } = useAuth();
 
   const handleLogin = formData => {
-    console.log(formData)
-    history.push('/home');
+    return signIn(formData)
+      .then(response => {
+        const userData = jwt.decode(response.data.accessToken);
+        setRole(userData.role)
+        setCurrentUserId(userData.userId);
+        localStorage.setItem('role', userData.role);
+        localStorage.setItem('userId', userData.userId);
+        history.push('/home');
+      })
+      .catch(error => {
+        // setBackendErrorMessage('The credentials are invalid');
+        setValue('password', '');
+        let messageResponse = error.response.data;
+        if (error.response.status === "500") {
+          messageResponse = "Internal server error";
+        }
+        setError('password', 'backend', messageResponse);
+      });
   };
 
   // console.log('WATCH: ', watch());

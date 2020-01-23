@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import i18n from "i18next";
-
 import { Link } from "react-router-dom";
+
+import { useAuth } from "../context/auth-context";
 
 export function Header() {
   const [lang, setLang] = useState("en");
   const [showMenu, setShowMenu] = useState(false);
+  const { currentUserId, role } = useAuth();
 
   useEffect(() => {
     const langStored = localStorage.getItem("re:lang");
@@ -96,37 +98,51 @@ export function Header() {
           </label>
         </li>
       </ul>
-      <nav className="header-item">
-        <ul className="header">
-          <li className="header-item">
-            <Link to="/account/login">
-              <p>Sign In
+      {!currentUserId ? (
+        <nav className="header-item">
+          <ul className="header">
+            <li className="header-item">
+              <Link to="/account/login">
+                <p>Sign In
                     </p>
-            </Link>
-          </li>
-          <li className="header-item">
-            <Link to="/account/create">
-              <p>Sign Up
+              </Link>
+            </li>
+            <li className="header-item">
+              <Link to="/account/create">
+                <p>Sign Up
                     </p>
-            </Link>
-          </li>
-        </ul>
-      </nav>
-      <nav className="menu header-item" onClick={() => setShowMenu(true)}>{i18n.t(" Menu")}
-        {showMenu && (
-          <div className="m-t-lg lista-menu" onMouseLeave={() => setShowMenu(false)}>
-            <ul>
-              <li><Link to="/company/create">{i18n.t("My company")}</Link></li>
-              <li><Link to="/review/create">{i18n.t("Create review")}</Link></li>
-              <li><Link to="/review/user">{i18n.t("My review")}</Link></li>
-              <li><Link to="/user/update">{i18n.t("My profile")}</Link></li>
-              <li><Link to="/account/password/change">{i18n.t("Change password")}</Link></li>
-              <li><Link to="/user/delete">{i18n.t("Delete user")}</Link></li >
-              <li><Link to="/home">{i18n.t("Logout")}</Link></li >
-            </ul>
-          </div>
-        )}
-      </nav>
+              </Link>
+            </li>
+          </ul>
+        </nav>
+      )
+        : (
+          <nav className="menu header-item" onClick={() => setShowMenu(true)}>{i18n.t(" Menu")}
+            {showMenu && (
+              <div className="m-t-lg lista-menu" onMouseLeave={() => setShowMenu(false)}>
+                <ul>
+                  {role === "2" && (<li><Link to="/company/create">{i18n.t("My company")}</Link></li>)}
+                  {role === "1" && (
+                    <React.Fragment>
+                      <li > <Link to="/review/create">{i18n.t("Create review")}</Link></li>
+                      <li><Link to="/review/user">{i18n.t("My review")}</Link></li>
+                    </React.Fragment>
+                  )}
+                  {(role === "1" || role === "2") && (
+                    <React.Fragment>
+                      <li><Link to="/user/update">{i18n.t("My profile")}</Link></li>
+                      <li><Link to="/account/password/change">{i18n.t("Change password")}</Link></li>
+                      <li><Link to="/user/delete">{i18n.t("Delete user")}</Link></li >
+                    </React.Fragment>
+                  )}
+                  <li><Link to="/home">{i18n.t("Logout")}</Link></li >
+                </ul>
+              </div>
+            )}
+          </nav>
+        )
+      }
+
     </header >
   );
 }

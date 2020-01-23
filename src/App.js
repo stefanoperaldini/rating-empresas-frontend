@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
 import { I18nextProvider } from "react-i18next";
 import i18n from "./i18n";
-import { ReProvider } from "./context/app-context";
+import { AuthProvider } from "./context/auth-context";
 
 import { Home } from "./pages/Home";
 import { AccountActivate } from "./pages/AccountActivate";
@@ -27,7 +27,7 @@ function App() {
   return (
     <I18nextProvider i18n={i18n}>
       <BrowserRouter>
-        <ReProvider>
+        <AuthProvider>
           <Switch>
             <Route exact path="/">
               <LinksTemporal />
@@ -81,7 +81,7 @@ function App() {
               <Redirect to="/not-found" />
             </Route>
           </Switch>
-        </ReProvider>
+        </AuthProvider>
       </BrowserRouter>
     </I18nextProvider>
   );
