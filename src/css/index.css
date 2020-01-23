@@ -1,13 +1,12 @@
 /* Importar en index.js debido a un bug en codesandbox */
 
-@import './theme.css';
-@import './header.css';
-@import './footer.css';
-@import './buttons.css';
-@import './forms.css';
-@import './utils.css';
-@import './dialog.css';
-
+@import "./theme.css";
+@import "./header.css";
+@import "./footer.css";
+@import "./buttons.css";
+@import "./forms.css";
+@import "./utils.css";
+@import "./dialog.css";
 
 html {
   box-sizing: border-box;
@@ -36,7 +35,7 @@ body,
 }
 
 section#info {
-    background-color: yellow;
+  background-color: yellow;
 }
 
 h1,
@@ -119,12 +118,10 @@ CSS autocompletamiento
 .resBusqueda {
   position: absolute;
   height: 7rem;
-	width: 12rem;
-	border: 1px solid #ddd;
-	background: #f1f1f1;
+  width: 12rem;
+  border: 1px solid #ddd;
+  background: #f1f1f1;
   overflow-y: scroll;
   top: 1.4rem;
   right: -1;
 }
-
-

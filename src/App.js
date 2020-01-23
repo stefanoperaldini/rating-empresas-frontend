@@ -22,7 +22,6 @@ import { UserDelete } from "./pages/UserDelete";
 import { LinksTemporal } from "./pages/LinksTemporal";
 import { NotFound } from "./pages/NotFound";
 
-
 function App() {
   return (
     <I18nextProvider i18n={i18n}>

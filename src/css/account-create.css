@@ -1,0 +1,6 @@
+@import "index.css";
+
+body,
+#root {
+  overflow: visible;
+}
