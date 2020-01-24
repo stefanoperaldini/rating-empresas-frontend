@@ -14,7 +14,7 @@ export function ReviewCreate() {
   return (
     <React.Fragment>
       <Header />
-      <main>
+      <main className="centered-container">
         <h2>{i18n.t("This is the review create")}</h2>
         <Cities />
       </main>

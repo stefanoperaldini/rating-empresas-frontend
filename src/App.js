@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
 import { I18nextProvider } from "react-i18next";
 import i18n from "./i18n";
-import { ReProvider } from "./context/app-context";
+import { AuthProvider } from "./context/auth-context";
 
 import { Home } from "./pages/Home";
 import { AccountActivate } from "./pages/AccountActivate";
@@ -22,12 +22,15 @@ import { UserDelete } from "./pages/UserDelete";
 import { LinksTemporal } from "./pages/LinksTemporal";
 import { NotFound } from "./pages/NotFound";
 
+import { PrivateRoute } from './components/PrivateRoute';
+
+
 
 function App() {
   return (
     <I18nextProvider i18n={i18n}>
       <BrowserRouter>
-        <ReProvider>
+        <AuthProvider>
           <Switch>
             <Route exact path="/">
               <LinksTemporal />
@@ -44,9 +47,9 @@ function App() {
             <Route path="/account/login">
               <AccountLogin />
             </Route>
-            <Route path="/account/password/change">
+            <PrivateRoute path="/account/password/change" allowedRoles={['1', '2']}>
               <AccountPasswordChange />
-            </Route>
+            </PrivateRoute>
             <Route path="/account/password/recovery">
               <AccountPasswordRecovery />
             </Route>
@@ -56,24 +59,24 @@ function App() {
             <Route path="/company/detail">
               <Company />
             </Route>
-            <Route exact path="/company/create">
+            <PrivateRoute exact path="/company/create" allowedRoles={['2']} >
               <CompanyCreate />
-            </Route>
+            </PrivateRoute>
             <Route path="/email/activation/recovery">
               <EmailActivationRecovery />
             </Route>
-            <Route path="/review/create">
+            <PrivateRoute path="/review/create" allowedRoles={['1']} >
               <ReviewCreate />
-            </Route>
-            <Route path="/review/user">
+            </PrivateRoute>
+            <PrivateRoute path="/review/user" allowedRoles={['1']} >
               <ReviewUser />
-            </Route>
-            <Route path="/user/update">
+            </PrivateRoute>
+            <PrivateRoute path="/user/update" allowedRoles={['1', '2']} >
               <UserUpdate />
-            </Route>
-            <Route path="/user/delete">
+            </PrivateRoute>
+            <PrivateRoute path="/user/delete" allowedRoles={['1', '2']} >
               <UserDelete />
-            </Route>
+            </PrivateRoute>
             <Route path="/not-found">
               <NotFound />
             </Route>
@@ -81,7 +84,7 @@ function App() {
               <Redirect to="/not-found" />
             </Route>
           </Switch>
-        </ReProvider>
+        </AuthProvider>
       </BrowserRouter>
     </I18nextProvider>
   );
