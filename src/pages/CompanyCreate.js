@@ -1,7 +1,10 @@
 import React from "react";
 import i18n from "i18next";
+import jwt from "jsonwebtoken";
 import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { createCompany } from "../http/createCompanyService";
+import { useAuth } from "../context/auth-context";
 
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
@@ -25,10 +28,26 @@ export function CompanyCreate() {
   });
 
   const history = useHistory();
+  const { setToken, setRole, setCurrentUserId } = useAuth();
 
   const handleCompanyCreate = formData => {
     console.log(formData);
-    history.push("/home");
+    return createCompany(formData)
+      .then(response => {
+        history.push("/home");
+      })
+      .catch(error => {
+        setValue("linkedin", "");
+        let messageResponse = "Server down";
+        if (error.response) {
+          // Server up
+          messageResponse = error.response.data;
+          if (error.response.status === "500") {
+            messageResponse = "Internal server error";
+          }
+        }
+        setError("linkedin", "backend", messageResponse);
+      });
   };
 
   // console.log('WATCH: ', watch());
@@ -38,7 +57,7 @@ export function CompanyCreate() {
   return (
     <React.Fragment>
       <Header />
-      <main className="centered-container">
+      <main className="centered-container" className="scroll">
         <h3>{i18n.t("My company")}</h3>
         {/* {backendErrorMessage && !formState.isValid && (
           <p className="alert">
@@ -134,7 +153,7 @@ export function CompanyCreate() {
             <input
               ref={register({
                 pattern: {
-                  value: /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/,
+                  value: /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/,
                   message: "The URL is not valid"
                 }
               })}
@@ -222,26 +241,7 @@ export function CompanyCreate() {
               </span>
             )}
           </div>
-          <div
-            className={`form-control ${
-              errors.logo ? "ko" : formState.touched.logo && "ok"
-            }`}
-          >
-            <label htmlFor="logo">{i18n.t("Upload company logo")}</label>
-            <input
-              ref={register}
-              name="logo"
-              id="logo"
-              type="file"
-              accept="image/png, image/jpeg"
-              placeholder={i18n.t("My company logo")}
-            ></input>
-            {errors.logo && (
-              <span className="errorMessage">
-                {i18n.t(errors.logo.message)}
-              </span>
-            )}
-          </div>
+
           <div className="btn-container">
             <button
               type="submit"
@@ -252,6 +252,25 @@ export function CompanyCreate() {
             </button>
           </div>
         </form>
+
+        {/* <div
+          className={`form-control ${
+            errors.logo ? "ko" : formState.touched.logo && "ok"
+          }`}
+        >
+          <label htmlFor="logo">{i18n.t("Upload company logo")}</label>
+          <input
+            ref={register}
+            name="logo"
+            id="logo"
+            type="file"
+            accept="image/png, image/jpeg"
+            placeholder={i18n.t("My company logo")}
+          ></input>
+          {errors.logo && (
+            <span className="errorMessage">{i18n.t(errors.logo.message)}</span>
+          )}
+        </div> */}
       </main>
       <Footer />
     </React.Fragment>
