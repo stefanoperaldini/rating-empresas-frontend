@@ -1,18 +1,44 @@
 import React, { useEffect, useState } from "react";
 import i18n from "i18next";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 import { useAuth } from "../context/auth-context";
+import { logOut } from '../http/logoutService';
+
+
 
 export function Header() {
   const [lang, setLang] = useState("en");
   const [showMenu, setShowMenu] = useState(false);
-  const { currentUserId, role } = useAuth();
+  const { currentUserId, role, setRole, setAccessToken, setCurrentUserId } = useAuth();
+
+  const history = useHistory();
+
+  const executeLogout = () => {
+    return logOut()
+      .then(response => {
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("role");
+        localStorage.removeItem("userId");
+        setRole(null);
+        setAccessToken(null);
+        setCurrentUserId(null)
+      }).catch(error => {
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("role");
+        localStorage.removeItem("userId");
+        setRole(null);
+        setAccessToken(null);
+        setCurrentUserId(null)
+        console.error(error);
+      }).finally(() => {
+        history.push('/home');
+      });
+  }
 
   useEffect(() => {
     const langStored = localStorage.getItem("re:lang");
     if (langStored) {
-      //console.log("Language stored", langStored)
       setLang(langStored);
       i18n.changeLanguage(langStored);
     } else {
@@ -25,23 +51,18 @@ export function Header() {
           case "en":
             i18n.changeLanguage(userLang);
             setLang(userLang);
-            //console.log("Language browser", userLang);
             break;
           default:
             i18n.changeLanguage("en");
             setLang(userLang);
-            //console.log("Language browser no encontrado", userLang);
             break;
         }
       } else {
         i18n.changeLanguage("en");
         setLang(userLang);
-        //console.log("Default languade EN!!!!!");
       }
     }
   }, [lang]);
-
-  //console.log("Lenguage impostado", i18n.languages[0])
 
   return (
     <header className="header">
@@ -135,7 +156,7 @@ export function Header() {
                       <li><Link to="/user/delete">{i18n.t("Delete user")}</Link></li >
                     </React.Fragment>
                   )}
-                  <li><Link to="/home">{i18n.t("Logout")}</Link></li >
+                  <li onClick={() => executeLogout()}>{i18n.t("Logout")}</li >
                 </ul>
               </div>
             )}
