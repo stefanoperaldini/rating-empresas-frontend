@@ -18,7 +18,6 @@ export function AccountLogin() {
     handleSubmit,
     register,
     errors,
-    watch,
     formState,
     setError,
     setValue
@@ -26,16 +25,16 @@ export function AccountLogin() {
     mode: 'onBlur'
   });
   const history = useHistory();
-  const { setToken, setRole, setCurrentUserId } = useAuth();
+  const { setAccessToken, setRole, setCurrentUserId } = useAuth();
 
   const handleLogin = formData => {
     return signIn(formData)
       .then(response => {
         const userData = jwt.decode(response.data.accessToken);
-        setToken(response.data.accessToken);
+        setAccessToken(response.data.accessToken);
         setRole(userData.role)
         setCurrentUserId(userData.userId);
-        localStorage.setItem('token', response.data.accessToken);
+        localStorage.setItem('accessToken', response.data.accessToken);
         localStorage.setItem('role', userData.role);
         localStorage.setItem('userId', userData.userId);
         history.push('/home');
@@ -53,10 +52,6 @@ export function AccountLogin() {
         setError('password', 'backend', messageResponse);
       });
   };
-
-  // console.log('WATCH: ', watch());
-  // console.log('ERROR: ', errors);
-  // console.log('FORMSTATE: ', formState);
 
   return (
     <React.Fragment>

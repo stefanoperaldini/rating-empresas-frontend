@@ -1,21 +1,49 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import i18n from "i18next";
 import { Link } from 'react-router-dom';
 import { useParams } from "react-router";
+import { activateAccount } from '../http/activationService';
 
 /**
  * Page for sending activation to backend. Show the result.
- * http://localhost:3000/account/activate?verification_code=b1d48660-ccf3-4b48-b33f-506d5b790862
  */
 
 export function AccountActivate() {
-
   const params = useParams();
+  const [response, setResponse] = useState(null);
+
+  const verificationCode = params.verification_code;
+
   console.log(params.verification_code);
+
+  useEffect(() => {
+    activateAccount(verificationCode)
+      .then(response => {
+        console.log("Attivato");
+        setResponse("Account activated");
+      })
+      .catch(error => {
+        let messageResponse = "Server down";
+        if (error.response) {
+          // Server up
+          messageResponse = error.response.data;
+          if (error.response.status === "500") {
+            messageResponse = "Internal server error";
+          }
+        }
+        console.log("Non attivato")
+        setResponse(messageResponse);
+      });
+  }, [verificationCode]);
+
+  if (response === null) {
+    return <div>Connecting to the server ...</div>;
+  }
+
   return (
     <React.Fragment>
       <main className="centered-container">
-        <h2>{i18n.t("This is Account Activate")}</h2>
+        <h2>{i18n.t(response)}</h2>
         <div className="m-t-lg btn-container">
           <Link to="/account/login">{i18n.t("Login")}</Link>
         </div>
