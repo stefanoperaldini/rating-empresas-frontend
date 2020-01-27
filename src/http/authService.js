@@ -6,6 +6,7 @@ axios.interceptors.request.use(
         let accessToken = currentAccessToken || null;
 
         if (accessToken) {
+            // FIXME Decidir cuando poner
             config.headers['Authorization'] = `Bearer ${accessToken}`;
         }
         return config;
