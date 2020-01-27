@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import i18n from "i18next";
 import jwt from "jsonwebtoken"
 import { Link, useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+
 import { signIn } from '../http/authService';
 import { useAuth } from '../context/auth-context';
-
+import { setErrorMessageCallBackEnd } from '../http/utility'
 import { Header } from "../components/Header";
 
 /**
@@ -41,15 +42,7 @@ export function AccountLogin() {
       })
       .catch(error => {
         setValue('password', '');
-        let messageResponse = "Server down";
-        if (error.response) {
-          // Server up
-          messageResponse = error.response.data;
-          if (error.response.status === "500") {
-            messageResponse = "Internal server error";
-          }
-        }
-        setError('password', 'backend', messageResponse);
+        setError('password', 'backend', setErrorMessageCallBackEnd(error));
       });
   };
 
@@ -58,12 +51,6 @@ export function AccountLogin() {
       <Header />
       <main className="centered-container">
         <h3>{i18n.t("Please Login")}</h3>
-        {/* {backendErrorMessage && !formState.isValid && (
-          <p className="alert">
-            {backendErrorMessage}
-            <span onClick={() => setBackendErrorMessage('')}>close</span>
-          </p>
-        )} */}
         <form onSubmit={handleSubmit(handleLogin)} noValidate>
           <div
             className={`form-control ${
