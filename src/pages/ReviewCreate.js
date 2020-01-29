@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import i18n from "i18next";
 import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -20,7 +20,6 @@ export function ReviewCreate() {
     console.log(formData);
     history.push("/home");
   };
-  const [type, setType] = useState("unchecked");
 
   return (
     <React.Fragment>
@@ -78,7 +77,7 @@ export function ReviewCreate() {
           <div
             className={`form-control ${
               errors.password ? "ko" : formState.touched.password && "ok"
-            }`}
+              }`}
           >
             <label>In-House Training</label>
             <input
@@ -101,7 +100,7 @@ export function ReviewCreate() {
           <div
             className={`form-control ${
               errors.password ? "ko" : formState.touched.password && "ok"
-            }`}
+              }`}
           >
             <label>Growth Opportunities</label>
             <input
@@ -124,7 +123,7 @@ export function ReviewCreate() {
           <div
             className={`form-control ${
               errors.password ? "ko" : formState.touched.password && "ok"
-            }`}
+              }`}
           >
             <label>Work Enviroment</label>
             <input
@@ -147,7 +146,7 @@ export function ReviewCreate() {
           <div
             className={`form-control ${
               errors.password ? "ko" : formState.touched.password && "ok"
-            }`}
+              }`}
           >
             <label>Personal Life</label>
             <input
@@ -169,7 +168,7 @@ export function ReviewCreate() {
           <div
             className={`form-control ${
               errors.password ? "ko" : formState.touched.password && "ok"
-            }`}
+              }`}
           >
             <label>Company Culture</label>
             <input

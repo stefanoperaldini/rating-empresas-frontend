@@ -18,7 +18,6 @@ export function AccountPasswordRecovery() {
     handleSubmit,
     register,
     errors,
-    watch,
     formState,
     setError,
     setValue
@@ -67,7 +66,7 @@ export function AccountPasswordRecovery() {
           <div
             className={`form-control ${
               errors.email ? "ko" : formState.touched.email && "ok"
-            }`}
+              }`}
           >
             <label htmlFor="email">{i18n.t("Email")}</label>
             <input

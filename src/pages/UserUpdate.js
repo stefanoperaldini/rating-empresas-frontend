@@ -6,7 +6,6 @@ import { useForm } from "react-hook-form";
 import "../css/account-password-change.css";
 
 import { Header } from "../components/Header";
-import { Footer } from "../components/Footer";
 
 /**
  * Page for update data user
@@ -18,10 +17,7 @@ export function UserUpdate() {
     handleSubmit,
     register,
     errors,
-    watch,
     formState,
-    setError,
-    setValue
   } = useForm({
     mode: "onBlur"
   });
@@ -52,7 +48,7 @@ export function UserUpdate() {
           <div
             className={`form-control ${
               errors.linkedin ? "ko" : formState.touched.linkedin && "ok"
-            }`}
+              }`}
           >
             <label htmlFor="linkedin">{i18n.t("Linkedin")}</label>
             <input

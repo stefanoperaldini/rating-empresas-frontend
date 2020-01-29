@@ -18,10 +18,7 @@ export function AccountPasswordChange() {
     handleSubmit,
     register,
     errors,
-    watch,
     formState,
-    setError,
-    setValue
   } = useForm({
     mode: "onBlur"
   });
@@ -52,7 +49,7 @@ export function AccountPasswordChange() {
           <div
             className={`form-control ${
               errors.oldPassword ? "ko" : formState.touched.oldPassword && "ok"
-            }`}
+              }`}
           >
             <label htmlFor="oldPassword">{i18n.t("Current Password")}</label>
             <input
@@ -76,7 +73,7 @@ export function AccountPasswordChange() {
           <div
             className={`form-control ${
               errors.newPassword ? "ko" : formState.touched.newPassword && "ok"
-            }`}
+              }`}
           >
             <label htmlFor="newPassword">{i18n.t("New Password")}</label>
             <input
@@ -102,7 +99,7 @@ export function AccountPasswordChange() {
               errors.confirmationPassword
                 ? "ko"
                 : formState.touched.confirmationPassword && "ok"
-            }`}
+              }`}
           >
             <label htmlFor="confirmationPassword">
               {i18n.t("Repeat new password")}
