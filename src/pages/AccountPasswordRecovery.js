@@ -2,11 +2,11 @@ import React from "react";
 import i18n from "i18next";
 import { Link, useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
+
 import { passwordRecovery } from "../http/passwordRecoveryService";
-
 import "../css/account-password-recovery.css";
-
 import { Header } from "../components/Header";
+import { setErrorMessageCallBackEnd } from './pagesUtils'
 
 /**
  * Page for recovering password
@@ -20,7 +20,6 @@ export function AccountPasswordRecovery() {
     errors,
     formState,
     setError,
-    setValue
   } = useForm({
     mode: "onBlur"
   });
@@ -34,17 +33,8 @@ export function AccountPasswordRecovery() {
         history.push("/account/login");
       })
       .catch(error => {
-        setValue("email", "");
-        let messageResponse = "Server down";
-        if (error.response) {
-          // Server up
-          messageResponse = error.response.data;
-          if (error.response.status === "500") {
-            messageResponse = "Internal server error";
-          }
-        }
-        setError("email", "backend", messageResponse);
-      });
+        setError("email", "backend", setErrorMessageCallBackEnd(error));
+      })
   };
 
   // console.log('WATCH: ', watch());
