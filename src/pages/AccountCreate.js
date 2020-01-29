@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 import { Header } from "../components/Header";
-import { setErrorMessageCallBackEnd } from './pagesUtils'
+import { setErrorMessageCallBackEnd } from './pagesUtils';
 import { signUp } from '../http/authService';
 
 export function AccountCreate() {
@@ -18,11 +18,10 @@ export function AccountCreate() {
     const formDataFiltered = { ...formData, confirmPassword: undefined }
     return signUp(formDataFiltered)
       .then(response => {
-
         history.push('/account/login');
       })
       .catch(error => {
-        setError('linkedin', 'backend', setErrorMessageCallBackEnd(error));
+        setError('name', 'backend', setErrorMessageCallBackEnd(error));
       });
   };
 
@@ -112,6 +111,31 @@ export function AccountCreate() {
 
           <div
             className={`form-control ${
+              errors.linkedin ? "ko" : formState.touched.linkedin && "ok"
+              }`}
+          >
+            <label htmlFor="linkedin">{i18n.t("Linkedin")}</label>
+            <input
+              ref={register({
+                pattern: {
+                  value: /^https:\/\/[a-z]{2,3}\.linkedin\.com\/.*$/,
+                  message: "The linkedin address is not valid"
+                }
+              })}
+              name="linkedin"
+              id="linkedin"
+              type="url"
+              placeholder={i18n.t("Linkedin address")}
+            ></input>
+            {errors.linkedin && (
+              <span className="errorMessage">
+                {i18n.t(errors.linkedin.message)}
+              </span>
+            )}
+          </div>
+
+          <div
+            className={`form-control ${
               errors.password ? 'ko' : formState.touched.password && 'ok'
               }`}
           >
@@ -151,31 +175,6 @@ export function AccountCreate() {
             ></input>
             {errors.confirmPassword && (
               <span className="error-message">{i18n.t("The password and the confirmation should match")}
-              </span>
-            )}
-          </div>
-
-          <div
-            className={`form-control ${
-              errors.linkedin ? "ko" : formState.touched.linkedin && "ok"
-              }`}
-          >
-            <label htmlFor="linkedin">{i18n.t("Linkedin")}</label>
-            <input
-              ref={register({
-                pattern: {
-                  value: /^https:\/\/[a-z]{2,3}\.linkedin\.com\/.*$/,
-                  message: "The linkedin address is not valid"
-                }
-              })}
-              name="linkedin"
-              id="linkedin"
-              type="url"
-              placeholder={i18n.t("Linkedin address")}
-            ></input>
-            {errors.linkedin && (
-              <span className="errorMessage">
-                {i18n.t(errors.linkedin.message)}
               </span>
             )}
           </div>

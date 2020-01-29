@@ -4,48 +4,48 @@ import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 import "../css/account-password-change.css";
-
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
+import { passwordChange } from "../http/authService";
+import { setErrorMessageCallBackEnd } from './pagesUtils';
+
 
 /**
  * Page for changing password
  */
 
 export function AccountPasswordChange() {
-  // const [backendErrorMessage, setBackendErrorMessage] = useState('')
+
   const {
     handleSubmit,
     register,
     errors,
     formState,
+    setError,
+    watch,
   } = useForm({
     mode: "onBlur"
   });
 
   const history = useHistory();
 
-  const handleChangePassword = formData => {
-    console.log(formData);
-    history.push("/home");
+  const handlePasswordChange = formData => {
+    const formDataFiltered = { ...formData, confirmPassword: undefined }
+    return passwordChange(formDataFiltered)
+      .then(response => {
+        history.push('/');
+      })
+      .catch(error => {
+        setError('oldPassword', 'backend', setErrorMessageCallBackEnd(error));
+      });
   };
-
-  // console.log('WATCH: ', watch());
-  // console.log('ERROR: ', errors);
-  // console.log('FORMSTATE: ', formState);
 
   return (
     <React.Fragment>
       <Header />
       <main className="centered-container">
         <h3>{i18n.t("Change my password")}</h3>
-        {/* {backendErrorMessage && !formState.isValid && (
-          <p className="alert">
-            {backendErrorMessage}
-            <span onClick={() => setBackendErrorMessage('')}>close</span>
-          </p>
-        )} */}
-        <form onSubmit={handleSubmit(handleChangePassword)}>
+        <form onSubmit={handleSubmit(handlePasswordChange)}>
           <div
             className={`form-control ${
               errors.oldPassword ? "ko" : formState.touched.oldPassword && "ok"
@@ -94,34 +94,28 @@ export function AccountPasswordChange() {
               </span>
             )}
           </div>
+
           <div
             className={`form-control ${
-              errors.confirmationPassword
-                ? "ko"
-                : formState.touched.confirmationPassword && "ok"
+              errors.confirmPassword ? 'ko' : formState.touched.confirmPassword && 'ok'
               }`}
           >
-            <label htmlFor="confirmationPassword">
-              {i18n.t("Repeat new password")}
-            </label>
+            <label htmlFor="confirmPassword">{i18n.t("Confirm password")}</label>
             <input
               ref={register({
-                required: "The new password is mandatory",
-                pattern: {
-                  value: /^[a-zA-Z0-9]{3,36}$/,
-                  message: "The password is not valid"
-                }
+                validate: value => value === watch("newPassword"),
               })}
-              name="confirmationPassword"
+              name="confirmPassword"
               type="password"
-              placeholder={i18n.t("Repeat your new password")}
+              id="confirmPassword"
+              placeholder={i18n.t("Please enter your password")}
             ></input>
-            {errors.confirmationPassword && (
-              <span className="errorMessage">
-                {i18n.t(errors.confirmationPassword.message)}
+            {errors.confirmPassword && (
+              <span className="error-message">{i18n.t("The password and the confirmation should match")}
               </span>
             )}
           </div>
+
           <div className="btn-container">
             <button
               type="submit"
