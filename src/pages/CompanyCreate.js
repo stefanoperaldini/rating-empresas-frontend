@@ -1,10 +1,8 @@
 import React from "react";
 import i18n from "i18next";
-import jwt from "jsonwebtoken";
 import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { createCompany } from "../http/createCompanyService";
-import { useAuth } from "../context/auth-context";
 
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
@@ -19,7 +17,6 @@ export function CompanyCreate() {
     handleSubmit,
     register,
     errors,
-    watch,
     formState,
     setError,
     setValue
@@ -28,7 +25,6 @@ export function CompanyCreate() {
   });
 
   const history = useHistory();
-  const { setToken, setRole, setCurrentUserId } = useAuth();
 
   const handleCompanyCreate = formData => {
     console.log(formData);
@@ -57,7 +53,7 @@ export function CompanyCreate() {
   return (
     <React.Fragment>
       <Header />
-      <main className="centered-container" className="scroll">
+      <main className="centered-container scroll">
         <h3>{i18n.t("My company")}</h3>
         {/* {backendErrorMessage && !formState.isValid && (
           <p className="alert">
@@ -69,7 +65,7 @@ export function CompanyCreate() {
           <div
             className={`form-control ${
               errors.name ? "ko" : formState.touched.name && "ok"
-            }`}
+              }`}
           >
             <label htmlFor="name">{i18n.t("Name")}</label>
             <input
@@ -98,7 +94,7 @@ export function CompanyCreate() {
           <div
             className={`form-control ${
               errors.description ? "ko" : formState.touched.description && "ok"
-            }`}
+              }`}
           >
             <label htmlFor="description">{i18n.t("Description")}</label>
             <input
@@ -126,7 +122,7 @@ export function CompanyCreate() {
           <div
             className={`form-control ${
               errors.sector_id ? "ko" : formState.touched.sector_id && "ok"
-            }`}
+              }`}
           >
             <label htmlFor="sector_id">{i18n.t("Sector")}</label>
             <input
@@ -147,13 +143,13 @@ export function CompanyCreate() {
           <div
             className={`form-control ${
               errors.url_web ? "ko" : formState.touched.url_web && "ok"
-            }`}
+              }`}
           >
             <label htmlFor="url_web">{i18n.t("URL")}</label>
             <input
               ref={register({
                 pattern: {
-                  value: /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/,
+                  value: /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([-.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/,
                   message: "The URL is not valid"
                 }
               })}
@@ -171,7 +167,7 @@ export function CompanyCreate() {
           <div
             className={`form-control ${
               errors.linkedin ? "ko" : formState.touched.linkedin && "ok"
-            }`}
+              }`}
           >
             <label htmlFor="linkedin">{i18n.t("Linkedin")}</label>
             <input
@@ -195,7 +191,7 @@ export function CompanyCreate() {
           <div
             className={`form-control ${
               errors.address ? "ko" : formState.touched.address && "ok"
-            }`}
+              }`}
           >
             <label htmlFor="address">{i18n.t("Address")}</label>
             <input
@@ -223,7 +219,7 @@ export function CompanyCreate() {
           <div
             className={`form-control ${
               errors.sede_id ? "ko" : formState.touched.sede_id && "ok"
-            }`}
+              }`}
           >
             <label htmlFor="sede_id">{i18n.t("City")}</label>
             <input

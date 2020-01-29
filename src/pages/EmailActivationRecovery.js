@@ -18,7 +18,6 @@ export function EmailActivationRecovery() {
     handleSubmit,
     register,
     errors,
-    watch,
     formState,
     setError,
     setValue
@@ -66,7 +65,7 @@ export function EmailActivationRecovery() {
           <div
             className={`form-control ${
               errors.email ? "ko" : formState.touched.email && "ok"
-            }`}
+              }`}
           >
             <label htmlFor="email">{i18n.t("Email")}</label>
             <input

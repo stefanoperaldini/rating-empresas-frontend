@@ -1,65 +1,89 @@
-import React, { useState } from "react";
+import React from "react";
 import i18n from "i18next";
 import "../css/account-create.css";
 import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
+
 import { Header } from "../components/Header";
-import { RadioButton } from "../components/radiobutton";
-import logo from "../img/logo100x100.jpeg";
+import { setErrorMessageCallBackEnd } from './pagesUtils'
+import { signUp } from '../http/authService';
 
 export function AccountCreate() {
-  const { handleSubmit, register, errors, formState } = useForm({
+  const { handleSubmit, register, errors, watch, formState, setError, } = useForm({
     mode: "onBlur"
   });
   const history = useHistory();
 
-  const handleCreate = formData => {
-    console.log(formData);
-    history.push("/home");
+  const handleAccountCreate = formData => {
+    const formDataFiltered = { ...formData, confirmPassword: undefined }
+    return signUp(formDataFiltered)
+      .then(response => {
+
+        history.push('/account/login');
+      })
+      .catch(error => {
+        setError('linkedin', 'backend', setErrorMessageCallBackEnd(error));
+      });
   };
-  const [type, setType] = useState("unchecked");
 
   return (
     <React.Fragment>
       <Header />
       <main className="centered-container">
-        <div className="mini">
-          <img src={logo} alt="logo small" />
-          <p>RATING EMPRESAS</p>
-        </div>
-
         <h3>{i18n.t("Create your account")}</h3>
-
-        <form onSubmit={handleSubmit(handleCreate)} noValidate>
-          <div>
-            <RadioButton
-              text="Employee"
-              value="1"
-              checked={type === "1"}
-              onRadioChange={val => setType(val)}
-            />
-            <RadioButton
-              text="Enterprise"
-              value="2"
-              checked={type === "2"}
-              onRadioChange={v => setType(v)}
-            />
+        <form onSubmit={handleSubmit(handleAccountCreate)} noValidate>
+          <div className="flexRow">
+            <label>
+              <input
+                ref={register}
+                type="radio"
+                name="role"
+                value="1"
+                defaultChecked
+              />
+              {i18n.t("Employee")}
+            </label>
+            <label>
+              <input
+                ref={register}
+                type="radio"
+                name="role"
+                value="2"
+              />
+              {i18n.t("Company")}
+            </label>
           </div>
 
-          <div>
-            <label>{i18n.t("name")}</label>
-
+          <div
+            className={`form-control ${
+              errors.name ? "ko" : formState.touched.name && "ok"
+              }`}
+          >
+            <label htmlFor="name">{i18n.t("Name")}</label>
             <input
+              ref={register({
+                required: "The name is mandatory",
+                maxLength: {
+                  value: 45,
+                  message: "Maximun is 45 characters"
+                }
+              })}
               name="name"
+              id="name"
               type="text"
               placeholder="Please enter your name"
             ></input>
+            {errors.name && (
+              <span className="errorMessage">
+                {i18n.t(errors.name.message)}
+              </span>
+            )}
           </div>
 
           <div
             className={`form-control ${
               errors.email ? "ko" : formState.touched.email && "ok"
-            }`}
+              }`}
           >
             <label htmlFor="email">{i18n.t("Email")}</label>
             <input
@@ -68,6 +92,10 @@ export function AccountCreate() {
                 pattern: {
                   value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
                   message: "The email is not valid"
+                },
+                maxLength: {
+                  value: 45,
+                  message: "Maximun is 45 characters"
                 }
               })}
               name="email"
@@ -82,60 +110,73 @@ export function AccountCreate() {
             )}
           </div>
 
-          <div>
-            <label>{i18n.t("LinkedIn")}</label>
-
-            <input
-              name="linkedin"
-              type="text"
-              placeholder="Please enter your linkedin address"
-            ></input>
-          </div>
-
           <div
             className={`form-control ${
-              errors.password ? "ko" : formState.touched.password && "ok"
-            }`}
+              errors.password ? 'ko' : formState.touched.password && 'ok'
+              }`}
           >
-            <label>Password</label>
+            <label htmlFor="password">{i18n.t("Password")}</label>
             <input
               ref={register({
-                required: "The password is mandatory",
-                minLength: {
-                  value: /^[a-zA-Z0-9]{3,30}$/,
-                  message:
-                    "You should enter a password between 3 and 30 alphanumerichal characters"
+                required: 'The password is mandatory',
+                pattern: {
+                  value: /^[a-zA-Z0-9]{3,36}$/,
+                  message: 'The password is not valid'
                 }
               })}
               name="password"
               type="password"
-              placeholder="Please enter your password"
+              id="password"
+              placeholder={i18n.t("Please enter your password")}
             ></input>
             {errors.password && (
-              <span className="errorMessage">{errors.password.message}</span>
+              <span className="errorMessage">{i18n.t(errors.password.message)}</span>
             )}
           </div>
 
           <div
             className={`form-control ${
-              errors.password1 ? "ko" : formState.touched.password1 && "ok"
-            }`}
+              errors.confirmPassword ? 'ko' : formState.touched.confirmPassword && 'ok'
+              }`}
           >
-            <label>Password</label>
+            <label htmlFor="confirmPassword">{i18n.t("Confirm password")}</label>
             <input
               ref={register({
-                required: "The password must be the same",
-                minLength: {
-                  value: /^[a-zA-Z0-9]{3,30}$/,
-                  message: "the password must be the same"
+                validate: value => value === watch("password"),
+              })}
+              name="confirmPassword"
+              type="password"
+              id="confirmPassword"
+              placeholder={i18n.t("Please enter your password")}
+            ></input>
+            {errors.confirmPassword && (
+              <span className="error-message">{i18n.t("The password and the confirmation should match")}
+              </span>
+            )}
+          </div>
+
+          <div
+            className={`form-control ${
+              errors.linkedin ? "ko" : formState.touched.linkedin && "ok"
+              }`}
+          >
+            <label htmlFor="linkedin">{i18n.t("Linkedin")}</label>
+            <input
+              ref={register({
+                pattern: {
+                  value: /^https:\/\/[a-z]{2,3}\.linkedin\.com\/.*$/,
+                  message: "The linkedin address is not valid"
                 }
               })}
-              name="password1"
-              type="password1"
-              placeholder="Please reenter your password"
+              name="linkedin"
+              id="linkedin"
+              type="url"
+              placeholder={i18n.t("Linkedin address")}
             ></input>
-            {errors.password1 && (
-              <span className="errorMessage">{errors.password1.message}</span>
+            {errors.linkedin && (
+              <span className="errorMessage">
+                {i18n.t(errors.linkedin.message)}
+              </span>
             )}
           </div>
 
@@ -150,6 +191,6 @@ export function AccountCreate() {
           </div>
         </form>
       </main>
-    </React.Fragment>
+    </React.Fragment >
   );
 }

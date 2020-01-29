@@ -19,7 +19,6 @@ import { ReviewCreate } from "./pages/ReviewCreate";
 import { ReviewUser } from "./pages/ReviewUser";
 import { UserUpdate } from "./pages/UserUpdate";
 import { UserDelete } from "./pages/UserDelete";
-import { LinksTemporal } from "./pages/LinksTemporal";
 import { NotFound } from "./pages/NotFound";
 
 import { PrivateRoute } from './components/PrivateRoute';
@@ -33,7 +32,7 @@ function App() {
         <AuthProvider>
           <Switch>
             <Route exact path="/">
-              <LinksTemporal />
+              <Redirect to="/home" />
             </Route>
             <Route exact path="/home">
               <Home />
