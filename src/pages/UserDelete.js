@@ -1,86 +1,66 @@
 import React from "react";
 import i18n from "i18next";
-import "../css/account-create.css";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
+
+import "../css/account-password-change.css";
+
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
+import { setErrorMessageCallBackEnd } from "./pagesUtils";
+import { deleteUser } from "../http/deleteUserService";
 
 /**
  * Page for logic delete account
  */
 
 export function UserDelete() {
-  const { handleSubmit, register, errors, formState } = useForm({
+  const { handleSubmit, register, errors, formState, setError } = useForm({
     mode: "onBlur"
   });
   const history = useHistory();
 
-  const handleLogin = formData => {
+  const handleUserDelete = formData => {
     console.log(formData);
-    history.push("/home");
+    return deleteUser(formData)
+      .then(response => {
+        history.push("/home");
+      })
+      .catch(error => {
+        setError("backend", setErrorMessageCallBackEnd(error));
+      });
   };
+
   return (
     <React.Fragment>
       <Header />
       <main className="centered-container">
-        <h2>{i18n.t("Delete your account")}</h2>
-        <div className="warning">
-          <p>
-            {i18n.t(
-              "are you sure you wish to delete your account? you will not be able to create any new reviews, but any reviews you have made will remain on the site."
-            )}
-          </p>
-        </div>
-
-        <form onSubmit={handleSubmit(handleLogin)} noValidate>
+        <h3>{i18n.t("Delete my account")}</h3>
+        <form onSubmit={handleSubmit(handleUserDelete)}>
           <div
             className={`form-control ${
-              errors.email ? "ko" : formState.touched.email && "ok"
+              errors.confirm ? "ko" : formState.touched.confirm && "ok"
             }`}
           >
-            <label htmlFor="email">{i18n.t("Email")}</label>
+            <label htmlFor="confirm">
+              {i18n.t("For deleting your account, please type")}: CONFIRM DELETE
+            </label>
             <input
               ref={register({
-                required: "The email is mandatory",
+                required: "This field is mandatory",
                 pattern: {
-                  value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                  message: "The email is not valid"
+                  value: /CONFIRM DELETE/,
+                  message: "Must type CONFIRM DELETE"
                 }
               })}
-              name="email"
-              id="email"
-              type="email"
-              placeholder={i18n.t("Please enter your email")}
+              name="confirm"
+              type="text"
+              id="confirm"
+              placeholder={i18n.t("CONFIRM DELETE")}
             ></input>
-            {errors.email && (
+            {errors.confirm && (
               <span className="errorMessage">
-                {i18n.t(errors.email.message)}
-              </span>
-            )}
-          </div>
-          <div
-            className={`form-control ${
-              errors.password ? "ko" : formState.touched.password && "ok"
-            }`}
-          >
-            <label htmlFor="password">{i18n.t("Password")}</label>
-            <input
-              ref={register({
-                required: "The password is mandatory",
-                pattern: {
-                  value: /^[a-zA-Z0-9]{3,36}$/,
-                  message: "The password is not valid"
-                }
-              })}
-              name="password"
-              type="password"
-              id="password"
-              placeholder={i18n.t("Please enter your password")}
-            ></input>
-            {errors.password && (
-              <span className="errorMessage">
-                {i18n.t(errors.password.message)}
+                {i18n.t(errors.confirm.message)}
               </span>
             )}
           </div>
@@ -90,7 +70,7 @@ export function UserDelete() {
               className="btn"
               disabled={formState.isSubmitting}
             >
-              {i18n.t("Delete")}
+              {i18n.t("Send delete request")}
             </button>
           </div>
         </form>
