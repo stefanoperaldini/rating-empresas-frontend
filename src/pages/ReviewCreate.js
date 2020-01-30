@@ -1,7 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import i18n from "i18next";
+import jwt from "jsonwebtoken";
 import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
+// import { createReview } from "../http/createReviewService";
+import { useAuth } from "../context/auth-context";
+
+import "../css/review-create.css";
+
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
 import { Cities } from "../components/Cities";
@@ -11,205 +17,707 @@ import { Cities } from "../components/Cities";
  */
 
 export function ReviewCreate() {
-  const { handleSubmit, register, errors, formState } = useForm({
+  // const [backendErrorMessage, setBackendErrorMessage] = useState('')
+  const {
+    handleSubmit,
+    register,
+    errors,
+    watch,
+    formState,
+    setError,
+    setValue
+  } = useForm({
     mode: "onBlur"
   });
-  const history = useHistory();
 
-  const handleCreate = formData => {
+  const history = useHistory();
+  const handleReviewCreate = formData => {
     console.log(formData);
-    history.push("/home");
+    // return createReview(formData)
+    //   .then(response => {
+    //     history.push("/home");
+    //   })
+    // .catch(error => {
+    //   setValue("name", "");
+    //   let messageResponse = "Server down";
+    //   if (error.response) {
+    //     // Server up
+    //     messageResponse = error.response.data;
+    //     if (error.response.status === "500") {
+    //       messageResponse = "Internal server error";
+    //     }
+    //   }
+    //   setError("name", "backend", messageResponse);
+    // });
   };
-  const [type, setType] = useState("unchecked");
+
+  // console.log('WATCH: ', watch());
+  // console.log('ERROR: ', errors);
+  // console.log('FORMSTATE: ', formState);
 
   return (
     <React.Fragment>
       <Header />
-      <main className="centered-container">
-        <h3>{i18n.t("Create your review")}</h3>
-
-        <form onSubmit={handleSubmit(handleCreate)} noValidate>
-          <div>
-            <label>{i18n.t("Company")}</label>
-
-            <input name="name" type="text"></input>
-          </div>
-
-          <div>
-            <label>{i18n.t("Location")}</label>
-            <Cities />
-          </div>
-
-          <div>
-            <label>{i18n.t("Position")}</label>
-            <input name="position" type="text"></input>
-          </div>
-
-          <div>
-            <label>{i18n.t("Salary")}</label>
-
-            <input name="salary" type="text"></input>
-          </div>
-
-          <div>
-            <label>{i18n.t("Start date")}</label>
-
-            <input
-              name="start_date"
-              type="date"
-              value=""
-              min="2010-01-01"
-              max="2030-12-31"
-            ></input>
-          </div>
-
-          <div>
-            <label>{i18n.t("End date")}</label>
-
-            <input
-              name="end_date"
-              type="date"
-              value=""
-              min="2017-01-01"
-              max="2030-12-31"
-            ></input>
-          </div>
-
-          <div
-            className={`form-control ${
-              errors.password ? "ko" : formState.touched.password && "ok"
-            }`}
-          >
-            <label>In-House Training</label>
-            <input
-              ref={register({
-                required: "the valuation is mandatory",
-                minLength: {
-                  value: /^[1-5]{1,5}$/,
-                  message: "enter a number between 1 and 5"
-                }
-              })}
-              name="inhouse_training"
-              type="number"
-              placeholder="rate between 1 and 5"
-            ></input>
-            {errors.password && (
-              <span className="errorMessage">{errors.password.message}</span>
-            )}
-          </div>
-
-          <div
-            className={`form-control ${
-              errors.password ? "ko" : formState.touched.password && "ok"
-            }`}
-          >
-            <label>Growth Opportunities</label>
-            <input
-              ref={register({
-                required: "the valuation is mandatory",
-                minLength: {
-                  value: /^[1-5]{1,5}$/,
-                  message: "enter a number between 1 and 5"
-                }
-              })}
-              name="growth_opportunities"
-              type="number"
-              placeholder="rate between 1 and 5"
-            ></input>
-            {errors.password && (
-              <span className="errorMessage">{errors.password.message}</span>
-            )}
-          </div>
-
-          <div
-            className={`form-control ${
-              errors.password ? "ko" : formState.touched.password && "ok"
-            }`}
-          >
-            <label>Work Enviroment</label>
-            <input
-              ref={register({
-                required: "the valuation is mandatory",
-                minLength: {
-                  value: /^[1-5]{1,5}$/,
-                  message: "enter a number between 1 and 5"
-                }
-              })}
-              name="work_enviroment"
-              type="number"
-              placeholder="rate between 1 and 5"
-            ></input>
-            {errors.password && (
-              <span className="errorMessage">{errors.password.message}</span>
-            )}
-          </div>
-
-          <div
-            className={`form-control ${
-              errors.password ? "ko" : formState.touched.password && "ok"
-            }`}
-          >
-            <label>Personal Life</label>
-            <input
-              ref={register({
-                required: "the valuation is mandatory",
-                minLength: {
-                  value: /^[1-5]{1,5}$/,
-                  message: "enter a number between 1 and 5"
-                }
-              })}
-              name="personal_life"
-              type="number"
-              placeholder="rate between 1 and 5"
-            ></input>
-            {errors.password && (
-              <span className="errorMessage">{errors.password.message}</span>
-            )}
-          </div>
-          <div
-            className={`form-control ${
-              errors.password ? "ko" : formState.touched.password && "ok"
-            }`}
-          >
-            <label>Company Culture</label>
-            <input
-              ref={register({
-                required: "the valuation is mandatory",
-                minLength: {
-                  value: /^[1-5]{1,5}$/,
-                  message: "enter a number between 1 and 5"
-                }
-              })}
-              name="company_culture"
-              type="number"
-              placeholder="rate between 1 and 5"
-            ></input>
-            {errors.password && (
-              <span className="errorMessage">{errors.password.message}</span>
-            )}
-          </div>
-          <div className="longtext">
-            <input
-              type="text"
-              placeholder="Enter your Review"
-              name="Review"
-              ref={register({ min: 10, maxLength: 500 })}
-            />
-          </div>
-          <input type="submit" />
-
-          <div className="btn-container">
-            <button
-              type="submit"
-              className="btn"
-              disabled={formState.isSubmitting}
+      <main className="centered-container" className="scroll">
+        <section className="first-part-review">
+          <h3>{i18n.t("Create a review")}</h3>
+          <h4>
+            {i18n.t("Rate a company you've worked for in the past 3 years.")}
+          </h4>
+          <h4>{i18n.t("Reviews published are anonymous.")}</h4>
+          {/* {backendErrorMessage && !formState.isValid && (
+          <p className="alert">
+            {backendErrorMessage}
+            <span onClick={() => setBackendErrorMessage('')}>close</span>
+          </p>
+        )} */}
+          <form onSubmit={handleSubmit(handleReviewCreate)}>
+            <div
+              className={`form-control ${
+                errors.name ? "ko" : formState.touched.name && "ok"
+              }`}
             >
-              {i18n.t("Submit")}
-            </button>
-          </div>
-        </form>
-        <Footer />
+              <label htmlFor="name">{i18n.t("Company name")}</label>
+              <input
+                ref={register({
+                  required: "Company name is mandatory",
+                  minLength: {
+                    value: 3,
+                    message: "Minimun is 3 characters"
+                  },
+                  maxLength: {
+                    value: 60,
+                    message: "Maximun is 60 characters"
+                  }
+                })}
+                name="name"
+                id="name"
+                type="text"
+                placeholder={i18n.t("Please, select company name")}
+              ></input>
+              {errors.name && (
+                <span className="errorMessage">
+                  {i18n.t(errors.name.message)}
+                </span>
+              )}
+            </div>
+            <div className="btn-container">
+              <button
+                type="submit"
+                className="btn"
+                disabled={formState.isSubmitting}
+              >
+                {i18n.t("Next")}
+              </button>
+            </div>
+          </form>
+        </section>
+
+        <section className="second-part-review">
+          {/* {backendErrorMessage && !formState.isValid && (
+          <p className="alert">
+            {backendErrorMessage}
+            <span onClick={() => setBackendErrorMessage('')}>close</span>
+          </p>
+        )} */}
+          <form onSubmit={handleSubmit(handleReviewCreate)}>
+            <fieldset>
+              <legend>
+                <h4>{i18n.t("Rate company")}</h4>
+              </legend>
+              <ul>
+                <li
+                  className={`form-control ${
+                    errors.salary_valuation
+                      ? "ko"
+                      : formState.touched.salary_valuation && "ok"
+                  }`}
+                  className="starsReview"
+                >
+                  <label className="itemsReview" htmlFor="salary_valuation">
+                    {i18n.t("Salary")}
+                  </label>
+                  <input
+                    name="salary_valuation"
+                    id="salary_valuation"
+                    type="radio"
+                    ref={register({
+                      required: "Required",
+                      value: "1"
+                    })}
+                  ></input>
+                  <input
+                    name="salary_valuation"
+                    id="salary_valuation"
+                    type="radio"
+                    ref={register({
+                      required: "Required",
+                      value: "2"
+                    })}
+                  ></input>
+                  <input
+                    name="salary_valuation"
+                    id="salary_valuation"
+                    type="radio"
+                    ref={register({
+                      required: "Required",
+                      value: "3"
+                    })}
+                  ></input>
+                  <input
+                    name="salary_valuation"
+                    id="salary_valuation"
+                    type="radio"
+                    ref={register({
+                      required: "Required",
+                      value: "4"
+                    })}
+                  ></input>
+                  <input
+                    name="salary_valuation"
+                    id="salary_valuation"
+                    type="radio"
+                    ref={register({
+                      required: "Required",
+                      value: "5"
+                    })}
+                  ></input>
+                  {errors.salary_valuation && (
+                    <span className="errorMessage">
+                      {i18n.t(errors.salary_valuation.message)}
+                    </span>
+                  )}
+                </li>
+                <li
+                  className={`form-control ${
+                    errors.inhouse_training
+                      ? "ko"
+                      : formState.touched.inhouse_training && "ok"
+                  }`}
+                  className="starsReview"
+                >
+                  <label className="itemsReview" htmlFor="inhouse_training">
+                    {i18n.t("Internal training")}
+                  </label>
+                  <input
+                    name="inhouse_training"
+                    id="inhouse_training"
+                    type="radio"
+                    ref={register({
+                      required: "Required",
+                      value: "1"
+                    })}
+                  ></input>
+                  <input
+                    name="inhouse_training"
+                    id="inhouse_training"
+                    type="radio"
+                    ref={register({
+                      required: "Required",
+                      value: "2"
+                    })}
+                  ></input>
+                  <input
+                    name="inhouse_training"
+                    id="inhouse_training"
+                    type="radio"
+                    ref={register({
+                      required: "Required",
+                      value: "3"
+                    })}
+                  ></input>
+                  <input
+                    name="inhouse_training"
+                    id="inhouse_training"
+                    type="radio"
+                    ref={register({
+                      required: "Required",
+                      value: "4"
+                    })}
+                  ></input>
+                  <input
+                    name="inhouse_training"
+                    id="inhouse_training"
+                    type="radio"
+                    ref={register({
+                      required: "Required",
+                      value: "5"
+                    })}
+                  ></input>
+                  {errors.inhouse_training && (
+                    <span className="errorMessage">
+                      {i18n.t(errors.inhouse_training.message)}
+                    </span>
+                  )}
+                </li>
+                <li
+                  className={`form-control ${
+                    errors.growth_opportunities
+                      ? "ko"
+                      : formState.touched.growth_opportunities && "ok"
+                  }`}
+                  className="starsReview"
+                >
+                  <label className="itemsReview" htmlFor="growth_opportunities">
+                    {i18n.t("Growth opportunities")}
+                  </label>
+                  <input
+                    name="growth_opportunities"
+                    id="growth_opportunities"
+                    type="radio"
+                    ref={register({
+                      required: "Required",
+                      value: "1"
+                    })}
+                  ></input>
+                  <input
+                    name="growth_opportunities"
+                    id="growth_opportunities"
+                    type="radio"
+                    ref={register({
+                      required: "Required",
+                      value: "2"
+                    })}
+                  ></input>
+                  <input
+                    name="growth_opportunities"
+                    id="growth_opportunities"
+                    type="radio"
+                    ref={register({
+                      required: "Required",
+                      value: "3"
+                    })}
+                  ></input>
+                  <input
+                    name="growth_opportunities"
+                    id="growth_opportunities"
+                    type="radio"
+                    ref={register({
+                      required: "Required",
+                      value: "4"
+                    })}
+                  ></input>
+                  <input
+                    name="growth_opportunities"
+                    id="growth_opportunities"
+                    type="radio"
+                    ref={register({
+                      required: "Required",
+                      value: "5"
+                    })}
+                  ></input>
+                  {errors.growth_opportunities && (
+                    <span className="errorMessage">
+                      {i18n.t(errors.growth_opportunities.message)}
+                    </span>
+                  )}
+                </li>
+                <li
+                  className={`form-control ${
+                    errors.work_enviroment
+                      ? "ko"
+                      : formState.touched.work_enviroment && "ok"
+                  }`}
+                  className="starsReview"
+                >
+                  <label className="itemsReview" htmlFor="work_enviroment">
+                    {i18n.t("Work environment")}
+                  </label>
+                  <input
+                    name="work_enviroment"
+                    id="work_enviroment"
+                    type="radio"
+                    ref={register({
+                      required: "Required",
+                      value: "1"
+                    })}
+                  ></input>
+                  <input
+                    name="work_enviroment"
+                    id="work_enviroment"
+                    type="radio"
+                    ref={register({
+                      required: "Required",
+                      value: "2"
+                    })}
+                  ></input>
+                  <input
+                    name="work_enviroment"
+                    id="work_enviroment"
+                    type="radio"
+                    ref={register({
+                      required: "Required",
+                      value: "3"
+                    })}
+                  ></input>
+                  <input
+                    name="work_enviroment"
+                    id="work_enviroment"
+                    type="radio"
+                    ref={register({
+                      required: "Required",
+                      value: "4"
+                    })}
+                  ></input>
+                  <input
+                    name="work_enviroment"
+                    id="work_enviroment"
+                    type="radio"
+                    ref={register({
+                      required: "Required",
+                      value: "5"
+                    })}
+                  ></input>
+                  {errors.work_enviroment && (
+                    <span className="errorMessage">
+                      {i18n.t(errors.work_enviroment.message)}
+                    </span>
+                  )}
+                </li>
+                <li
+                  className={`form-control ${
+                    errors.personal_life
+                      ? "ko"
+                      : formState.touched.personal_life && "ok"
+                  }`}
+                  className="starsReview"
+                >
+                  <label className="itemsReview" htmlFor="personal_life">
+                    {i18n.t("Work&Life balance")}
+                  </label>
+                  <input
+                    name="personal_life"
+                    id="personal_life"
+                    type="radio"
+                    ref={register({
+                      required: "Required",
+                      value: "1"
+                    })}
+                  ></input>
+                  <input
+                    name="personal_life"
+                    id="personal_life"
+                    type="radio"
+                    ref={register({
+                      required: "Required",
+                      value: "2"
+                    })}
+                  ></input>
+                  <input
+                    name="personal_life"
+                    id="personal_life"
+                    type="radio"
+                    ref={register({
+                      required: "Required",
+                      value: "3"
+                    })}
+                  ></input>
+                  <input
+                    name="personal_life"
+                    id="personal_life"
+                    type="radio"
+                    ref={register({
+                      required: "Required",
+                      value: "4"
+                    })}
+                  ></input>
+                  <input
+                    name="personal_life"
+                    id="personal_life"
+                    type="radio"
+                    ref={register({
+                      required: "Required",
+                      value: "5"
+                    })}
+                  ></input>
+                  {errors.personal_life && (
+                    <span className="errorMessage">
+                      {i18n.t(errors.personal_life.message)}
+                    </span>
+                  )}
+                </li>
+              </ul>
+            </fieldset>
+            <fieldset>
+              <legend>
+                <h4>{i18n.t("Salary")}</h4>
+              </legend>
+              <div
+                className={`form-control ${
+                  errors.salary ? "ko" : formState.touched.salary && "ok"
+                }`}
+                className="ammount"
+              >
+                <label htmlFor="salary">{i18n.t("Your salary")}</label>
+                <input
+                  className="salary-ammount"
+                  ref={register({
+                    pattern: {
+                      value: /^[1-9]+(\.[0-9])?$/,
+                      message: "The ammount is not valid"
+                    }
+                  })}
+                  name="salary"
+                  id="salary"
+                  type="number"
+                  placeholder={i18n.t("Example: 2.000")}
+                ></input>
+                <label htmlFor="salary">{i18n.t("€ per month")}</label>
+                {errors.salary && (
+                  <span className="errorMessage">
+                    {i18n.t(errors.salary.message)}
+                  </span>
+                )}
+              </div>
+            </fieldset>
+            <fieldset>
+              <legend>
+                <h4>
+                  {i18n.t("Could you add something else to your rating?")}
+                </h4>
+              </legend>
+              <ul>
+                <li
+                  className={`form-control ${
+                    errors.comment_title
+                      ? "ko"
+                      : formState.touched.comment_title && "ok"
+                  }`}
+                >
+                  <label htmlFor="comment_title">
+                    {i18n.t("Review summary")}
+                  </label>
+                  <input
+                    ref={register({
+                      required: "This field is mandatory",
+                      minLength: {
+                        value: 5,
+                        message: "Minimun is 5 characters"
+                      },
+                      maxLength: {
+                        value: 30,
+                        message: "Maximun is 30 characters"
+                      }
+                    })}
+                    name="comment_title"
+                    id="comment_title"
+                    type="text"
+                    placeholder={i18n.t("Please, write a title")}
+                  ></input>
+                  {errors.comment_title && (
+                    <span className="errorMessage">
+                      {i18n.t(errors.comment_title.message)}
+                    </span>
+                  )}
+                </li>
+                <li
+                  className={`form-control ${
+                    errors.comment ? "ko" : formState.touched.comment && "ok"
+                  }`}
+                >
+                  <label htmlFor="comment">{i18n.t("Your review")}</label>
+                  <input
+                    ref={register({
+                      required: "This field is mandatory",
+                      minLength: {
+                        value: 5,
+                        message: "Minimun is 10 characters"
+                      },
+                      maxLength: {
+                        value: 30,
+                        message: "Maximun is 1000 characters"
+                      }
+                    })}
+                    name="comment"
+                    id="comment"
+                    type="textarea"
+                  ></input>
+                  {errors.comment && (
+                    <span className="errorMessage">
+                      {i18n.t(errors.comment.message)}
+                    </span>
+                  )}
+                </li>
+              </ul>
+            </fieldset>
+            <fieldset>
+              <legend>
+                <h4>{i18n.t("Tell us about your job")}</h4>
+              </legend>
+              <ul>
+                <li
+                  className={`form-control ${
+                    errors.name ? "ko" : formState.touched.name && "ok"
+                  }`}
+                >
+                  <label htmlFor="name">{i18n.t("Name")}</label>
+                  <input
+                    ref={register({
+                      required: "Company name is mandatory",
+                      minLength: {
+                        value: 3,
+                        message: "Minimun is 3 characters"
+                      },
+                      maxLength: {
+                        value: 60,
+                        message: "Maximun is 60 characters"
+                      }
+                    })}
+                    name="name"
+                    id="name"
+                    type="text"
+                    placeholder={i18n.t("My company name")}
+                  ></input>
+                  {errors.name && (
+                    <span className="errorMessage">
+                      {i18n.t(errors.name.message)}
+                    </span>
+                  )}
+                </li>
+                <li
+                  className={`form-control ${
+                    errors.sector_id
+                      ? "ko"
+                      : formState.touched.sector_id && "ok"
+                  }`}
+                >
+                  <label htmlFor="sector_id">{i18n.t("Sector")}</label>
+                  <input
+                    ref={register({
+                      required: "Sector is mandatory"
+                    })}
+                    name="sector_id"
+                    id="sector_id"
+                    type="text"
+                    placeholder={i18n.t("My company's sector")}
+                  ></input>
+                  {errors.sector_id && (
+                    <span className="errorMessage">
+                      {i18n.t(errors.sector_id.message)}
+                    </span>
+                  )}
+                </li>
+                <li
+                  className={`form-control ${
+                    errors.position_id
+                      ? "ko"
+                      : formState.touched.position_id && "ok"
+                  }`}
+                >
+                  <label htmlFor="position_id">{i18n.t("Job title")}</label>
+                  <input
+                    ref={register({
+                      required: "Required"
+                    })}
+                    name="position_id"
+                    id="position_id"
+                    type="text"
+                    placeholder={i18n.t("Please, enter your position")}
+                  ></input>
+                  {errors.position_id && (
+                    <span className="errorMessage">
+                      {i18n.t(errors.position_id.message)}
+                    </span>
+                  )}
+                </li>
+                <li className={`form-control`}>
+                  <Cities />
+                </li>
+                <li
+                  className={`form-control ${
+                    errors.start_year_id
+                      ? "ko"
+                      : formState.touched.start_year && "ok"
+                  }`}
+                  className="review-years"
+                >
+                  <label htmlFor="start_year">{i18n.t("Start year")}</label>
+                  <select
+                    name="start_year"
+                    id="start_year"
+                    ref={register({
+                      required: "Required"
+                    })}
+                  >
+                    <option value="Empty"></option>
+                    <option value="2020">2020</option>
+                    <option value="2019">2019</option>
+                    <option value="2018">2018</option>
+                    <option value="2017">2017</option>
+                    <option value="2016">2016</option>
+                    <option value="2015">2015</option>
+                    <option value="2014">2014</option>
+                    <option value="2013">2013</option>
+                    <option value="2012">2012</option>
+                    <option value="2011">2011</option>
+                    <option value="2010">2010</option>
+                    <option value="2009">2009</option>
+                    <option value="2008">2008</option>
+                    <option value="2007">2007</option>
+                    <option value="2006">2006</option>
+                    <option value="2005">2005</option>
+                    <option value="2004">2004</option>
+                    <option value="2003">2003</option>
+                    <option value="2002">2002</option>
+                    <option value="2001">2001</option>
+                    <option value="2000">2000</option>
+                    <option value="1999">1999</option>
+                    <option value="1998">1998</option>
+                    <option value="1997">1997</option>
+                    <option value="1996">1996</option>
+                    <option value="1995">1995</option>
+                    <option value="1994">1994</option>
+                    <option value="1993">1993</option>
+                    <option value="1992">1992</option>
+                    <option value="1991">1991</option>
+                    <option value="1990">1990</option>
+                    <option value="1989">1989</option>
+                    <option value="1988">1988</option>
+                    <option value="1987">1987</option>
+                    <option value="1986">1986</option>
+                    <option value="1985">1985</option>
+                    <option value="1984">1984</option>
+                    <option value="1983">1983</option>
+                    <option value="1982">1982</option>
+                    <option value="1981">1981</option>
+                    <option value="1980">1980</option>
+                  </select>
+                  <label htmlFor="end_year">{i18n.t("End year")}</label>
+                  <select
+                    name="end_year"
+                    id="end_year"
+                    ref={register({
+                      required: "Required"
+                    })}
+                  >
+                    <option value="Empty"></option>
+                    <option value="null">I currently work here</option>
+                    <option value="2020">2020</option>
+                    <option value="2019">2019</option>
+                    <option value="2018">2018</option>
+                    <option value="2017">2017</option>
+                  </select>
+                  {errors.start_year && (
+                    <span className="errorMessage">
+                      {i18n.t(errors.start_year)}
+                    </span>
+                  )}
+                </li>
+              </ul>
+            </fieldset>
+            <div className="btn-container">
+              <button
+                type="submit"
+                className="btn"
+                disabled={formState.isSubmitting}
+              >
+                {i18n.t("Send")}
+              </button>
+            </div>
+          </form>
+        </section>
       </main>
+      <Footer />
     </React.Fragment>
   );
 }
