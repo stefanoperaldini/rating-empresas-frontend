@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form';
 
 import { signIn } from '../http/authService';
 import { useAuth } from '../context/auth-context';
-import { setErrorMessageCallBackEnd } from '../http/utility'
+import { setErrorMessageCallBackEnd } from './pagesUtils'
 import { Header } from "../components/Header";
 
 /**

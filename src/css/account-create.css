@@ -4,3 +4,7 @@ body,
 #root {
   overflow: visible;
 }
+.flexRow {
+  display: flex;
+  align-items: center;
+}

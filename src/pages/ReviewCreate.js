@@ -51,10 +51,6 @@ export function ReviewCreate() {
     // });
   };
 
-  // console.log('WATCH: ', watch());
-  // console.log('ERROR: ', errors);
-  // console.log('FORMSTATE: ', formState);
-
   return (
     <React.Fragment>
       <Header />
@@ -65,12 +61,6 @@ export function ReviewCreate() {
             {i18n.t("Rate a company you've worked for in the past 3 years.")}
           </h4>
           <h4>{i18n.t("Reviews published are anonymous.")}</h4>
-          {/* {backendErrorMessage && !formState.isValid && (
-          <p className="alert">
-            {backendErrorMessage}
-            <span onClick={() => setBackendErrorMessage('')}>close</span>
-          </p>
-        )} */}
           <form onSubmit={handleSubmit(handleReviewCreate)}>
             <div
               className={`form-control ${

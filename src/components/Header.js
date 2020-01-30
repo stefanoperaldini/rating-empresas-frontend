@@ -4,7 +4,7 @@ import { Link, useHistory } from "react-router-dom";
 
 import { useAuth } from "../context/auth-context";
 import { logOut } from '../http/logoutService';
-import { setErrorMessageCallBackEnd } from '../http/utility'
+import { setErrorMessageCallBackEnd } from '../pages/pagesUtils'
 
 const styles = {
   menuAdmin: {
