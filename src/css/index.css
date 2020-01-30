@@ -111,7 +111,7 @@ CSS autocompletamiento
 
 .busqueda {
   position: relative;
-  width: 100vw;
+  /* width: 100vw; */
   height: 2rem;
 }
 
@@ -131,4 +131,29 @@ CSS scroll para formularios
 **/
 .scroll {
   overflow-y: scroll;
+}
+
+/**
+CSS para reviewUser
+**/
+
+main.userReview {
+  margin-top: 1rem;
+}
+
+main.userReview h3 {
+  text-align: center;
+}
+
+ul.review-list {
+  list-style: none;
+  margin: 1rem;
+  padding: 1rem, 2rem;
+  display: grid;
+  gap: 1rem;
+  grid-template-rows: auto;
+}
+
+ul.review-list .box-header h5 {
+  background: var(--lgray);
 }
