@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import i18n from "i18next";
 import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -6,49 +6,55 @@ import { useForm } from "react-hook-form";
 import "../css/account-password-change.css";
 
 import { Header } from "../components/Header";
+import { Footer } from "../components/Footer";
+import { setErrorMessageCallBackEnd } from "./pagesUtils";
+import { getLinkedin, updateLinkedin } from "../http/updateUserService";
 
 /**
  * Page for update data user
  */
 
 export function UserUpdate() {
-  // const [backendErrorMessage, setBackendErrorMessage] = useState('')
-  const {
-    handleSubmit,
-    register,
-    errors,
-    formState,
-  } = useForm({
+  const { handleSubmit, register, errors, formState, setError } = useForm({
     mode: "onBlur"
   });
 
   const history = useHistory();
 
-  const handleUserUpdate = formData => {
-    console.log(formData);
-    history.push("/home");
-  };
+  const [linkedinUser, setlinkedinUser] = useState(null);
 
-  // console.log('WATCH: ', watch());
-  // console.log('ERROR: ', errors);
-  // console.log('FORMSTATE: ', formState);
+  useEffect(() => {
+    getLinkedin()
+      .then(response => {
+        setlinkedinUser(response.data.linkedin);
+      })
+      .catch(error => {
+        setError("backend", setErrorMessageCallBackEnd(error));
+      });
+    return;
+  }, []);
+
+  const handleLinkedinChange = formData => {
+    console.log(formData);
+    return updateLinkedin(formData)
+      .then(response => {
+        history.push("/");
+      })
+      .catch(error => {
+        setError("linkedin", "backend", setErrorMessageCallBackEnd(error));
+      });
+  };
 
   return (
     <React.Fragment>
       <Header />
       <main className="centered-container">
         <h3>{i18n.t("Update my data")}</h3>
-        {/* {backendErrorMessage && !formState.isValid && (
-          <p className="alert">
-            {backendErrorMessage}
-            <span onClick={() => setBackendErrorMessage('')}>close</span>
-          </p>
-        )} */}
-        <form onSubmit={handleSubmit(handleUserUpdate)} noValidate>
+        <form onSubmit={handleSubmit(handleLinkedinChange)} Not validate>
           <div
             className={`form-control ${
               errors.linkedin ? "ko" : formState.touched.linkedin && "ok"
-              }`}
+            }`}
           >
             <label htmlFor="linkedin">{i18n.t("Linkedin")}</label>
             <input
@@ -61,7 +67,9 @@ export function UserUpdate() {
               name="linkedin"
               id="linkedin"
               type="url"
-              placeholder={i18n.t("linkedin address")}
+              value={linkedinUser}
+              onChange={e => setlinkedinUser(e.target.value)}
+              onSubmit={() => updateLinkedin(linkedinUser)}
             ></input>
             {errors.linkedin && (
               <span className="errorMessage">
@@ -80,6 +88,7 @@ export function UserUpdate() {
           </div>
         </form>
       </main>
+      <Footer />
     </React.Fragment>
   );
 }
