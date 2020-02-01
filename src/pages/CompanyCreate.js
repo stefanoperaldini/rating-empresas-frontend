@@ -1,9 +1,9 @@
 import React from "react";
-import i18n from "i18next";
+import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
-import { createCompany } from "../http/createCompanyService";
+import { createCompany } from "../http/companyService";
 import { setErrorMessageCallBackEnd } from './pagesUtils';
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
@@ -26,6 +26,7 @@ export function CompanyCreate() {
   });
 
   const history = useHistory();
+  const { t } = useTranslation();
 
   const handleCompanyCreate = formData => {
     const formDataFiltered = { ...formData, confirmPassword: undefined }
@@ -53,24 +54,24 @@ export function CompanyCreate() {
     <React.Fragment>
       <Header />
       <main className="centered-container">
-        <h3>{i18n.t("My company")}</h3>
+        <h3>{t("My company")}</h3>
         <form onSubmit={handleSubmit(handleCompanyCreate)} noValidate>
           {/* <div
           className={`form-control ${
             errors.logo ? "ko" : formState.touched.logo && "ok"
           }`}
         >
-          <label htmlFor="logo">{i18n.t("Upload company logo")}</label>
+          <label htmlFor="logo">{t("Upload company logo")}</label>
           <input
             ref={register}
             name="logo"
             id="logo"
             type="file"
             accept="image/png, image/jpeg"
-            placeholder={i18n.t("My company logo")}
+            placeholder={t("My company logo")}
           ></input>
           {errors.logo && (
-            <span className="errorMessage">{i18n.t(errors.logo.message)}</span>
+            <span className="errorMessage">{t(errors.logo.message)}</span>
           )}
         </div> */}
           <div
@@ -78,7 +79,7 @@ export function CompanyCreate() {
               errors.name ? "ko" : formState.touched.name && "ok"
               }`}
           >
-            <label htmlFor="name">{i18n.t("Name")}</label>
+            <label htmlFor="name">{t("Name")}</label>
             <input
               ref={register({
                 required: "Company name is mandatory",
@@ -94,11 +95,11 @@ export function CompanyCreate() {
               name="name"
               id="name"
               type="text"
-              placeholder={i18n.t("My company name")}
+              placeholder={t("My company name")}
             ></input>
             {errors.name && (
               <span className="errorMessage">
-                {i18n.t(errors.name.message)}
+                {t(errors.name.message)}
               </span>
             )}
           </div>
@@ -107,7 +108,7 @@ export function CompanyCreate() {
               errors.description ? "ko" : formState.touched.description && "ok"
               }`}
           >
-            <label htmlFor="description">{i18n.t("Description")}</label>
+            <label htmlFor="description">{t("Description")}</label>
             <textarea
               ref={register({
                 minLength: {
@@ -122,11 +123,11 @@ export function CompanyCreate() {
               name="description"
               id="description"
               type="text"
-              placeholder={i18n.t("About my company")}
+              placeholder={t("About my company")}
             ></textarea>
             {errors.description && (
               <span className="errorMessage">
-                {i18n.t(errors.description.message)}
+                {t(errors.description.message)}
               </span>
             )}
           </div>
@@ -135,7 +136,7 @@ export function CompanyCreate() {
               errors.sector_id ? "ko" : formState.touched.sector_id && "ok"
               }`}
           >
-            <label htmlFor="sector_id">{i18n.t("Sector")}</label>
+            <label htmlFor="sector_id">{t("Sector")}</label>
             <input
               ref={register({
                 required: "Sector is mandatory"
@@ -143,11 +144,11 @@ export function CompanyCreate() {
               name="sector_id"
               id="sector_id"
               type="text"
-              placeholder={i18n.t("My company's sector")}
+              placeholder={t("My company's sector")}
             ></input>
             {errors.sector_id && (
               <span className="errorMessage">
-                {i18n.t(errors.sector_id.message)}
+                {t(errors.sector_id.message)}
               </span>
             )}
           </div>
@@ -156,7 +157,7 @@ export function CompanyCreate() {
               errors.url_web ? "ko" : formState.touched.url_web && "ok"
               }`}
           >
-            <label htmlFor="url_web">{i18n.t("URL")}</label>
+            <label htmlFor="url_web">{t("URL")}</label>
             <input
               ref={register({
                 pattern: {
@@ -167,11 +168,11 @@ export function CompanyCreate() {
               name="url_web"
               id="url_web"
               type="url"
-              placeholder={i18n.t("Website")}
+              placeholder={t("Website")}
             ></input>
             {errors.url_web && (
               <span className="errorMessage">
-                {i18n.t(errors.url_web.message)}
+                {t(errors.url_web.message)}
               </span>
             )}
           </div>
@@ -180,7 +181,7 @@ export function CompanyCreate() {
               errors.linkedin ? "ko" : formState.touched.linkedin && "ok"
               }`}
           >
-            <label htmlFor="linkedin">{i18n.t("Linkedin")}</label>
+            <label htmlFor="linkedin">{t("Linkedin")}</label>
             <input
               ref={register({
                 pattern: {
@@ -191,11 +192,11 @@ export function CompanyCreate() {
               name="linkedin"
               id="linkedin"
               type="url"
-              placeholder={i18n.t("linkedin address")}
+              placeholder={t("linkedin address")}
             ></input>
             {errors.linkedin && (
               <span className="errorMessage">
-                {i18n.t(errors.linkedin.message)}
+                {t(errors.linkedin.message)}
               </span>
             )}
           </div>
@@ -204,7 +205,7 @@ export function CompanyCreate() {
               errors.address ? "ko" : formState.touched.address && "ok"
               }`}
           >
-            <label htmlFor="address">{i18n.t("Address")}</label>
+            <label htmlFor="address">{t("Address")}</label>
             <input
               ref={register({
                 minLength: {
@@ -219,11 +220,11 @@ export function CompanyCreate() {
               name="address"
               id="address"
               type="text"
-              placeholder={i18n.t("Headquarters address")}
+              placeholder={t("Headquarters address")}
             ></input>
             {errors.address && (
               <span className="errorMessage">
-                {i18n.t(errors.address.message)}
+                {t(errors.address.message)}
               </span>
             )}
           </div>
@@ -232,7 +233,7 @@ export function CompanyCreate() {
               errors.sede_id ? "ko" : formState.touched.sede_id && "ok"
               }`}
           >
-            <label htmlFor="sede_id">{i18n.t("Headquarter")}</label>
+            <label htmlFor="sede_id">{t("Headquarter")}</label>
             <input
               ref={register({
                 required: "Headquarter city is mandatory"
@@ -240,11 +241,11 @@ export function CompanyCreate() {
               name="sede_id"
               id="sede_id"
               type="text"
-              placeholder={i18n.t("Headquarter city")}
+              placeholder={t("Headquarter city")}
             ></input>
             {errors.sede_id && (
               <span className="errorMessage">
-                {i18n.t(errors.sede_id.message)}
+                {t(errors.sede_id.message)}
               </span>
             )}
           </div>
@@ -255,7 +256,7 @@ export function CompanyCreate() {
               className="btn"
               disabled={formState.isSubmitting}
             >
-              {i18n.t("Save")}
+              {t("Save")}
             </button>
           </div>
         </form>

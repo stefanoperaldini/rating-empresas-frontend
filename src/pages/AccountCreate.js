@@ -1,5 +1,6 @@
 import React from "react";
-import i18n from "i18next";
+import { useTranslation } from "react-i18next";
+
 import "../css/account-create.css";
 import { Link, useHistory } from 'react-router-dom';
 import { useForm } from "react-hook-form";
@@ -9,6 +10,7 @@ import { setErrorMessageCallBackEnd } from './pagesUtils';
 import { signUp } from '../http/authService';
 
 export function AccountCreate() {
+  const { t } = useTranslation();
   const { handleSubmit, register, errors, watch, formState, setError, } = useForm({
     mode: "onBlur"
   });
@@ -29,7 +31,7 @@ export function AccountCreate() {
     <React.Fragment>
       <Header />
       <main className="centered-container">
-        <h3>{i18n.t("Create your account")}</h3>
+        <h3>{t("Create your account")}</h3>
         <form onSubmit={handleSubmit(handleAccountCreate)} noValidate>
           <div className="flexRow">
             <label>
@@ -40,7 +42,7 @@ export function AccountCreate() {
                 value="1"
                 defaultChecked
               />
-              {i18n.t("Employee")}
+              {t("Employee")}
             </label>
             <label>
               <input
@@ -49,7 +51,7 @@ export function AccountCreate() {
                 name="role"
                 value="2"
               />
-              {i18n.t("Company")}
+              {t("Company")}
             </label>
           </div>
 
@@ -58,7 +60,7 @@ export function AccountCreate() {
               errors.name ? "ko" : formState.touched.name && "ok"
               }`}
           >
-            <label htmlFor="name">{i18n.t("Name")}</label>
+            <label htmlFor="name">{t("Name")}</label>
             <input
               ref={register({
                 required: "The name is mandatory",
@@ -74,7 +76,7 @@ export function AccountCreate() {
             ></input>
             {errors.name && (
               <span className="errorMessage">
-                {i18n.t(errors.name.message)}
+                {t(errors.name.message)}
               </span>
             )}
           </div>
@@ -84,7 +86,7 @@ export function AccountCreate() {
               errors.email ? "ko" : formState.touched.email && "ok"
               }`}
           >
-            <label htmlFor="email">{i18n.t("Email")}</label>
+            <label htmlFor="email">{t("Email")}</label>
             <input
               ref={register({
                 required: "The email is mandatory",
@@ -100,11 +102,11 @@ export function AccountCreate() {
               name="email"
               id="email"
               type="email"
-              placeholder={i18n.t("Please enter your email")}
+              placeholder={t("Please enter your email")}
             ></input>
             {errors.email && (
               <span className="errorMessage">
-                {i18n.t(errors.email.message)}
+                {t(errors.email.message)}
               </span>
             )}
           </div>
@@ -114,7 +116,7 @@ export function AccountCreate() {
               errors.linkedin ? "ko" : formState.touched.linkedin && "ok"
               }`}
           >
-            <label htmlFor="linkedin">{i18n.t("Linkedin")}</label>
+            <label htmlFor="linkedin">{t("Linkedin")}</label>
             <input
               ref={register({
                 pattern: {
@@ -125,11 +127,11 @@ export function AccountCreate() {
               name="linkedin"
               id="linkedin"
               type="url"
-              placeholder={i18n.t("Linkedin address")}
+              placeholder={t("Linkedin address")}
             ></input>
             {errors.linkedin && (
               <span className="errorMessage">
-                {i18n.t(errors.linkedin.message)}
+                {t(errors.linkedin.message)}
               </span>
             )}
           </div>
@@ -139,7 +141,7 @@ export function AccountCreate() {
               errors.password ? 'ko' : formState.touched.password && 'ok'
               }`}
           >
-            <label htmlFor="password">{i18n.t("Password")}</label>
+            <label htmlFor="password">{t("Password")}</label>
             <input
               ref={register({
                 required: 'The password is mandatory',
@@ -151,10 +153,10 @@ export function AccountCreate() {
               name="password"
               type="password"
               id="password"
-              placeholder={i18n.t("Please enter your password")}
+              placeholder={t("Please enter your password")}
             ></input>
             {errors.password && (
-              <span className="errorMessage">{i18n.t(errors.password.message)}</span>
+              <span className="errorMessage">{t(errors.password.message)}</span>
             )}
           </div>
 
@@ -163,7 +165,7 @@ export function AccountCreate() {
               errors.confirmPassword ? 'ko' : formState.touched.confirmPassword && 'ok'
               }`}
           >
-            <label htmlFor="confirmPassword">{i18n.t("Confirm password")}</label>
+            <label htmlFor="confirmPassword">{t("Confirm password")}</label>
             <input
               ref={register({
                 validate: value => value === watch("password"),
@@ -171,10 +173,10 @@ export function AccountCreate() {
               name="confirmPassword"
               type="password"
               id="confirmPassword"
-              placeholder={i18n.t("Please enter your password")}
+              placeholder={t("Please enter your password")}
             ></input>
             {errors.confirmPassword && (
-              <span className="error-message">{i18n.t("The password and the confirmation should match")}
+              <span className="error-message">{t("The password and the confirmation should match")}
               </span>
             )}
           </div>
@@ -185,10 +187,10 @@ export function AccountCreate() {
               className="btn"
               disabled={formState.isSubmitting}
             >
-              {i18n.t("Create Account")}
+              {t("Create Account")}
             </button>
             <div className="m-t-lg btn-container">
-              <Link to="/account/Login">{i18n.t("Login")}</Link>
+              <Link to="/account/Login">{t("Login")}</Link>
             </div>
           </div>
         </form>

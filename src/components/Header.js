@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
 import { useAuth } from "../context/auth-context";
-import { logOut } from '../http/logoutService';
+import { logOut } from '../http/authService';
 import { setErrorMessageCallBackEnd } from '../pages/pagesUtils'
 
 const styles = {
@@ -45,6 +45,7 @@ export function Header() {
           case "es":
           case "it":
           case "en":
+          case "gl":
             i18n.changeLanguage(userLang);
             setLang(userLang);
             break;
@@ -58,14 +59,13 @@ export function Header() {
         setLang(userLang);
       }
     }
-  }, [lang]);
+  }, [lang, i18n]);
 
   return (
     <header className="header">
       <Link to="/" header-item>
         <h1>Rating Empresas</h1>
       </Link>
-      <span header-item>{t("Company")}</span>
       <ul className="header" header-item>
         <li className="header-item header-item">
           <label>
@@ -115,6 +115,22 @@ export function Header() {
             />
           </label>
         </li>
+        <li className="header-item">
+          <label>
+            Gallego
+              <input
+              type="radio"
+              name="language"
+              value="gl"
+              checked={lang === "gl"}
+              onChange={e => {
+                localStorage.setItem("re:lang", "gl");
+                i18n.changeLanguage("gl");
+                setLang("gl");
+              }}
+            />
+          </label>
+        </li>
       </ul>
       {!currentUserId ? (
         <nav className="header-item">
@@ -135,27 +151,27 @@ export function Header() {
         </nav>
       )
         : role === "0" ? (
-          <nav className="menu header-item" style={styles.menuAdmin} onClick={() => executeLogout()}>{i18n.t("Logout")}</nav>
+          <nav className="menu header-item" style={styles.menuAdmin} onClick={() => executeLogout()}>{t("Logout")}</nav>
         ) : (
-            <nav className="menu header-item" onClick={() => setShowMenu(true)}>{i18n.t("Menu")}
+            <nav className="menu header-item" onClick={() => setShowMenu(true)}>{t("Menu")}
               {showMenu && (
                 <div className="m-t-lg lista-menu" onMouseLeave={() => setShowMenu(false)}>
                   <ul>
-                    {role === "2" && (<li><Link to="/company/create">{i18n.t("My company")}</Link></li>)}
+                    {role === "2" && (<li><Link to="/company/create">{t("My company")}</Link></li>)}
                     {role === "1" && (
                       <React.Fragment>
-                        <li><Link to="/review/create">{i18n.t("Create review")}</Link></li>
-                        <li><Link to="/review/user">{i18n.t("My review")}</Link></li>
+                        <li><Link to="/review/create">{t("Create review")}</Link></li>
+                        <li><Link to="/review/user">{t("My review")}</Link></li>
                       </React.Fragment>
                     )}
                     {(role === "1" || role === "2") && (
                       <React.Fragment>
-                        <li><Link to="/user/update">{i18n.t("My profile")}</Link></li>
-                        <li><Link to="/account/password/change">{i18n.t("Change password")}</Link></li>
-                        <li><Link to="/user/delete">{i18n.t("Delete user")}</Link></li >
+                        <li><Link to="/user/update">{t("My profile")}</Link></li>
+                        <li><Link to="/account/password/change">{t("Change password")}</Link></li>
+                        <li><Link to="/user/delete">{t("Delete user")}</Link></li >
                       </React.Fragment>
                     )}
-                    <li onClick={() => executeLogout()}>{i18n.t("Logout")}</li >
+                    <li onClick={() => executeLogout()}>{t("Logout")}</li >
                   </ul>
                 </div>
               )}

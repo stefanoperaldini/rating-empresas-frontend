@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import i18n from "i18next";
+import { useTranslation } from "react-i18next";
 import Rating from '@material-ui/lab/Rating';
 import { makeStyles } from '@material-ui/core/styles';
 
-import { getReviewUserList } from "../http/reviewUserListService";
+import { getReviewUserList } from "../http/reviewService";
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
 
@@ -22,6 +22,7 @@ const useStyles = makeStyles({
 export function ReviewUser() {
   const [reviewUserList, setReviewUserList] = useState(null);
   const classes = useStyles();
+  const { t } = useTranslation();
 
   useEffect(() => {
     getReviewUserList().then(response => {
@@ -33,7 +34,7 @@ export function ReviewUser() {
   if (reviewUserList === null) {
     return (
       <div>
-        <h3>{i18n.t("You don't have any review")}</h3>
+        <h3>{t("You don't have any review")}</h3>
       </div>
     );
   }
@@ -42,7 +43,7 @@ export function ReviewUser() {
     <React.Fragment>
       <Header />
       <main>
-        <h3>{i18n.t("My reviews")}</h3>
+        <h3>{t("My reviews")}</h3>
         <ul className="review-list">
           {reviewUserList.map(review => (
             <li key={review.id}>
@@ -57,7 +58,7 @@ export function ReviewUser() {
                   <h5>{review.comment_title}</h5>
                   <textarea>{review.comment}</textarea>
                   <div className={classes.rating}>
-                    <span>{i18n.t("Overall rating")}</span>
+                    <span>{t("Overall rating")}</span>
                     <Rating
                       name="overall_rating"
                       id="overall_rating"
@@ -68,7 +69,7 @@ export function ReviewUser() {
                     />
                   </div>
                   <div className={classes.rating}>
-                    <span>{i18n.t("Salary")}</span>
+                    <span>{t("Salary")}</span>
                     <Rating
                       name="salary_valuation"
                       id="salary_valuation"
@@ -79,7 +80,7 @@ export function ReviewUser() {
                     />
                   </div>
                   <div className={classes.rating}>
-                    <span> {i18n.t("Internal training")}</span>
+                    <span> {t("Internal training")}</span>
                     <Rating
                       name="inhouse_training"
                       id="inhouse_training"
@@ -90,7 +91,7 @@ export function ReviewUser() {
                     />
                   </div>
                   <div className={classes.rating}>
-                    <span>{i18n.t("Growth opportunities")}</span>
+                    <span>{t("Growth opportunities")}</span>
                     <Rating
                       name="growth_opportunities"
                       id="growth_opportunities"
@@ -101,7 +102,7 @@ export function ReviewUser() {
                     />
                   </div>
                   <div className={classes.rating}>
-                    <span>{i18n.t("Work environment")}</span>
+                    <span>{t("Work environment")}</span>
                     <Rating
                       name="review.work_enviroment"
                       id="review.work_enviroment"
@@ -112,7 +113,7 @@ export function ReviewUser() {
                     />
                   </div>
                   <div className={classes.rating}>
-                    <span>{i18n.t("Work&Life balance")}</span>
+                    <span>{t("Work&Life balance")}</span>
                     <Rating
                       name="personal_life"
                       id="personal_life"
