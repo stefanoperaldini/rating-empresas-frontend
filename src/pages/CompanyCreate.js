@@ -2,8 +2,9 @@ import React from "react";
 import i18n from "i18next";
 import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { createCompany } from "../http/createCompanyService";
 
+import { createCompany } from "../http/createCompanyService";
+import { setErrorMessageCallBackEnd } from './pagesUtils';
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
 
@@ -19,7 +20,7 @@ export function CompanyCreate() {
     errors,
     formState,
     setError,
-    setValue
+    reset,
   } = useForm({
     mode: "onBlur"
   });
@@ -27,41 +28,51 @@ export function CompanyCreate() {
   const history = useHistory();
 
   const handleCompanyCreate = formData => {
-    console.log(formData);
-    return createCompany(formData)
+    const formDataFiltered = { ...formData, confirmPassword: undefined }
+    return createCompany(formDataFiltered)
       .then(response => {
-        history.push("/home");
+        history.push('/company/detail');
       })
       .catch(error => {
-        setValue("linkedin", "");
-        let messageResponse = "Server down";
-        if (error.response) {
-          // Server up
-          messageResponse = error.response.data;
-          if (error.response.status === "500") {
-            messageResponse = "Internal server error";
-          }
-        }
-        setError("linkedin", "backend", messageResponse);
+        setError('sede_id', 'backend', setErrorMessageCallBackEnd(error));
       });
   };
 
-  // console.log('WATCH: ', watch());
-  // console.log('ERROR: ', errors);
-  // console.log('FORMSTATE: ', formState);
+  // reset({
+  //   firstName: "bill",
+  //   lastName: "luo"
+  // });
+
+  // useEffect(() => {
+  //   getCompany().then(response =>
+  //     dispatch({ type: 'GET_NOTES_SUCCESS', initialNotes: response.data.rows })
+  //   );
+  // }, []);
 
   return (
     <React.Fragment>
       <Header />
-      <main className="centered-container scroll">
+      <main className="centered-container">
         <h3>{i18n.t("My company")}</h3>
-        {/* {backendErrorMessage && !formState.isValid && (
-          <p className="alert">
-            {backendErrorMessage}
-            <span onClick={() => setBackendErrorMessage('')}>close</span>
-          </p>
-        )} */}
         <form onSubmit={handleSubmit(handleCompanyCreate)} noValidate>
+          {/* <div
+          className={`form-control ${
+            errors.logo ? "ko" : formState.touched.logo && "ok"
+          }`}
+        >
+          <label htmlFor="logo">{i18n.t("Upload company logo")}</label>
+          <input
+            ref={register}
+            name="logo"
+            id="logo"
+            type="file"
+            accept="image/png, image/jpeg"
+            placeholder={i18n.t("My company logo")}
+          ></input>
+          {errors.logo && (
+            <span className="errorMessage">{i18n.t(errors.logo.message)}</span>
+          )}
+        </div> */}
           <div
             className={`form-control ${
               errors.name ? "ko" : formState.touched.name && "ok"
@@ -97,7 +108,7 @@ export function CompanyCreate() {
               }`}
           >
             <label htmlFor="description">{i18n.t("Description")}</label>
-            <input
+            <textarea
               ref={register({
                 minLength: {
                   value: 10,
@@ -110,9 +121,9 @@ export function CompanyCreate() {
               })}
               name="description"
               id="description"
-              type="textarea"
+              type="text"
               placeholder={i18n.t("About my company")}
-            ></input>
+            ></textarea>
             {errors.description && (
               <span className="errorMessage">
                 {i18n.t(errors.description.message)}
@@ -221,15 +232,15 @@ export function CompanyCreate() {
               errors.sede_id ? "ko" : formState.touched.sede_id && "ok"
               }`}
           >
-            <label htmlFor="sede_id">{i18n.t("City")}</label>
+            <label htmlFor="sede_id">{i18n.t("Headquarter")}</label>
             <input
               ref={register({
-                required: "Headquarters city is mandatory"
+                required: "Headquarter city is mandatory"
               })}
               name="sede_id"
               id="sede_id"
               type="text"
-              placeholder={i18n.t("Headquarters city")}
+              placeholder={i18n.t("Headquarter city")}
             ></input>
             {errors.sede_id && (
               <span className="errorMessage">
@@ -248,25 +259,6 @@ export function CompanyCreate() {
             </button>
           </div>
         </form>
-
-        {/* <div
-          className={`form-control ${
-            errors.logo ? "ko" : formState.touched.logo && "ok"
-          }`}
-        >
-          <label htmlFor="logo">{i18n.t("Upload company logo")}</label>
-          <input
-            ref={register}
-            name="logo"
-            id="logo"
-            type="file"
-            accept="image/png, image/jpeg"
-            placeholder={i18n.t("My company logo")}
-          ></input>
-          {errors.logo && (
-            <span className="errorMessage">{i18n.t(errors.logo.message)}</span>
-          )}
-        </div> */}
       </main>
       <Footer />
     </React.Fragment>

@@ -1,18 +1,35 @@
 import axios from 'axios';
 
+const storedUser = JSON.parse(localStorage.getItem('currentUser'));
+
+let accessToken = (storedUser && storedUser.accessToken) || null;
+
 axios.interceptors.request.use(
     function (config) {
-        const currentAccessToken = localStorage.getItem('accessToken');
-        let accessToken = currentAccessToken || null;
 
         if (accessToken) {
-            // FIXME Decidir cuando poner
             config.headers['Authorization'] = `Bearer ${accessToken}`;
         }
         return config;
     },
     function (error) {
-        // Siempre devolver el error de esta forma, a través de Promise.reject
+        return Promise.reject(error);
+    }
+);
+
+axios.interceptors.response.use(
+    function (response) {
+        if (response.data.accessToken) {
+            localStorage.setItem('currentUser', JSON.stringify(response.data));
+            accessToken = response.data.accessToken;
+        }
+        return response;
+    },
+    function (error) {
+        if (error.response.status === 401) {
+            localStorage.removeItem('currentUser');
+            window.location.href = '/account/login';
+        }
         return Promise.reject(error);
     }
 );

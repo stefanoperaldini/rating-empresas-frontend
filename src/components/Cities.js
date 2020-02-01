@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import axios from "axios";
-import i18n from "i18next";
+import { useTranslation } from "react-i18next";
 
 const BASE_URL = "http://127.0.0.1:8000/v1/cities";
 
@@ -8,12 +8,13 @@ export function Cities() {
     const [searchTerm, setSearchTerm] = useState("");
     const [cities, setCities] = useState([]);
     const [showResult, setShowResult] = useState(false);
+    const { t } = useTranslation();
 
     useEffect(() => {
         if (searchTerm.length >= 3) {
             axios.get(`${BASE_URL}?name=${searchTerm}`).then(response => {
                 setCities(response.data.rows);
-                if (cities !== 0) {
+                if (cities.length !== 0) {
                     setShowResult(true);
                 } else {
                     setShowResult(false);
@@ -29,9 +30,9 @@ export function Cities() {
 
     return (
         <div className="autocompletamiento">
-            <label htmlFor="cities">{i18n.t("City")}</label>
+            <label htmlFor="cities">{t("City")}</label>
             <div className="busqueda">
-                <input type="text" name="cities" id="cities" placeholder={i18n.t("Find the city...")} value={searchTerm}
+                <input type="text" name="cities" id="cities" placeholder={t("Find the city...")} value={searchTerm}
                     onChange={e => {
                         setSearchTerm(e.target.value);
                     }} onKeyDown={e => {
