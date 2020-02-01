@@ -4,7 +4,6 @@ import { Link, useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 import { passwordRecovery } from "../http/passwordRecoveryService";
-import "../css/account-password-recovery.css";
 import { Header } from "../components/Header";
 import { setErrorMessageCallBackEnd } from './pagesUtils'
 

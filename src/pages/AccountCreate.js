@@ -1,7 +1,7 @@
 import React from "react";
 import i18n from "i18next";
 import "../css/account-create.css";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 
 import { Header } from "../components/Header";
@@ -187,6 +187,9 @@ export function AccountCreate() {
             >
               {i18n.t("Create Account")}
             </button>
+            <div className="m-t-lg btn-container">
+              <Link to="/account/Login">{i18n.t("Login")}</Link>
+            </div>
           </div>
         </form>
       </main>

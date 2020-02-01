@@ -5,7 +5,6 @@ import { useForm } from "react-hook-form";
 
 import { mailActivationRecovery } from "../http/mailActivRecoveryService";
 
-import "../css/email-activation-recovery.css";
 import { Header } from "../components/Header";
 import { setErrorMessageCallBackEnd } from './pagesUtils'
 

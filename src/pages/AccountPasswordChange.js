@@ -3,7 +3,6 @@ import i18n from "i18next";
 import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
-import "../css/account-password-change.css";
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
 import { passwordChange } from "../http/authService";

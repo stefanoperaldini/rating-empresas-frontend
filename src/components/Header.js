@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import i18n from "i18next";
-import { Link, useHistory } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 
 import { useAuth } from "../context/auth-context";
 import { logOut } from '../http/logoutService';
@@ -16,29 +16,19 @@ const styles = {
 export function Header() {
   const [lang, setLang] = useState("en");
   const [showMenu, setShowMenu] = useState(false);
-  const { currentUserId, role, setRole, setAccessToken, setCurrentUserId } = useAuth();
+  const { currentUserId, role, } = useAuth();
 
-  const history = useHistory();
+  const { t, i18n } = useTranslation();
 
   const executeLogout = () => {
     return logOut()
       .then(response => {
-        localStorage.removeItem("accessToken");
-        localStorage.removeItem("role");
-        localStorage.removeItem("userId");
-        setRole(null);
-        setAccessToken(null);
-        setCurrentUserId(null)
+        localStorage.removeItem('currentUser');
       }).catch(error => {
         localStorage.removeItem("accessToken");
-        localStorage.removeItem("role");
-        localStorage.removeItem("userId");
-        setRole(null);
-        setAccessToken(null);
-        setCurrentUserId(null)
         console.error(setErrorMessageCallBackEnd(error));
       }).finally(() => {
-        history.push('/home');
+        window.location.href = '/home';
       });
   }
 
@@ -72,10 +62,11 @@ export function Header() {
 
   return (
     <header className="header">
-      <Link to="/">
+      <Link to="/" header-item>
         <h1>Rating Empresas</h1>
       </Link>
-      <ul className="header">
+      <span header-item>{t("Company")}</span>
+      <ul className="header" header-item>
         <li className="header-item header-item">
           <label>
             English
@@ -86,8 +77,8 @@ export function Header() {
               checked={lang === "en"}
               onChange={e => {
                 localStorage.setItem("re:lang", "en");
-                setLang("en");
                 i18n.changeLanguage("en");
+                setLang("en");
               }}
             />
           </label>
@@ -102,8 +93,8 @@ export function Header() {
               checked={lang === "es"}
               onChange={e => {
                 localStorage.setItem("re:lang", "es");
-                setLang("es");
                 i18n.changeLanguage("es");
+                setLang("es");
               }}
             />
           </label>
@@ -118,8 +109,8 @@ export function Header() {
               checked={lang === "it"}
               onChange={e => {
                 localStorage.setItem("re:lang", "it");
-                setLang("it");
                 i18n.changeLanguage("it");
+                setLang("it");
               }}
             />
           </label>
