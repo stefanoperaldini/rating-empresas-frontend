@@ -1,20 +1,19 @@
 import React from 'react';
 import i18n from "i18next";
-import jwt from "jsonwebtoken"
 import { Link, useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import jwt from "jsonwebtoken";
 
 import { signIn } from '../http/authService';
-import { useAuth } from '../context/auth-context';
 import { setErrorMessageCallBackEnd } from './pagesUtils'
 import { Header } from "../components/Header";
+import { useAuth } from '../context/auth-context';
 
 /**
  * Page for logining
  */
 
 export function AccountLogin() {
-  // const [backendErrorMessage, setBackendErrorMessage] = useState('');
   const {
     handleSubmit,
     register,
@@ -26,18 +25,16 @@ export function AccountLogin() {
     mode: 'onBlur'
   });
   const history = useHistory();
-  const { setAccessToken, setRole, setCurrentUserId } = useAuth();
+  const { setCurrentUser, setAccessToken, setRole, setCurrentUserId } = useAuth();
 
   const handleLogin = formData => {
     return signIn(formData)
       .then(response => {
-        const userData = jwt.decode(response.data.accessToken);
+        setCurrentUser(response.data);
+        const userData = jwt.decode(response.data.accessToken)
         setAccessToken(response.data.accessToken);
-        setRole(userData.role)
+        setRole(userData.role);
         setCurrentUserId(userData.userId);
-        localStorage.setItem('accessToken', response.data.accessToken);
-        localStorage.setItem('role', userData.role);
-        localStorage.setItem('userId', userData.userId);
         history.push('/home');
       })
       .catch(error => {
