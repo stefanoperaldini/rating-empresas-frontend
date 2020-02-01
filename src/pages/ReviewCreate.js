@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import i18n from "i18next";
+import { useTranslation } from "react-i18next";
 import { useForm } from "react-hook-form";
 import { makeStyles } from '@material-ui/core/styles';
 import Rating from '@material-ui/lab/Rating';
 
-// import { createReview } from "../http/createReviewService";
 import "../css/review-create.css";
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
@@ -33,6 +32,7 @@ export function ReviewCreate() {
   });
 
   const classes = useStyles();
+  const { t } = useTranslation();
 
   const [value, setValue] = useState({ salary_valuation: 1, inhouse_training: 1, growth_opportunities: 1, work_enviroment: 1, personal_life: 1 });
 
@@ -44,11 +44,11 @@ export function ReviewCreate() {
     <React.Fragment>
       <Header />
       <main>
-        <h3>{i18n.t("Create a review")}</h3>
+        <h3>{t("Create a review")}</h3>
         <h4>
-          {i18n.t("Rate a company you've worked for in the past 3 years.")}
+          {t("Rate a company you've worked for in the past 3 years.")}
         </h4>
-        <h4>{i18n.t("Reviews published are anonymous.")}</h4>
+        <h4>{t("Reviews published are anonymous.")}</h4>
 
         <form onSubmit={handleSubmit(handleReviewCreate)}>
           <div
@@ -56,7 +56,7 @@ export function ReviewCreate() {
               errors.name ? "ko" : formState.touched.name && "ok"
               }`}
           >
-            <label htmlFor="name">{i18n.t("Company name")}</label>
+            <label htmlFor="name">{t("Company name")}</label>
             <input
               ref={register({
                 required: "Company name is mandatory",
@@ -72,11 +72,11 @@ export function ReviewCreate() {
               name="name"
               id="name"
               type="text"
-              placeholder={i18n.t("Please, select company name")}
+              placeholder={t("Please, select company name")}
             ></input>
             {errors.name && (
               <span className="errorMessage">
-                {i18n.t(errors.name.message)}
+                {t(errors.name.message)}
               </span>
             )}
           </div>
@@ -86,19 +86,19 @@ export function ReviewCreate() {
               className="btn"
               disabled={formState.isSubmitting}
             >
-              {i18n.t("Next")}
+              {t("Next")}
             </button>
           </div>
         </form>
         <form onSubmit={handleSubmit(handleReviewCreate)}>
           <fieldset>
             <legend>
-              <h4>{i18n.t("Rate company")}</h4>
+              <h4>{t("Rate company")}</h4>
             </legend>
             <ul>
               <li className={`form-control ${classes.rating}`}>
                 <label className="itemsReview" htmlFor="salary_valuation">
-                  {i18n.t("Salary")}
+                  {t("Salary")}
                 </label>
                 <Rating
                   name="salary_valuation"
@@ -112,7 +112,7 @@ export function ReviewCreate() {
               </li>
               <li className={`form-control ${classes.rating}`}>
                 <label className="itemsReview" htmlFor="inhouse_training">
-                  {i18n.t("Internal training")}
+                  {t("Internal training")}
                 </label>
                 <Rating
                   name="inhouse_training"
@@ -126,7 +126,7 @@ export function ReviewCreate() {
               </li>
               <li className={`form-control ${classes.rating}`}>
                 <label className="itemsReview" htmlFor="growth_opportunities">
-                  {i18n.t("Growth opportunities")}
+                  {t("Growth opportunities")}
                 </label>
                 <Rating
                   name="growth_opportunities"
@@ -140,7 +140,7 @@ export function ReviewCreate() {
               </li>
               <li className={`form-control ${classes.rating}`}>
                 <label className="itemsReview" htmlFor="work_enviroment">
-                  {i18n.t("Work environment")}
+                  {t("Work environment")}
                 </label>
                 <Rating
                   name="work_enviroment"
@@ -154,7 +154,7 @@ export function ReviewCreate() {
               </li>
               <li className={`form-control ${classes.rating}`}>
                 <label className="itemsReview" htmlFor="personal_life">
-                  {i18n.t("Work&Life balance")}
+                  {t("Work&Life balance")}
                 </label>
                 <Rating
                   name="personal_life"
@@ -170,14 +170,14 @@ export function ReviewCreate() {
           </fieldset>
           <fieldset>
             <legend>
-              <h4>{i18n.t("Salary")}</h4>
+              <h4>{t("Salary")}</h4>
             </legend>
             <div
               className={`form-control ${
                 errors.salary ? "ko" : formState.touched.salary && "ok"
                 } ammount`}
             >
-              <label htmlFor="salary">{i18n.t("Your salary")}</label>
+              <label htmlFor="salary">{t("Your salary")}</label>
               <input
                 className="salary-ammount"
                 ref={register({
@@ -189,12 +189,12 @@ export function ReviewCreate() {
                 name="salary"
                 id="salary"
                 type="number"
-                placeholder={i18n.t("Example: 2.000")}
+                placeholder={t("Example: 2.000")}
               ></input>
-              <label htmlFor="salary">{i18n.t("€ per month")}</label>
+              <label htmlFor="salary">{t("€ per month")}</label>
               {errors.salary && (
                 <span className="errorMessage">
-                  {i18n.t(errors.salary.message)}
+                  {t(errors.salary.message)}
                 </span>
               )}
             </div>
@@ -202,7 +202,7 @@ export function ReviewCreate() {
           <fieldset>
             <legend>
               <h4>
-                {i18n.t("Could you add something else to your rating?")}
+                {t("Could you add something else to your rating?")}
               </h4>
             </legend>
             <ul>
@@ -214,7 +214,7 @@ export function ReviewCreate() {
                   }`}
               >
                 <label htmlFor="comment_title">
-                  {i18n.t("Review summary")}
+                  {t("Review summary")}
                 </label>
                 <input
                   ref={register({
@@ -231,11 +231,11 @@ export function ReviewCreate() {
                   name="comment_title"
                   id="comment_title"
                   type="text"
-                  placeholder={i18n.t("Please, write a title")}
+                  placeholder={t("Please, write a title")}
                 ></input>
                 {errors.comment_title && (
                   <span className="errorMessage">
-                    {i18n.t(errors.comment_title.message)}
+                    {t(errors.comment_title.message)}
                   </span>
                 )}
               </li>
@@ -244,7 +244,7 @@ export function ReviewCreate() {
                   errors.comment ? "ko" : formState.touched.comment && "ok"
                   }`}
               >
-                <label htmlFor="comment">{i18n.t("Your review")}</label>
+                <label htmlFor="comment">{t("Your review")}</label>
                 <textarea
                   ref={register({
                     required: "This field is mandatory",
@@ -263,7 +263,7 @@ export function ReviewCreate() {
                 ></textarea>
                 {errors.comment && (
                   <span className="errorMessage">
-                    {i18n.t(errors.comment.message)}
+                    {t(errors.comment.message)}
                   </span>
                 )}
               </li>
@@ -271,7 +271,7 @@ export function ReviewCreate() {
           </fieldset>
           <fieldset>
             <legend>
-              <h4>{i18n.t("Tell us about your job")}</h4>
+              <h4>{t("Tell us about your job")}</h4>
             </legend>
             <ul>
               <li
@@ -279,7 +279,7 @@ export function ReviewCreate() {
                   errors.name ? "ko" : formState.touched.name && "ok"
                   }`}
               >
-                <label htmlFor="name">{i18n.t("Name")}</label>
+                <label htmlFor="name">{t("Name")}</label>
                 <input
                   ref={register({
                     required: "Company name is mandatory",
@@ -295,11 +295,11 @@ export function ReviewCreate() {
                   name="name"
                   id="name"
                   type="text"
-                  placeholder={i18n.t("My company name")}
+                  placeholder={t("My company name")}
                 ></input>
                 {errors.name && (
                   <span className="errorMessage">
-                    {i18n.t(errors.name.message)}
+                    {t(errors.name.message)}
                   </span>
                 )}
               </li>
@@ -310,7 +310,7 @@ export function ReviewCreate() {
                     : formState.touched.sector_id && "ok"
                   }`}
               >
-                <label htmlFor="sector_id">{i18n.t("Sector")}</label>
+                <label htmlFor="sector_id">{t("Sector")}</label>
                 <input
                   ref={register({
                     required: "Sector is mandatory"
@@ -318,11 +318,11 @@ export function ReviewCreate() {
                   name="sector_id"
                   id="sector_id"
                   type="text"
-                  placeholder={i18n.t("My company's sector")}
+                  placeholder={t("My company's sector")}
                 ></input>
                 {errors.sector_id && (
                   <span className="errorMessage">
-                    {i18n.t(errors.sector_id.message)}
+                    {t(errors.sector_id.message)}
                   </span>
                 )}
               </li>
@@ -333,7 +333,7 @@ export function ReviewCreate() {
                     : formState.touched.position_id && "ok"
                   }`}
               >
-                <label htmlFor="position_id">{i18n.t("Job title")}</label>
+                <label htmlFor="position_id">{t("Job title")}</label>
                 <input
                   ref={register({
                     required: "Required"
@@ -341,11 +341,11 @@ export function ReviewCreate() {
                   name="position_id"
                   id="position_id"
                   type="text"
-                  placeholder={i18n.t("Please, enter your position")}
+                  placeholder={t("Please, enter your position")}
                 ></input>
                 {errors.position_id && (
                   <span className="errorMessage">
-                    {i18n.t(errors.position_id.message)}
+                    {t(errors.position_id.message)}
                   </span>
                 )}
               </li>
@@ -359,7 +359,7 @@ export function ReviewCreate() {
                     : formState.touched.start_year && "ok"
                   } review-years`}
               >
-                <label htmlFor="start_year">{i18n.t("Start year")}</label>
+                <label htmlFor="start_year">{t("Start year")}</label>
                 <select
                   name="start_year"
                   id="start_year"
@@ -410,7 +410,7 @@ export function ReviewCreate() {
                   <option value="1981">1981</option>
                   <option value="1980">1980</option>
                 </select>
-                <label htmlFor="end_year">{i18n.t("End year")}</label>
+                <label htmlFor="end_year">{t("End year")}</label>
                 <select
                   name="end_year"
                   id="end_year"
@@ -427,7 +427,7 @@ export function ReviewCreate() {
                 </select>
                 {errors.start_year && (
                   <span className="errorMessage">
-                    {i18n.t(errors.start_year)}
+                    {t(errors.start_year)}
                   </span>
                 )}
               </li>
@@ -439,7 +439,7 @@ export function ReviewCreate() {
               className="btn"
               disabled={formState.isSubmitting}
             >
-              {i18n.t("Send")}
+              {t("Send")}
             </button>
           </div>
         </form>

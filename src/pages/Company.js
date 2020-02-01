@@ -1,5 +1,5 @@
 import React from "react";
-import i18n from "i18next";
+import { useTranslation } from "react-i18next";
 
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
@@ -9,11 +9,12 @@ import { Footer } from "../components/Footer";
  */
 
 export function Company() {
+  const { t } = useTranslation();
   return (
     <React.Fragment>
       <Header />
       <main className="centered-container">
-        <h2>{i18n.t("This is the company detail")}</h2>
+        <h2>{t("This is the company detail")}</h2>
       </main>
       <Footer />
     </React.Fragment>

@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import i18n from "i18next";
+import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
 import { setErrorMessageCallBackEnd } from "./pagesUtils";
-import { getLinkedin, updateLinkedin } from "../http/updateUserService";
+import { getUser, updateUser } from "../http/userService";
 
 /**
  * Page for update data user
@@ -18,23 +18,23 @@ export function UserUpdate() {
   });
 
   const history = useHistory();
+  const { t } = useTranslation();
 
   const [linkedinUser, setlinkedinUser] = useState(null);
 
   useEffect(() => {
-    getLinkedin()
+    getUser()
       .then(response => {
         setlinkedinUser(response.data.linkedin);
       })
       .catch(error => {
-        setError("backend", setErrorMessageCallBackEnd(error));
+        setError("linkedin", "backend", setErrorMessageCallBackEnd(error));
       });
     return;
   }, []);
 
   const handleLinkedinChange = formData => {
-    console.log(formData);
-    return updateLinkedin(formData)
+    return updateUser(formData)
       .then(response => {
         history.push("/");
       })
@@ -47,14 +47,14 @@ export function UserUpdate() {
     <React.Fragment>
       <Header />
       <main className="centered-container">
-        <h3>{i18n.t("Update my data")}</h3>
-        <form onSubmit={handleSubmit(handleLinkedinChange)} Not validate>
+        <h3>{t("Update my data")}</h3>
+        <form onSubmit={handleSubmit(handleLinkedinChange)} noValidate>
           <div
             className={`form-control ${
               errors.linkedin ? "ko" : formState.touched.linkedin && "ok"
-            }`}
+              }`}
           >
-            <label htmlFor="linkedin">{i18n.t("Linkedin")}</label>
+            <label htmlFor="linkedin">{t("Linkedin")}</label>
             <input
               ref={register({
                 pattern: {
@@ -67,11 +67,10 @@ export function UserUpdate() {
               type="url"
               value={linkedinUser}
               onChange={e => setlinkedinUser(e.target.value)}
-              onSubmit={() => updateLinkedin(linkedinUser)}
             ></input>
             {errors.linkedin && (
               <span className="errorMessage">
-                {i18n.t(errors.linkedin.message)}
+                {t(errors.linkedin.message)}
               </span>
             )}
           </div>
@@ -81,7 +80,7 @@ export function UserUpdate() {
               className="btn"
               disabled={formState.isSubmitting}
             >
-              {i18n.t("Change")}
+              {t("Change")}
             </button>
           </div>
         </form>

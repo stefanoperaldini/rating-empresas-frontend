@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import i18n from "i18next";
+import { useTranslation } from "react-i18next";
 import { Link } from 'react-router-dom';
 import { useParams } from "react-router";
-import { activateAccount } from '../http/activationService';
+import { activateAccount } from '../http/authService';
 
 /**
  * Page for sending activation to backend. Show the result.
@@ -11,15 +11,13 @@ import { activateAccount } from '../http/activationService';
 export function AccountActivate() {
   const params = useParams();
   const [response, setResponse] = useState(null);
+  const { t } = useTranslation();
 
   const verificationCode = params.verification_code;
-
-  console.log(params.verification_code);
 
   useEffect(() => {
     activateAccount(verificationCode)
       .then(response => {
-        console.log("Attivato");
         setResponse("Account activated");
       })
       .catch(error => {
@@ -31,7 +29,6 @@ export function AccountActivate() {
             messageResponse = "Internal server error";
           }
         }
-        console.log("Non attivato")
         setResponse(messageResponse);
       });
   }, [verificationCode]);
@@ -43,9 +40,9 @@ export function AccountActivate() {
   return (
     <React.Fragment>
       <main className="centered-container">
-        <h2>{i18n.t(response)}</h2>
+        <h2>{t(response)}</h2>
         <div className="m-t-lg btn-container">
-          <Link to="/account/login">{i18n.t("Login")}</Link>
+          <Link to="/account/login">{t("Login")}</Link>
         </div>
       </main>
     </React.Fragment>

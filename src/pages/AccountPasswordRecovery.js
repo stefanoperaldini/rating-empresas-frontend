@@ -1,9 +1,9 @@
 import React from "react";
-import i18n from "i18next";
+import { useTranslation } from "react-i18next";
 import { Link, useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
-import { passwordRecovery } from "../http/passwordRecoveryService";
+import { passwordRecovery } from "../http/authService";
 import { Header } from "../components/Header";
 import { setErrorMessageCallBackEnd } from './pagesUtils'
 
@@ -24,9 +24,9 @@ export function AccountPasswordRecovery() {
   });
 
   const history = useHistory();
+  const { t } = useTranslation();
 
   const handleRecoveryPassword = formData => {
-    console.log(formData);
     return passwordRecovery(formData)
       .then(response => {
         history.push("/account/login");
@@ -36,15 +36,11 @@ export function AccountPasswordRecovery() {
       })
   };
 
-  // console.log('WATCH: ', watch());
-  // console.log('ERROR: ', errors);
-  // console.log('FORMSTATE: ', formState);
-
   return (
     <React.Fragment>
       <Header />
       <main className="centered-container">
-        <h3>{i18n.t("Password recovery")}</h3>
+        <h3>{t("Password recovery")}</h3>
         {/* {backendErrorMessage && !formState.isValid && (
           <p className="alert">
             {backendErrorMessage}
@@ -57,7 +53,7 @@ export function AccountPasswordRecovery() {
               errors.email ? "ko" : formState.touched.email && "ok"
               }`}
           >
-            <label htmlFor="email">{i18n.t("Email")}</label>
+            <label htmlFor="email">{t("Email")}</label>
             <input
               ref={register({
                 required: "The email is mandatory",
@@ -69,11 +65,11 @@ export function AccountPasswordRecovery() {
               name="email"
               id="email"
               type="email"
-              placeholder={i18n.t("Please enter your email")}
+              placeholder={t("Please enter your email")}
             ></input>
             {errors.email && (
               <span className="errorMessage">
-                {i18n.t(errors.email.message)}
+                {t(errors.email.message)}
               </span>
             )}
           </div>
@@ -83,10 +79,10 @@ export function AccountPasswordRecovery() {
               className="btn"
               disabled={formState.isSubmitting}
             >
-              {i18n.t("Send")}
+              {t("Send")}
             </button>
             <div className="m-t-lg btn-container">
-              <Link to="/account/login">{i18n.t("Sign in")}</Link>
+              <Link to="/account/login">{t("Sign in")}</Link>
             </div>
           </div>
         </form>

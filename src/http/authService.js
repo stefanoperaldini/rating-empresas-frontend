@@ -26,7 +26,7 @@ axios.interceptors.response.use(
         return response;
     },
     function (error) {
-        if (error.response.status === 401) {
+        if (error.response && error.response.status === 401 && !error.config.url.includes('/login')) {
             localStorage.removeItem('currentUser');
             window.location.href = '/account/login';
         }
@@ -42,6 +42,28 @@ export function signUp(accountData) {
     return axios.post(`${process.env.REACT_APP_BACKEND_URL}/v1/accounts`, accountData);
 };
 
+export function logOut() {
+    return axios.post(`${process.env.REACT_APP_BACKEND_URL}/v1/accounts/logout`);
+}
+
 export function passwordChange(passwordChangeData) {
     return axios.post(`${process.env.REACT_APP_BACKEND_URL}/v1/accounts/password/change`, passwordChangeData);
 };
+
+export function activateAccount(verificationCode) {
+    return axios.put(`${process.env.REACT_APP_BACKEND_URL}/v1/accounts/activate/${verificationCode}`);
+}
+
+export function passwordRecovery(email) {
+    return axios.post(
+        `${process.env.REACT_APP_BACKEND_URL}/v1/accounts/password/recovery`,
+        email
+    );
+}
+
+export function mailActivationRecovery(email) {
+    return axios.post(
+        `${process.env.REACT_APP_BACKEND_URL}/v1/accounts/email/activation/recovery`,
+        email
+    );
+}

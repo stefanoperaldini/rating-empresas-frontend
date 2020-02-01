@@ -4,6 +4,7 @@ import { initReactI18next } from "react-i18next";
 import translationEn from "./locales/en/translation.json";
 import translationEs from "./locales/es/translation.json";
 import translationIt from "./locales/it/translation.json";
+import translationGl from "./locales/gl/translation.json"
 
 
 i18n
@@ -28,6 +29,9 @@ i18n
             },
             it: {
                 translations: translationIt
+            },
+            gl: {
+                translations: translationGl
             },
         },
         // have a common namespace used around the full app
