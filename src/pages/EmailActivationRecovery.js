@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { mailActivationRecovery } from "../http/authService";
 
 import { Header } from "../components/Header";
-import { setErrorMessageCallBackEnd } from './pagesUtils'
+import { setErrorMessageCallBackEnd, validatorEmail, } from './pagesUtils';
 
 /**
  * Page for recovering email
@@ -42,12 +42,6 @@ export function EmailActivationRecovery() {
       <Header />
       <main className="centered-container">
         <h3>{t("E-mail activation")}</h3>
-        {/* {backendErrorMessage && !formState.isValid && (
-          <p className="alert">
-            {backendErrorMessage}
-            <span onClick={() => setBackendErrorMessage('')}>close</span>
-          </p>
-        )} */}
         <form onSubmit={handleSubmit(handleEmailActivationRecovery)} noValidate>
           <div
             className={`form-control ${
@@ -55,25 +49,16 @@ export function EmailActivationRecovery() {
               }`}
           >
             <label htmlFor="email">{t("Email")}</label>
-            <input
-              ref={register({
-                required: "The email is mandatory",
-                pattern: {
-                  value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                  message: "The email is not valid"
-                }
-              })}
-              name="email"
-              id="email"
-              type="email"
-              placeholder={t("Please enter your email")}
-            ></input>
+            <input ref={register(validatorEmail)} name="email" id="email" type="email"
+              placeholder={t("Please enter your email")}>
+            </input>
             {errors.email && (
               <span className="errorMessage">
                 {t(errors.email.message)}
               </span>
             )}
           </div>
+
           <div className="btn-container">
             <button
               type="submit"
@@ -86,6 +71,7 @@ export function EmailActivationRecovery() {
               <Link to="/account/login">{t("Sign in")}</Link>
             </div>
           </div>
+
         </form>
       </main>
     </React.Fragment>

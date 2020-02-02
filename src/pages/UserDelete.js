@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
-import { setErrorMessageCallBackEnd } from "./pagesUtils";
+import { setErrorMessageCallBackEnd, validatorDelete } from "./pagesUtils";
 import { deleteUser } from "../http/userService";
 
 /**
@@ -35,6 +35,7 @@ export function UserDelete() {
       <main className="centered-container">
         <h3>{t("Delete my account")}</h3>
         <form onSubmit={handleSubmit(handleUserDelete)}>
+
           <div
             className={`form-control ${
               errors.confirm ? "ko" : formState.touched.confirm && "ok"
@@ -43,25 +44,16 @@ export function UserDelete() {
             <label htmlFor="confirm">
               {t("For deleting your account, please type")}: CONFIRM DELETE
             </label>
-            <input
-              ref={register({
-                required: "This field is mandatory",
-                pattern: {
-                  value: /CONFIRM DELETE/,
-                  message: "Must type CONFIRM DELETE"
-                }
-              })}
-              name="confirm"
-              type="text"
-              id="confirm"
-              placeholder={t("CONFIRM DELETE")}
-            ></input>
+            <input ref={register(validatorDelete)} name="confirm" type="text"
+              id="confirm" placeholder={t("CONFIRM DELETE")}>
+            </input>
             {errors.confirm && (
               <span className="errorMessage">
                 {t(errors.confirm.message)}
               </span>
             )}
           </div>
+
           <div className="btn-container">
             <button
               type="submit"
@@ -71,6 +63,7 @@ export function UserDelete() {
               {t("Send delete request")}
             </button>
           </div>
+
         </form>
       </main>
       <Footer />

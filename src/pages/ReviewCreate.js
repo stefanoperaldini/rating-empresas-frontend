@@ -8,6 +8,10 @@ import "../css/review-create.css";
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
 import { Cities } from "../components/Cities";
+import {
+  validatorCompanyName, validatorSalary, validatorTitleReview,
+  validatorDescription, validatorSector, validatorPosition
+} from './pagesUtils';
 
 /**
  * Review create
@@ -57,23 +61,9 @@ export function ReviewCreate() {
               }`}
           >
             <label htmlFor="name">{t("Company name")}</label>
-            <input
-              ref={register({
-                required: "Company name is mandatory",
-                minLength: {
-                  value: 3,
-                  message: "Minimun is 3 characters"
-                },
-                maxLength: {
-                  value: 60,
-                  message: "Maximun is 60 characters"
-                }
-              })}
-              name="name"
-              id="name"
-              type="text"
-              placeholder={t("Please, select company name")}
-            ></input>
+            <input ref={register(validatorCompanyName)} name="name" id="name"
+              type="text" placeholder={t("Please, select company name")}>
+            </input>
             {errors.name && (
               <span className="errorMessage">
                 {t(errors.name.message)}
@@ -90,12 +80,14 @@ export function ReviewCreate() {
             </button>
           </div>
         </form>
+
         <form onSubmit={handleSubmit(handleReviewCreate)}>
           <fieldset>
             <legend>
               <h4>{t("Rate company")}</h4>
             </legend>
             <ul>
+
               <li className={`form-control ${classes.rating}`}>
                 <label className="itemsReview" htmlFor="salary_valuation">
                   {t("Salary")}
@@ -110,6 +102,7 @@ export function ReviewCreate() {
                   }}
                 />
               </li>
+
               <li className={`form-control ${classes.rating}`}>
                 <label className="itemsReview" htmlFor="inhouse_training">
                   {t("Internal training")}
@@ -124,6 +117,7 @@ export function ReviewCreate() {
                   }}
                 />
               </li>
+
               <li className={`form-control ${classes.rating}`}>
                 <label className="itemsReview" htmlFor="growth_opportunities">
                   {t("Growth opportunities")}
@@ -138,6 +132,7 @@ export function ReviewCreate() {
                   }}
                 />
               </li>
+
               <li className={`form-control ${classes.rating}`}>
                 <label className="itemsReview" htmlFor="work_enviroment">
                   {t("Work environment")}
@@ -152,6 +147,7 @@ export function ReviewCreate() {
                   }}
                 />
               </li>
+
               <li className={`form-control ${classes.rating}`}>
                 <label className="itemsReview" htmlFor="personal_life">
                   {t("Work&Life balance")}
@@ -166,31 +162,24 @@ export function ReviewCreate() {
                   }}
                 />
               </li>
+
             </ul>
           </fieldset>
+
           <fieldset>
             <legend>
               <h4>{t("Salary")}</h4>
             </legend>
+
             <div
               className={`form-control ${
                 errors.salary ? "ko" : formState.touched.salary && "ok"
                 } ammount`}
             >
               <label htmlFor="salary">{t("Your salary")}</label>
-              <input
-                className="salary-ammount"
-                ref={register({
-                  pattern: {
-                    value: /^[1-9]+(\.[0-9])?$/,
-                    message: "The ammount is not valid"
-                  }
-                })}
-                name="salary"
-                id="salary"
-                type="number"
-                placeholder={t("Example: 2.000")}
-              ></input>
+              <input className="salary-ammount" ref={register(validatorSalary)} name="salary"
+                id="salary" type="number" placeholder={t("Example: 2.000")}>
+              </input>
               <label htmlFor="salary">{t("€ per month")}</label>
               {errors.salary && (
                 <span className="errorMessage">
@@ -198,7 +187,9 @@ export function ReviewCreate() {
                 </span>
               )}
             </div>
+
           </fieldset>
+
           <fieldset>
             <legend>
               <h4>
@@ -206,6 +197,7 @@ export function ReviewCreate() {
               </h4>
             </legend>
             <ul>
+
               <li
                 className={`form-control ${
                   errors.comment_title
@@ -217,28 +209,16 @@ export function ReviewCreate() {
                   {t("Review summary")}
                 </label>
                 <input
-                  ref={register({
-                    required: "This field is mandatory",
-                    minLength: {
-                      value: 5,
-                      message: "Minimun is 5 characters"
-                    },
-                    maxLength: {
-                      value: 30,
-                      message: "Maximun is 30 characters"
-                    }
-                  })}
-                  name="comment_title"
-                  id="comment_title"
-                  type="text"
-                  placeholder={t("Please, write a title")}
-                ></input>
+                  ref={register(validatorTitleReview)} name="comment_title" id="comment_title"
+                  type="text" placeholder={t("Please, write a title")}>
+                </input>
                 {errors.comment_title && (
                   <span className="errorMessage">
                     {t(errors.comment_title.message)}
                   </span>
                 )}
               </li>
+
               <li
                 className={`form-control ${
                   errors.comment ? "ko" : formState.touched.comment && "ok"
@@ -246,34 +226,25 @@ export function ReviewCreate() {
               >
                 <label htmlFor="comment">{t("Your review")}</label>
                 <textarea
-                  ref={register({
-                    required: "This field is mandatory",
-                    minLength: {
-                      value: 5,
-                      message: "Minimun is 10 characters"
-                    },
-                    maxLength: {
-                      value: 30,
-                      message: "Maximun is 1000 characters"
-                    }
-                  })}
-                  name="comment"
-                  id="comment"
-                  type="text"
-                ></textarea>
+                  ref={register(validatorDescription)} name="comment" id="comment"
+                  type="text">
+                </textarea>
                 {errors.comment && (
                   <span className="errorMessage">
                     {t(errors.comment.message)}
                   </span>
                 )}
               </li>
+
             </ul>
           </fieldset>
+
           <fieldset>
             <legend>
               <h4>{t("Tell us about your job")}</h4>
             </legend>
             <ul>
+
               <li
                 className={`form-control ${
                   errors.name ? "ko" : formState.touched.name && "ok"
@@ -281,17 +252,7 @@ export function ReviewCreate() {
               >
                 <label htmlFor="name">{t("Name")}</label>
                 <input
-                  ref={register({
-                    required: "Company name is mandatory",
-                    minLength: {
-                      value: 3,
-                      message: "Minimun is 3 characters"
-                    },
-                    maxLength: {
-                      value: 60,
-                      message: "Maximun is 60 characters"
-                    }
-                  })}
+                  ref={register(validatorCompanyName)}
                   name="name"
                   id="name"
                   type="text"
@@ -303,6 +264,7 @@ export function ReviewCreate() {
                   </span>
                 )}
               </li>
+
               <li
                 className={`form-control ${
                   errors.sector_id
@@ -311,21 +273,16 @@ export function ReviewCreate() {
                   }`}
               >
                 <label htmlFor="sector_id">{t("Sector")}</label>
-                <input
-                  ref={register({
-                    required: "Sector is mandatory"
-                  })}
-                  name="sector_id"
-                  id="sector_id"
-                  type="text"
-                  placeholder={t("My company's sector")}
-                ></input>
+                <input ref={register(validatorSector)} name="sector_id" id="sector_id"
+                  type="text" placeholder={t("My company's sector")}>
+                </input>
                 {errors.sector_id && (
                   <span className="errorMessage">
                     {t(errors.sector_id.message)}
                   </span>
                 )}
               </li>
+
               <li
                 className={`form-control ${
                   errors.position_id
@@ -334,15 +291,9 @@ export function ReviewCreate() {
                   }`}
               >
                 <label htmlFor="position_id">{t("Job title")}</label>
-                <input
-                  ref={register({
-                    required: "Required"
-                  })}
-                  name="position_id"
-                  id="position_id"
-                  type="text"
-                  placeholder={t("Please, enter your position")}
-                ></input>
+                <input ref={register(validatorPosition)} name="position_id" id="position_id"
+                  type="text" placeholder={t("Please, enter your position")}>
+                </input>
                 {errors.position_id && (
                   <span className="errorMessage">
                     {t(errors.position_id.message)}
@@ -352,6 +303,7 @@ export function ReviewCreate() {
               <li className={`form-control`}>
                 <Cities />
               </li>
+
               <li
                 className={`form-control ${
                   errors.start_year_id
@@ -410,13 +362,12 @@ export function ReviewCreate() {
                   <option value="1981">1981</option>
                   <option value="1980">1980</option>
                 </select>
+
                 <label htmlFor="end_year">{t("End year")}</label>
                 <select
                   name="end_year"
                   id="end_year"
-                  ref={register({
-                    required: "Required"
-                  })}
+                  ref={register()}
                 >
                   <option value="Empty"></option>
                   <option value="null">I currently work here</option>
@@ -431,8 +382,10 @@ export function ReviewCreate() {
                   </span>
                 )}
               </li>
+
             </ul>
           </fieldset>
+
           <div className="btn-container">
             <button
               type="submit"
@@ -442,6 +395,7 @@ export function ReviewCreate() {
               {t("Send")}
             </button>
           </div>
+
         </form>
       </main>
       <Footer />
