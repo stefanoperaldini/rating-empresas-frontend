@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useEffect, useReducer, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
-import { createCompany } from "../http/companyService";
+import { useAuth } from "../context/auth-context";
+import { getCompanies, getSectors, createCompany, updateCompany, createSector } from "../http/companyService";
 import {
   setErrorMessageCallBackEnd, validatorLinkedin, validatorCompanyName,
   validatorDescription, validatorUrl, validatorAddress, validatorSector,
+  validatorCity,
 } from './pagesUtils';
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
@@ -15,6 +17,24 @@ import { Footer } from "../components/Footer";
  * Page for create company
  */
 
+function companyReducer(state, action) {
+  switch (action.type) {
+    case 'GET_COMPANIES':
+      return { ...state, companies: action.initialCompanies };
+    case 'GET_SECTORS':
+      return { ...state, sectors: action.initialSectors };
+
+    case 'SET_COMPANY':
+      return { ...state, indexCompany: action.initialCompany, isSavedCompany: true };
+
+    case 'DATA_SET':
+      return { ...state, company: { ...state.company, ...action.data } }
+
+    default:
+      return state;
+  }
+}
+
 export function CompanyCreate() {
   const {
     handleSubmit,
@@ -22,35 +42,112 @@ export function CompanyCreate() {
     errors,
     formState,
     setError,
-    //reset,
   } = useForm({
     mode: "onBlur"
   });
 
+  const { currentUserId, } = useAuth();
+
   const history = useHistory();
   const { t } = useTranslation();
 
-  const handleCompanyCreate = formData => {
-    const formDataFiltered = { ...formData, confirmPassword: undefined }
-    return createCompany(formDataFiltered)
+  const [state, dispatch] = useReducer(companyReducer, {
+    companies: [],
+    sectors: [],
+    cities: [],
+    indexCompany: null,
+    company: { name: "", description: "", sector: "", url_web: "", linkedin: "", address: "", },
+    sector: { id: null, name: null },
+    city: { id: null, name: null },
+    isSavedCompany: false,
+  });
+
+  const handleCompanyCreate = async (formData) => {
+    let isNewSector = true;
+    let sectorId = null;
+
+    for (let sector of state.sectors) {
+      if (formData.sector === sector.sector) {
+        isNewSector = false;
+        sectorId = sector.id;
+      }
+    }
+
+    let isNewCompany = true;
+    let companyId = null;
+    for (let company of state.companies) {
+      if (formData.name === company.name) {
+        isNewCompany = false;
+        companyId = company.id;
+        break;
+      }
+    }
+
+    try {
+      if (isNewSector) {
+        const { headers } = await createSector({ sector: formData.sector })
+        const location = headers.location.split("/");
+        sectorId = location[location.length - 1]
+      }
+
+      const formDataCompany = { ...formData, sector: undefined, sector_id: sectorId };
+
+      if (isNewCompany) {
+        createCompany(formDataCompany).then(response => {
+          history.push('/company/detail');
+        }).catch(error => {
+          setError('sede_id', 'backend', setErrorMessageCallBackEnd(error))
+        })
+      } else {
+        updateCompany(companyId, formDataCompany).then(response => {
+          history.push('/company/detail');
+        }).catch(error => {
+          setError('sede_id', 'backend', setErrorMessageCallBackEnd(error))
+        })
+      }
+    } catch (error) {
+      setError('sector', 'backend', setErrorMessageCallBackEnd(error));
+    }
+  }
+
+
+  useEffect(() => {
+    getCompanies()
       .then(response => {
-        history.push('/company/detail');
+        const filteredCompany = response.data.rows.filter((company, index) => {
+          if (currentUserId === company.user_id) {
+            dispatch({ type: 'SET_COMPANY', initialCompany: index })
+            dispatch({ type: 'DATA_SET', data: { name: company.name } })
+            dispatch({ type: 'DATA_SET', data: { description: company.description } })
+            dispatch({ type: 'DATA_SET', data: { sector: company.sector } })
+            dispatch({ type: 'DATA_SET', data: { url_web: company.url_web } })
+            dispatch({ type: 'DATA_SET', data: { linkedin: company.linkedin } })
+            dispatch({ type: 'DATA_SET', data: { address: company.address } })
+            dispatch({ type: 'DATA_SET', data: { sede_id: company.sede_id } })
+            return true;
+          }
+          if (company.userRole === "1" || (company.userRole === "2" && company.userDeleteAt !== null)) {
+            return true;
+          }
+          return false;
+        });
+        dispatch({ type: 'GET_COMPANIES', initialCompanies: filteredCompany });
       })
       .catch(error => {
-        setError('sede_id', 'backend', setErrorMessageCallBackEnd(error));
+        setError("sede_id", "backend", setErrorMessageCallBackEnd(error));
+        return;
       });
-  };
 
-  // reset({
-  //   firstName: "bill",
-  //   lastName: "luo"
-  // });
-
-  // useEffect(() => {
-  //   getCompany().then(response =>
-  //     dispatch({ type: 'GET_NOTES_SUCCESS', initialNotes: response.data.rows })
-  //   );
-  // }, []);
+    getSectors()
+      .then(response => {
+        dispatch({ type: 'GET_SECTORS', initialSectors: response.data.rows })
+      })
+      .catch(error => {
+        setError("sector", "backend", setErrorMessageCallBackEnd(error));
+        return;
+      });
+    return;
+  }, [currentUserId, setError]);
 
   return (
     <React.Fragment>
@@ -58,34 +155,21 @@ export function CompanyCreate() {
       <main className="centered-container">
         <h3>{t("My company")}</h3>
         <form onSubmit={handleSubmit(handleCompanyCreate)} noValidate>
-          {/* <div
-          className={`form-control ${
-            errors.logo ? "ko" : formState.touched.logo && "ok"
-          }`}
-        >
-          <label htmlFor="logo">{t("Upload company logo")}</label>
-          <input
-            ref={register}
-            name="logo"
-            id="logo"
-            type="file"
-            accept="image/png, image/jpeg"
-            placeholder={t("My company logo")}
-          ></input>
-          {errors.logo && (
-            <span className="errorMessage">{t(errors.logo.message)}</span>
-          )}
-        </div> */}
-
           <div
             className={`form-control ${
               errors.name ? "ko" : formState.touched.name && "ok"
               }`}
           >
             <label htmlFor="name">{t("Name")}</label>
-            <input ref={register(validatorCompanyName)} name="name" id="name" type="text"
-              placeholder={t("My company name")}>
-            </input>
+            <input list="companyName" ref={register(validatorCompanyName)} name="name" id="name" type="text"
+              value={state.company.name}
+              onChange={e => dispatch({ type: 'DATA_SET', data: { name: e.target.value } })}
+            ></input>
+            <datalist id="companyName">
+              {state.companies.map(element => (
+                <option key={element.name} value={element.name}
+                >{element.name}</option>))}
+            </datalist>
             {errors.name && (
               <span className="errorMessage">
                 {t(errors.name.message)}
@@ -104,7 +188,9 @@ export function CompanyCreate() {
               name="description"
               id="description"
               type="text"
+              value={state.company.description}
               placeholder={t("About my company")}
+              onChange={e => dispatch({ type: 'DATA_SET', data: { description: e.target.value } })}
             ></textarea>
             {errors.description && (
               <span className="errorMessage">
@@ -115,20 +201,24 @@ export function CompanyCreate() {
 
           <div
             className={`form-control ${
-              errors.sector_id ? "ko" : formState.touched.sector_id && "ok"
+              errors.sector ? "ko" : formState.touched.sector && "ok"
               }`}
           >
-            <label htmlFor="sector_id">{t("Sector")}</label>
-            <input
-              ref={register(validatorSector)}
-              name="sector_id"
-              id="sector_id"
-              type="text"
-              placeholder={t("My company's sector")}
-            ></input>
-            {errors.sector_id && (
+            <label htmlFor="sector">{t("Sector")}</label>
+
+            <input list="listSectors" ref={register(validatorSector)} name="sector" id="sector" type="text"
+              placeholder={t("Sector name")}
+              value={state.company.sector}
+              onChange={e => dispatch({ type: 'DATA_SET', data: { sector: e.target.value } })}
+            >
+            </input>
+            <datalist id="listSectors">
+              {state.sectors.map(element => (
+                <option key={element.name} value={element.sector}>{element.sector}</option>))}
+            </datalist>
+            {errors.sector && (
               <span className="errorMessage">
-                {t(errors.sector_id.message)}
+                {t(errors.sector.message)}
               </span>
             )}
           </div>
@@ -140,7 +230,10 @@ export function CompanyCreate() {
           >
             <label htmlFor="url_web">{t("URL")}</label>
             <input ref={register(validatorUrl)} name="url_web" id="url_web" type="url"
-              placeholder={t("Website")}>
+              placeholder={t("Website")}
+              value={state.company.url_web}
+              onChange={e => dispatch({ type: 'DATA_SET', data: { url_web: e.target.value } })}
+            >
             </input>
             {errors.url_web && (
               <span className="errorMessage">
@@ -148,6 +241,7 @@ export function CompanyCreate() {
               </span>
             )}
           </div>
+
           <div
             className={`form-control ${
               errors.linkedin ? "ko" : formState.touched.linkedin && "ok"
@@ -155,7 +249,10 @@ export function CompanyCreate() {
           >
             <label htmlFor="linkedin">{t("Linkedin")}</label>
             <input ref={register(validatorLinkedin)} name="linkedin" id="linkedin" type="url"
-              placeholder={t("linkedin address")}>
+              placeholder={t("linkedin address")}
+              value={state.company.linkedin}
+              onChange={e => dispatch({ type: 'DATA_SET', data: { linkedin: e.target.value } })}
+            >
             </input>
             {errors.linkedin && (
               <span className="errorMessage">
@@ -175,6 +272,8 @@ export function CompanyCreate() {
               name="address"
               id="address"
               type="text"
+              value={state.company.address}
+              onChange={e => dispatch({ type: 'DATA_SET', data: { address: e.target.value } })}
               placeholder={t("Headquarters address")}
             ></input>
             {errors.address && (
@@ -183,20 +282,31 @@ export function CompanyCreate() {
               </span>
             )}
           </div>
+
           <div
             className={`form-control ${
               errors.sede_id ? "ko" : formState.touched.sede_id && "ok"
               }`}
           >
             <label htmlFor="sede_id">{t("Headquarter")}</label>
-            <input ref={register({ required: "Headquarter city is mandatory" })}
-              name="sede_id" id="sede_id" type="text" placeholder={t("Headquarter city")}>
-            </input>
-            {errors.sede_id && (
-              <span className="errorMessage">
-                {t(errors.sede_id.message)}
-              </span>
-            )}
+            <input
+              ref={register({
+                required: 'Required',
+              })}
+              name="sede_id"
+              id="sede_id"
+              type="text"
+              value={state.company.sede_id}
+              onChange={e => dispatch({ type: 'DATA_SET', data: { sede_id: e.target.value } })}
+              placeholder={t("Headquarters")}
+            ></input>
+            {
+              errors.sede_id && (
+                <span className="errorMessage">
+                  {t(errors.sede_id.message)}
+                </span>
+              )
+            }
           </div>
 
           <div className="btn-container">
@@ -213,5 +323,5 @@ export function CompanyCreate() {
       </main>
       <Footer />
     </React.Fragment>
-  );
-}
+  )
+};

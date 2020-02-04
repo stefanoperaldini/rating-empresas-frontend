@@ -300,9 +300,32 @@ export function ReviewCreate() {
                   </span>
                 )}
               </li>
-              <li className={`form-control`}>
-                <Cities />
-              </li>
+
+              <div
+                className={`form-control ${
+                  errors.city ? "ko" : formState.touched.city && "ok"
+                  }`}
+              >
+                <label htmlFor="city">{t("Headquarter")}</label>
+                <input
+                  ref={register({
+                    required: 'Required',
+                  })}
+                  name="city"
+                  id="city"
+                  type="text"
+                  value=""
+                  onChange={e => console.log("Change city")}
+                  placeholder={t("Headquarters")}
+                ></input>
+                {
+                  errors.city && (
+                    <span className="errorMessage">
+                      {t(errors.city.message)}
+                    </span>
+                  )
+                }
+              </div>
 
               <li
                 className={`form-control ${

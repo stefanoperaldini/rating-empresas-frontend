@@ -149,8 +149,21 @@ const validatorPosition = {
     }
 }
 
+const validatorCity = {
+    required: "This field is mandatory",
+    minLength: {
+        value: 5,
+        message: "Minimun is 5 characters"
+    },
+    maxLength: {
+        value: 60,
+        message: "Maximun is 60 characters"
+    }
+}
+
 export {
     setErrorMessageCallBackEnd, validatorEmail, validatorPassword, validatorLinkedin,
     validatorUserName, validatorCompanyName, validatorDescription, validatorUrl,
-    validatorAddress, validatorDelete, validatorSalary, validatorSector, validatorPosition
+    validatorAddress, validatorDelete, validatorTitleReview, validatorSalary, validatorSector,
+    validatorPosition, validatorCity
 }; 

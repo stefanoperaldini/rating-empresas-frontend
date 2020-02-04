@@ -60,7 +60,7 @@ export function UserDelete() {
               className="btn"
               disabled={formState.isSubmitting}
             >
-              {t("Send delete request")}
+              {t("Delete")}
             </button>
           </div>
 
