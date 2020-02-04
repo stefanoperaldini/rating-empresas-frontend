@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
-import { setErrorMessageCallBackEnd } from "./pagesUtils";
+import { setErrorMessageCallBackEnd, validatorLinkedin, } from './pagesUtils';
 import { getUser, updateUser } from "../http/userService";
 
 /**
@@ -31,7 +31,7 @@ export function UserUpdate() {
         setError("linkedin", "backend", setErrorMessageCallBackEnd(error));
       });
     return;
-  }, []);
+  }, [setError]);
 
   const handleLinkedinChange = formData => {
     return updateUser(formData)
@@ -49,31 +49,23 @@ export function UserUpdate() {
       <main className="centered-container">
         <h3>{t("Update my data")}</h3>
         <form onSubmit={handleSubmit(handleLinkedinChange)} noValidate>
+
           <div
             className={`form-control ${
               errors.linkedin ? "ko" : formState.touched.linkedin && "ok"
               }`}
           >
             <label htmlFor="linkedin">{t("Linkedin")}</label>
-            <input
-              ref={register({
-                pattern: {
-                  value: /^https:\/\/[a-z]{2,3}\.linkedin\.com\/.*$/,
-                  message: "The linkedin address is not valid"
-                }
-              })}
-              name="linkedin"
-              id="linkedin"
-              type="url"
-              value={linkedinUser}
-              onChange={e => setlinkedinUser(e.target.value)}
-            ></input>
+            <input ref={register(validatorLinkedin)} name="linkedin" id="linkedin"
+              type="url" value={linkedinUser} onChange={e => setlinkedinUser(e.target.value)}>
+            </input>
             {errors.linkedin && (
               <span className="errorMessage">
                 {t(errors.linkedin.message)}
               </span>
             )}
           </div>
+
           <div className="btn-container">
             <button
               type="submit"
@@ -83,6 +75,7 @@ export function UserUpdate() {
               {t("Change")}
             </button>
           </div>
+
         </form>
       </main>
       <Footer />

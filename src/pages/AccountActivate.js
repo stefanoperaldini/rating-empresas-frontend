@@ -18,23 +18,23 @@ export function AccountActivate() {
   useEffect(() => {
     activateAccount(verificationCode)
       .then(response => {
-        setResponse("Account activated");
+        setResponse(t("Account activated"));
       })
       .catch(error => {
-        let messageResponse = "Server down";
+        let messageResponse = t("Server down");
         if (error.response) {
           // Server up
           messageResponse = error.response.data;
           if (error.response.status === "500") {
-            messageResponse = "Internal server error";
+            messageResponse = t("Internal server error");
           }
         }
         setResponse(messageResponse);
       });
-  }, [verificationCode]);
+  }, [verificationCode, t]);
 
   if (response === null) {
-    return <div>Connecting to the server ...</div>;
+    return <div>{t("Connecting to the server...")}</div>;
   }
 
   return (
