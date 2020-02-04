@@ -21,9 +21,7 @@ import { UserUpdate } from "./pages/UserUpdate";
 import { UserDelete } from "./pages/UserDelete";
 import { NotFound } from "./pages/NotFound";
 
-import { PrivateRoute } from './components/PrivateRoute';
-
-
+import { PrivateRoute } from "./components/PrivateRoute";
 
 function App() {
   return (
@@ -46,7 +44,10 @@ function App() {
             <Route path="/account/login">
               <AccountLogin />
             </Route>
-            <PrivateRoute path="/account/password/change" allowedRoles={['1', '2']}>
+            <PrivateRoute
+              path="/account/password/change"
+              allowedRoles={["1", "2"]}
+            >
               <AccountPasswordChange />
             </PrivateRoute>
             <Route path="/account/password/recovery">
@@ -55,25 +56,25 @@ function App() {
             <Route path="/advanced-search">
               <AdvancedSearch />
             </Route>
-            <Route path="/company/detail">
+            <Route path="/company/detail/:id">
               <Company />
             </Route>
-            <PrivateRoute exact path="/company/create" allowedRoles={['2']} >
+            <PrivateRoute exact path="/company/create" allowedRoles={["2"]}>
               <CompanyCreate />
             </PrivateRoute>
             <Route path="/email/activation/recovery">
               <EmailActivationRecovery />
             </Route>
-            <PrivateRoute path="/review/create" allowedRoles={['1']} >
+            <PrivateRoute path="/review/create" allowedRoles={["1"]}>
               <ReviewCreate />
             </PrivateRoute>
-            <PrivateRoute path="/review/user" allowedRoles={['1']} >
+            <PrivateRoute path="/review/user" allowedRoles={["1"]}>
               <ReviewUser />
             </PrivateRoute>
-            <PrivateRoute path="/user/update" allowedRoles={['1', '2']} >
+            <PrivateRoute path="/user/update" allowedRoles={["1", "2"]}>
               <UserUpdate />
             </PrivateRoute>
-            <PrivateRoute path="/user/delete" allowedRoles={['1', '2']} >
+            <PrivateRoute path="/user/delete" allowedRoles={["1", "2"]}>
               <UserDelete />
             </PrivateRoute>
             <Route path="/not-found">
