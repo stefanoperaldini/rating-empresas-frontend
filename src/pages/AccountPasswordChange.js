@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
 import { passwordChange } from "../http/authService";
-import { setErrorMessageCallBackEnd } from './pagesUtils';
+import { setErrorMessageCallBackEnd, validatorPassword, } from './pagesUtils';
 
 
 /**
@@ -53,13 +53,7 @@ export function AccountPasswordChange() {
           >
             <label htmlFor="oldPassword">{t("Current Password")}</label>
             <input
-              ref={register({
-                required: "The current password is mandatory",
-                pattern: {
-                  value: /^[a-zA-Z0-9]{3,36}$/,
-                  message: "The password is not valid"
-                }
-              })}
+              ref={register(validatorPassword)}
               name="oldPassword"
               type="password"
               placeholder={t("Enter your current password")}
@@ -77,13 +71,7 @@ export function AccountPasswordChange() {
           >
             <label htmlFor="newPassword">{t("New Password")}</label>
             <input
-              ref={register({
-                required: "The new password is mandatory",
-                pattern: {
-                  value: /^[a-zA-Z0-9]{3,36}$/,
-                  message: "The password is not valid"
-                }
-              })}
+              ref={register(validatorPassword)}
               name="newPassword"
               type="password"
               placeholder={t("Enter your new password")}
