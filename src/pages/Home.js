@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import Rating from "@material-ui/lab/Rating";
 import { makeStyles } from "@material-ui/core/styles";
 import { useHistory } from "react-router-dom";
+import defaultImageCompany from "../img/company-default-small.jpeg";
 
 import { getCompany, getCompanies } from "../http/companyService";
 import { Header } from "../components/Header";
@@ -54,14 +55,14 @@ export function Home() {
       <Header />
       <main>
         <section className="search-reviews">
-          <h3>{t("Get access to company reviews")}</h3>
+          <h2>{t("Find great places to work")}</h2>
+          <h3>{t("Get access to rating and company reviews")}</h3>
           <form onSubmit={handleSubmit(handleGetCompanyData)}>
             <div
               className={`form-control ${
                 errors.id ? "ko" : formState.touched.id && "ok"
               }`}
             >
-              <label htmlFor="search-name">{t("Company name")}</label>
               <input
                 ref={register({
                   required: "Enter a company name",
@@ -77,6 +78,7 @@ export function Home() {
                 name="id"
                 id="search-name"
                 type="search"
+                placeholder={t("Company name")}
               ></input>
               {errors.id && (
                 <span className="errorMessage">{t(errors.id.message)}</span>
@@ -87,45 +89,53 @@ export function Home() {
                   className="btn"
                   disabled={formState.isSubmitting}
                 >
-                  {t("Find company")}
+                  {t("Find")}
                 </button>
                 <div className="m-t-lg btn-container"></div>
               </div>
             </div>
           </form>
-          <a href="/advanced-search" title="Link to Advanced search page">
+          <a href="/advanced-search" title={t("Link to Advanced search page")}>
             {t("Advanced search")}
           </a>
-          <h3>
-            {t("Do you want to rate a company? Just")}{" "}
-            <a href="/account/create" title="Link to sign up page">
-              {t("sign up")}
-            </a>{" "}
-            {t("or")}{" "}
-            <a href="/account/login" title="Link to sign in page">
-              {t("sign in")}
-            </a>
-            ! {t("Your reviews will be anonimous")}.
-          </h3>
+          <p>
+            <h3>{t("Do you want to rate a company?")}</h3>
+            <h4>{t("Your reviews will be anonimous")}</h4>
+            <div className={classes.rating}>
+              <Rating
+                name="overall_rating"
+                size="large"
+                value="0"
+                precision={1}
+                onChange={() => {
+                  history.push("/account/login");
+                }}
+              />
+            </div>
+          </p>
         </section>
         <section className="top-companies">
-          <h3>
-            {t("Top-Rated Workplaces")}: {t("the Top 10")}
-          </h3>
+          <h3>{t("Top Ten Workplaces")}</h3>
           <ul className="top-companies">
             {topTenList.map(company => (
               <li key={company.id}>
                 <article>
                   <header className="box-header">
-                    {/* <p>{company.url_logo}</p> */}
                     <p>{company.name}</p>
                   </header>
                   <main>
+                    {/* <p>{company.url_logo}</p> */}
+                    <img
+                      src={defaultImageCompany}
+                      alt={t("Default image company")}
+                    />
+                    <p>n {t("reviews")}</p>
+                    <p> {company.sector}</p>
                     <div className={classes.rating}>
                       <span>{t("Overall rating")}</span>
                       <Rating
-                        name="overall_rating"
-                        id="overall_rating"
+                        name={company.name}
+                        id={company.name}
                         size="large"
                         value="4"
                         precision={1}

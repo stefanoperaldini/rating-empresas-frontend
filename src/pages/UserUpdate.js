@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
-import { setErrorMessageCallBackEnd, validatorLinkedin, } from './pagesUtils';
+import { setErrorMessageCallBackEnd, validatorLinkedin } from "./pagesUtils";
 import { getUser, updateUser } from "../http/userService";
 
 /**
@@ -47,22 +47,24 @@ export function UserUpdate() {
     <React.Fragment>
       <Header />
       <main className="centered-container">
-        <h3>{t("Update my data")}</h3>
+        <h3>{t("Update profile")}</h3>
         <form onSubmit={handleSubmit(handleLinkedinChange)} noValidate>
-
           <div
             className={`form-control ${
               errors.linkedin ? "ko" : formState.touched.linkedin && "ok"
-              }`}
+            }`}
           >
-            <label htmlFor="linkedin">{t("Linkedin")}</label>
-            <input ref={register(validatorLinkedin)} name="linkedin" id="linkedin"
-              type="url" value={linkedinUser} onChange={e => setlinkedinUser(e.target.value)}>
-            </input>
+            <label htmlFor="linkedin">{t("LinkedIn")}</label>
+            <input
+              ref={register(validatorLinkedin)}
+              name="linkedin"
+              id="linkedin"
+              type="url"
+              value={linkedinUser}
+              onChange={e => setlinkedinUser(e.target.value)}
+            ></input>
             {errors.linkedin && (
-              <span className="errorMessage">
-                {t(errors.linkedin.message)}
-              </span>
+              <span className="errorMessage">{t(errors.linkedin.message)}</span>
             )}
           </div>
 
@@ -72,10 +74,9 @@ export function UserUpdate() {
               className="btn"
               disabled={formState.isSubmitting}
             >
-              {t("Change")}
+              {t("Save")}
             </button>
           </div>
-
         </form>
       </main>
       <Footer />

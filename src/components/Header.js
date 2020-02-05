@@ -1,36 +1,35 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
+import admin from "../img/admin-user.png";
+import user from "../img/user.png";
+import company from "../img/company.png";
+import menu from "../img/menu-black.png";
 
 import { useAuth } from "../context/auth-context";
-import { logOut } from '../http/authService';
-import { setErrorMessageCallBackEnd } from '../pages/pagesUtils'
-
-const styles = {
-  menuAdmin: {
-    backgroundColor: "#FF0000",
-    cursor: "pointer",
-  },
-};
+import { logOut } from "../http/authService";
+import { setErrorMessageCallBackEnd } from "../pages/pagesUtils";
 
 export function Header() {
   const [lang, setLang] = useState("en");
   const [showMenu, setShowMenu] = useState(false);
-  const { currentUserId, role, } = useAuth();
+  const { currentUserId, role } = useAuth();
 
   const { t, i18n } = useTranslation();
 
   const executeLogout = () => {
     return logOut()
       .then(response => {
-        localStorage.removeItem('currentUser');
-      }).catch(error => {
+        localStorage.removeItem("currentUser");
+      })
+      .catch(error => {
         localStorage.removeItem("accessToken");
         console.error(setErrorMessageCallBackEnd(error));
-      }).finally(() => {
-        window.location.href = '/home';
+      })
+      .finally(() => {
+        window.location.href = "/home";
       });
-  }
+  };
 
   useEffect(() => {
     const langStored = localStorage.getItem("re:lang");
@@ -70,7 +69,7 @@ export function Header() {
         <li className="header-item header-item">
           <label>
             English
-              <input
+            <input
               type="radio"
               name="language"
               value="en"
@@ -85,8 +84,8 @@ export function Header() {
         </li>
         <li className="header-item">
           <label>
-            Spanish
-              <input
+            Español
+            <input
               type="radio"
               name="language"
               value="es"
@@ -101,8 +100,8 @@ export function Header() {
         </li>
         <li className="header-item">
           <label>
-            Italian
-              <input
+            Italiano
+            <input
               type="radio"
               name="language"
               value="it"
@@ -117,8 +116,8 @@ export function Header() {
         </li>
         <li className="header-item">
           <label>
-            Gallego
-              <input
+            Galego
+            <input
               type="radio"
               name="language"
               value="gl"
@@ -132,52 +131,89 @@ export function Header() {
           </label>
         </li>
       </ul>
+
+      <p>
+        {currentUserId && role === "0" && (
+          <React.Fragment>
+            <img src={admin} alt="Admin icon" /> <span>aaa@bbb.com</span>
+          </React.Fragment>
+        )}
+        {currentUserId && role === "1" && (
+          <React.Fragment>
+            <img src={user} alt="User icon" /> <span>aaa@bbb.com</span>
+          </React.Fragment>
+        )}
+        {currentUserId && role === "2" && (
+          <React.Fragment>
+            <img src={company} alt="User icon" /> <span>aaa@bbb.com</span>
+          </React.Fragment>
+        )}
+      </p>
+
       {!currentUserId ? (
         <nav className="header-item">
           <ul className="header">
             <li className="header-item">
               <Link to="/account/login">
-                <p>Sign In
-                    </p>
+                <p>{t("Sign in")}</p>
               </Link>
             </li>
             <li className="header-item">
               <Link to="/account/create">
-                <p>Sign Up
-                    </p>
+                <p>{t("Sign up")}</p>
               </Link>
             </li>
           </ul>
         </nav>
-      )
-        : role === "0" ? (
-          <nav className="menu header-item" style={styles.menuAdmin} onClick={() => executeLogout()}>{t("Logout")}</nav>
-        ) : (
-            <nav className="menu header-item" onClick={() => setShowMenu(true)}>{t("Menu")}
-              {showMenu && (
-                <div className="m-t-lg lista-menu" onMouseLeave={() => setShowMenu(false)}>
-                  <ul>
-                    {role === "2" && (<li><Link to="/company/create">{t("My company")}</Link></li>)}
-                    {role === "1" && (
-                      <React.Fragment>
-                        <li><Link to="/review/create">{t("Create review")}</Link></li>
-                        <li><Link to="/review/user">{t("My review")}</Link></li>
-                      </React.Fragment>
-                    )}
-                    {(role === "1" || role === "2") && (
-                      <React.Fragment>
-                        <li><Link to="/user/update">{t("My profile")}</Link></li>
-                        <li><Link to="/account/password/change">{t("Change password")}</Link></li>
-                        <li><Link to="/user/delete">{t("Delete user")}</Link></li >
-                      </React.Fragment>
-                    )}
-                    <li onClick={() => executeLogout()}>{t("Logout")}</li >
-                  </ul>
-                </div>
-              )}
-            </nav>
-          )
-      }
-    </header >
+      ) : role === "0" ? (
+        <nav className="menu header-item" onClick={() => executeLogout()}>
+          {t("Sign out")}
+        </nav>
+      ) : (
+        <nav className="menu header-item" onClick={() => setShowMenu(true)}>
+          <img src={menu} alt="Menu icon" />
+          {showMenu && (
+            <div
+              className="m-t-lg lista-menu"
+              onMouseLeave={() => setShowMenu(false)}
+            >
+              <ul>
+                {role === "2" && (
+                  <li>
+                    <Link to="/company/create">{t("My company")}</Link>
+                  </li>
+                )}
+                {role === "1" && (
+                  <React.Fragment>
+                    <li>
+                      <Link to="/review/create">{t("Create review")}</Link>
+                    </li>
+                    <li>
+                      <Link to="/review/user">{t("My reviews")}</Link>
+                    </li>
+                  </React.Fragment>
+                )}
+                {(role === "1" || role === "2") && (
+                  <React.Fragment>
+                    <li>
+                      <Link to="/user/update">{t("Profile")}</Link>
+                    </li>
+                    <li>
+                      <Link to="/account/password/change">
+                        {t("Change password")}
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/user/delete">{t("Delete account")}</Link>
+                    </li>
+                  </React.Fragment>
+                )}
+                <li onClick={() => executeLogout()}>{t("Sign out")}</li>
+              </ul>
+            </div>
+          )}
+        </nav>
+      )}
+    </header>
   );
 }

@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useForm } from "react-hook-form";
 import Rating from "@material-ui/lab/Rating";
 import { makeStyles } from "@material-ui/core/styles";
+import { useHistory } from "react-router-dom";
 import { useParams } from "react-router";
 
 import { getCompany } from "../http/companyService";
@@ -31,13 +32,13 @@ export function Company() {
   });
   const classes = useStyles();
   const { t } = useTranslation();
+  const history = useHistory();
   const params = useParams();
   const idCompany = params.id;
 
   useEffect(() => {
     getCompany(idCompany).then(response => {
       setCompany(response.data);
-      console.log(("DATOS:", response.data));
     });
     getReviewsFilter(idCompany).then(response => {
       setReviewsCompanyList(response.data.reviews);
@@ -48,38 +49,30 @@ export function Company() {
   if (reviewsCompanyList === null) {
     return (
       <div>
-        <h3>
-          {t("This company doesn't have any review. Do you want to rate it?")}
-        </h3>
+        <h3>{t("This company doesn't have any review")}</h3>
       </div>
     );
   }
-
-  //   const handleGetCompanyReviews = () => {
-  //   return getReviewsFilter()
-  //     .then(response => {
-  //       console.log(response.data.reviews);
-  //     })
-  //     .catch(error => {
-  //       setError("reviews", "backend", setErrorMessageCallBackEnd(error));
-  //     });
-  // };
 
   return (
     <React.Fragment>
       <Header />
       <main className="company">
-        <h3>
-          {t("Do you want to rate a company? Just")}{" "}
-          <a href="/account/create" title="Link to sign up page">
-            {t("sign up")}
-          </a>{" "}
-          {t("or")}{" "}
-          <a href="/account/login" title="Link to sign in page">
-            {t("sign in")}
-          </a>
-          ! {t("Your reviews will be anonimous")}.
-        </h3>
+        <p>
+          <h3>{t("Do you want to rate a company?")}</h3>
+          <h4>{t("Your reviews will be anonimous")}</h4>
+          <div className={classes.rating}>
+            <Rating
+              name="overall_rating"
+              size="large"
+              value="0"
+              precision={1}
+              onChange={() => {
+                history.push("/account/login");
+              }}
+            />
+          </div>
+        </p>
         <article className="box-article">
           <header className="box-header">
             {/* <img class="company-logo"
@@ -157,17 +150,17 @@ export function Company() {
               </div>
             </section>
             <section className="box-section">
-              <h5> {t("Company data")}: </h5>
+              <h5> {company.name} </h5>
               <p>
-                {t("Sector")}: {company.sector}
+                {t("Sector")} {company.sector}
               </p>
               <p>
-                {t("About us")}: {company.description}
+                {t("About us")} {company.description}
               </p>
               <p>
-                {t("Headquarters")}: {company.address} - {company.city_name}
+                {t("Headquarters")} {company.address} - {company.city_name}
               </p>
-              <p>{t("Contact")}:</p>
+              <p>{t("Contact")}</p>
               <p>{company.url_web}</p>
               <p>{company.linkedin}</p>
             </section>
@@ -200,7 +193,7 @@ export function Company() {
         </section>
         <section className="box-section">
           <h5>
-            {t("Salary")}: ....... € {t("per month")}
+            {t("Average salary")} 1.250,00 € / {t("month")}
           </h5>
         </section>
         <h5>{t("Sort by")}:</h5>
