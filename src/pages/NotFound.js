@@ -13,13 +13,8 @@ export function NotFound() {
     <React.Fragment>
       <main className="centered-container">
         <h2>{t("Page not found")}</h2>
-        <p>
-          {" "}
-          {t(
-            "Something went wrong and we cant find the page you are looking for."
-          )}{" "}
-        </p>
-        <Link to="/Home">{t("Home")}</Link>
+        <p>{t("Sorry, we can't find the page you're looking for.")}</p>
+        <Link to="/Home">{t("Go back Home")}</Link>
       </main>
     </React.Fragment>
   );

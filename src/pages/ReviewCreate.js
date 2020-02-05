@@ -256,8 +256,8 @@ export function ReviewCreate() {
                 <label htmlFor="name">{t("Name")} (*)</label>
                 <input
                   ref={register(validatorCompanyName)}
-                  name="name"
-                  id="name"
+                  name="companyname"
+                  id="companyname"
                   type="text"
                   placeholder={t("Company name")}
                 ></input>
