@@ -135,17 +135,18 @@ export function Header() {
       <p>
         {currentUserId && role === "0" && (
           <React.Fragment>
-            <img src={admin} alt="Admin icon" /> <span>aaa@bbb.com</span>
+            <img src={admin} alt={t("Admin icon")} /> <span>aaa@bbb.com</span>
           </React.Fragment>
         )}
         {currentUserId && role === "1" && (
           <React.Fragment>
-            <img src={user} alt="User icon" /> <span>aaa@bbb.com</span>
+            <img src={user} alt={t("User icon")} /> <span>aaa@bbb.com</span>
           </React.Fragment>
         )}
         {currentUserId && role === "2" && (
           <React.Fragment>
-            <img src={company} alt="User icon" /> <span>aaa@bbb.com</span>
+            <img src={company} alt={t("Company icon")} />{" "}
+            <span>aaa@bbb.com</span>
           </React.Fragment>
         )}
       </p>
@@ -171,7 +172,7 @@ export function Header() {
         </nav>
       ) : (
         <nav className="menu header-item" onClick={() => setShowMenu(true)}>
-          <img src={menu} alt="Menu icon" />
+          <img src={menu} alt={t("Menu icon")} />
           {showMenu && (
             <div
               className="m-t-lg lista-menu"

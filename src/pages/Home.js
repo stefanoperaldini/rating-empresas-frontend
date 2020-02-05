@@ -124,7 +124,9 @@ export function Home() {
                     <p>{company.name}</p>
                   </header>
                   <main>
-                    {/* <p>{company.url_logo}</p> */}
+                    {/* <img class="company-logo"
+              src="{company.url_logo}"
+              alt={t("Company logo")}> */}
                     <img
                       src={defaultImageCompany}
                       alt={t("Default image company")}

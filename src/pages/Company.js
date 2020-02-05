@@ -77,7 +77,7 @@ export function Company() {
           <header className="box-header">
             {/* <img class="company-logo"
               src="{company.url_logo}"
-              alt="Company logo"> */}
+              alt={t("Company logo")}> */}
             <h4>{company.name}</h4>
           </header>
           <main>
@@ -129,8 +129,8 @@ export function Company() {
               <div className={classes.rating}>
                 <span>{t("Work environment")}</span>
                 <Rating
-                  name="review.work_enviroment"
-                  id="review.work_enviroment"
+                  name="work_enviroment"
+                  id="work_enviroment"
                   size="small"
                   value={"4"}
                   precision={1}
@@ -234,8 +234,8 @@ export function Company() {
                     <div className={classes.rating}>
                       <span>{t("Overall rating")}</span>
                       <Rating
-                        name="overall_rating"
-                        id="overall_rating"
+                        name={review.id["overall_rating"]}
+                        id={review.id["overall_rating"]}
                         size="large"
                         value="4"
                         precision={1}
@@ -245,8 +245,8 @@ export function Company() {
                     <div className={classes.rating}>
                       <span>{t("Salary")}</span>
                       <Rating
-                        name="salary_valuation"
-                        id="salary_valuation"
+                        name={review.id["salary_valuation"]}
+                        id={review.id[" salary_valuation"]}
                         size="small"
                         value={review.salary_valuation}
                         precision={1}
@@ -256,8 +256,8 @@ export function Company() {
                     <div className={classes.rating}>
                       <span> {t("Internal training")}</span>
                       <Rating
-                        name="inhouse_training"
-                        id="inhouse_training"
+                        name={review.id["inhouse_training"]}
+                        id={review.id[" inhouse_training"]}
                         size="small"
                         value={review.inhouse_training}
                         precision={1}
@@ -267,8 +267,8 @@ export function Company() {
                     <div className={classes.rating}>
                       <span>{t("Growth opportunities")}</span>
                       <Rating
-                        name="growth_opportunities"
-                        id="growth_opportunities"
+                        name={review.id["growth_opportunities"]}
+                        id={review.id["growth_opportunities"]}
                         size="small"
                         value={review.growth_opportunities}
                         precision={1}
@@ -278,8 +278,8 @@ export function Company() {
                     <div className={classes.rating}>
                       <span>{t("Work environment")}</span>
                       <Rating
-                        name="review.work_enviroment"
-                        id="review.work_enviroment"
+                        name={review.id["work_enviroment"]}
+                        id={review.id["work_enviroment"]}
                         size="small"
                         value={review.work_enviroment}
                         precision={1}
@@ -289,8 +289,8 @@ export function Company() {
                     <div className={classes.rating}>
                       <span>{t("Work&Life balance")}</span>
                       <Rating
-                        name="personal_life"
-                        id="personal_life"
+                        name={review.id["personal_life"]}
+                        id={review.id["personal_life"]}
                         size="small"
                         value={review.personal_life}
                         precision={1}
