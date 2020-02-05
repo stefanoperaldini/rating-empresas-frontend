@@ -33,24 +33,25 @@ export function UserDelete() {
     <React.Fragment>
       <Header />
       <main className="centered-container">
-        <h3>{t("Delete my account")}</h3>
+        <h3>{t("Delete account")}</h3>
         <form onSubmit={handleSubmit(handleUserDelete)}>
-
           <div
             className={`form-control ${
               errors.confirm ? "ko" : formState.touched.confirm && "ok"
-              }`}
+            }`}
           >
             <label htmlFor="confirm">
               {t("For deleting your account, please type")}: CONFIRM DELETE
             </label>
-            <input ref={register(validatorDelete)} name="confirm" type="text"
-              id="confirm" placeholder={t("CONFIRM DELETE")}>
-            </input>
+            <input
+              ref={register(validatorDelete)}
+              name="confirm"
+              type="text"
+              id="confirm"
+              placeholder={t("CONFIRM DELETE")}
+            ></input>
             {errors.confirm && (
-              <span className="errorMessage">
-                {t(errors.confirm.message)}
-              </span>
+              <span className="errorMessage">{t(errors.confirm.message)}</span>
             )}
           </div>
 
@@ -63,7 +64,6 @@ export function UserDelete() {
               {t("Delete")}
             </button>
           </div>
-
         </form>
       </main>
       <Footer />

@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import Rating from '@material-ui/lab/Rating';
-import { makeStyles } from '@material-ui/core/styles';
+import Rating from "@material-ui/lab/Rating";
+import { makeStyles } from "@material-ui/core/styles";
+import denounceReview from "../img/denounce.png";
+import deleteReview from "../img/delete.png";
 
 import { getReviewUserList } from "../http/reviewService";
 import { Header } from "../components/Header";
@@ -14,9 +16,9 @@ import { Footer } from "../components/Footer";
 const useStyles = makeStyles({
   rating: {
     width: 200,
-    display: 'flex',
-    alignItems: 'center',
-  },
+    display: "flex",
+    alignItems: "center"
+  }
 });
 
 export function ReviewUser() {
@@ -128,6 +130,17 @@ export function ReviewUser() {
             </li>
           ))}
         </ul>
+        <img src={denounceReview} alt={t("Icon for denounce a review")} />
+        <a
+          href="/"
+          title={t("Link for sending e-mail to the web administrator")}
+        >
+          {t("Denounce")}
+        </a>
+        <img src={deleteReview} alt={t("Icon for delete a review")} />
+        <a href="/" title={t("Link for deleting a review")}>
+          {t("Delete")}
+        </a>
       </main>
       <Footer />
     </React.Fragment>

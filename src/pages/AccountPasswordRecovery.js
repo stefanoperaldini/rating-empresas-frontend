@@ -5,20 +5,14 @@ import { useForm } from "react-hook-form";
 
 import { passwordRecovery } from "../http/authService";
 import { Header } from "../components/Header";
-import { setErrorMessageCallBackEnd, validatorEmail, } from './pagesUtils';
+import { setErrorMessageCallBackEnd, validatorEmail } from "./pagesUtils";
 
 /**
  * Page for recovering password
  */
 
 export function AccountPasswordRecovery() {
-  const {
-    handleSubmit,
-    register,
-    errors,
-    formState,
-    setError,
-  } = useForm({
+  const { handleSubmit, register, errors, formState, setError } = useForm({
     mode: "onBlur"
   });
 
@@ -32,30 +26,33 @@ export function AccountPasswordRecovery() {
       })
       .catch(error => {
         setError("email", "backend", setErrorMessageCallBackEnd(error));
-      })
+      });
   };
 
   return (
     <React.Fragment>
       <Header />
       <main className="centered-container">
-        <h3>{t("Password recovery")}</h3>
+        <h3>{t("Forgot password?")}</h3>
         <form onSubmit={handleSubmit(handleRecoveryPassword)} noValidate>
           <div
             className={`form-control ${
               errors.email ? "ko" : formState.touched.email && "ok"
-              }`}
+            }`}
           >
-            <label htmlFor="email">{t("Email")}</label>
-            <input ref={register(validatorEmail)} name="email" id="email" type="email"
-              placeholder={t("Please enter your email")}>
-            </input>
+            <label htmlFor="email">{t("E-mail")}</label>
+            <input
+              ref={register(validatorEmail)}
+              name="email"
+              id="email"
+              type="email"
+              placeholder={t("Enter your e-mail")}
+            ></input>
             {errors.email && (
-              <span className="errorMessage">
-                {t(errors.email.message)}
-              </span>
+              <span className="errorMessage">{t(errors.email.message)}</span>
             )}
           </div>
+          <p>{t("We will send you an email with a new password")}</p>
           <div className="btn-container">
             <button
               type="submit"

@@ -1,17 +1,21 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useForm } from "react-hook-form";
-import { makeStyles } from '@material-ui/core/styles';
-import Rating from '@material-ui/lab/Rating';
+import { makeStyles } from "@material-ui/core/styles";
+import Rating from "@material-ui/lab/Rating";
 
 import "../css/review-create.css";
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
 import { Cities } from "../components/Cities";
 import {
-  validatorCompanyName, validatorSalary, validatorTitleReview,
-  validatorDescription, validatorSector, validatorPosition
-} from './pagesUtils';
+  validatorCompanyName,
+  validatorSalary,
+  validatorTitleReview,
+  validatorDescription,
+  validatorSector,
+  validatorPosition
+} from "./pagesUtils";
 
 /**
  * Review create
@@ -20,25 +24,26 @@ import {
 const useStyles = makeStyles({
   rating: {
     width: 200,
-    display: 'flex',
-    alignItems: 'center',
-  },
+    display: "flex",
+    alignItems: "center"
+  }
 });
 
 export function ReviewCreate() {
-  const {
-    handleSubmit,
-    register,
-    errors,
-    formState,
-  } = useForm({
+  const { handleSubmit, register, errors, formState } = useForm({
     mode: "onBlur"
   });
 
   const classes = useStyles();
   const { t } = useTranslation();
 
-  const [value, setValue] = useState({ salary_valuation: 1, inhouse_training: 1, growth_opportunities: 1, work_enviroment: 1, personal_life: 1 });
+  const [value, setValue] = useState({
+    salary_valuation: 1,
+    inhouse_training: 1,
+    growth_opportunities: 1,
+    work_enviroment: 1,
+    personal_life: 1
+  });
 
   const handleReviewCreate = formData => {
     console.log(formData);
@@ -49,25 +54,25 @@ export function ReviewCreate() {
       <Header />
       <main>
         <h3>{t("Create a review")}</h3>
-        <h4>
-          {t("Rate a company you've worked for in the past 3 years.")}
-        </h4>
+        <h4>{t("Rate a company you've worked for in the past 3 years.")}</h4>
         <h4>{t("Reviews published are anonymous.")}</h4>
 
         <form onSubmit={handleSubmit(handleReviewCreate)}>
           <div
             className={`form-control ${
               errors.name ? "ko" : formState.touched.name && "ok"
-              }`}
+            }`}
           >
             <label htmlFor="name">{t("Company name")}</label>
-            <input ref={register(validatorCompanyName)} name="name" id="name"
-              type="text" placeholder={t("Please, select company name")}>
-            </input>
+            <input
+              ref={register(validatorCompanyName)}
+              name="name"
+              id="name"
+              type="text"
+              placeholder={t("Company name")}
+            ></input>
             {errors.name && (
-              <span className="errorMessage">
-                {t(errors.name.message)}
-              </span>
+              <span className="errorMessage">{t(errors.name.message)}</span>
             )}
           </div>
           <div className="btn-container">
@@ -87,7 +92,6 @@ export function ReviewCreate() {
               <h4>{t("Rate company")}</h4>
             </legend>
             <ul>
-
               <li className={`form-control ${classes.rating}`}>
                 <label className="itemsReview" htmlFor="salary_valuation">
                   {t("Salary")}
@@ -98,7 +102,7 @@ export function ReviewCreate() {
                   value={value["salary_valuation"]}
                   precision={1}
                   onChange={(event, newValue) => {
-                    setValue({ ...value, "salary_valuation": newValue });
+                    setValue({ ...value, salary_valuation: newValue });
                   }}
                 />
               </li>
@@ -113,7 +117,7 @@ export function ReviewCreate() {
                   value={value["inhouse_training"]}
                   precision={1}
                   onChange={(event, newValue) => {
-                    setValue({ ...value, "inhouse_training": newValue });
+                    setValue({ ...value, inhouse_training: newValue });
                   }}
                 />
               </li>
@@ -128,7 +132,7 @@ export function ReviewCreate() {
                   value={value["growth_opportunities"]}
                   precision={1}
                   onChange={(event, newValue) => {
-                    setValue({ ...value, "growth_opportunities": newValue });
+                    setValue({ ...value, growth_opportunities: newValue });
                   }}
                 />
               </li>
@@ -143,7 +147,7 @@ export function ReviewCreate() {
                   value={value["work_enviroment"]}
                   precision={1}
                   onChange={(event, newValue) => {
-                    setValue({ ...value, "work_enviroment": newValue });
+                    setValue({ ...value, work_enviroment: newValue });
                   }}
                 />
               </li>
@@ -158,11 +162,10 @@ export function ReviewCreate() {
                   value={value["personal_life"]}
                   precision={1}
                   onChange={(event, newValue) => {
-                    setValue({ ...value, "personal_life": newValue });
+                    setValue({ ...value, personal_life: newValue });
                   }}
                 />
               </li>
-
             </ul>
           </fieldset>
 
@@ -174,44 +177,44 @@ export function ReviewCreate() {
             <div
               className={`form-control ${
                 errors.salary ? "ko" : formState.touched.salary && "ok"
-                } ammount`}
+              } ammount`}
             >
               <label htmlFor="salary">{t("Your salary")}</label>
-              <input className="salary-ammount" ref={register(validatorSalary)} name="salary"
-                id="salary" type="number" placeholder={t("Example: 2.000")}>
-              </input>
-              <label htmlFor="salary">{t("€ per month")}</label>
+              <input
+                className="salary-ammount"
+                ref={register(validatorSalary)}
+                name="salary"
+                id="salary"
+                type="number"
+                placeholder={t("Example: 2.000")}
+              ></input>
+              <label htmlFor="salary">€ / {t("month")}</label>
               {errors.salary && (
-                <span className="errorMessage">
-                  {t(errors.salary.message)}
-                </span>
+                <span className="errorMessage">{t(errors.salary.message)}</span>
               )}
             </div>
-
           </fieldset>
 
           <fieldset>
             <legend>
-              <h4>
-                {t("Could you add something else to your rating?")}
-              </h4>
+              <h4>{t("Could you add something else to your rating?")}</h4>
             </legend>
             <ul>
-
               <li
                 className={`form-control ${
                   errors.comment_title
                     ? "ko"
                     : formState.touched.comment_title && "ok"
-                  }`}
+                }`}
               >
-                <label htmlFor="comment_title">
-                  {t("Review summary")}
-                </label>
+                <label htmlFor="comment_title">{t("Review summary")}</label>
                 <input
-                  ref={register(validatorTitleReview)} name="comment_title" id="comment_title"
-                  type="text" placeholder={t("Please, write a title")}>
-                </input>
+                  ref={register(validatorTitleReview)}
+                  name="comment_title"
+                  id="comment_title"
+                  type="text"
+                  placeholder={t("Please, write a title")}
+                ></input>
                 {errors.comment_title && (
                   <span className="errorMessage">
                     {t(errors.comment_title.message)}
@@ -222,20 +225,21 @@ export function ReviewCreate() {
               <li
                 className={`form-control ${
                   errors.comment ? "ko" : formState.touched.comment && "ok"
-                  }`}
+                }`}
               >
                 <label htmlFor="comment">{t("Your review")}</label>
                 <textarea
-                  ref={register(validatorDescription)} name="comment" id="comment"
-                  type="text">
-                </textarea>
+                  ref={register(validatorDescription)}
+                  name="comment"
+                  id="comment"
+                  type="text"
+                ></textarea>
                 {errors.comment && (
                   <span className="errorMessage">
                     {t(errors.comment.message)}
                   </span>
                 )}
               </li>
-
             </ul>
           </fieldset>
 
@@ -244,38 +248,37 @@ export function ReviewCreate() {
               <h4>{t("Tell us about your job")}</h4>
             </legend>
             <ul>
-
               <li
                 className={`form-control ${
                   errors.name ? "ko" : formState.touched.name && "ok"
-                  }`}
+                }`}
               >
-                <label htmlFor="name">{t("Name")}</label>
+                <label htmlFor="name">{t("Name")} (*)</label>
                 <input
                   ref={register(validatorCompanyName)}
                   name="name"
                   id="name"
                   type="text"
-                  placeholder={t("My company name")}
+                  placeholder={t("Company name")}
                 ></input>
                 {errors.name && (
-                  <span className="errorMessage">
-                    {t(errors.name.message)}
-                  </span>
+                  <span className="errorMessage">{t(errors.name.message)}</span>
                 )}
               </li>
 
               <li
                 className={`form-control ${
-                  errors.sector_id
-                    ? "ko"
-                    : formState.touched.sector_id && "ok"
-                  }`}
+                  errors.sector_id ? "ko" : formState.touched.sector_id && "ok"
+                }`}
               >
-                <label htmlFor="sector_id">{t("Sector")}</label>
-                <input ref={register(validatorSector)} name="sector_id" id="sector_id"
-                  type="text" placeholder={t("My company's sector")}>
-                </input>
+                <label htmlFor="sector_id">{t("Sector")} (*)</label>
+                <input
+                  ref={register(validatorSector)}
+                  name="sector_id"
+                  id="sector_id"
+                  type="text"
+                  placeholder={t("Company's sector")}
+                ></input>
                 {errors.sector_id && (
                   <span className="errorMessage">
                     {t(errors.sector_id.message)}
@@ -288,12 +291,16 @@ export function ReviewCreate() {
                   errors.position_id
                     ? "ko"
                     : formState.touched.position_id && "ok"
-                  }`}
+                }`}
               >
-                <label htmlFor="position_id">{t("Job title")}</label>
-                <input ref={register(validatorPosition)} name="position_id" id="position_id"
-                  type="text" placeholder={t("Please, enter your position")}>
-                </input>
+                <label htmlFor="position_id">{t("Job title")} (*)</label>
+                <input
+                  ref={register(validatorPosition)}
+                  name="position_id"
+                  id="position_id"
+                  type="text"
+                  placeholder={t("Enter your position")}
+                ></input>
                 {errors.position_id && (
                   <span className="errorMessage">
                     {t(errors.position_id.message)}
@@ -304,27 +311,23 @@ export function ReviewCreate() {
               <div
                 className={`form-control ${
                   errors.city ? "ko" : formState.touched.city && "ok"
-                  }`}
+                }`}
               >
-                <label htmlFor="city">{t("Headquarter")}</label>
+                <label htmlFor="city">{t("City")} (*)</label>
                 <input
                   ref={register({
-                    required: 'Required',
+                    required: "Required"
                   })}
                   name="city"
                   id="city"
                   type="text"
                   value=""
                   onChange={e => console.log("Change city")}
-                  placeholder={t("Headquarters")}
+                  placeholder={t("City")}
                 ></input>
-                {
-                  errors.city && (
-                    <span className="errorMessage">
-                      {t(errors.city.message)}
-                    </span>
-                  )
-                }
+                {errors.city && (
+                  <span className="errorMessage">{t(errors.city.message)}</span>
+                )}
               </div>
 
               <li
@@ -332,9 +335,9 @@ export function ReviewCreate() {
                   errors.start_year_id
                     ? "ko"
                     : formState.touched.start_year && "ok"
-                  } review-years`}
+                } review-years`}
               >
-                <label htmlFor="start_year">{t("Start year")}</label>
+                <label htmlFor="start_year">{t("Start year")} (*)</label>
                 <select
                   name="start_year"
                   id="start_year"
@@ -386,12 +389,8 @@ export function ReviewCreate() {
                   <option value="1980">1980</option>
                 </select>
 
-                <label htmlFor="end_year">{t("End year")}</label>
-                <select
-                  name="end_year"
-                  id="end_year"
-                  ref={register()}
-                >
+                <label htmlFor="end_year">{t("End year")} (*)</label>
+                <select name="end_year" id="end_year" ref={register()}>
                   <option value="Empty"></option>
                   <option value="null">I currently work here</option>
                   <option value="2020">2020</option>
@@ -400,25 +399,21 @@ export function ReviewCreate() {
                   <option value="2017">2017</option>
                 </select>
                 {errors.start_year && (
-                  <span className="errorMessage">
-                    {t(errors.start_year)}
-                  </span>
+                  <span className="errorMessage">{t(errors.start_year)}</span>
                 )}
               </li>
-
             </ul>
           </fieldset>
-
+          <p>(*) {t("Field required")}</p>
           <div className="btn-container">
             <button
               type="submit"
               className="btn"
               disabled={formState.isSubmitting}
             >
-              {t("Send")}
+              {t("Save")}
             </button>
           </div>
-
         </form>
       </main>
       <Footer />

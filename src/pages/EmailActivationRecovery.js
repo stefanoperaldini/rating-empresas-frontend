@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { mailActivationRecovery } from "../http/authService";
 
 import { Header } from "../components/Header";
-import { setErrorMessageCallBackEnd, validatorEmail, } from './pagesUtils';
+import { setErrorMessageCallBackEnd, validatorEmail } from "./pagesUtils";
 
 /**
  * Page for recovering email
@@ -14,13 +14,7 @@ import { setErrorMessageCallBackEnd, validatorEmail, } from './pagesUtils';
 
 export function EmailActivationRecovery() {
   // const [backendErrorMessage, setBackendErrorMessage] = useState('')
-  const {
-    handleSubmit,
-    register,
-    errors,
-    formState,
-    setError,
-  } = useForm({
+  const { handleSubmit, register, errors, formState, setError } = useForm({
     mode: "onBlur"
   });
 
@@ -41,24 +35,26 @@ export function EmailActivationRecovery() {
     <React.Fragment>
       <Header />
       <main className="centered-container">
-        <h3>{t("E-mail activation")}</h3>
+        <h3>{t("Lost e-mail activation?")}</h3>
         <form onSubmit={handleSubmit(handleEmailActivationRecovery)} noValidate>
           <div
             className={`form-control ${
               errors.email ? "ko" : formState.touched.email && "ok"
-              }`}
+            }`}
           >
-            <label htmlFor="email">{t("Email")}</label>
-            <input ref={register(validatorEmail)} name="email" id="email" type="email"
-              placeholder={t("Please enter your email")}>
-            </input>
+            <label htmlFor="email">{t("E-mail")}</label>
+            <input
+              ref={register(validatorEmail)}
+              name="email"
+              id="email"
+              type="email"
+              placeholder={t("Enter your e-mail")}
+            ></input>
             {errors.email && (
-              <span className="errorMessage">
-                {t(errors.email.message)}
-              </span>
+              <span className="errorMessage">{t(errors.email.message)}</span>
             )}
           </div>
-
+          <p>{t("We will resend you a new activation e-mail")}</p>
           <div className="btn-container">
             <button
               type="submit"
@@ -71,7 +67,6 @@ export function EmailActivationRecovery() {
               <Link to="/account/login">{t("Sign in")}</Link>
             </div>
           </div>
-
         </form>
       </main>
     </React.Fragment>
