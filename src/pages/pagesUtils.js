@@ -107,7 +107,7 @@ const validatorDelete = {
 
 const validatorSalary = {
   pattern: {
-    value: /^[1-9]+(\.[0-9])?$/,
+    value: /^\d{1,6}(?:\.\d{0,2})?$/,
     message: "The ammount is not valid"
   }
 };
@@ -123,6 +123,19 @@ const validatorTitleReview = {
     message: "Maximun is 30 characters"
   }
 };
+
+const validatorDescriptionReview = {
+  required: "This field is required",
+  minLength: {
+    value: 10,
+    message: "Minimun is 10 characters"
+  },
+  maxLength: {
+    value: 1000,
+    message: "Maximun is 1000 characters"
+  }
+};
+
 
 const validatorSector = {
   required: "This field is required",
@@ -172,6 +185,7 @@ export {
   validatorAddress,
   validatorDelete,
   validatorTitleReview,
+  validatorDescriptionReview,
   validatorSalary,
   validatorSector,
   validatorPosition,

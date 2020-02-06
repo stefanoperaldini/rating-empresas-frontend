@@ -61,7 +61,7 @@ export function Home() {
             <div
               className={`form-control ${
                 errors.id ? "ko" : formState.touched.id && "ok"
-              }`}
+                }`}
             >
               <input
                 ref={register({
@@ -108,7 +108,7 @@ export function Home() {
                 value="0"
                 precision={1}
                 onChange={() => {
-                  history.push("/account/login");
+                  history.push("/review/create");
                 }}
               />
             </div>
