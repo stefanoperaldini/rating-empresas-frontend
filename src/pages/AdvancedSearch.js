@@ -41,7 +41,7 @@ export function AdvancedSearch() {
     <React.Fragment>
       <Header />
       <main className="centered-container">
-        <h3>{t("Advanced Search")}</h3>
+        <h3>{t("Advanced search")}</h3>
         <section>
           <h5>{t("Search for")}:</h5>
           <form onSubmit>

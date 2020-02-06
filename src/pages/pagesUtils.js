@@ -36,7 +36,7 @@ const validatorPassword = {
 const validatorLinkedin = {
   pattern: {
     value: /^https:\/\/[a-z]{2,3}\.linkedin\.com\/.*$/,
-    message: "The linkedin address is not valid"
+    message: "The LinkedIn address is not valid"
   },
   maxLength: {
     value: 255,
