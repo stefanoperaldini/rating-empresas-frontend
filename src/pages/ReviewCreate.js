@@ -392,7 +392,7 @@ export function ReviewCreate() {
                 <label htmlFor="end_year">{t("End year")} (*)</label>
                 <select name="end_year" id="end_year" ref={register()}>
                   <option value="Empty"></option>
-                  <option value="null">I currently work here</option>
+                  <option value="null">{t("I currently work here")}</option>
                   <option value="2020">2020</option>
                   <option value="2019">2019</option>
                   <option value="2018">2018</option>

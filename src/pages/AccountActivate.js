@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import { useParams } from "react-router";
-import { activateAccount } from '../http/authService';
+import { activateAccount } from "../http/authService";
+import { setErrorMessageCallBackEnd } from "./pagesUtils";
 
 /**
  * Page for sending activation to backend. Show the result.
@@ -18,18 +19,10 @@ export function AccountActivate() {
   useEffect(() => {
     activateAccount(verificationCode)
       .then(response => {
-        setResponse(t("Account activated"));
+        setResponse("Account activated");
       })
       .catch(error => {
-        let messageResponse = t("Server down");
-        if (error.response) {
-          // Server up
-          messageResponse = error.response.data;
-          if (error.response.status === "500") {
-            messageResponse = t("Internal server error");
-          }
-        }
-        setResponse(messageResponse);
+        setResponse(setErrorMessageCallBackEnd(error));
       });
   }, [verificationCode, t]);
 
@@ -42,7 +35,7 @@ export function AccountActivate() {
       <main className="centered-container">
         <h2>{t(response)}</h2>
         <div className="m-t-lg btn-container">
-          <Link to="/account/login">{t("Login")}</Link>
+          <Link to="/account/login">{t("Sign in")}</Link>
         </div>
       </main>
     </React.Fragment>
