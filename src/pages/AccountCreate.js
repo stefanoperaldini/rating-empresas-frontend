@@ -67,7 +67,7 @@ export function AccountCreate() {
               name="name"
               id="name"
               type="text"
-              placeholder="Enter your name"
+              placeholder={t("Enter your name")}
             ></input>
             {errors.name && (
               <span className="errorMessage">{t(errors.name.message)}</span>

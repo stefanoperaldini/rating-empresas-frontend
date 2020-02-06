@@ -515,7 +515,7 @@ export function ReviewCreate() {
                 <div className="form-control">
                   <label htmlFor="end_year">{t("End year")} (*)</label>
                   <select name="end_year" id="end_year" ref={register()}>
-                    <option value="null">I currently work here</option>
+                    <option value="null">{t("I currently work here")}</option>
                     <option value="2020">2020</option>
                     <option value="2019">2019</option>
                     <option value="2018">2018</option>
@@ -533,7 +533,7 @@ export function ReviewCreate() {
                   className="btn"
                   disabled={formState.isSubmitting}
                 >
-                  {t("Save")}
+                 {t("Save")}
                 </button>
               </div>
             </form>
