@@ -125,22 +125,22 @@ export function ReviewUser() {
                       readOnly={true}
                     />
                   </div>
+                  <img src={denounceReview} alt={t("Icon for denounce a review")} />
+                  <a
+                    href="/"
+                    title={t("Link for sending e-mail to the web administrator")}
+                  >
+                    {t("Denounce")}
+                  </a>
+                  <img src={deleteReview} alt={t("Icon for delete a review")} />
+                  <a href="/" title={t("Link for deleting a review")}>
+                    {t("Delete")}
+                  </a>
                 </main>
               </article>
             </li>
           ))}
         </ul>
-        <img src={denounceReview} alt={t("Icon for denounce a review")} />
-        <a
-          href="/"
-          title={t("Link for sending e-mail to the web administrator")}
-        >
-          {t("Denounce")}
-        </a>
-        <img src={deleteReview} alt={t("Icon for delete a review")} />
-        <a href="/" title={t("Link for deleting a review")}>
-          {t("Delete")}
-        </a>
       </main>
       <Footer />
     </React.Fragment>

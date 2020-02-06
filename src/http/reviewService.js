@@ -9,3 +9,21 @@ export function getReviewsFilter(id) {
     `${process.env.REACT_APP_BACKEND_URL}/v1/reviews/filter/all?companyId=${id}`
   );
 }
+
+export function getPositions() {
+  return axios.get(
+    `${process.env.REACT_APP_BACKEND_URL}/v1/positions`
+  );
+}
+
+export function createPosition(dataPosition) {
+  return axios.post(
+    `${process.env.REACT_APP_BACKEND_URL}/v1/positions`, dataPosition
+  );
+}
+
+export function createReview(dataReview) {
+  return axios.post(
+    `${process.env.REACT_APP_BACKEND_URL}/v1/reviews`, dataReview
+  );
+}

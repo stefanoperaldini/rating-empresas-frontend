@@ -68,7 +68,7 @@ export function Company() {
               value="0"
               precision={1}
               onChange={() => {
-                history.push("/account/login");
+                history.push("/review/create");
               }}
             />
           </div>

@@ -24,10 +24,6 @@ import {
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
 
-/**
- * Page for create company
- */
-
 function companyReducer(state, action) {
   switch (action.type) {
     case "GET_COMPANIES":
@@ -49,6 +45,10 @@ function companyReducer(state, action) {
       return state;
   }
 }
+
+/**
+ * Page for create company
+ */
 
 export function CompanyCreate() {
   const { handleSubmit, register, errors, formState, setError } = useForm({
@@ -89,11 +89,9 @@ export function CompanyCreate() {
       }
     }
 
-    let isNewCompany = true;
     let companyId = null;
     for (let company of state.companies) {
       if (formData.name === company.name) {
-        isNewCompany = false;
         companyId = company.id;
         break;
       }
@@ -112,10 +110,12 @@ export function CompanyCreate() {
         sector_id: sectorId
       };
 
-      if (isNewCompany) {
+      if (!companyId) {
         createCompany(formDataCompany)
           .then(response => {
-            history.push("/company/detail");
+            const location = response.headers.location.split("/");
+            companyId = location[location.length - 1];
+            history.push(`/company/detail/${companyId}`);
           })
           .catch(error => {
             setError("sede_id", "backend", setErrorMessageCallBackEnd(error));
@@ -123,7 +123,7 @@ export function CompanyCreate() {
       } else {
         updateCompany(companyId, formDataCompany)
           .then(response => {
-            history.push("/company/detail");
+            history.push(`/company/detail/${companyId}`);
           })
           .catch(error => {
             setError("sede_id", "backend", setErrorMessageCallBackEnd(error));
@@ -190,7 +190,7 @@ export function CompanyCreate() {
           <div
             className={`form-control ${
               errors.name ? "ko" : formState.touched.name && "ok"
-            }`}
+              }`}
           >
             <label htmlFor="name">{t("Name")} (*)</label>
             <input
@@ -219,7 +219,7 @@ export function CompanyCreate() {
           <div
             className={`form-control ${
               errors.description ? "ko" : formState.touched.description && "ok"
-            }`}
+              }`}
           >
             <label htmlFor="description">{t("Description")}</label>
             <textarea
@@ -246,7 +246,7 @@ export function CompanyCreate() {
           <div
             className={`form-control ${
               errors.sector ? "ko" : formState.touched.sector && "ok"
-            }`}
+              }`}
           >
             <label htmlFor="sector">{t("Sector")} (*)</label>
 
@@ -277,7 +277,7 @@ export function CompanyCreate() {
           <div
             className={`form-control ${
               errors.url_web ? "ko" : formState.touched.url_web && "ok"
-            }`}
+              }`}
           >
             <label htmlFor="url_web">{t("URL")}</label>
             <input
@@ -302,7 +302,7 @@ export function CompanyCreate() {
           <div
             className={`form-control ${
               errors.linkedin ? "ko" : formState.touched.linkedin && "ok"
-            }`}
+              }`}
           >
             <label htmlFor="linkedin">{t("LinkedIn")}</label>
             <input
@@ -327,7 +327,7 @@ export function CompanyCreate() {
           <div
             className={`form-control ${
               errors.address ? "ko" : formState.touched.address && "ok"
-            }`}
+              }`}
           >
             <label htmlFor="address">{t("Headquarters address")}</label>
             <input
@@ -352,7 +352,7 @@ export function CompanyCreate() {
           <div
             className={`form-control ${
               errors.sede_id ? "ko" : formState.touched.sede_id && "ok"
-            }`}
+              }`}
           >
             <label htmlFor="sede_id">{t("Headquarters")} (*)</label>
             <input
