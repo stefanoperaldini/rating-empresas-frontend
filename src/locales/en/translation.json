@@ -69,7 +69,7 @@
   "Next": "Next",
   "Rate company": "Rate company",
   "Your salary": "Your salary",
-  "Example: 2.000": "Example: 2.000",
+  "Example: 2000": "Example: 2000",
   "Could you add something else to your rating?": "Could you add something else to your rating?",
   "Review summary": "Review summary",
   "Please, write a title": "Please, write a title",
@@ -109,7 +109,6 @@
   "You will receive an activation e-mail": "You will receive an activation e-mail",
   "Create": "Create",
   "Please sign in": "Please sign in",
-
   "Account activated": "Account activated",
   "The e-mail is required": "The e-mail is required",
   "The e-mail is not valid": "The e-mail is not valid",
@@ -129,5 +128,8 @@
   "Must type CONFIRM DELETE": "Must type CONFIRM DELETE",
   "The ammount is not valid": "The ammount is not valid",
   "Minimun is 5 characters": "Minimun is 5 characters",
-  "Maximun is 30 characters": "Maximun is 30 characters"
+  "Maximun is 30 characters": "Maximun is 30 characters",
+  "Server down": "Server down",
+  "Internal server error": "Internal server error",
+  "Enter a company name": "Enter a company name"
 }

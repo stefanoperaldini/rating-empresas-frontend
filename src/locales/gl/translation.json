@@ -69,7 +69,7 @@
   "Next": "Seguinte",
   "Rate company": "Cualificar empresa",
   "Your salary": "O teu soldo",
-  "Example: 2.000": "Exemplo: 2.000",
+  "Example: 2000": "Exemplo: 2000",
   "Could you add something else to your rating?": "Escribe a túa valoración desta empresa",
   "Review summary": "Título",
   "Please, write a title": "Por favor, insire un título",
@@ -84,7 +84,7 @@
   "Icon for denounce a review": "Icona para denunciar unha valoración",
   "Link for sending e-mail to the web administrator": "Ligazón para enviar un e-mail ao administrador do sitio web",
   "Denounce": "Denunciar",
-  "Icon for delete a review": "Icona para denunciar unha valoración",
+  "Icon for delete a review": "Icona para eliminar unha valoración",
   "Link for deleting a review": "Ligazón para eliminar unha valoración",
   "Delete": "Borrar",
   "For deleting your account, please type": "Para borrar a túa conta, por favor, insire",
@@ -109,7 +109,6 @@
   "You will receive an activation e-mail": "Recibirás un e-mail de activación",
   "Create": "Crear",
   "Please sign in": "Por favor inicia sesión",
-
   "Account activated": "Conta activada",
   "The e-mail is required": "O e-mail é necesario",
   "The e-mail is not valid": "O e-mail non é válido",
@@ -129,5 +128,8 @@
   "Must type CONFIRM DELETE": "Debes escribir CONFIRM DELETE",
   "The ammount is not valid": "A cantidade non é válida",
   "Minimun is 5 characters": "Mínimo 5 caracteres",
-  "Maximun is 30 characters": "Máximo 30 caracteres"
+  "Maximun is 30 characters": "Máximo 30 caracteres",
+  "Server down": "Servidor non disposto",
+  "Internal server error": "Erro interno do servidor",
+  "Enter a company name": "Insire un nome de empresa"
 }

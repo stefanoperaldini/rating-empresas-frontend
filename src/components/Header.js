@@ -21,8 +21,10 @@ export function Header() {
     return logOut()
       .then(response => {
         localStorage.removeItem("currentUser");
+        localStorage.removeItem("accessToken");
       })
       .catch(error => {
+        localStorage.removeItem("currentUser");
         localStorage.removeItem("accessToken");
         console.error(setErrorMessageCallBackEnd(error));
       })
@@ -171,50 +173,50 @@ export function Header() {
           {t("Sign out")}
         </nav>
       ) : (
-        <nav className="menu header-item" onClick={() => setShowMenu(true)}>
-          <img src={menu} alt={t("Menu icon")} />
-          {showMenu && (
-            <div
-              className="m-t-lg lista-menu"
-              onMouseLeave={() => setShowMenu(false)}
-            >
-              <ul>
-                {role === "2" && (
-                  <li>
-                    <Link to="/company/create">{t("My company")}</Link>
-                  </li>
-                )}
-                {role === "1" && (
-                  <React.Fragment>
-                    <li>
-                      <Link to="/review/create">{t("Create review")}</Link>
-                    </li>
-                    <li>
-                      <Link to="/review/user">{t("My reviews")}</Link>
-                    </li>
-                  </React.Fragment>
-                )}
-                {(role === "1" || role === "2") && (
-                  <React.Fragment>
-                    <li>
-                      <Link to="/user/update">{t("Profile")}</Link>
-                    </li>
-                    <li>
-                      <Link to="/account/password/change">
-                        {t("Change password")}
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to="/user/delete">{t("Delete account")}</Link>
-                    </li>
-                  </React.Fragment>
-                )}
-                <li onClick={() => executeLogout()}>{t("Sign out")}</li>
-              </ul>
-            </div>
+            <nav className="menu header-item" onClick={() => setShowMenu(true)}>
+              <img src={menu} alt={t("Menu icon")} />
+              {showMenu && (
+                <div
+                  className="m-t-lg lista-menu"
+                  onMouseLeave={() => setShowMenu(false)}
+                >
+                  <ul>
+                    {role === "2" && (
+                      <li>
+                        <Link to="/company/create">{t("My company")}</Link>
+                      </li>
+                    )}
+                    {role === "1" && (
+                      <React.Fragment>
+                        <li>
+                          <Link to="/review/create">{t("Create review")}</Link>
+                        </li>
+                        <li>
+                          <Link to="/review/user">{t("My reviews")}</Link>
+                        </li>
+                      </React.Fragment>
+                    )}
+                    {(role === "1" || role === "2") && (
+                      <React.Fragment>
+                        <li>
+                          <Link to="/user/update">{t("Profile")}</Link>
+                        </li>
+                        <li>
+                          <Link to="/account/password/change">
+                            {t("Change password")}
+                          </Link>
+                        </li>
+                        <li>
+                          <Link to="/user/delete">{t("Delete account")}</Link>
+                        </li>
+                      </React.Fragment>
+                    )}
+                    <li onClick={() => executeLogout()}>{t("Sign out")}</li>
+                  </ul>
+                </div>
+              )}
+            </nav>
           )}
-        </nav>
-      )}
     </header>
   );
 }

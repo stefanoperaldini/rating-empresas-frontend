@@ -327,7 +327,7 @@ export function ReviewCreate() {
                     name="salary"
                     id="salary"
                     type="number"
-                    placeholder={t("Example: 2.000")}
+                    placeholder={t("Example: 2000")}
                   ></input>
                   <label htmlFor="salary">€ / {t("month")}</label>
                   {errors.salary && (
@@ -533,7 +533,7 @@ export function ReviewCreate() {
                   className="btn"
                   disabled={formState.isSubmitting}
                 >
-                 {t("Save")}
+                  {t("Save")}
                 </button>
               </div>
             </form>
