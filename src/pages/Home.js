@@ -54,16 +54,13 @@ export function Home() {
     <React.Fragment>
       <Header />
       <main className="centered-container">
-        <section className="search-reviews">
+        <section>
           <h2>{t("Find great places to work")}</h2>
           <h3>{t("Get access to rating and company reviews")}</h3>
           <form onSubmit={handleSubmit(handleGetCompanyData)}>
-            <div
-              className={`form-control ${
-                errors.id ? "ko" : formState.touched.id && "ok"
-                }`}
-            >
-              <input className="input.search"
+            <div className="form-control">
+              <input
+                className="input.search"
                 ref={register({
                   required: "Enter a company name",
                   minLength: {
@@ -112,15 +109,14 @@ export function Home() {
               }}
             />
           </div>
-
         </section>
-        <section className="top-companies">
+        <section>
           <h3>{t("Top Ten Workplaces")}</h3>
-          <ul className="top-companies">
+          <ul>
             {topTenList.map(company => (
               <li key={company.id}>
                 <article>
-                  <header className="box-header">
+                  <header>
                     <p>{company.name}</p>
                   </header>
                   <main>

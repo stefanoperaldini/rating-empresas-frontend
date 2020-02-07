@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, } from "react";
+import React, { useEffect, useReducer } from "react";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -18,7 +18,7 @@ import {
   validatorDescription,
   validatorUrl,
   validatorAddress,
-  validatorSector,
+  validatorSector
 } from "./pagesUtils";
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
@@ -186,11 +186,7 @@ export function CompanyCreate() {
       <main className="centered-container">
         <h3>{t("My company")}</h3>
         <form onSubmit={handleSubmit(handleCompanyCreate)} noValidate>
-          <div
-            className={`form-control ${
-              errors.name ? "ko" : formState.touched.name && "ok"
-              }`}
-          >
+          <div className="form-control">
             <label htmlFor="name">{t("Name")} (*)</label>
             <input
               list="companyName"
@@ -215,11 +211,7 @@ export function CompanyCreate() {
             )}
           </div>
 
-          <div
-            className={`form-control ${
-              errors.description ? "ko" : formState.touched.description && "ok"
-              }`}
-          >
+          <div className="form-control">
             <label htmlFor="description">{t("Description")}</label>
             <textarea
               ref={register(validatorDescription)}
@@ -242,11 +234,7 @@ export function CompanyCreate() {
             )}
           </div>
 
-          <div
-            className={`form-control ${
-              errors.sector ? "ko" : formState.touched.sector && "ok"
-              }`}
-          >
+          <div className="form-control">
             <label htmlFor="sector">{t("Sector")} (*)</label>
 
             <input
@@ -273,11 +261,7 @@ export function CompanyCreate() {
             )}
           </div>
 
-          <div
-            className={`form-control ${
-              errors.url_web ? "ko" : formState.touched.url_web && "ok"
-              }`}
-          >
+          <div className="form-control">
             <label htmlFor="url_web">{t("URL")}</label>
             <input
               ref={register(validatorUrl)}
@@ -298,11 +282,7 @@ export function CompanyCreate() {
             )}
           </div>
 
-          <div
-            className={`form-control ${
-              errors.linkedin ? "ko" : formState.touched.linkedin && "ok"
-              }`}
-          >
+          <div className="form-control">
             <label htmlFor="linkedin">{t("LinkedIn")}</label>
             <input
               ref={register(validatorLinkedin)}
@@ -323,11 +303,7 @@ export function CompanyCreate() {
             )}
           </div>
 
-          <div
-            className={`form-control ${
-              errors.address ? "ko" : formState.touched.address && "ok"
-              }`}
-          >
+          <div className="form-control">
             <label htmlFor="address">{t("Headquarters address")}</label>
             <input
               ref={register(validatorAddress)}
@@ -348,11 +324,7 @@ export function CompanyCreate() {
             )}
           </div>
 
-          <div
-            className={`form-control ${
-              errors.sede_id ? "ko" : formState.touched.sede_id && "ok"
-              }`}
-          >
+          <div className="form-control">
             <label htmlFor="sede_id">{t("Headquarters")} (*)</label>
             <input
               ref={register({

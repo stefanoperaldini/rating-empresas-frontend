@@ -36,11 +36,7 @@ export function AccountPasswordRecovery() {
         <div className="boxAccount">
           <h3>{t("Forgot password?")}</h3>
           <form onSubmit={handleSubmit(handleRecoveryPassword)} noValidate>
-            <div
-              className={`form-control ${
-                errors.email ? "ko" : formState.touched.email && "ok"
-                }`}
-            >
+            <div className="form-control">
               <label htmlFor="email">{t("E-mail")}</label>
               <input
                 ref={register(validatorEmail)}

@@ -45,11 +45,7 @@ export function AccountPasswordChange() {
         <div className="boxAccount">
           <h3>{t("Change password")}</h3>
           <form onSubmit={handleSubmit(handlePasswordChange)}>
-            <div
-              className={`form-control ${
-                errors.oldPassword ? "ko" : formState.touched.oldPassword && "ok"
-                }`}
-            >
+            <div className="form-control">
               <label htmlFor="oldPassword">{t("Current password")}</label>
               <input
                 ref={register(validatorPassword)}
@@ -63,11 +59,7 @@ export function AccountPasswordChange() {
                 </span>
               )}
             </div>
-            <div
-              className={`form-control ${
-                errors.newPassword ? "ko" : formState.touched.newPassword && "ok"
-                }`}
-            >
+            <div className="form-control">
               <label htmlFor="newPassword">{t("New password")}</label>
               <input
                 ref={register(validatorPassword)}
@@ -82,14 +74,10 @@ export function AccountPasswordChange() {
               )}
             </div>
 
-            <div
-              className={`form-control ${
-                errors.confirmPassword
-                  ? "ko"
-                  : formState.touched.confirmPassword && "ok"
-                }`}
-            >
-              <label htmlFor="confirmPassword">{t("Confirm new password")}</label>
+            <div className="form-control">
+              <label htmlFor="confirmPassword">
+                {t("Confirm new password")}
+              </label>
               <input
                 ref={register({
                   validate: value => value === watch("newPassword")

@@ -49,11 +49,7 @@ export function UserUpdate() {
       <main className="centered-container">
         <h3>{t("Update profile")}</h3>
         <form onSubmit={handleSubmit(handleLinkedinChange)} noValidate>
-          <div
-            className={`form-control ${
-              errors.linkedin ? "ko" : formState.touched.linkedin && "ok"
-            }`}
-          >
+          <div className="form-control">
             <label htmlFor="linkedin">{t("LinkedIn")}</label>
             <input
               ref={register(validatorLinkedin)}

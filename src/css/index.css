@@ -5,7 +5,7 @@
 }
 
 body {
-  font-family: 'Noto Sans JP', sans-serif;
+  font-family: "Noto Sans JP", sans-serif;
 }
 
 button {
@@ -19,6 +19,12 @@ button {
   border: 2px solid var(--blue);
   border-radius: 15px;
   font-weight: 500;
+  transition-duration: 0.4s;
+}
+
+button:hover {
+  background-color: #003399;
+  border: 2px solid #003399;
 }
 
 ul {
@@ -31,12 +37,11 @@ a {
   font-weight: 300;
 }
 
-nav>a {
+nav > a {
   text-decoration: none;
   color: inherit;
   font-weight: 900;
 }
-
 
 /* CONTAINER
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
@@ -85,7 +90,6 @@ nav>a {
   position: relative;
   color: var(--blue);
 }
-
 
 /* MAIN
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
@@ -148,7 +152,6 @@ nav>a {
 .page-footer ul li:not(:last-child) {
   margin-right: 20px;
 }
-
 
 /* MQ
 –––––––––––––––––––––––––––––––––––––––––––––––––– */

@@ -37,11 +37,7 @@ export function EmailActivationRecovery() {
       <main className="centered-container">
         <h3>{t("Lost e-mail activation?")}</h3>
         <form onSubmit={handleSubmit(handleEmailActivationRecovery)} noValidate>
-          <div
-            className={`form-control ${
-              errors.email ? "ko" : formState.touched.email && "ok"
-            }`}
-          >
+          <div className="form-control">
             <label htmlFor="email">{t("E-mail")}</label>
             <input
               ref={register(validatorEmail)}
