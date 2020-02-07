@@ -38,7 +38,7 @@ export function UserDelete() {
           <div
             className={`form-control ${
               errors.confirm ? "ko" : formState.touched.confirm && "ok"
-            }`}
+              }`}
           >
             <label htmlFor="confirm">
               {t("For deleting your account, please type")}: CONFIRM DELETE

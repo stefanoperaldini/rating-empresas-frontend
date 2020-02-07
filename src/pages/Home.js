@@ -17,7 +17,7 @@ import { setErrorMessageCallBackEnd } from "./pagesUtils";
 
 const useStyles = makeStyles({
   rating: {
-    width: 200,
+    width: "200",
     display: "flex",
     alignItems: "center"
   }
@@ -53,7 +53,7 @@ export function Home() {
   return (
     <React.Fragment>
       <Header />
-      <main>
+      <main className="centered-container">
         <section className="search-reviews">
           <h2>{t("Find great places to work")}</h2>
           <h3>{t("Get access to rating and company reviews")}</h3>
@@ -63,7 +63,7 @@ export function Home() {
                 errors.id ? "ko" : formState.touched.id && "ok"
                 }`}
             >
-              <input
+              <input className="input.search"
                 ref={register({
                   required: "Enter a company name",
                   minLength: {
@@ -98,21 +98,21 @@ export function Home() {
           <a href="/advanced-search" title={t("Link to Advanced search page")}>
             {t("Advanced search")}
           </a>
-          <p>
-            <h3>{t("Do you want to rate a company?")}</h3>
-            <h4>{t("Your reviews will be anonimous")}</h4>
-            <div className={classes.rating}>
-              <Rating
-                name="overall_rating"
-                size="large"
-                value="0"
-                precision={1}
-                onChange={() => {
-                  history.push("/review/create");
-                }}
-              />
-            </div>
-          </p>
+
+          <h3>{t("Do you want to rate a company?")}</h3>
+          <h4>{t("Your reviews will be anonimous")}</h4>
+          <div className={classes.rating}>
+            <Rating
+              name="overall_rating"
+              size="large"
+              value="0"
+              precision={1}
+              onChange={() => {
+                history.push("/review/create");
+              }}
+            />
+          </div>
+
         </section>
         <section className="top-companies">
           <h3>{t("Top Ten Workplaces")}</h3>

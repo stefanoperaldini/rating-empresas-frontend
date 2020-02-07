@@ -1,11 +1,10 @@
-import React, { useEffect, useState, useReducer, useRef } from "react";
+import React, { useEffect, useState, } from "react";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { makeStyles } from "@material-ui/core/styles";
 import Rating from "@material-ui/lab/Rating";
 
-import { useAuth } from "../context/auth-context";
 import {
   getCompanies,
   getSectors,
@@ -20,7 +19,6 @@ import {
   setErrorMessageCallBackEnd,
   validatorCompanyName,
   validatorSector,
-  validatorCity,
   validatorSalary,
   validatorTitleReview,
   validatorDescriptionReview,
@@ -30,7 +28,6 @@ import {
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
 
-import "../css/review-create.css";
 
 /**
  * Review create
@@ -186,7 +183,7 @@ export function ReviewCreate() {
   return (
     <React.Fragment>
       <Header />
-      <main>
+      <main className="centered-container">
         <h3>{t("Create a review")}</h3>
         <h4>{t("Rate a company you've worked for in the past 3 years.")}</h4>
         <h4>{t("Reviews published are anonymous.")}</h4>

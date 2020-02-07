@@ -44,7 +44,7 @@ export function ReviewUser() {
   return (
     <React.Fragment>
       <Header />
-      <main>
+      <main className="centered-container">
         <h3>{t("My reviews")}</h3>
         <ul className="review-list">
           {reviewUserList.map(review => (

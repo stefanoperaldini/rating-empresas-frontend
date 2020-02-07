@@ -28,62 +28,64 @@ function App() {
     <I18nextProvider i18n={i18n}>
       <BrowserRouter>
         <AuthProvider>
-          <Switch>
-            <Route exact path="/">
-              <Redirect to="/home" />
-            </Route>
-            <Route exact path="/home">
-              <Home />
-            </Route>
-            <Route path="/account/activate/:verification_code">
-              <AccountActivate />
-            </Route>
-            <Route path="/account/create">
-              <AccountCreate />
-            </Route>
-            <Route path="/account/login">
-              <AccountLogin />
-            </Route>
-            <PrivateRoute
-              path="/account/password/change"
-              allowedRoles={["1", "2"]}
-            >
-              <AccountPasswordChange />
-            </PrivateRoute>
-            <Route path="/account/password/recovery">
-              <AccountPasswordRecovery />
-            </Route>
-            <Route path="/advanced-search">
-              <AdvancedSearch />
-            </Route>
-            <Route path="/company/detail/:id">
-              <Company />
-            </Route>
-            <PrivateRoute exact path="/company/create" allowedRoles={["2"]}>
-              <CompanyCreate />
-            </PrivateRoute>
-            <Route path="/email/activation/recovery">
-              <EmailActivationRecovery />
-            </Route>
-            <PrivateRoute path="/review/create" allowedRoles={["1"]}>
-              <ReviewCreate />
-            </PrivateRoute>
-            <PrivateRoute path="/review/user" allowedRoles={["1"]}>
-              <ReviewUser />
-            </PrivateRoute>
-            <PrivateRoute path="/user/update" allowedRoles={["1", "2"]}>
-              <UserUpdate />
-            </PrivateRoute>
-            <PrivateRoute path="/user/delete" allowedRoles={["1", "2"]}>
-              <UserDelete />
-            </PrivateRoute>
-            <Route path="/not-found">
-              <NotFound />
-            </Route>
-            <Route path="*">
-              <Redirect to="/not-found" />
-            </Route>
-          </Switch>
+          <div className="wrapper">
+            <Switch>
+              <Route exact path="/">
+                <Redirect to="/home" />
+              </Route>
+              <Route exact path="/home">
+                <Home />
+              </Route>
+              <Route path="/account/activate/:verification_code">
+                <AccountActivate />
+              </Route>
+              <Route path="/account/create">
+                <AccountCreate />
+              </Route>
+              <Route path="/account/login">
+                <AccountLogin />
+              </Route>
+              <PrivateRoute
+                path="/account/password/change"
+                allowedRoles={["1", "2"]}
+              >
+                <AccountPasswordChange />
+              </PrivateRoute>
+              <Route path="/account/password/recovery">
+                <AccountPasswordRecovery />
+              </Route>
+              <Route path="/advanced-search">
+                <AdvancedSearch />
+              </Route>
+              <Route path="/company/detail/:id">
+                <Company />
+              </Route>
+              <PrivateRoute exact path="/company/create" allowedRoles={["2"]}>
+                <CompanyCreate />
+              </PrivateRoute>
+              <Route path="/email/activation/recovery">
+                <EmailActivationRecovery />
+              </Route>
+              <PrivateRoute path="/review/create" allowedRoles={["1"]}>
+                <ReviewCreate />
+              </PrivateRoute>
+              <PrivateRoute path="/review/user" allowedRoles={["1"]}>
+                <ReviewUser />
+              </PrivateRoute>
+              <PrivateRoute path="/user/update" allowedRoles={["1", "2"]}>
+                <UserUpdate />
+              </PrivateRoute>
+              <PrivateRoute path="/user/delete" allowedRoles={["1", "2"]}>
+                <UserDelete />
+              </PrivateRoute>
+              <Route path="/not-found">
+                <NotFound />
+              </Route>
+              <Route path="*">
+                <Redirect to="/not-found" />
+              </Route>
+            </Switch>
+          </div>
         </AuthProvider>
       </BrowserRouter>
     </I18nextProvider>

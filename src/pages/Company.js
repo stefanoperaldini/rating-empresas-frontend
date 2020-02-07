@@ -10,7 +10,6 @@ import { getCompany } from "../http/companyService";
 import { getReviewsFilter } from "../http/reviewService";
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
-import { setErrorMessageCallBackEnd } from "./pagesUtils";
 
 /**
  * Page company detail
@@ -27,7 +26,7 @@ const useStyles = makeStyles({
 export function Company() {
   const [company, setCompany] = useState({});
   const [reviewsCompanyList, setReviewsCompanyList] = useState([]);
-  const { handleSubmit, register, errors, formState, setError } = useForm({
+  const { register, } = useForm({
     mode: "onBlur"
   });
   const classes = useStyles();
@@ -44,7 +43,7 @@ export function Company() {
       setReviewsCompanyList(response.data.reviews);
     });
     return;
-  }, []);
+  }, [idCompany]);
 
   if (reviewsCompanyList === null) {
     return (
@@ -57,7 +56,7 @@ export function Company() {
   return (
     <React.Fragment>
       <Header />
-      <main className="company">
+      <main className="centered-container">
         <p>
           <h3>{t("Do you want to rate a company?")}</h3>
           <h4>{t("Your reviews will be anonimous")}</h4>
