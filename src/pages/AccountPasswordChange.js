@@ -42,79 +42,81 @@ export function AccountPasswordChange() {
     <React.Fragment>
       <Header />
       <main className="centered-container">
-        <h3>{t("Change password")}</h3>
-        <form onSubmit={handleSubmit(handlePasswordChange)}>
-          <div
-            className={`form-control ${
-              errors.oldPassword ? "ko" : formState.touched.oldPassword && "ok"
-            }`}
-          >
-            <label htmlFor="oldPassword">{t("Current password")}</label>
-            <input
-              ref={register(validatorPassword)}
-              name="oldPassword"
-              type="password"
-              placeholder={t("Enter current password")}
-            ></input>
-            {errors.oldPassword && (
-              <span className="errorMessage">
-                {t(errors.oldPassword.message)}
-              </span>
-            )}
-          </div>
-          <div
-            className={`form-control ${
-              errors.newPassword ? "ko" : formState.touched.newPassword && "ok"
-            }`}
-          >
-            <label htmlFor="newPassword">{t("New password")}</label>
-            <input
-              ref={register(validatorPassword)}
-              name="newPassword"
-              type="password"
-              placeholder={t("Enter new password")}
-            ></input>
-            {errors.newPassword && (
-              <span className="errorMessage">
-                {t(errors.newPassword.message)}
-              </span>
-            )}
-          </div>
-
-          <div
-            className={`form-control ${
-              errors.confirmPassword
-                ? "ko"
-                : formState.touched.confirmPassword && "ok"
-            }`}
-          >
-            <label htmlFor="confirmPassword">{t("Confirm new password")}</label>
-            <input
-              ref={register({
-                validate: value => value === watch("newPassword")
-              })}
-              name="confirmPassword"
-              type="password"
-              id="confirmPassword"
-              placeholder={t("Confirm new password")}
-            ></input>
-            {errors.confirmPassword && (
-              <span className="error-message">
-                {t("The password and the confirmation should match")}
-              </span>
-            )}
-          </div>
-
-          <div className="btn-container">
-            <button
-              type="submit"
-              className="btn"
-              disabled={formState.isSubmitting}
+        <div className="boxAccount">
+          <h3>{t("Change password")}</h3>
+          <form onSubmit={handleSubmit(handlePasswordChange)}>
+            <div
+              className={`form-control ${
+                errors.oldPassword ? "ko" : formState.touched.oldPassword && "ok"
+                }`}
             >
-              {t("Save")}
-            </button>
-          </div>
-        </form>
+              <label htmlFor="oldPassword">{t("Current password")}</label>
+              <input
+                ref={register(validatorPassword)}
+                name="oldPassword"
+                type="password"
+                placeholder={t("Enter current password")}
+              ></input>
+              {errors.oldPassword && (
+                <span className="errorMessage">
+                  {t(errors.oldPassword.message)}
+                </span>
+              )}
+            </div>
+            <div
+              className={`form-control ${
+                errors.newPassword ? "ko" : formState.touched.newPassword && "ok"
+                }`}
+            >
+              <label htmlFor="newPassword">{t("New password")}</label>
+              <input
+                ref={register(validatorPassword)}
+                name="newPassword"
+                type="password"
+                placeholder={t("Enter new password")}
+              ></input>
+              {errors.newPassword && (
+                <span className="errorMessage">
+                  {t(errors.newPassword.message)}
+                </span>
+              )}
+            </div>
+
+            <div
+              className={`form-control ${
+                errors.confirmPassword
+                  ? "ko"
+                  : formState.touched.confirmPassword && "ok"
+                }`}
+            >
+              <label htmlFor="confirmPassword">{t("Confirm new password")}</label>
+              <input
+                ref={register({
+                  validate: value => value === watch("newPassword")
+                })}
+                name="confirmPassword"
+                type="password"
+                id="confirmPassword"
+                placeholder={t("Confirm new password")}
+              ></input>
+              {errors.confirmPassword && (
+                <span className="error-message">
+                  {t("The password and the confirmation should match")}
+                </span>
+              )}
+            </div>
+
+            <div className="btn-container">
+              <button
+                type="submit"
+                className="btn"
+                disabled={formState.isSubmitting}
+              >
+                {t("Save")}
+              </button>
+            </div>
+          </form>
+        </div>
       </main>
       <Footer />
     </React.Fragment>

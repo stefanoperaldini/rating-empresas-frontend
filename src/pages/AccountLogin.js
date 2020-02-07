@@ -57,63 +57,58 @@ export function AccountLogin() {
     <React.Fragment>
       <Header />
       <main className="centered-container">
-        <h3>{t("Please sign in")}</h3>
-        <form onSubmit={handleSubmit(handleLogin)} noValidate>
-          <div
-            className={`form-control ${
-              errors.email ? "ko" : formState.touched.email && "ok"
-            }`}
-          >
-            <label htmlFor="email">{t("E-mail")}</label>
-            <input
-              ref={register(validatorEmail)}
-              name="email"
-              id="email"
-              type="email"
-              placeholder={t("Enter your e-mail")}
-            ></input>
-            {errors.email && (
-              <span className="errorMessage">{t(errors.email.message)}</span>
-            )}
-          </div>
+        <div className="boxAccount">
+          <h3>{t("Please sign in")}</h3>
+          <form onSubmit={handleSubmit(handleLogin)} noValidate>
 
-          <div
-            className={`form-control ${
-              errors.password ? "ko" : formState.touched.password && "ok"
-            }`}
-          >
-            <label htmlFor="password">{t("Password")}</label>
-            <input
-              ref={register(validatorPassword)}
-              name="password"
-              type="password"
-              id="password"
-              placeholder={t("Enter your password")}
-            ></input>
-            {errors.password && (
-              <span className="errorMessage">{t(errors.password.message)}</span>
-            )}
-          </div>
-
-          <div className="btn-container">
-            <button
-              type="submit"
-              className="btn"
-              disabled={formState.isSubmitting}
-            >
-              {t("Sign in")}
-            </button>
-            <div className="m-t-lg btn-container">
-              <Link to="/account/create">{t("Sign up")}</Link>
-              <Link to="/account/password/recovery">
-                {t("Forgot password?")}
-              </Link>
-              <Link to="/email/activation/recovery">
-                {t("Lost e-mail activation?")}
-              </Link>
+            <div className="form-control">
+              <label htmlFor="email">{t("E-mail")}</label>
+              <input
+                ref={register(validatorEmail)}
+                name="email"
+                id="email"
+                type="email"
+                placeholder={t("Enter your e-mail")}
+              ></input>
+              {errors.email && (
+                <span className="errorMessage">{t(errors.email.message)}</span>
+              )}
             </div>
-          </div>
-        </form>
+
+            <div className="form-control">
+              <label htmlFor="password">{t("Password")}</label>
+              <input
+                ref={register(validatorPassword)}
+                name="password"
+                type="password"
+                id="password"
+                placeholder={t("Enter your password")}
+              ></input>
+              {errors.password && (
+                <span className="errorMessage">{t(errors.password.message)}</span>
+              )}
+            </div>
+
+            <div className="btn-container">
+              <button
+                type="submit"
+                className="btn"
+                disabled={formState.isSubmitting}
+              >
+                {t("Sign in")}
+              </button>
+              <div className="m-t-lg btn-container">
+                <Link to="/account/create">{t("Sign up")}</Link>
+                <Link to="/account/password/recovery">
+                  {t("Forgot password?")}
+                </Link>
+                <Link to="/email/activation/recovery">
+                  {t("Lost e-mail activation?")}
+                </Link>
+              </div>
+            </div>
+          </form>
+        </div>
       </main>
     </React.Fragment>
   );

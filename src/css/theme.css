@@ -1,20 +1,11 @@
 :root {
   /* colors */
-  --primary: #f8c51d;
-  --secondary: #c86818;
-  --separator: #1b1b1b;
-  --medium: #999999;
   --dark: #000;
-  --bright: #fff;
+  --bright: #FFFF;
   --blue: #195FF7;
   --lgray: #F8F8F8;
+  --gray: #909090;
   --ko: #e92119;
-  --ok: #3c8c20;
-
-  /* fonts */
-  --font-primary: "Raleway", sans-serif;
-  --font-secondary: "Oswald", sans-serif;
-  --font-special: "Press Start 2P";
 
   /* font-sizes */
   --font-xs: 0.8rem;

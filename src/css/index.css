@@ -1,244 +1,184 @@
-/* Importar en index.js debido a un bug en codesandbox */
-
-@import "./theme.css";
-@import "./header.css";
-@import "./footer.css";
-@import "./buttons.css";
-@import "./forms.css";
-@import "./utils.css";
-@import "./dialog.css";
-
-html {
-  box-sizing: border-box;
-  height: 100%;
-}
-
-*,
-*:before,
-*:after {
-  box-sizing: inherit;
-  margin: 0;
+* {
   padding: 0;
-  font-size: 100%;
+  margin: 0;
+  box-sizing: border-box;
 }
 
-body,
-#root {
-  font-family: var(--font-primary);
-  height: 100%;
-  background: var(--bright);
-  color: var(--dark);
-  line-height: 1.3em;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
+body {
+  font-family: 'Noto Sans JP', sans-serif;
 }
 
-section#info {
-  background-color: yellow;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: var(--font-secondary);
-  color: var(--dark);
-}
-
-h1 {
-  font-size: var(--font-xxl);
-}
-
-h2 {
-  font-size: var(--font-xl);
-}
-
-h3 {
-  font-size: var(--font-l);
-}
-
-h4 {
-  font-size: var(--font-m);
-}
-
-h5 {
-  font-size: var(--font-sm);
-}
-
-h6 {
-  font-size: var(--font-xs);
-}
-
-p {
-  font-size: var(--font-sm);
-}
-
-a {
-  font-family: var(--font-secondary);
-  color: var(--blue);
-  text-decoration: none;
-}
-
-a:hover {
-  opacity: 0.7;
-  border-bottom: 2px solid var(--dark);
-}
-
-a:active {
-  opacity: 1;
-  border-bottom: 2px solid var(--medium);
+button {
+  background: none;
+  font: inherit;
+  outline: none;
+  cursor: pointer;
+  background-color: var(--blue);
+  color: var(--bright);
+  padding: 1rem 4rem;
+  border: 2px solid var(--blue);
+  border-radius: 15px;
+  font-weight: 500;
 }
 
 ul {
-  list-style-type: none;
+  list-style: none;
 }
 
-ul > li {
-  cursor: pointer;
+a {
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 300;
 }
 
-/**
-CSS autocompletamiento
-**/
-.autocompletamiento {
+nav>a {
+  text-decoration: none;
+  color: inherit;
+  font-weight: 900;
+}
+
+
+/* CONTAINER
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.wrapper {
   display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
-.busqueda {
+.wrapper > * {
+  padding: 20px;
+}
+
+/* HEADER
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+.page-header {
+  background: var(--lgray);
+}
+
+.page-header nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.page-header ul {
+  display: flex;
+  order: 1;
+  width: 100%;
+  margin-top: 15px;
+}
+
+.page-header ul li:not(:last-child) {
+  padding-right: 15px;
+}
+
+.page-header .cta-contact {
+  font-family: inherit;
+  font-size: 1.2rem;
+  padding: 5px 18px;
+}
+
+.menu {
   position: relative;
-  /* width: 100vw; */
-  height: 2rem;
+  color: var(--blue);
 }
 
-.resBusqueda {
-  position: absolute;
-  height: 7rem;
-  width: 12rem;
-  border: 1px solid #ddd;
-  background: #f1f1f1;
-  overflow-y: scroll;
-  top: 1.4rem;
-  right: -1;
+
+/* MAIN
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.centered-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 350px;
+  flex-grow: 1;
 }
 
-/**
-CSS scroll para formularios
-**/
-.scroll {
-  overflow-y: scroll;
+.opacity-container {
+  transition: opacity 0.3s ease-in;
+  opacity: 1;
 }
 
-/**
-CSS para reviewUser
-**/
-
-main.userReview {
-  margin-top: 1rem;
+.opacity-container.activated {
+  opacity: 0.5;
 }
 
-main.userReview h3 {
-  text-align: center;
+.centered-container div {
+  max-width: 500px;
 }
 
-ul.review-list {
-  list-style: none;
-  margin: 1rem;
-  padding: 1rem, 2rem;
-  display: grid;
-  gap: 1rem;
-  grid-template-rows: auto;
+.centered-container h1 {
+  margin-bottom: 20px;
 }
 
-ul.review-list .box-header h5 {
+.centered-container p + p {
+  margin-top: 10px;
+}
+
+.boxAccount {
+  border: 2px solid var(--lgray);
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.boxAccount > * {
+  padding: 1rem 3rem;
+}
+
+/* FOOTER
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.page-footer {
+  display: flex;
+  flex-direction: column-reverse;
   background: var(--lgray);
 }
 
-/**
-CSS para HOME
-**/
-
-section.search-reviews,
-.top-companies {
-  margin-top: 1rem;
-}
-
-section.search-reviews,
-.top-companies h3 {
-  text-align: center;
-  text-transform: none;
-}
-
-/**
-CSS para company
-**/
-
-main.company {
-  margin-top: 1rem;
-}
-
-main.company h3 {
-  text-align: center;
-  text-transform: none;
-}
-
-main.company h4,
-h5 {
-  text-transform: none;
-}
-
-header.box-header {
-  margin-top: 1rem;
-  margin-bottom: 0.5rem;
-}
-
-section.box-section {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-}
-
-ul.select-box {
-  list-style: none;
-  display: grid;
-}
-
-ul.review-list {
-  list-style: none;
-  margin: 1rem;
-  padding: 1rem, 2rem;
-  display: grid;
-  gap: 1rem;
-  grid-template-rows: auto;
-}
-
-ul.review-list .box-header h5 {
-  background: var(--lgray);
-}
-
-section.box-flex {
+.page-footer ul {
   display: flex;
-  margin: 0.5rem;
+  margin-bottom: 5px;
 }
 
-button.btn {
-  text-transform: none;
-  font-size: 75%;
-  margin-right: 0.5rem;
+.page-footer ul li:not(:last-child) {
+  margin-right: 20px;
 }
 
-/**
-CSS para advanced search
-**/
 
-section.box-flex {
-  display: flex;
-  margin: 0.5rem;
+/* MQ
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+@media screen and (min-width: 550px) {
+  .page-header ul {
+    width: auto;
+    margin-top: 0;
+  }
+
+  .page-header .cta-contact {
+    order: 1;
+  }
+
+  .page-footer {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .page-footer ul {
+    margin-bottom: 0;
+  }
 }
 
-button.btn {
-  text-transform: none;
-  font-size: 75%;
-  margin-right: 0.5rem;
+@media screen and (min-width: 768px) {
+  body {
+    font-size: 18px;
+  }
+
+  .page-main {
+    padding-left: 90px;
+  }
 }

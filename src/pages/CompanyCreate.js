@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useRef } from "react";
+import React, { useEffect, useReducer, } from "react";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -19,7 +19,6 @@ import {
   validatorUrl,
   validatorAddress,
   validatorSector,
-  validatorCity
 } from "./pagesUtils";
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
