@@ -35,11 +35,7 @@ export function UserDelete() {
       <main className="centered-container">
         <h3>{t("Delete account")}</h3>
         <form onSubmit={handleSubmit(handleUserDelete)}>
-          <div
-            className={`form-control ${
-              errors.confirm ? "ko" : formState.touched.confirm && "ok"
-              }`}
-          >
+          <div className="form-control">
             <label htmlFor="confirm">
               {t("For deleting your account, please type")}: CONFIRM DELETE
             </label>

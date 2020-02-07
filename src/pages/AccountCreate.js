@@ -56,11 +56,7 @@ export function AccountCreate() {
               </label>
             </div>
 
-            <div
-              className={`form-control ${
-                errors.name ? "ko" : formState.touched.name && "ok"
-                }`}
-            >
+            <div className="form-control">
               <label htmlFor="name">{t("Name")} (*)</label>
               <input
                 ref={register(validatorUserName)}
@@ -74,11 +70,7 @@ export function AccountCreate() {
               )}
             </div>
 
-            <div
-              className={`form-control ${
-                errors.email ? "ko" : formState.touched.email && "ok"
-                }`}
-            >
+            <div className="form-control">
               <label htmlFor="email">{t("E-mail")} (*)</label>
               <input
                 ref={register(validatorEmail)}
@@ -92,11 +84,7 @@ export function AccountCreate() {
               )}
             </div>
 
-            <div
-              className={`form-control ${
-                errors.linkedin ? "ko" : formState.touched.linkedin && "ok"
-                }`}
-            >
+            <div className="form-control">
               <label htmlFor="linkedin">{t("LinkedIn")}</label>
               <input
                 ref={register(validatorLinkedin)}
@@ -106,15 +94,13 @@ export function AccountCreate() {
                 placeholder={t("LinkedIn address")}
               ></input>
               {errors.linkedin && (
-                <span className="errorMessage">{t(errors.linkedin.message)}</span>
+                <span className="errorMessage">
+                  {t(errors.linkedin.message)}
+                </span>
               )}
             </div>
 
-            <div
-              className={`form-control ${
-                errors.password ? "ko" : formState.touched.password && "ok"
-                }`}
-            >
+            <div className="form-control">
               <label htmlFor="password">{t("Password")} (*)</label>
               <input
                 ref={register(validatorPassword)}
@@ -124,18 +110,16 @@ export function AccountCreate() {
                 placeholder={t("Enter your password")}
               ></input>
               {errors.password && (
-                <span className="errorMessage">{t(errors.password.message)}</span>
+                <span className="errorMessage">
+                  {t(errors.password.message)}
+                </span>
               )}
             </div>
 
-            <div
-              className={`form-control ${
-                errors.confirmPassword
-                  ? "ko"
-                  : formState.touched.confirmPassword && "ok"
-                }`}
-            >
-              <label htmlFor="confirmPassword">{t("Confirm password")} (*)</label>
+            <div className="form-control">
+              <label htmlFor="confirmPassword">
+                {t("Confirm password")} (*)
+              </label>
               <input
                 ref={register(validatorPassword)}
                 name="confirmPassword"
@@ -166,6 +150,6 @@ export function AccountCreate() {
           </form>
         </div>
       </main>
-    </React.Fragment >
+    </React.Fragment>
   );
 }

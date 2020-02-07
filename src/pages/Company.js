@@ -26,7 +26,7 @@ const useStyles = makeStyles({
 export function Company() {
   const [company, setCompany] = useState({});
   const [reviewsCompanyList, setReviewsCompanyList] = useState([]);
-  const { register, } = useForm({
+  const { register } = useForm({
     mode: "onBlur"
   });
   const classes = useStyles();
@@ -72,8 +72,8 @@ export function Company() {
             />
           </div>
         </p>
-        <article className="box-article">
-          <header className="box-header">
+        <article>
+          <header>
             {/* <img class="company-logo"
               src="{company.url_logo}"
               alt={t("Company logo")}> */}
@@ -148,7 +148,7 @@ export function Company() {
                 />
               </div>
             </section>
-            <section className="box-section">
+            <section>
               <h5> {company.name} </h5>
               <p>
                 {t("Sector")} {company.sector}
@@ -168,7 +168,7 @@ export function Company() {
         <section>
           <h5>{t("Search for")}:</h5>
           <form onSubmit>
-            <ul className="select-box">
+            <ul>
               <li>
                 <label htmlFor="position">{t("Job title")}</label>
                 <select name="position" id="position" ref={register}>
@@ -190,38 +190,38 @@ export function Company() {
             </ul>
           </form>
         </section>
-        <section className="box-section">
+        <section>
           <h5>
             {t("Average salary")} 1.250,00 € / {t("month")}
           </h5>
         </section>
         <h5>{t("Sort by")}:</h5>
-        <section className="box-flex">
-          <div className="btn-filter">
-            <button className="btn">{t("Overall rating")}</button>
+        <section>
+          <div>
+            <button>{t("Overall rating")}</button>
           </div>
-          <div className="btn-filter">
-            <button className="btn">{t("Salary")}</button>
+          <div>
+            <button>{t("Salary")}</button>
           </div>
-          <div className="btn-filter">
-            <button className="btn">{t("Internal training")}</button>
+          <div>
+            <button>{t("Internal training")}</button>
           </div>
-          <div className="btn-filter">
-            <button className="btn">{t("Growth opportunities")}</button>
+          <div>
+            <button>{t("Growth opportunities")}</button>
           </div>
-          <div className="btn-filter">
-            <button className="btn">{t("Work environment")}</button>
+          <div>
+            <button>{t("Work environment")}</button>
           </div>
-          <div className="btn-filter">
-            <button className="btn">{t("Work&Life balance")}</button>
+          <div>
+            <button>{t("Work&Life balance")}</button>
           </div>
         </section>
         <section>
-          <ul className="review-list">
+          <ul>
             {reviewsCompanyList.map(review => (
               <li key={review.id}>
                 <article>
-                  <header className="box-header">
+                  <header>
                     <p>
                       {review.name} ({review.start_year}-{review.end_year}) -{" "}
                       {review.city_name}. {review.created_at}

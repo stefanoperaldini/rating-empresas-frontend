@@ -23,7 +23,7 @@
   "Advanced search": "Busca avanzada",
   "Do you want to rate a company?": "¿Queres valorar unha empresa?",
   "Your reviews will be anonimous": "As túas respostas serán anónimas",
-  "Top Ten Workplaces": "Empresas mellor valoradas",
+  "Top Ten Workplaces": "As dez empresas mellor valoradas",
   "Company logo": "Logotipo de empresa",
   "Default image company": "Imaxe por defecto de empresa",
   "reviews": "valoracións",
@@ -131,5 +131,7 @@
   "Maximun is 30 characters": "Máximo 30 caracteres",
   "Server down": "Servidor non disposto",
   "Internal server error": "Erro interno do servidor",
-  "Enter a company name": "Insire un nome de empresa"
+  "Enter a company name": "Insire un nome de empresa",
+  "Position": "Posto",
+  "Position name": "Nome do posto"
 }

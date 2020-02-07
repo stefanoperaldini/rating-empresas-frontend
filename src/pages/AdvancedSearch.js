@@ -78,32 +78,32 @@ export function AdvancedSearch() {
             </ul>
           </form>
         </section>
-        <section className="box-flex">
-          <div className="btn-filter">
-            <button className="btn">{t("Overall rating")}</button>
+        <section>
+          <div>
+            <button>{t("Overall rating")}</button>
           </div>
-          <div className="btn-filter">
-            <button className="btn">{t("Salary")}</button>
+          <div>
+            <button>{t("Salary")}</button>
           </div>
-          <div className="btn-filter">
-            <button className="btn">{t("Internal training")}</button>
+          <div>
+            <button>{t("Internal training")}</button>
           </div>
-          <div className="btn-filter">
-            <button className="btn">{t("Growth opportunities")}</button>
+          <div>
+            <button>{t("Growth opportunities")}</button>
           </div>
-          <div className="btn-filter">
-            <button className="btn">{t("Work environment")}</button>
+          <div>
+            <button>{t("Work environment")}</button>
           </div>
-          <div className="btn-filter">
-            <button className="btn">{t("Work&Life balance")}</button>
+          <div>
+            <button>{t("Work&Life balance")}</button>
           </div>
         </section>
-        <section className="filtered-companies">
+        <section>
           <ul>
             {companiesList.map(company => (
               <li key={company.id}>
                 <article>
-                  <header className="box-header">
+                  <header>
                     <p>{company.url_logo}</p>
                     <p>{company.name}</p>
                   </header>

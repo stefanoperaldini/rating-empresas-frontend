@@ -131,5 +131,7 @@
   "Maximun is 30 characters": "Máximo 30 caracteres",
   "Server down": "Servidor no disponible",
   "Internal server error": "Error interno del servidor",
-  "Enter a company name": "Introduce un nombre de empresa"
+  "Enter a company name": "Introduce un nombre de empresa",
+  "Position": "Puesto",
+  "Position name": "Nombre del puesto"
 }
