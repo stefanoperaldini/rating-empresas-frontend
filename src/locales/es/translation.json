@@ -23,7 +23,7 @@
   "Advanced search": "Búsqueda avanzada",
   "Do you want to rate a company?": "¿Quieres valorar una empresa?",
   "Your reviews will be anonimous": "Tus respuestas serán anónimas",
-  "Top Ten Workplaces": "Empresas mejor valoradas",
+  "Top Ten Workplaces": "Las diez empresas mejor valoradas",
   "Company logo": "Logotipo de empresa",
   "Default image company": "Imagen por defecto de empresa",
   "reviews": "valoraciones",
@@ -69,7 +69,7 @@
   "Next": "Siguiente",
   "Rate company": "Calificar empresa",
   "Your salary": "Tu sueldo",
-  "Example: 2.000": "Ejemplo: 2.000",
+  "Example: 2000": "Ejemplo: 2000",
   "Could you add something else to your rating?": "Escribe tu valoración de esta empresa",
   "Review summary": "Título",
   "Please, write a title": "Por favor, escribe un título",
@@ -84,7 +84,7 @@
   "Icon for denounce a review": "Icono para denunciar una valoración",
   "Link for sending e-mail to the web administrator": "Enlace para enviar un e-mail al administrador del sitio web",
   "Denounce": "Denunciar",
-  "Icon for delete a review": "Icono para denunciar una valoración",
+  "Icon for delete a review": "Icono para eliminar una valoración",
   "Link for deleting a review": "Enlace para eliminar una valoración",
   "Delete": "Borrar",
   "For deleting your account, please type": "Para borrar tu cuenta, por favor, escribe",
@@ -109,7 +109,6 @@
   "You will receive an activation e-mail": "Recibirás un e-mail de activación",
   "Create": "Crear",
   "Please sign in": "Por favor inicia sesión",
-
   "Account activated": "Cuenta activada",
   "The e-mail is required": "El e-mail es necesario",
   "The e-mail is not valid": "El e-mail no es válido",
@@ -129,5 +128,8 @@
   "Must type CONFIRM DELETE": "Debes escribir CONFIRM DELETE",
   "The ammount is not valid": "La cantidad no es válida",
   "Minimun is 5 characters": "Mínimo 5 caracteres",
-  "Maximun is 30 characters": "Máximo 30 caracteres"
+  "Maximun is 30 characters": "Máximo 30 caracteres",
+  "Server down": "Servidor no disponible",
+  "Internal server error": "Error interno del servidor",
+  "Enter a company name": "Introduce un nombre de empresa"
 }
