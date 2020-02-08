@@ -1,9 +1,28 @@
+.b-l {
+  border-left: 2px solid var(--lgray);
+}
+.b-b {
+  border-bottom: 2px solid var(--lgray);
+}
+
 .p-t-md {
   padding-top: var(--space-md);
 }
 
+.m-t-xl {
+  margin-top: var(--space-xl);
+}
+
 .m-t-lg {
   margin-top: var(--space-lg);
+}
+
+.m-r-md {
+  margin-right: var(--space-md);
+}
+
+.f-s-xs {
+  font-size: var(--font-xs);
 }
 
 .flex {

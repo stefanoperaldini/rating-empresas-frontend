@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 const AuthContext = React.createContext();
 
 const storedUser = JSON.parse(localStorage.getItem('currentUser'));
+const storedEmail = localStorage.getItem('currentEmail');
 
 export function AuthProvider({ children }) {
 
@@ -15,6 +16,7 @@ export function AuthProvider({ children }) {
     }
 
     const [accessToken, setAccessToken] = useState(storedUser && storedUser.accessToken);
+    const [email, setEmail] = useState(storedEmail);
     const [role, setRole] = useState(userData && userData.role);
     const [currentUserId, setCurrentUserId] = useState(userData && userData.userId);
 
@@ -29,7 +31,9 @@ export function AuthProvider({ children }) {
                 role,
                 setRole,
                 currentUserId,
-                setCurrentUserId
+                setCurrentUserId,
+                email,
+                setEmail,
             }}
         >
             {children}

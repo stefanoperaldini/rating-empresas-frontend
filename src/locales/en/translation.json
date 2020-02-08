@@ -133,5 +133,6 @@
   "Internal server error": "Internal server error",
   "Enter a company name": "Enter a company name",
   "Position": "Position",
-  "Position name": "Position name"
+  "Position name": "Position name",
+  "Icon gitHub": "Icon gitHub"
 }

@@ -83,7 +83,7 @@
   "You don't have any review": "Non hai effettuato nessuna valutazione",
   "Icon for denounce a review": "Icona per denunciare una valutazione",
   "Link for sending e-mail to the web administrator": "Link per inviare una e-mail all'amministratore della pagina web",
-  "Denounce": "Denunciare",
+  "Denounce": "Denuncia",
   "Icon for delete a review": "Icona par eliminare una valutazione",
   "Link for deleting a review": "Link per eliminare una valutazione",
   "Delete": "Elimina",
@@ -132,6 +132,7 @@
   "Server down": "Server non raggiungibile",
   "Internal server error": "Errore interno del server",
   "Enter a company name": "Inserisci il nome dell'impresa",
-  "Position": "Position",
-  "Position name": "Position name"
+  "Position": "Ruolo",
+  "Position name": "Nome ruolo",
+  "Icon gitHub": "Icona gitHub"
 }

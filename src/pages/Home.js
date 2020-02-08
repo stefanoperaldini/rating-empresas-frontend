@@ -4,12 +4,14 @@ import { useForm } from "react-hook-form";
 import Rating from "@material-ui/lab/Rating";
 import { makeStyles } from "@material-ui/core/styles";
 import { useHistory } from "react-router-dom";
-import defaultImageCompany from "../img/company-default-small.jpeg";
+
 
 import { getCompany, getCompanies } from "../http/companyService";
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
 import { setErrorMessageCallBackEnd } from "./pagesUtils";
+import { useAuth } from "../context/auth-context";
+import defaultImageCompany from "../img/company-default.png";
 
 /**
  * Home page
@@ -31,6 +33,7 @@ export function Home() {
   const classes = useStyles();
   const { t } = useTranslation();
   const history = useHistory();
+  const { currentUserId, role } = useAuth();
 
   useEffect(() => {
     getCompanies().then(response => {
@@ -53,14 +56,15 @@ export function Home() {
   return (
     <React.Fragment>
       <Header />
-      <main className="centered-container">
-        <section>
+      <main className="centered-container-home">
+        <section className="allWidth centeredComponent">
           <h2>{t("Find great places to work")}</h2>
-          <h3>{t("Get access to rating and company reviews")}</h3>
+          <p>{t("Get access to rating and company reviews")}</p>
           <form onSubmit={handleSubmit(handleGetCompanyData)}>
-            <div className="form-control">
+
+            <div className="searchComponent">
               <input
-                className="input.search"
+                className="searchCompany"
                 ref={register({
                   required: "Enter a company name",
                   minLength: {
@@ -80,7 +84,7 @@ export function Home() {
               {errors.id && (
                 <span className="errorMessage">{t(errors.id.message)}</span>
               )}
-              <div className="btn-container">
+              <div className="btn-container buttonSearch">
                 <button
                   type="submit"
                   className="btn"
@@ -88,49 +92,48 @@ export function Home() {
                 >
                   {t("Find")}
                 </button>
-                <div className="m-t-lg btn-container"></div>
               </div>
+              <a className="advancedSearch" href="/advanced-search" title={t("Link to Advanced search page")}>
+                {t("Advanced search")}
+              </a>
             </div>
-          </form>
-          <a href="/advanced-search" title={t("Link to Advanced search page")}>
-            {t("Advanced search")}
-          </a>
 
-          <h3>{t("Do you want to rate a company?")}</h3>
-          <h4>{t("Your reviews will be anonimous")}</h4>
-          <div className={classes.rating}>
-            <Rating
-              name="overall_rating"
-              size="large"
-              value="0"
-              precision={1}
-              onChange={() => {
-                history.push("/review/create");
-              }}
-            />
-          </div>
+          </form>
         </section>
-        <section>
-          <h3>{t("Top Ten Workplaces")}</h3>
-          <ul>
-            {topTenList.map(company => (
-              <li key={company.id}>
-                <article>
-                  <header>
-                    <p>{company.name}</p>
-                  </header>
-                  <main>
-                    {/* <img class="company-logo"
-              src="{company.url_logo}"
-              alt={t("Company logo")}> */}
-                    <img
+        {(!currentUserId || role === "1") && (
+          <section className="allWidth centeredComponentRate p-t-md m-t-xl">
+            <header>
+              <h3>{t("Do you want to rate a company?")}</h3>
+              <p>{t("Your reviews will be anonimous")}</p>
+            </header>
+            <main className={classes.rating}>
+              <Rating
+                name="overall_rating"
+                size="large"
+                value="0"
+                precision={1}
+                onChange={() => {
+                  history.push("/review/create");
+                }}
+              />
+            </main>
+          </section>
+        )}
+
+        <section className="allWidth centered-container-home p-t-md m-t-xl">
+          <header><h3>{t("Top Ten Workplaces")}</h3></header>
+          <main className="minWidth">
+            <ul className="containerGrid m-t-lg">
+              {topTenList.map(company => (
+                <li key={company.id} className="borderGrey">
+                  <article className="summaryCompany">
+                    <img className="item1"
                       src={defaultImageCompany}
                       alt={t("Default image company")}
                     />
-                    <p>n {t("reviews")}</p>
+                    <h4>{company.name}</h4>
                     <p> {company.sector}</p>
-                    <div className={classes.rating}>
-                      <span>{t("Overall rating")}</span>
+                    <div className={`${classes.rating} item2 f-s-xs`}>
                       <Rating
                         name={company.name}
                         id={company.name}
@@ -138,16 +141,18 @@ export function Home() {
                         value="4"
                         precision={1}
                         readOnly={true}
+                        className="m-r-md"
                       />
+                      100 {t("reviews")}
                     </div>
-                  </main>
-                </article>
-              </li>
-            ))}
-          </ul>
+                  </article>
+                </li>
+              ))}
+            </ul>
+          </main>
         </section>
       </main>
       <Footer />
-    </React.Fragment>
+    </React.Fragment >
   );
 }
