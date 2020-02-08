@@ -15,7 +15,7 @@ button {
   cursor: pointer;
   background-color: var(--blue);
   color: var(--bright);
-  padding: 1rem 4rem;
+  padding: 0.5rem 3rem;
   border: 2px solid var(--blue);
   border-radius: 15px;
   font-weight: 500;
@@ -23,8 +23,8 @@ button {
 }
 
 button:hover {
-  background-color: #003399;
-  border: 2px solid #003399;
+  background-color: var(--darkblue);
+  border: 2px solid var(--darkblue);
 }
 
 ul {
@@ -82,7 +82,7 @@ nav > a {
 
 .page-header .cta-contact {
   font-family: inherit;
-  font-size: 1.2rem;
+  font-size: 1rem;
   padding: 5px 18px;
 }
 
@@ -135,6 +135,122 @@ nav > a {
 .boxAccount > * {
   padding: 1rem 3rem;
 }
+/* HOME
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.centered-container-home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 350px;
+  flex-grow: 1;
+}
+
+.centeredComponent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.centeredComponentRate {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.containerGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-column-gap: 6px;
+  grid-row-gap: 6px;
+}
+
+.allWidth {
+  min-width: 100vw;
+}
+
+.minWidth{
+  min-width: 90vw;
+}
+
+.searchComponent {
+  position: relative;
+  display: grid;
+  grid-gap: 1rem;
+  grid-template-columns: 300px;
+  grid-template-rows: repeat(3, 100px);
+  grid-template-areas:
+    'searchCompany'
+    'buttonSearch'
+    'advancedSearch';
+}
+
+.searchCompany {
+  grid-area: searchCompany;
+}
+
+.buttonSearch {
+  grid-area: buttonSearch;
+}
+
+.advancedSearch {
+  grid-area: advancedSearch;
+}
+
+.summaryCompany {
+  display: grid;
+  grid-template-columns: 2fr, 1fr;
+  grid-template-rows: repeat(3, 1fr);
+  grid-column-gap: 1px;
+  grid-row-gap: 1px;
+}
+
+.borderGrey{
+  border: 2px solid var(--lgray);
+  border-radius: 5px;
+}
+
+.item1 {
+  grid-row: span 2;
+}
+
+.item2 {
+  grid-column: span 2;
+}
+
+/* COMPANY
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+.flexRow{
+  display: flex;
+  flex-direction: row;  
+  align-items: center;
+}
+
+
+.companyDetail {
+  display: grid;
+  grid-gap: 0.25rem;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr, 1fr 1fr;
+  grid-template-areas:
+    'companyTitle'
+    'asideCompany'
+    'ratingCompany';
+}
+
+.companyTitle {
+  grid-area: companyTitle;
+}
+
+.asideCompany {
+  grid-area: asideCompany;
+}
+
+.ratingCompany {
+  grid-area: ratingCompany;
+}
 
 /* FOOTER
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
@@ -176,12 +292,60 @@ nav > a {
   }
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 800px) {
   body {
-    font-size: 18px;
+    font-size: 1rem;
   }
 
   .page-main {
     padding-left: 90px;
   }
+
+.searchComponent {
+  display: grid;
+  grid-gap: 0.25rem;
+  grid-template-columns: 25rem 12rem;
+  grid-template-rows: 5rem 1.5rem;
+  grid-template-areas:
+    'searchCompany   buttonSearch'
+    'none advancedSearch';
+}
+
+.searchCompany {
+  grid-area: searchCompany;
+}
+
+.buttonSearch {
+  grid-area: buttonSearch;
+  align-self: end;
+}
+
+.advancedSearch {
+  grid-area: advancedSearch;
+  align-self: start;
+  justify-self: center;
+}
+
+.centeredComponentRate {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.minWidth{
+  min-width: 80vw;
+}
+
+.companyDetail {
+  display: grid;
+  grid-gap: 0.25rem;
+  grid-template-columns: 1fr, 1fr;
+  grid-template-rows: 1fr, 1fr, 1fr;
+  grid-template-areas:
+    'companyTitle   companyTitle'
+    'ratingCompany  asideCompany'
+    'ratingCompany  none';
+}
+
 }

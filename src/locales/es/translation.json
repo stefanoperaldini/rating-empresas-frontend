@@ -133,5 +133,6 @@
   "Internal server error": "Error interno del servidor",
   "Enter a company name": "Introduce un nombre de empresa",
   "Position": "Puesto",
-  "Position name": "Nombre del puesto"
+  "Position name": "Nombre del puesto",
+  "Icon gitHub": "Icono gitHub"
 }

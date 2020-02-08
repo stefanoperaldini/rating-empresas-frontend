@@ -5,6 +5,7 @@ import admin from "../img/admin-user.png";
 import user from "../img/user.png";
 import company from "../img/company.png";
 import menu from "../img/menu-black.png";
+import logo from "../img/Logo.png";
 
 import { useAuth } from "../context/auth-context";
 import { logOut } from "../http/authService";
@@ -13,7 +14,7 @@ import { setErrorMessageCallBackEnd } from "../pages/pagesUtils";
 export function Header() {
   const [lang, setLang] = useState("en");
   const [showMenu, setShowMenu] = useState(false);
-  const { currentUserId, role } = useAuth();
+  const { currentUserId, role, email } = useAuth();
 
   const { t, i18n } = useTranslation();
 
@@ -21,11 +22,11 @@ export function Header() {
     return logOut()
       .then(response => {
         localStorage.removeItem("currentUser");
-        localStorage.removeItem("accessToken");
+        localStorage.removeItem("currentEmail");
       })
       .catch(error => {
         localStorage.removeItem("currentUser");
-        localStorage.removeItem("accessToken");
+        localStorage.removeItem("currentEmail");
         console.error(setErrorMessageCallBackEnd(error));
       })
       .finally(() => {
@@ -66,9 +67,13 @@ export function Header() {
     <header className="page-header">
       <nav>
         <Link to="/" className="header-item">
-          <h1>Rating Empresas</h1>
+          <img
+            src={logo}
+            alt={t("Logo app")}
+            width="230"
+          />
         </Link>
-        <ul className="header header-item">
+        <ul className="header header-item f-s-xs">
           <li className="header-item">
             <label>
               English
@@ -137,18 +142,18 @@ export function Header() {
         <div className="cta-contact">
           {currentUserId && role === "0" && (
             <React.Fragment>
-              <img src={admin} alt={t("Admin icon")} /> <span>aaa@bbb.com</span>
+              <img src={admin} alt={t("Admin icon")} /> <span>{email}</span>
             </React.Fragment>
           )}
           {currentUserId && role === "1" && (
             <React.Fragment>
-              <img src={user} alt={t("User icon")} /> <span>aaa@bbb.com</span>
+              <img src={user} alt={t("User icon")} /> <span>{email}</span>
             </React.Fragment>
           )}
           {currentUserId && role === "2" && (
             <React.Fragment>
               <img src={company} alt={t("Company icon")} />{" "}
-              <span>aaa@bbb.com</span>
+              <span>{email}</span>
             </React.Fragment>
           )}
 

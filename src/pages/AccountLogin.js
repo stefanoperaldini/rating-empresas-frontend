@@ -33,7 +33,8 @@ export function AccountLogin() {
     setCurrentUser,
     setAccessToken,
     setRole,
-    setCurrentUserId
+    setCurrentUserId,
+    setEmail
   } = useAuth();
   const { t } = useTranslation();
 
@@ -45,6 +46,8 @@ export function AccountLogin() {
         setAccessToken(response.data.accessToken);
         setRole(userData.role);
         setCurrentUserId(userData.userId);
+        localStorage.setItem('currentEmail', formData.email);
+        setEmail(formData.email);
         history.push("/home");
       })
       .catch(error => {

@@ -28,6 +28,7 @@ axios.interceptors.response.use(
     function (error) {
         if (error.response && error.response.status === 401 && !error.config.url.includes('/login')) {
             localStorage.removeItem('currentUser');
+            localStorage.removeItem("currentEmail");
             window.location.href = '/account/login';
         }
         return Promise.reject(error);
