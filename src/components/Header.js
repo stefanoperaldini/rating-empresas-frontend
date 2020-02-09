@@ -139,24 +139,24 @@ export function Header() {
             </label>
           </li>
         </ul>
-        <div className="cta-contact">
+
+        <div className="cta-contact flexRow">
           {currentUserId && role === "0" && (
-            <React.Fragment>
+            <span className="centeredComponent m-r-xl">
               <img src={admin} alt={t("Admin icon")} /> <span>{email}</span>
-            </React.Fragment>
+            </span>
           )}
           {currentUserId && role === "1" && (
-            <React.Fragment>
+            <span className="centeredComponent m-r-xl">
               <img src={user} alt={t("User icon")} /> <span>{email}</span>
-            </React.Fragment>
+            </span>
           )}
           {currentUserId && role === "2" && (
-            <React.Fragment>
+            <span className="centeredComponent m-r-xl">
               <img src={company} alt={t("Company icon")} />{" "}
               <span>{email}</span>
-            </React.Fragment>
+            </span>
           )}
-
 
           {!currentUserId ? (
             <span className="header-item">

@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useForm } from "react-hook-form";
 import Rating from "@material-ui/lab/Rating";
 import { makeStyles } from "@material-ui/core/styles";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { useParams } from "react-router";
 
 import { getCompany } from "../http/companyService";
@@ -12,6 +12,7 @@ import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
 import { useAuth } from "../context/auth-context";
 import defaultImageCompany from "../img/company-default.png";
+import { ListReviews } from "../components/ListReviews";
 
 /**
  * Page company detail
@@ -37,6 +38,8 @@ export function Company() {
   const params = useParams();
   const idCompany = params.id;
   const { currentUserId, role } = useAuth();
+
+  const location = useLocation();
 
   useEffect(() => {
     getCompany(idCompany).then(response => {
@@ -227,90 +230,7 @@ export function Company() {
             </section>
 
             <section>
-              <ul>
-                {reviewsCompanyList.map(review => (
-                  <li key={review.id}>
-                    <article>
-                      <header>
-                        <p>
-                          {review.name} ({review.start_year}-{review.end_year}) -{" "}
-                          {review.city_name}. {review.created_at}
-                        </p>
-                      </header>
-                      <main>
-                        <h5>{review.comment_title}</h5>
-                        <textarea>{review.comment}</textarea>
-                        <div className={classes.rating}>
-                          <span>{t("Overall rating")}</span>
-                          <Rating
-                            name={review.id["overall_rating"]}
-                            id={review.id["overall_rating"]}
-                            size="large"
-                            value="4"
-                            precision={1}
-                            readOnly={true}
-                          />
-                        </div>
-                        <div className={classes.rating}>
-                          <span>{t("Salary")}</span>
-                          <Rating
-                            name={review.id["salary_valuation"]}
-                            id={review.id[" salary_valuation"]}
-                            size="small"
-                            value={review.salary_valuation}
-                            precision={1}
-                            readOnly={true}
-                          />
-                        </div>
-                        <div className={classes.rating}>
-                          <span> {t("Internal training")}</span>
-                          <Rating
-                            name={review.id["inhouse_training"]}
-                            id={review.id[" inhouse_training"]}
-                            size="small"
-                            value={review.inhouse_training}
-                            precision={1}
-                            readOnly={true}
-                          />
-                        </div>
-                        <div className={classes.rating}>
-                          <span>{t("Growth opportunities")}</span>
-                          <Rating
-                            name={review.id["growth_opportunities"]}
-                            id={review.id["growth_opportunities"]}
-                            size="small"
-                            value={review.growth_opportunities}
-                            precision={1}
-                            readOnly={true}
-                          />
-                        </div>
-                        <div className={classes.rating}>
-                          <span>{t("Work environment")}</span>
-                          <Rating
-                            name={review.id["work_enviroment"]}
-                            id={review.id["work_enviroment"]}
-                            size="small"
-                            value={review.work_enviroment}
-                            precision={1}
-                            readOnly={true}
-                          />
-                        </div>
-                        <div className={classes.rating}>
-                          <span>{t("Work&Life balance")}</span>
-                          <Rating
-                            name={review.id["personal_life"]}
-                            id={review.id["personal_life"]}
-                            size="small"
-                            value={review.personal_life}
-                            precision={1}
-                            readOnly={true}
-                          />
-                        </div>
-                      </main>
-                    </article>
-                  </li>
-                ))}
-              </ul>
+              <ListReviews pathLocation={location.pathname} listReviews={reviewsCompanyList} />
             </section>
           </main>
         </section>

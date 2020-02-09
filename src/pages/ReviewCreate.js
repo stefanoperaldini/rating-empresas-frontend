@@ -112,7 +112,6 @@ export function ReviewCreate() {
       }
     }
     setIsToNext(true);
-
   };
 
   const handleReviewCreate = async (formData) => {
@@ -183,7 +182,7 @@ export function ReviewCreate() {
   return (
     <React.Fragment>
       <Header />
-      <main className="centered-container">
+      <main className="centered-container-home">
         <h3>{t("Create a review")}</h3>
         <h4>{t("Rate a company you've worked for in the past 3 years.")}</h4>
         <h4>{t("Reviews published are anonymous.")}</h4>

@@ -4,6 +4,8 @@ import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 import { useAuth } from "../context/auth-context";
+import defaultImageCompany from "../img/company-default.png";
+
 import {
   getCompanies,
   getSectors,
@@ -185,6 +187,10 @@ export function CompanyCreate() {
       <Header />
       <main className="centered-container">
         <h3>{t("My company")}</h3>
+        <img
+          src={defaultImageCompany}
+          alt={t("Default image company")}
+        />
         <form onSubmit={handleSubmit(handleCompanyCreate)} noValidate>
           <div className="form-control">
             <label htmlFor="name">{t("Name")} (*)</label>

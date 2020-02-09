@@ -43,6 +43,15 @@ nav > a {
   font-weight: 900;
 }
 
+.cursorPointer {
+  cursor: pointer;
+}
+
+fieldset {
+  border: 1px solid var(--lgray);
+  padding: 0 1rem;
+}
+
 /* CONTAINER
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 .wrapper {
