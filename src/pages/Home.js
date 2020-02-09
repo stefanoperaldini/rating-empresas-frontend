@@ -6,10 +6,10 @@ import { makeStyles } from "@material-ui/core/styles";
 import { useHistory } from "react-router-dom";
 
 
-import { getCompany, getCompanies } from "../http/companyService";
+import { getCompanies } from "../http/companyService";
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
-import { setErrorMessageCallBackEnd } from "./pagesUtils";
+import { setErrorMessageCallBackEnd, validatorCompanyName } from "./pagesUtils";
 import { useAuth } from "../context/auth-context";
 import defaultImageCompany from "../img/company-default.png";
 
@@ -26,32 +26,43 @@ const useStyles = makeStyles({
 });
 
 export function Home() {
-  const [topTenList, setTopTenList] = useState([]);
+  const [companies, setCompanies] = useState([]);
+  const [company, setCompany] = useState("");
+
   const { handleSubmit, register, errors, formState, setError } = useForm({
     mode: "onBlur"
   });
+
   const classes = useStyles();
   const { t } = useTranslation();
   const history = useHistory();
   const { currentUserId, role } = useAuth();
 
   useEffect(() => {
+    // FIXME Llamar back con filtro top 10
     getCompanies().then(response => {
-      setTopTenList(response.data.rows);
+      setCompanies(response.data.rows);
+    }).catch(error => {
+      setError("name", "backend", setErrorMessageCallBackEnd(error));
     });
 
     return;
-  }, []);
+  }, [setError]);
 
   const handleGetCompanyData = formData => {
-    return getCompany(formData.id)
-      .then(response => {
-        history.push(`/company/detail/${formData.id}`);
-      })
-      .catch(error => {
-        setError("id", "backend", setErrorMessageCallBackEnd(error));
-      });
-  };
+    let idCompany = null;
+    for (let companyItem of companies) {
+      if (company === companyItem.name) {
+        idCompany = companyItem.id;
+        break;
+      }
+    }
+    if (idCompany) {
+      history.push(`/company/detail/${idCompany}`);
+    } else {
+      setError("name", "backend", t("Company not found"));
+    }
+  }
 
   return (
     <React.Fragment>
@@ -61,28 +72,29 @@ export function Home() {
           <h2>{t("Find great places to work")}</h2>
           <p>{t("Get access to rating and company reviews")}</p>
           <form onSubmit={handleSubmit(handleGetCompanyData)}>
-
             <div className="searchComponent">
               <input
                 className="searchCompany"
-                ref={register({
-                  required: "Enter a company name",
-                  minLength: {
-                    value: 3,
-                    message: "Minimun is 3 characters"
-                  },
-                  maxLength: {
-                    value: 60,
-                    message: "Maximun is 60 characters"
-                  }
-                })}
-                name="id"
-                id="search-name"
-                type="search"
+                list="companyName"
+                ref={register(validatorCompanyName)}
+                name="name"
+                id="name"
+                type="text"
+                value={company}
                 placeholder={t("Company name")}
+                onChange={e =>
+                  setCompany(e.target.value)
+                }
               ></input>
-              {errors.id && (
-                <span className="errorMessage">{t(errors.id.message)}</span>
+              <datalist id="companyName">
+                {companies.map(element => (
+                  <option key={element.name} value={element.name}>
+                    {element.name}
+                  </option>
+                ))}
+              </datalist>
+              {errors.name && (
+                <span className="errorMessage">{t(errors.name.message)}</span>
               )}
               <div className="btn-container buttonSearch">
                 <button
@@ -97,9 +109,9 @@ export function Home() {
                 {t("Advanced search")}
               </a>
             </div>
-
           </form>
         </section>
+
         {(!currentUserId || role === "1") && (
           <section className="allWidth centeredComponentRate p-t-md m-t-xl">
             <header>
@@ -124,8 +136,9 @@ export function Home() {
           <header><h3>{t("Top Ten Workplaces")}</h3></header>
           <main className="minWidth">
             <ul className="containerGrid m-t-lg">
-              {topTenList.map(company => (
-                <li key={company.id} className="borderGrey">
+              {companies.map(company => (
+                <li key={company.id} className="borderGrey cursorPointer"
+                  onClick={e => history.push(`/company/detail/${company.id}`)}>
                   <article className="summaryCompany">
                     <img className="item1"
                       src={defaultImageCompany}

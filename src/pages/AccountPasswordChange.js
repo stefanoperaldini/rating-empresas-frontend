@@ -42,7 +42,7 @@ export function AccountPasswordChange() {
     <React.Fragment>
       <Header />
       <main className="centered-container">
-        <div className="boxAccount">
+        <div>
           <h3>{t("Change password")}</h3>
           <form onSubmit={handleSubmit(handlePasswordChange)}>
             <div className="form-control">

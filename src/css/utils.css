@@ -1,6 +1,7 @@
 .b-l {
   border-left: 2px solid var(--lgray);
 }
+
 .b-b {
   border-bottom: 2px solid var(--lgray);
 }
@@ -19,6 +20,10 @@
 
 .m-r-md {
   margin-right: var(--space-md);
+}
+
+.m-r-xl {
+  margin-right: var(--space-xl);
 }
 
 .f-s-xs {

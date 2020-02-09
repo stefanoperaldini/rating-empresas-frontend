@@ -17,6 +17,7 @@ import { CompanyCreate } from "./pages/CompanyCreate";
 import { EmailActivationRecovery } from "./pages/EmailActivationRecovery";
 import { ReviewCreate } from "./pages/ReviewCreate";
 import { ReviewUser } from "./pages/ReviewUser";
+import { ReviewReport } from "./pages/ReviewReport";
 import { UserUpdate } from "./pages/UserUpdate";
 import { UserDelete } from "./pages/UserDelete";
 import { NotFound } from "./pages/NotFound";
@@ -71,6 +72,9 @@ function App() {
               </PrivateRoute>
               <PrivateRoute path="/review/user" allowedRoles={["1"]}>
                 <ReviewUser />
+              </PrivateRoute>
+              <PrivateRoute path="/review/report/:idReview" allowedRoles={["0"]} >
+                <ReviewReport />
               </PrivateRoute>
               <PrivateRoute path="/user/update" allowedRoles={["1", "2"]}>
                 <UserUpdate />
