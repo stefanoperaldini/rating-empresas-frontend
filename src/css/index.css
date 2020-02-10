@@ -6,6 +6,7 @@
 
 body {
   font-family: "Noto Sans JP", sans-serif;
+  /* white-space: nowrap; */
 }
 
 button {
@@ -93,11 +94,6 @@ fieldset {
   font-family: inherit;
   font-size: 1rem;
   padding: 5px 18px;
-}
-
-.menu {
-  position: relative;
-  color: var(--blue);
 }
 
 /* MAIN
@@ -228,6 +224,31 @@ fieldset {
   grid-column: span 2;
 }
 
+/* ADVANCED SEARCH
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+.buttonSort { 
+  padding: 0.2rem 1rem;
+  border-radius: 0;
+  /* 15px; */
+  font-weight: 300;
+  transition-duration: 0.4s;
+}
+
+.buttonSortLeft { 
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
+}
+
+.buttonSortRight { 
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;  
+}
+
+.buttonBorderRight { 
+  border-right: 0.5px solid var(--darkblue);
+}
+
 /* COMPANY
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
@@ -235,6 +256,12 @@ fieldset {
   display: flex;
   flex-direction: row;  
   align-items: center;
+}
+
+.flexColumn {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 
@@ -310,51 +337,51 @@ fieldset {
     padding-left: 90px;
   }
 
-.searchComponent {
-  display: grid;
-  grid-gap: 0.25rem;
-  grid-template-columns: 25rem 12rem;
-  grid-template-rows: 5rem 1.5rem;
-  grid-template-areas:
-    'searchCompany   buttonSearch'
-    'none advancedSearch';
-}
+  .searchComponent {
+    display: grid;
+    grid-gap: 0.25rem;
+    grid-template-columns: 25rem 12rem;
+    grid-template-rows: 5rem 1.5rem;
+    grid-template-areas:
+      'searchCompany   buttonSearch'
+      'none advancedSearch';
+  }
 
-.searchCompany {
-  grid-area: searchCompany;
-}
+  .searchCompany {
+    grid-area: searchCompany;
+  }
 
-.buttonSearch {
-  grid-area: buttonSearch;
-  align-self: end;
-}
+  .buttonSearch {
+    grid-area: buttonSearch;
+    align-self: end;
+  }
 
-.advancedSearch {
-  grid-area: advancedSearch;
-  align-self: start;
-  justify-self: center;
-}
+  .advancedSearch {
+    grid-area: advancedSearch;
+    align-self: start;
+    justify-self: center;
+  }
 
-.centeredComponentRate {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-}
+  .centeredComponentRate {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
 
-.minWidth{
-  min-width: 80vw;
-}
+  .minWidth{
+    min-width: 80vw;
+  }
 
-.companyDetail {
-  display: grid;
-  grid-gap: 0.25rem;
-  grid-template-columns: 1fr, 1fr;
-  grid-template-rows: 1fr, 1fr, 1fr;
-  grid-template-areas:
-    'companyTitle   companyTitle'
-    'ratingCompany  asideCompany'
-    'ratingCompany  none';
-}
+  .companyDetail {
+    display: grid;
+    grid-gap: 2rem;
+    grid-template-columns: 2fr, 1fr;
+    grid-template-rows: 1fr, 1fr, 1fr;
+    grid-template-areas:
+      'companyTitle   companyTitle'
+      'ratingCompany  asideCompany'
+      'ratingCompany  none';
+  }
 
 }

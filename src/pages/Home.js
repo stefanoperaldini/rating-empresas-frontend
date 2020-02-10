@@ -11,7 +11,8 @@ import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
 import { setErrorMessageCallBackEnd, validatorCompanyName } from "./pagesUtils";
 import { useAuth } from "../context/auth-context";
-import defaultImageCompany from "../img/company-default.png";
+import { ListCompanies } from "../components/ListCompanies";
+
 
 /**
  * Home page
@@ -120,7 +121,7 @@ export function Home() {
             </header>
             <main className={classes.rating}>
               <Rating
-                name="overall_rating"
+                name="vote"
                 size="large"
                 value="0"
                 precision={1}
@@ -135,33 +136,7 @@ export function Home() {
         <section className="allWidth centered-container-home p-t-md m-t-xl">
           <header><h3>{t("Top Ten Workplaces")}</h3></header>
           <main className="minWidth">
-            <ul className="containerGrid m-t-lg">
-              {companies.map(company => (
-                <li key={company.id} className="borderGrey cursorPointer"
-                  onClick={e => history.push(`/company/detail/${company.id}`)}>
-                  <article className="summaryCompany">
-                    <img className="item1"
-                      src={defaultImageCompany}
-                      alt={t("Default image company")}
-                    />
-                    <h4>{company.name}</h4>
-                    <p> {company.sector}</p>
-                    <div className={`${classes.rating} item2 f-s-xs`}>
-                      <Rating
-                        name={company.name}
-                        id={company.name}
-                        size="large"
-                        value="4"
-                        precision={1}
-                        readOnly={true}
-                        className="m-r-md"
-                      />
-                      100 {t("reviews")}
-                    </div>
-                  </article>
-                </li>
-              ))}
-            </ul>
+            <ListCompanies listCompanies={companies} />
           </main>
         </section>
       </main>

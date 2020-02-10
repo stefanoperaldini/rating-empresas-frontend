@@ -36,8 +36,8 @@ export function ListReviews({ pathLocation, listReviews }) {
     };
 
     const executeDelete = (reviewId) => {
-        const deleteReview = window.confirm(t("Do you want to delete this review?"));
-        if (deleteReview) {
+        const deleteReviewConfirm = window.confirm(t("Do you want to delete this review?"));
+        if (deleteReviewConfirm) {
             return deleteReview(reviewId)
                 .then(response => {
                     // FIXME tengo que quedar en esta pagina
@@ -47,7 +47,7 @@ export function ListReviews({ pathLocation, listReviews }) {
     };
 
     return (
-        <ul>
+        <ul className="flexColumn">
             {listReviews.map(review => (
                 <li key={review.id} className="b-b m-t-lg">
                     <section>
@@ -64,7 +64,6 @@ export function ListReviews({ pathLocation, listReviews }) {
                             <h5>{review.comment_title}</h5>
                             <textarea>{review.comment}</textarea>
                             <div className={classes.rating}>
-                                <span>{t("Overall rating")}</span>
                                 <Rating
                                     name={review.id["overall_rating"]}
                                     id={review.id["overall_rating"]}
@@ -73,9 +72,9 @@ export function ListReviews({ pathLocation, listReviews }) {
                                     precision={1}
                                     readOnly={true}
                                 />
+                                <span className="m-l-md">{t("Overall rating")}</span>
                             </div>
                             <div className={classes.rating}>
-                                <span>{t("Salary")}</span>
                                 <Rating
                                     name={review.id["salary_valuation"]}
                                     id={review.id[" salary_valuation"]}
@@ -84,9 +83,9 @@ export function ListReviews({ pathLocation, listReviews }) {
                                     precision={1}
                                     readOnly={true}
                                 />
+                                <span className="m-l-md">{t("Salary")}</span>
                             </div>
                             <div className={classes.rating}>
-                                <span> {t("Internal training")}</span>
                                 <Rating
                                     name={review.id["inhouse_training"]}
                                     id={review.id[" inhouse_training"]}
@@ -95,9 +94,9 @@ export function ListReviews({ pathLocation, listReviews }) {
                                     precision={1}
                                     readOnly={true}
                                 />
+                                <span className="m-l-md"> {t("Internal training")}</span>
                             </div>
                             <div className={classes.rating}>
-                                <span>{t("Growth opportunities")}</span>
                                 <Rating
                                     name={review.id["growth_opportunities"]}
                                     id={review.id["growth_opportunities"]}
@@ -106,9 +105,9 @@ export function ListReviews({ pathLocation, listReviews }) {
                                     precision={1}
                                     readOnly={true}
                                 />
+                                <span className="m-l-md">{t("Growth opportunities")}</span>
                             </div>
                             <div className={classes.rating}>
-                                <span>{t("Work environment")}</span>
                                 <Rating
                                     name={review.id["work_enviroment"]}
                                     id={review.id["work_enviroment"]}
@@ -117,9 +116,9 @@ export function ListReviews({ pathLocation, listReviews }) {
                                     precision={1}
                                     readOnly={true}
                                 />
+                                <span className="m-l-md">{t("Work environment")}</span>
                             </div>
                             <div className={classes.rating}>
-                                <span>{t("Work&Life balance")}</span>
                                 <Rating
                                     name={review.id["personal_life"]}
                                     id={review.id["personal_life"]}
@@ -128,6 +127,7 @@ export function ListReviews({ pathLocation, listReviews }) {
                                     precision={1}
                                     readOnly={true}
                                 />
+                                <span className="m-l-md">{t("Work&Life balance")}</span>
                             </div>
 
                             {currentUserId && role !== "0" && (

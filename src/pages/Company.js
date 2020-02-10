@@ -72,7 +72,7 @@ export function Company() {
             </header>
             <main className={classes.rating}>
               <Rating
-                name="overall_rating"
+                name="vote"
                 size="large"
                 value="0"
                 precision={1}
@@ -95,8 +95,7 @@ export function Company() {
           </header>
 
           <aside className="asideCompany b-l">
-            <div className={classes.rating}>
-              <span>{t("Overall rating")}</span>
+            <div className={`${classes.rating} m-l-md`}>
               4.5
             <Rating
                 name="overall_rating"
@@ -106,9 +105,9 @@ export function Company() {
                 precision={1}
                 readOnly={true}
               />
+              <span className="m-l-md">{t("Overall rating")}</span>
             </div>
-            <div className={classes.rating}>
-              <span>{t("Salary")}</span>
+            <div className={`${classes.rating} m-l-md`}>
               4.5
             <Rating
                 name="salary_valuation"
@@ -118,9 +117,9 @@ export function Company() {
                 precision={1}
                 readOnly={true}
               />
+              <span className="m-l-md">{t("Salary")}</span>
             </div>
-            <div className={classes.rating}>
-              <span> {t("Internal training")}</span>
+            <div className={`${classes.rating} m-l-md`}>
               4.5
             <Rating
                 name="inhouse_training"
@@ -130,9 +129,9 @@ export function Company() {
                 precision={1}
                 readOnly={true}
               />
+              <span className="m-l-md"> {t("Internal training")}</span>
             </div>
-            <div className={classes.rating}>
-              <span>{t("Growth opportunities")}</span>
+            <div className={`${classes.rating} m-l-md`}>
               4.5
             <Rating
                 name="growth_opportunities"
@@ -142,9 +141,9 @@ export function Company() {
                 precision={1}
                 readOnly={true}
               />
+              <span className="m-l-md">{t("Growth opportunities")}</span>
             </div>
-            <div className={classes.rating}>
-              <span>{t("Work environment")}</span>
+            <div className={`${classes.rating} m-l-md`}>
               4.5
             <Rating
                 name="work_enviroment"
@@ -154,9 +153,9 @@ export function Company() {
                 precision={1}
                 readOnly={true}
               />
+              <span className="m-l-md">{t("Work environment")}</span>
             </div>
-            <div className={classes.rating}>
-              <span>{t("Work&Life balance")}</span>
+            <div className={`${classes.rating} m-l-md`}>
               4.5
             <Rating
                 name="personal_life"
@@ -166,30 +165,31 @@ export function Company() {
                 precision={1}
                 readOnly={true}
               />
+              <span className="m-l-md">{t("Work&Life balance")}</span>
             </div>
 
             <section>
-              <h5> {company.name} </h5>
-              <p>
+              <h5 className="m-l-md m-t-xl"> {company.name} </h5>
+              <p className="m-l-md">
                 {company.sector}
               </p>
-              <p>
+              <p className="m-l-md">
                 {company.description}
               </p>
-              <p>
+              <p className="m-l-md">
                 {company.address} - {company.city_name}
               </p>
-              <p>{company.url_web}</p>
-              <p>{company.linkedin}</p>
+              <p className="m-l-md">{company.url_web}</p>
+              <p className="m-l-md">{company.linkedin}</p>
             </section>
           </aside>
 
           <main className="ratingCompany">
             <section >
               <form onSubmit className="flexRow">
-                <h5>{t("Search for")}:</h5>
+                <h5 className="m-r-md">{t("Search for")}</h5>
                 <ul className="flexRow">
-                  <li>
+                  <li className="m-r-xs">
                     <select name="position" id="position" ref={register}>
                       <option value="Empty">&#60;{t("Job title")}&#62;</option>
                       <option value="Software developer">Software developer</option>
@@ -217,7 +217,7 @@ export function Company() {
 
             <section>
               <form onSubmit>
-                <label htmlFor="sort">{t("Sort by")}</label>
+                <h5 className="m-r-md">{t("Sort by")}</h5>
                 <select name="sort" id="sort" ref={register}>
                   <option value="1">{t("Overall rating")}</option>
                   <option value="2">{t("Salary")}</option>
