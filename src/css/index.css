@@ -6,7 +6,7 @@
 
 body {
   font-family: "Noto Sans JP", sans-serif;
-  /* white-space: nowrap; */
+  white-space: nowrap;
 }
 
 button {
@@ -51,6 +51,13 @@ nav > a {
 fieldset {
   border: 1px solid var(--lgray);
   padding: 0 1rem;
+}
+
+textarea {
+  height: 6rem;
+  width: 22rem;
+  border: none;
+  font-family: inherit;
 }
 
 /* CONTAINER

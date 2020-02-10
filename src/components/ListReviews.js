@@ -62,7 +62,7 @@ export function ListReviews({ pathLocation, listReviews }) {
                         </header>
                         <main>
                             <h5>{review.comment_title}</h5>
-                            <textarea>{review.comment}</textarea>
+                            <textarea value={review.comment}></textarea>
                             <div className={classes.rating}>
                                 <Rating
                                     name={review.id["overall_rating"]}

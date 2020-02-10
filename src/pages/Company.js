@@ -174,7 +174,7 @@ export function Company() {
                 {company.sector}
               </p>
               <p className="m-l-md">
-                {company.description}
+                <textarea value={company.description} />
               </p>
               <p className="m-l-md">
                 {company.address} - {company.city_name}
