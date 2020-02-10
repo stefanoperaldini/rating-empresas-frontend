@@ -1,31 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useForm } from "react-hook-form";
-import Rating from "@material-ui/lab/Rating";
-import { makeStyles } from "@material-ui/core/styles";
 
 import { getCompanies } from "../http/companyService";
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
+import { ListCompanies } from "../components/ListCompanies";
 
 /**
  * Page advanced search
  */
-
-const useStyles = makeStyles({
-  rating: {
-    width: 200,
-    display: "flex",
-    alignItems: "center"
-  }
-});
 
 export function AdvancedSearch() {
   const [companiesList, setcompaniesList] = useState([]);
   const { register } = useForm({
     mode: "onBlur"
   });
-  const classes = useStyles();
+
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -42,13 +33,13 @@ export function AdvancedSearch() {
       <Header />
       <main className="centered-container">
         <h3>{t("Advanced search")}</h3>
-        <section>
-          <h5>{t("Search for")}:</h5>
+        <section className="flexRow m-t-lg">
+          <h5 className="m-r-md">{t("Search for")}</h5>
           <form onSubmit>
-            <ul>
+            <ul className="flexRow">
               <li>
-                <label htmlFor="sector">{t("Sector")}</label>
-                <select name="sector" id="sector" ref={register}>
+                <label className="m-r-xs" htmlFor="sector">{t("Sector")}</label>
+                <select name="sector" id="sector" ref={register} className="m-r-md">
                   <option value="Empty"></option>
                   <option value="Bank">Bank</option>
                   <option value="Information technology">
@@ -58,8 +49,8 @@ export function AdvancedSearch() {
                 </select>
               </li>
               <li>
-                <label htmlFor="position">{t("Job title")}</label>
-                <select name="position" id="position" ref={register}>
+                <label className="m-r-xs" htmlFor="position">{t("Job title")}</label>
+                <select name="position" id="position" ref={register} className="m-r-md">
                   <option value="Empty"></option>
                   <option value="Software developer">Software developer</option>
                   <option value="Project owner">Project owner</option>
@@ -67,7 +58,7 @@ export function AdvancedSearch() {
                 </select>
               </li>
               <li>
-                <label htmlFor="city">{t("City")}</label>
+                <label className="m-r-xs" htmlFor="city">{t("City")}</label>
                 <select name="city" id="city" ref={register}>
                   <option value="Empty"></option>
                   <option value="Coruña">Coruña, A</option>
@@ -78,58 +69,39 @@ export function AdvancedSearch() {
             </ul>
           </form>
         </section>
-        <section>
-          <div>
-            <button>{t("Overall rating")}</button>
-          </div>
-          <div>
-            <button>{t("Salary")}</button>
-          </div>
-          <div>
-            <button>{t("Internal training")}</button>
-          </div>
-          <div>
-            <button>{t("Growth opportunities")}</button>
-          </div>
-          <div>
-            <button>{t("Work environment")}</button>
-          </div>
-          <div>
-            <button>{t("Work&Life balance")}</button>
-          </div>
-        </section>
-        <section>
-          <ul>
-            {companiesList.map(company => (
-              <li key={company.id}>
-                <article>
-                  <header>
-                    <p>{company.url_logo}</p>
-                    <p>{company.name}</p>
-                  </header>
-                  <main>
-                    <div className={classes.rating}>
-                      <span>{t("Overall rating")}</span>
-                      <Rating
-                        name="overall_rating"
-                        id="overall_rating"
-                        size="large"
-                        value="4"
-                        precision={1}
-                        readOnly={true}
-                      />
-                    </div>
-                  </main>
-                </article>
-              </li>
-            ))}
+        <section className="flexRow m-t-lg">
+          <h5 className="m-r-md">{t("Sort by")}</h5>
+          <ul className="flexRow">
+            <li>
+              <button className="buttonSort buttonSortLeft buttonBorderRight">{t("Overall rating")}</button>
+            </li>
+            <li>
+              <button className="buttonSort buttonBorderRight">{t("Salary")}</button>
+            </li>
+            <li>
+              <button className="buttonSort buttonBorderRight">{t("Internal training")}</button>
+            </li>
+            <li>
+              <button className="buttonSort buttonBorderRight">{t("Growth opportunities")}</button>
+            </li>
+            <li>
+              <button className="buttonSort buttonBorderRight">{t("Work environment")}</button>
+            </li>
+            <li>
+              <button className="buttonSort buttonSortRight">{t("Work&Life balance")}</button>
+            </li>
           </ul>
-
+        </section>
+        <section className="allWidth centered-container-home p-t-md m-t-xl">
+          <main className="minWidth">
+            <ListCompanies listCompanies={companiesList} />
+          </main>
           <div>
-            <button>{t("Previous")}</button>
+            <button className="m-r-md">{t("Previous")}</button>
             <button>{t("Next")}</button>
           </div>
         </section>
+
       </main>
       <Footer />
     </React.Fragment>

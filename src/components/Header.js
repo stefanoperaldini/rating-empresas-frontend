@@ -1,38 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
+
 import admin from "../img/admin-user.png";
 import user from "../img/user.png";
 import company from "../img/company.png";
-import menu from "../img/menu-black.png";
 import logo from "../img/Logo.png";
-
 import { useAuth } from "../context/auth-context";
-import { logOut } from "../http/authService";
-import { setErrorMessageCallBackEnd } from "../pages/pagesUtils";
+import { executeLogout } from "../utils";
+
+import { AppMenu } from "../components/AppMenu"
 
 export function Header() {
   const [lang, setLang] = useState("en");
-  const [showMenu, setShowMenu] = useState(false);
   const { currentUserId, role, email } = useAuth();
 
   const { t, i18n } = useTranslation();
-
-  const executeLogout = () => {
-    return logOut()
-      .then(response => {
-        localStorage.removeItem("currentUser");
-        localStorage.removeItem("currentEmail");
-      })
-      .catch(error => {
-        localStorage.removeItem("currentUser");
-        localStorage.removeItem("currentEmail");
-        console.error(setErrorMessageCallBackEnd(error));
-      })
-      .finally(() => {
-        window.location.href = "/home";
-      });
-  };
 
   useEffect(() => {
     const langStored = localStorage.getItem("re:lang");
@@ -177,51 +160,9 @@ export function Header() {
             <span className="menu header-item" onClick={() => executeLogout()}>
               {t("Sign out")}
             </span>
-          ) : (
-                <span onClick={() => setShowMenu(true)}>
-                  <img src={menu} alt={t("Menu icon")} />
-                  {showMenu && (
-                    <div
-                      className="m-t-lg lista-menu"
-                      onMouseLeave={() => setShowMenu(false)}
-                    >
-                      <ul>
-                        {role === "2" && (
-                          <li>
-                            <Link to="/company/create">{t("My company")}</Link>
-                          </li>
-                        )}
-                        {role === "1" && (
-                          <React.Fragment>
-                            <li>
-                              <Link to="/review/create">{t("Create review")}</Link>
-                            </li>
-                            <li>
-                              <Link to="/review/user">{t("My reviews")}</Link>
-                            </li>
-                          </React.Fragment>
-                        )}
-                        {(role === "1" || role === "2") && (
-                          <React.Fragment>
-                            <li>
-                              <Link to="/user/update">{t("Profile")}</Link>
-                            </li>
-                            <li>
-                              <Link to="/account/password/change">
-                                {t("Change password")}
-                              </Link>
-                            </li>
-                            <li>
-                              <Link to="/user/delete">{t("Delete account")}</Link>
-                            </li>
-                          </React.Fragment>
-                        )}
-                        <li onClick={() => executeLogout()}>{t("Sign out")}</li>
-                      </ul>
-                    </div>
-                  )}
-                </span>
-              )}
+          ) :
+              <AppMenu />
+          }
         </div>
       </nav>
     </header>

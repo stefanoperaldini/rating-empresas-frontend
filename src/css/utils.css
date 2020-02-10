@@ -18,13 +18,26 @@
   margin-top: var(--space-lg);
 }
 
+.m-r-xs {
+  margin-right: var(--space-xs);
+}
+
 .m-r-md {
   margin-right: var(--space-md);
+}
+
+.m-l-md {
+  margin-left: var(--space-md);
+}
+
+.m-l-sm {
+  margin-left: var(--space-sm);
 }
 
 .m-r-xl {
   margin-right: var(--space-xl);
 }
+
 
 .f-s-xs {
   font-size: var(--font-xs);
