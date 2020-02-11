@@ -1,0 +1,394 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Noto Sans JP", sans-serif;
+  white-space: nowrap;
+}
+
+button {
+  background: none;
+  font: inherit;
+  outline: none;
+  cursor: pointer;
+  background-color: var(--blue);
+  color: var(--bright);
+  padding: 0.5rem 3rem;
+  border: 2px solid var(--blue);
+  border-radius: 15px;
+  font-weight: 500;
+  transition-duration: 0.4s;
+}
+
+button:hover {
+  background-color: var(--darkblue);
+  border: 2px solid var(--darkblue);
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 300;
+}
+
+nav > a {
+  text-decoration: none;
+  color: inherit;
+  font-weight: 900;
+}
+
+.cursorPointer {
+  cursor: pointer;
+}
+
+fieldset {
+  border: 1px solid var(--lgray);
+  padding: 0 1rem;
+}
+
+textarea {
+  height: 6rem;
+  width: 22rem;
+  border: none;
+  font-family: inherit;
+}
+
+/* CONTAINER
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.wrapper > * {
+  padding: 20px;
+}
+
+/* HEADER
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+.page-header {
+  background: var(--lgray);
+}
+
+.page-header nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.page-header ul {
+  display: flex;
+  order: 1;
+  width: 100%;
+  margin-top: 15px;
+}
+
+.page-header ul li:not(:last-child) {
+  padding-right: 15px;
+}
+
+.page-header .cta-contact {
+  font-family: inherit;
+  font-size: 1rem;
+  padding: 5px 18px;
+}
+
+/* MAIN
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.centered-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 350px;
+  flex-grow: 1;
+}
+
+.opacity-container {
+  transition: opacity 0.3s ease-in;
+  opacity: 1;
+}
+
+.opacity-container.activated {
+  opacity: 0.5;
+}
+
+.centered-container div {
+  max-width: 500px;
+}
+
+.centered-container h1 {
+  margin-bottom: 20px;
+}
+
+.centered-container p + p {
+  margin-top: 10px;
+}
+
+.boxAccount {
+  border: 2px solid var(--lgray);
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.boxAccount > * {
+  padding: 1rem 3rem;
+}
+/* HOME
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.centered-container-home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 350px;
+  flex-grow: 1;
+}
+
+.centeredComponent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.centeredComponentRate {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.containerGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-column-gap: 6px;
+  grid-row-gap: 6px;
+}
+
+.allWidth {
+  min-width: 100vw;
+}
+
+.minWidth{
+  min-width: 90vw;
+}
+
+.searchComponent {
+  position: relative;
+  display: grid;
+  grid-gap: 1rem;
+  grid-template-columns: 300px;
+  grid-template-rows: repeat(3, 100px);
+  grid-template-areas:
+    'searchCompany'
+    'buttonSearch'
+    'advancedSearch';
+}
+
+.searchCompany {
+  grid-area: searchCompany;
+}
+
+.buttonSearch {
+  grid-area: buttonSearch;
+}
+
+.advancedSearch {
+  grid-area: advancedSearch;
+}
+
+.summaryCompany {
+  display: grid;
+  grid-template-columns: 2fr, 1fr;
+  grid-template-rows: repeat(3, 1fr);
+  grid-column-gap: 1px;
+  grid-row-gap: 1px;
+}
+
+.borderGrey{
+  border: 2px solid var(--lgray);
+  border-radius: 5px;
+}
+
+.item1 {
+  grid-row: span 2;
+}
+
+.item2 {
+  grid-column: span 2;
+}
+
+/* ADVANCED SEARCH
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+.buttonSort { 
+  padding: 0.2rem 1rem;
+  border-radius: 0;
+  /* 15px; */
+  font-weight: 300;
+  transition-duration: 0.4s;
+}
+
+.buttonSortLeft { 
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
+}
+
+.buttonSortRight { 
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;  
+}
+
+.buttonBorderRight { 
+  border-right: 0.5px solid var(--darkblue);
+}
+
+/* COMPANY
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+.flexRow{
+  display: flex;
+  flex-direction: row;  
+  align-items: center;
+}
+
+.flexColumn {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+
+.companyDetail {
+  display: grid;
+  grid-gap: 0.25rem;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr, 1fr 1fr;
+  grid-template-areas:
+    'companyTitle'
+    'asideCompany'
+    'ratingCompany';
+}
+
+.companyTitle {
+  grid-area: companyTitle;
+}
+
+.asideCompany {
+  grid-area: asideCompany;
+}
+
+.ratingCompany {
+  grid-area: ratingCompany;
+}
+
+/* FOOTER
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.page-footer {
+  display: flex;
+  flex-direction: column-reverse;
+  background: var(--lgray);
+}
+
+.page-footer ul {
+  display: flex;
+  margin-bottom: 5px;
+}
+
+.page-footer ul li:not(:last-child) {
+  margin-right: 20px;
+}
+
+/* MQ
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+@media screen and (min-width: 550px) {
+  .page-header ul {
+    width: auto;
+    margin-top: 0;
+  }
+
+  .page-header .cta-contact {
+    order: 1;
+  }
+
+  .page-footer {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .page-footer ul {
+    margin-bottom: 0;
+  }
+}
+
+@media screen and (min-width: 800px) {
+  body {
+    font-size: 1rem;
+  }
+
+  .page-main {
+    padding-left: 90px;
+  }
+
+  .searchComponent {
+    display: grid;
+    grid-gap: 0.25rem;
+    grid-template-columns: 25rem 12rem;
+    grid-template-rows: 5rem 1.5rem;
+    grid-template-areas:
+      'searchCompany   buttonSearch'
+      'none advancedSearch';
+  }
+
+  .searchCompany {
+    grid-area: searchCompany;
+  }
+
+  .buttonSearch {
+    grid-area: buttonSearch;
+    align-self: end;
+  }
+
+  .advancedSearch {
+    grid-area: advancedSearch;
+    align-self: start;
+    justify-self: center;
+  }
+
+  .centeredComponentRate {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .minWidth{
+    min-width: 80vw;
+  }
+
+  .companyDetail {
+    display: grid;
+    grid-gap: 2rem;
+    grid-template-columns: 2fr, 1fr;
+    grid-template-rows: 1fr, 1fr, 1fr;
+    grid-template-areas:
+      'companyTitle   companyTitle'
+      'ratingCompany  asideCompany'
+      'ratingCompany  none';
+  }
+
+}

@@ -1,0 +1,65 @@
+.b-l {
+  border-left: 2px solid var(--lgray);
+}
+
+.b-b {
+  border-bottom: 2px solid var(--lgray);
+}
+
+.p-t-md {
+  padding-top: var(--space-md);
+}
+
+.m-t-xl {
+  margin-top: var(--space-xl);
+}
+
+.m-t-lg {
+  margin-top: var(--space-lg);
+}
+
+.m-r-xs {
+  margin-right: var(--space-xs);
+}
+
+.m-r-md {
+  margin-right: var(--space-md);
+}
+
+.m-l-md {
+  margin-left: var(--space-md);
+}
+
+.m-l-sm {
+  margin-left: var(--space-sm);
+}
+
+.m-r-xl {
+  margin-right: var(--space-xl);
+}
+
+
+.f-s-xs {
+  font-size: var(--font-xs);
+}
+
+.flex {
+  display: flex;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.truncate-text {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.truncate-multiline-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}

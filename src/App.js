@@ -1,25 +1,98 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+
+import { I18nextProvider } from "react-i18next";
+import i18n from "./i18n";
+import { AuthProvider } from "./context/auth-context";
+
+import { Home } from "./pages/Home";
+import { AccountActivate } from "./pages/AccountActivate";
+import { AccountCreate } from "./pages/AccountCreate";
+import { AccountLogin } from "./pages/AccountLogin";
+import { AccountPasswordChange } from "./pages/AccountPasswordChange";
+import { AccountPasswordRecovery } from "./pages/AccountPasswordRecovery";
+import { AdvancedSearch } from "./pages/AdvancedSearch";
+import { Company } from "./pages/Company";
+import { CompanyCreate } from "./pages/CompanyCreate";
+import { EmailActivationRecovery } from "./pages/EmailActivationRecovery";
+import { ReviewCreate } from "./pages/ReviewCreate";
+import { ReviewUser } from "./pages/ReviewUser";
+import { ReviewReport } from "./pages/ReviewReport";
+import { UserUpdate } from "./pages/UserUpdate";
+import { UserDelete } from "./pages/UserDelete";
+import { NotFound } from "./pages/NotFound";
+
+import { PrivateRoute } from "./components/PrivateRoute";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <I18nextProvider i18n={i18n}>
+      <BrowserRouter>
+        <AuthProvider>
+          <div className="wrapper">
+            <Switch>
+              <Route exact path="/">
+                <Redirect to="/home" />
+              </Route>
+              <Route exact path="/home">
+                <Home />
+              </Route>
+              <Route path="/account/activate/:verification_code">
+                <AccountActivate />
+              </Route>
+              <Route path="/account/create">
+                <AccountCreate />
+              </Route>
+              <Route path="/account/login">
+                <AccountLogin />
+              </Route>
+              <PrivateRoute
+                path="/account/password/change"
+                allowedRoles={["1", "2"]}
+              >
+                <AccountPasswordChange />
+              </PrivateRoute>
+              <Route path="/account/password/recovery">
+                <AccountPasswordRecovery />
+              </Route>
+              <Route path="/advanced-search">
+                <AdvancedSearch />
+              </Route>
+              <Route path="/company/detail/:id">
+                <Company />
+              </Route>
+              <PrivateRoute exact path="/company/create" allowedRoles={["2"]}>
+                <CompanyCreate />
+              </PrivateRoute>
+              <Route path="/email/activation/recovery">
+                <EmailActivationRecovery />
+              </Route>
+              <PrivateRoute path="/review/create" allowedRoles={["1"]}>
+                <ReviewCreate />
+              </PrivateRoute>
+              <PrivateRoute path="/review/user" allowedRoles={["1"]}>
+                <ReviewUser />
+              </PrivateRoute>
+              <PrivateRoute path="/review/report/:idReview" allowedRoles={["0"]} >
+                <ReviewReport />
+              </PrivateRoute>
+              <PrivateRoute path="/user/update" allowedRoles={["1", "2"]}>
+                <UserUpdate />
+              </PrivateRoute>
+              <PrivateRoute path="/user/delete" allowedRoles={["1", "2"]}>
+                <UserDelete />
+              </PrivateRoute>
+              <Route path="/not-found">
+                <NotFound />
+              </Route>
+              <Route path="*">
+                <Redirect to="/not-found" />
+              </Route>
+            </Switch>
+          </div>
+        </AuthProvider>
+      </BrowserRouter>
+    </I18nextProvider>
   );
 }
 

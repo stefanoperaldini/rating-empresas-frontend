@@ -1,0 +1,40 @@
+.form-control {
+  display: flex;
+  flex-direction: column;
+  margin: 35px 0;
+  position: relative;
+  color: var(--dark);
+}
+
+.form-control.ko {
+  color: var(--ko);
+}
+
+input {
+  font-size: 1rem;
+  border:0;
+  border-bottom: 1px solid var(--dark); 
+  padding: 10px;
+  background: transparent;
+  outline: none;
+  color: inherit;
+}
+
+input::placeholder {
+  color: inherit;
+  opacity: 0.5;
+}
+
+.errorMessage {
+  position: absolute;
+  top: 75px;
+  font-size: 0.8rem;
+  color: var(--ko);
+}
+
+.btn-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
