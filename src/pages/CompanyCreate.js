@@ -24,6 +24,7 @@ import {
 } from "./pagesUtils";
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
+import { FileUpload } from "../components/UploadCompanyLogo";
 
 function companyReducer(state, action) {
   switch (action.type) {
@@ -187,10 +188,8 @@ export function CompanyCreate() {
       <Header />
       <main className="centered-container">
         <h3>{t("My company")}</h3>
-        <img
-          src={defaultImageCompany}
-          alt={t("Default image company")}
-        />
+        <FileUpload />
+        <img src={defaultImageCompany} alt={t("Default image company")} />
         <form onSubmit={handleSubmit(handleCompanyCreate)} noValidate>
           <div className="form-control">
             <label htmlFor="name">{t("Name")} (*)</label>

@@ -182,20 +182,22 @@ textarea {
   min-width: 100vw;
 }
 
-.minWidth{
+.minWidth {
   min-width: 90vw;
 }
 
 .searchComponent {
   position: relative;
   display: grid;
-  grid-gap: 1rem;
+  justify-items: center;
+  row-gap: 0.25rem;
   grid-template-columns: 300px;
-  grid-template-rows: repeat(3, 100px);
+  grid-template-rows: 12rem 5rem 5rem 5rem;
   grid-template-areas:
-    'searchCompany'
-    'buttonSearch'
-    'advancedSearch';
+    "imageHome"
+    "searchCompany"
+    "buttonSearch"
+    "advancedSearch";
 }
 
 .searchCompany {
@@ -204,10 +206,17 @@ textarea {
 
 .buttonSearch {
   grid-area: buttonSearch;
+  align-self: center;
 }
 
 .advancedSearch {
   grid-area: advancedSearch;
+}
+
+.imageHome {
+  grid-area: imageHome;
+  width: 15rem;
+  align-self: center;
 }
 
 .summaryCompany {
@@ -218,7 +227,7 @@ textarea {
   grid-row-gap: 1px;
 }
 
-.borderGrey{
+.borderGrey {
   border: 2px solid var(--lgray);
   border-radius: 5px;
 }
@@ -234,7 +243,7 @@ textarea {
 /* ADVANCED SEARCH
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
-.buttonSort { 
+.buttonSort {
   padding: 0.2rem 1rem;
   border-radius: 0;
   /* 15px; */
@@ -242,26 +251,26 @@ textarea {
   transition-duration: 0.4s;
 }
 
-.buttonSortLeft { 
+.buttonSortLeft {
   border-top-left-radius: 15px;
   border-bottom-left-radius: 15px;
 }
 
-.buttonSortRight { 
+.buttonSortRight {
   border-top-right-radius: 15px;
-  border-bottom-right-radius: 15px;  
+  border-bottom-right-radius: 15px;
 }
 
-.buttonBorderRight { 
+.buttonBorderRight {
   border-right: 0.5px solid var(--darkblue);
 }
 
 /* COMPANY
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
-.flexRow{
+.flexRow {
   display: flex;
-  flex-direction: row;  
+  flex-direction: row;
   align-items: center;
 }
 
@@ -271,16 +280,15 @@ textarea {
   align-items: flex-start;
 }
 
-
 .companyDetail {
   display: grid;
   grid-gap: 0.25rem;
   grid-template-columns: 1fr;
   grid-template-rows: 1fr, 1fr 1fr;
   grid-template-areas:
-    'companyTitle'
-    'asideCompany'
-    'ratingCompany';
+    "companyTitle"
+    "asideCompany"
+    "ratingCompany";
 }
 
 .companyTitle {
@@ -346,27 +354,35 @@ textarea {
 
   .searchComponent {
     display: grid;
-    grid-gap: 0.25rem;
-    grid-template-columns: 25rem 12rem;
-    grid-template-rows: 5rem 1.5rem;
-    grid-template-areas:
-      'searchCompany   buttonSearch'
-      'none advancedSearch';
+    column-gap: 0.25rem;
+    row-gap: 0.25rem;
+    grid-template-columns: 18rem 12rem 22rem;
+    grid-template-rows: 7rem 5rem 1.5rem;
   }
 
   .searchCompany {
-    grid-area: searchCompany;
+    grid-column: 1;
+    grid-row: 2;
   }
 
   .buttonSearch {
-    grid-area: buttonSearch;
-    align-self: end;
+    grid-column: 2;
+    grid-row: 2;
   }
 
   .advancedSearch {
-    grid-area: advancedSearch;
+    grid-column: 2;
+    grid-row: 3;
     align-self: start;
     justify-self: center;
+  }
+
+  .imageHome {
+    grid-column: 3;
+    grid-row: span 3;
+    width: 18rem;
+    justify-self: center;
+    align-self: end;
   }
 
   .centeredComponentRate {
@@ -376,7 +392,7 @@ textarea {
     justify-content: center;
   }
 
-  .minWidth{
+  .minWidth {
     min-width: 80vw;
   }
 
@@ -386,9 +402,8 @@ textarea {
     grid-template-columns: 2fr, 1fr;
     grid-template-rows: 1fr, 1fr, 1fr;
     grid-template-areas:
-      'companyTitle   companyTitle'
-      'ratingCompany  asideCompany'
-      'ratingCompany  none';
+      "companyTitle   companyTitle"
+      "ratingCompany  asideCompany"
+      "ratingCompany  none";
   }
-
 }

@@ -3,13 +3,14 @@ import { useTranslation } from "react-i18next";
 import { useForm } from "react-hook-form";
 import Rating from "@material-ui/lab/Rating";
 import { makeStyles } from "@material-ui/core/styles";
-import { useHistory, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useParams } from "react-router";
 
 import { getCompany } from "../http/companyService";
 import { getReviewsFilter } from "../http/reviewService";
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
+import { RateCompanyLink } from "../components/RateCompanyLink";
 import { useAuth } from "../context/auth-context";
 import defaultImageCompany from "../img/company-default.png";
 import { ListReviews } from "../components/ListReviews";
@@ -34,7 +35,6 @@ export function Company() {
   });
   const classes = useStyles();
   const { t } = useTranslation();
-  const history = useHistory();
   const params = useParams();
   const idCompany = params.id;
   const { currentUserId, role } = useAuth();
@@ -63,34 +63,11 @@ export function Company() {
     <React.Fragment>
       <Header />
       <main className="centered-container-home">
-
-        {(!currentUserId || role === "1") && (
-          <section className="allWidth centeredComponentRate">
-            <header>
-              <h3>{t("Do you want to rate a company?")}</h3>
-              <p>{t("Your reviews will be anonimous")}</p>
-            </header>
-            <main className={classes.rating}>
-              <Rating
-                name="vote"
-                size="large"
-                value="0"
-                precision={1}
-                onChange={() => {
-                  history.push("/review/create");
-                }}
-              />
-            </main>
-          </section>
-        )}
+        {(!currentUserId || role === "1") && <RateCompanyLink />}
 
         <section className="companyDetail">
-
           <header className="companyTitle flexRow m-t-lg b-b">
-            <img
-              src={defaultImageCompany}
-              alt={t("Default image company")}
-            />
+            <img src={defaultImageCompany} alt={t("Default image company")} />
             <h2>{company.name}</h2>
           </header>
 
@@ -170,9 +147,7 @@ export function Company() {
 
             <section>
               <h5 className="m-l-md m-t-xl"> {company.name} </h5>
-              <p className="m-l-md">
-                {company.sector}
-              </p>
+              <p className="m-l-md">{company.sector}</p>
               <p className="m-l-md">
                 <textarea value={company.description} readOnly />
               </p>
@@ -185,14 +160,16 @@ export function Company() {
           </aside>
 
           <main className="ratingCompany">
-            <section >
+            <section>
               <form onSubmit className="flexRow">
                 <h5 className="m-r-md">{t("Search for")}</h5>
                 <ul className="flexRow">
                   <li className="m-r-xs">
                     <select name="position" id="position" ref={register}>
                       <option value="Empty">&#60;{t("Job title")}&#62;</option>
-                      <option value="Software developer">Software developer</option>
+                      <option value="Software developer">
+                        Software developer
+                      </option>
                       <option value="Project owner">Project owner</option>
                       <option value="Team leader">Team leader</option>
                     </select>
@@ -230,12 +207,15 @@ export function Company() {
             </section>
 
             <section>
-              <ListReviews pathLocation={location.pathname} listReviews={reviewsCompanyList} />
+              <ListReviews
+                pathLocation={location.pathname}
+                listReviews={reviewsCompanyList}
+              />
             </section>
           </main>
         </section>
       </main>
       <Footer />
-    </React.Fragment >
+    </React.Fragment>
   );
 }
