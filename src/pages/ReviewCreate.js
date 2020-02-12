@@ -72,7 +72,7 @@ export function ReviewCreate() {
   useEffect(() => {
     getCompanies()
       .then(response => {
-        setCompanies(response.data.rows);
+        setCompanies(response.data.rows_companies);
       })
       .catch(error => {
         setError("name", "backend", setErrorMessageCallBackEnd(error));

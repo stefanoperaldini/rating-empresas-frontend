@@ -21,10 +21,8 @@ export function AdvancedSearch() {
 
   useEffect(() => {
     getCompanies().then(response => {
-      setcompaniesList(response.data.rows);
-      console.log(response.data.rows);
+      setcompaniesList(response.data.rows_companies);
     });
-
     return;
   }, []);
 

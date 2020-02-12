@@ -138,7 +138,7 @@ export function CompanyCreate() {
   useEffect(() => {
     getCompanies()
       .then(response => {
-        const filteredCompany = response.data.rows.filter((company, index) => {
+        const filteredCompany = response.data.rows_companies.filter((company, index) => {
           if (currentUserId === company.user_id) {
             dispatch({ type: "SET_COMPANY", initialCompany: index });
             dispatch({ type: "DATA_SET", data: { name: company.name } });

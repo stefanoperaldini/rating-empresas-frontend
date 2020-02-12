@@ -42,7 +42,7 @@ export function Home() {
   useEffect(() => {
     // FIXME Llamar back con filtro top 10
     getCompanies().then(response => {
-      setCompanies(response.data.rows);
+      setCompanies(response.data.rows_companies);
     }).catch(error => {
       setError("name", "backend", setErrorMessageCallBackEnd(error));
     });
@@ -53,8 +53,8 @@ export function Home() {
   const handleGetCompanyData = formData => {
     let idCompany = null;
     for (let companyItem of companies) {
-      if (company === companyItem.name) {
-        idCompany = companyItem.id;
+      if (company.toUpperCase() === companyItem.name.toUpperCase()) {
+        idCompany = companyItem.company_id;
         break;
       }
     }

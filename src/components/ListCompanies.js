@@ -23,7 +23,7 @@ export function ListCompanies({ listCompanies }) {
         <ul className="containerGrid m-t-lg">
             {listCompanies.map(company => (
                 <li key={company.id} className="borderGrey cursorPointer"
-                    onClick={e => history.push(`/company/detail/${company.id}`)}>
+                    onClick={e => history.push(`/company/detail/${company.company_id}`)}>
                     <article className="summaryCompany">
                         <img className="item1"
                             src={defaultImageCompany}
@@ -32,16 +32,16 @@ export function ListCompanies({ listCompanies }) {
                         <h4>{company.name}</h4>
                         <p> {company.sector}</p>
                         <div className={`${classes.rating} item2 f-s-xs`}>
+                            {company.everage}
                             <Rating
-                                name={company.name}
+                                name={`${company.name}`}
                                 id={company.name}
                                 size="large"
-                                value="4"
-                                precision={1}
-                                readOnly={true}
-                                className="m-r-md"
+                                value={`${company.everage}`}
+                                precision={0.5}
+                                readOnly
                             />
-                            100 {t("reviews")}
+                            {company.n_review} {t("reviews")}
                         </div>
                     </article>
                 </li>

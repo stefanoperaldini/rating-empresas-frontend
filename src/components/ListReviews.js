@@ -62,70 +62,76 @@ export function ListReviews({ pathLocation, listReviews }) {
                         </header>
                         <main>
                             <h5>{review.comment_title}</h5>
-                            <textarea value={review.comment}></textarea>
+                            <textarea value={review.comment} readOnly></textarea>
                             <div className={classes.rating}>
+                                {review.everage}
                                 <Rating
                                     name={review.id["overall_rating"]}
                                     id={review.id["overall_rating"]}
                                     size="large"
-                                    value="4"
-                                    precision={1}
-                                    readOnly={true}
+                                    value={`${review.everage}`}
+                                    precision={0.5}
+                                    readOnly
                                 />
                                 <span className="m-l-md">{t("Overall rating")}</span>
                             </div>
                             <div className={classes.rating}>
+                                {review.salary_valuation}
                                 <Rating
                                     name={review.id["salary_valuation"]}
                                     id={review.id[" salary_valuation"]}
                                     size="small"
                                     value={review.salary_valuation}
-                                    precision={1}
-                                    readOnly={true}
+                                    precision={0.5}
+                                    readOnly
                                 />
                                 <span className="m-l-md">{t("Salary")}</span>
                             </div>
                             <div className={classes.rating}>
+                                {review.inhouse_training}
                                 <Rating
                                     name={review.id["inhouse_training"]}
                                     id={review.id[" inhouse_training"]}
                                     size="small"
                                     value={review.inhouse_training}
-                                    precision={1}
-                                    readOnly={true}
+                                    precision={0.5}
+                                    readOnly
                                 />
                                 <span className="m-l-md"> {t("Internal training")}</span>
                             </div>
                             <div className={classes.rating}>
+                                {review.growth_opportunities}
                                 <Rating
                                     name={review.id["growth_opportunities"]}
                                     id={review.id["growth_opportunities"]}
                                     size="small"
                                     value={review.growth_opportunities}
-                                    precision={1}
-                                    readOnly={true}
+                                    precision={0.5}
+                                    readOnly
                                 />
                                 <span className="m-l-md">{t("Growth opportunities")}</span>
                             </div>
                             <div className={classes.rating}>
+                                {review.work_enviroment}
                                 <Rating
                                     name={review.id["work_enviroment"]}
                                     id={review.id["work_enviroment"]}
                                     size="small"
                                     value={review.work_enviroment}
-                                    precision={1}
-                                    readOnly={true}
+                                    precision={0.5}
+                                    readOnly
                                 />
                                 <span className="m-l-md">{t("Work environment")}</span>
                             </div>
                             <div className={classes.rating}>
+                                {review.personal_life}
                                 <Rating
                                     name={review.id["personal_life"]}
                                     id={review.id["personal_life"]}
                                     size="small"
                                     value={review.personal_life}
-                                    precision={1}
-                                    readOnly={true}
+                                    precision={0.5}
+                                    readOnly
                                 />
                                 <span className="m-l-md">{t("Work&Life balance")}</span>
                             </div>

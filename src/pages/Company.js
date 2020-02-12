@@ -96,74 +96,74 @@ export function Company() {
 
           <aside className="asideCompany b-l">
             <div className={`${classes.rating} m-l-md`}>
-              4.5
-            <Rating
+              {company.everage}
+              <Rating
                 name="overall_rating"
                 id="overall_rating"
                 size="large"
-                value="4"
-                precision={1}
-                readOnly={true}
+                value={`${company.everage}`}
+                precision={0.5}
+                readOnly
               />
               <span className="m-l-md">{t("Overall rating")}</span>
             </div>
             <div className={`${classes.rating} m-l-md`}>
-              4.5
-            <Rating
+              {company.avg_salary_valuation}
+              <Rating
                 name="salary_valuation"
                 id="salary_valuation"
                 size="small"
-                value={"3"}
-                precision={1}
-                readOnly={true}
+                value={`${company.avg_salary_valuation}`}
+                precision={0.5}
+                readOnly
               />
               <span className="m-l-md">{t("Salary")}</span>
             </div>
             <div className={`${classes.rating} m-l-md`}>
-              4.5
-            <Rating
+              {company.avg_inhouse_training}
+              <Rating
                 name="inhouse_training"
                 id="inhouse_training"
                 size="small"
-                value={"4"}
-                precision={1}
-                readOnly={true}
+                value={`${company.avg_inhouse_training}`}
+                precision={0.5}
+                readOnly
               />
               <span className="m-l-md"> {t("Internal training")}</span>
             </div>
             <div className={`${classes.rating} m-l-md`}>
-              4.5
-            <Rating
+              {company.avg_growth_opportunities}
+              <Rating
                 name="growth_opportunities"
                 id="growth_opportunities"
                 size="small"
-                value={"4"}
-                precision={1}
-                readOnly={true}
+                value={`${company.avg_growth_opportunities}`}
+                precision={0.5}
+                readOnly
               />
               <span className="m-l-md">{t("Growth opportunities")}</span>
             </div>
             <div className={`${classes.rating} m-l-md`}>
-              4.5
-            <Rating
+              {company.avg_work_enviroment}
+              <Rating
                 name="work_enviroment"
                 id="work_enviroment"
                 size="small"
-                value={"4"}
-                precision={1}
-                readOnly={true}
+                value={`${company.avg_work_enviroment}`}
+                precision={0.5}
+                readOnly
               />
               <span className="m-l-md">{t("Work environment")}</span>
             </div>
             <div className={`${classes.rating} m-l-md`}>
-              4.5
-            <Rating
+              {company.avg_personal_life}
+              <Rating
                 name="personal_life"
                 id="personal_life"
                 size="small"
-                value={"4"}
-                precision={1}
-                readOnly={true}
+                value={`${company.avg_personal_life}`}
+                precision={0.5}
+                readOnly
               />
               <span className="m-l-md">{t("Work&Life balance")}</span>
             </div>
@@ -174,10 +174,10 @@ export function Company() {
                 {company.sector}
               </p>
               <p className="m-l-md">
-                <textarea value={company.description} />
+                <textarea value={company.description} readOnly />
               </p>
               <p className="m-l-md">
-                {company.address} - {company.city_name}
+                {company.address} - {company.sede_name}
               </p>
               <p className="m-l-md">{company.url_web}</p>
               <p className="m-l-md">{company.linkedin}</p>
@@ -211,7 +211,7 @@ export function Company() {
 
             <section>
               <h5>
-                {t("Average salary")} 1.250,00 € / {t("month")}
+                {t("Average salary")} {company.avg_salary ? company.avg_salary : "--"} {t("month")}
               </h5>
             </section>
 
