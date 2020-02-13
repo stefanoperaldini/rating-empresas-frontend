@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -38,6 +38,9 @@ export function AccountLogin() {
   } = useAuth();
   const { t } = useTranslation();
 
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+
   const handleLogin = formData => {
     return signIn(formData)
       .then(response => {
@@ -46,7 +49,7 @@ export function AccountLogin() {
         setAccessToken(response.data.accessToken);
         setRole(userData.role);
         setCurrentUserId(userData.userId);
-        localStorage.setItem('currentEmail', formData.email);
+        localStorage.setItem("currentEmail", formData.email);
         setEmail(formData.email);
         history.push("/home");
       })
@@ -63,7 +66,6 @@ export function AccountLogin() {
         <div className="boxAccount">
           <h3>{t("Please sign in")}</h3>
           <form onSubmit={handleSubmit(handleLogin)} noValidate>
-
             <div className="form-control">
               <label htmlFor="email">{t("E-mail")}</label>
               <input
@@ -77,18 +79,32 @@ export function AccountLogin() {
                 <span className="errorMessage">{t(errors.email.message)}</span>
               )}
             </div>
-
             <div className="form-control">
               <label htmlFor="password">{t("Password")}</label>
               <input
+                id="password"
                 ref={register(validatorPassword)}
                 name="password"
-                type="password"
-                id="password"
+                type={showPassword ? "text" : "password"}
                 placeholder={t("Enter your password")}
+                value={password}
+                onChange={e => {
+                  setPassword(e.target.value);
+                }}
               ></input>
+              <span
+                className={
+                  showPassword ? "password-visible" : "password-invisible"
+                }
+                onClick={e => {
+                  e.preventDefault();
+                  setShowPassword(!showPassword);
+                }}
+              ></span>
               {errors.password && (
-                <span className="errorMessage">{t(errors.password.message)}</span>
+                <span className="errorMessage">
+                  {t(errors.password.message)}
+                </span>
               )}
             </div>
 

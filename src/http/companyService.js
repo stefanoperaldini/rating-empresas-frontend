@@ -33,14 +33,9 @@ export function createSector(sectorData) {
   );
 }
 
-export function uploadLogo(urlLogo) {
+export function uploadLogo(dataForm) {
   return axios.post(
     `${process.env.REACT_APP_BACKEND_URL}/v1/companies/logo`,
-    null,
-    {
-      auth: {
-        secureUrl: urlLogo
-      }
-    }
+    dataForm
   );
 }

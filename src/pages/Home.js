@@ -30,11 +30,13 @@ export function Home() {
 
   useEffect(() => {
     // FIXME Llamar back con filtro top 10
-    getCompanies().then(response => {
-      setCompanies(response.data.rows_companies);
-    }).catch(error => {
-      setError("name", "backend", setErrorMessageCallBackEnd(error));
-    });
+    getCompanies()
+      .then(response => {
+        setCompanies(response.data.rows_companies);
+      })
+      .catch(error => {
+        setError("name", "backend", setErrorMessageCallBackEnd(error));
+      });
 
     return;
   }, [setError]);
@@ -87,7 +89,9 @@ export function Home() {
                 ))}
               </datalist>
               {errors.name && (
-                <span className="errorMessage">{t(errors.name.message)}</span>
+                <span className="errorMessageCompany">
+                  {t(errors.name.message)}
+                </span>
               )}
               <div className="btn-container buttonSearch">
                 <button
