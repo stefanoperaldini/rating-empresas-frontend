@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { useForm } from "react-hook-form";
 import Rating from "@material-ui/lab/Rating";
 import { makeStyles } from "@material-ui/core/styles";
 import { useLocation } from "react-router-dom";
 import { useParams } from "react-router";
+import { useForm } from "react-hook-form";
 
-import { getCompany } from "../http/companyService";
-import { getReviewsFilter } from "../http/reviewService";
+import { getCompany, getCompanyCities } from "../http/companyService";
+import { getReviewsFilter, getPositionsCompany } from "../http/reviewService";
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
 import { RateCompanyLink } from "../components/RateCompanyLink";
@@ -28,11 +28,13 @@ const useStyles = makeStyles({
 });
 
 export function Company() {
-  const [company, setCompany] = useState({});
-  const [reviewsCompanyList, setReviewsCompanyList] = useState([]);
-  const { register } = useForm({
-    mode: "onBlur"
+  const { handleSubmit, register, formState, } = useForm({
+    mode: "onSubmit"
   });
+  const [company, setCompany] = useState({});
+  const [positionsCompany, setPositionsCompany] = useState([]);
+  const [reviewsCompanyList, setReviewsCompanyList] = useState([]);
+  const [companyCities, setCompanyCities] = useState([]);
   const classes = useStyles();
   const { t } = useTranslation();
   const params = useParams();
@@ -44,6 +46,12 @@ export function Company() {
   useEffect(() => {
     getCompany(idCompany).then(response => {
       setCompany(response.data);
+    });
+    getPositionsCompany(idCompany).then(response => {
+      setPositionsCompany(response.data);
+    });
+    getCompanyCities(idCompany).then(response => {
+      setCompanyCities(response.data);
     });
     getReviewsFilter(idCompany).then(response => {
       setReviewsCompanyList(response.data.reviews);
@@ -58,6 +66,9 @@ export function Company() {
       </div>
     );
   }
+  const handleCompanySearch = formData => {
+    console.log("COMPANY SEARCH", formData);
+  };
 
   return (
     <React.Fragment>
@@ -160,50 +171,57 @@ export function Company() {
           </aside>
 
           <main className="ratingCompany">
-            <section>
-              <form onSubmit className="flexRow">
-                <h5 className="m-r-md">{t("Search for")}</h5>
-                <ul className="flexRow">
-                  <li className="m-r-xs">
-                    <select name="position" id="position" ref={register}>
-                      <option value="Empty">&#60;{t("Job title")}&#62;</option>
-                      <option value="Software developer">
-                        Software developer
+            <form onSubmit={handleSubmit(handleCompanySearch)} noValidate>
+              <fieldset >
+                <legend>
+                  <h4>{t("Search for")}</h4>
+                </legend>
+                <span className="flexRow">
+                  <select name="position" id="position" className="m-r-xs" ref={register}>
+                    <option value="Empty">&#60;{t("Position")}&#62;</option>
+                    {positionsCompany.map(element => (
+                      <option key={element.name} value={element.id}>
+                        {element.name}
                       </option>
-                      <option value="Project owner">Project owner</option>
-                      <option value="Team leader">Team leader</option>
-                    </select>
-                  </li>
-                  <li>
-                    <select name="city" id="city" ref={register}>
-                      <option value="Empty">&#60;{t("City")}&#62;</option>
-                      <option value="Coruña">Coruña, A</option>
-                      <option value="Madrid">Madrid</option>
-                      <option value="Vigo">Vigo</option>
-                    </select>
-                  </li>
-                </ul>
-              </form>
-            </section>
+                    ))}
+                  </select>
+                  <select name="city" id="city" ref={register}>
+                    <option value="Empty">&#60;{t("City")}&#62;</option>
+                    {companyCities.map(element => (
+                      <option key={element.name} value={element.id}>
+                        {element.name}
+                      </option>
+                    ))}
+                  </select>
+                </span>
+              </fieldset>
+              <fieldset>
+                <legend>
+                  <h4>{t("Sort by")}</h4>
+                </legend>
+                <select name="sort" id="sort" ref={register}>
+                  <option value="1">{t("Date")}</option>
+                  <option value="2">{t("Overall rating")}</option>
+                  <option value="3">{t("Salary")}</option>
+                  <option value="4">{t("Internal training")}</option>
+                  <option value="5">{t("Growth opportunities")}</option>
+                  <option value="6">{t("Work environment")}</option>
+                  <option value="7">{t("Work&Life balance")}</option>
+                </select>
+              </fieldset>
+              <button
+                type="submit"
+                className="btn"
+                disabled={formState.isSubmitting}
+              >
+                {t("Find")}
+              </button>
+            </form>
 
             <section>
               <h5>
-                {t("Average salary")} {company.avg_salary ? company.avg_salary : "--"} {t("month")}
+                {t("Average salary")} {company.avg_salary ? company.avg_salary : "--"} €/{t("month")}
               </h5>
-            </section>
-
-            <section>
-              <form onSubmit>
-                <h5 className="m-r-md">{t("Sort by")}</h5>
-                <select name="sort" id="sort" ref={register}>
-                  <option value="1">{t("Overall rating")}</option>
-                  <option value="2">{t("Salary")}</option>
-                  <option value="3">{t("Internal training")}</option>
-                  <option value="4">{t("Growth opportunities")}</option>
-                  <option value="5">{t("Work environment")}</option>
-                  <option value="6">{t("Work&Life balance")}</option>
-                </select>
-              </form>
             </section>
 
             <section>
@@ -216,6 +234,6 @@ export function Company() {
         </section>
       </main>
       <Footer />
-    </React.Fragment>
+    </React.Fragment >
   );
 }

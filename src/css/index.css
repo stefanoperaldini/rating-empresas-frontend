@@ -60,6 +60,15 @@ textarea {
   font-family: inherit;
 }
 
+select {
+     background: transparent;
+     border: none;
+     border-bottom: 1px solid var(--dark); 
+     height: 30px;
+     padding: 5px;
+     width: 250px;
+  }
+
 /* CONTAINER
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 .wrapper {

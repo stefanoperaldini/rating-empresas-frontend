@@ -4,8 +4,16 @@ export function getCompanies() {
   return axios.get(`${process.env.REACT_APP_BACKEND_URL}/v1/companies`);
 }
 
-export function getCompany(id) {
-  return axios.get(`${process.env.REACT_APP_BACKEND_URL}/v1/companies/${id}`);
+export function getCompany(idCompany) {
+  return axios.get(`${process.env.REACT_APP_BACKEND_URL}/v1/companies/${idCompany}`);
+}
+
+export function getCompanyCities(idCompany) {
+  return axios.get(`${process.env.REACT_APP_BACKEND_URL}/v1/companies/cities/${idCompany}`);
+}
+
+export function getCompaniesCities() {
+  return axios.get(`${process.env.REACT_APP_BACKEND_URL}/v1/companies/cities/active`);
 }
 
 export function createCompany(companyData) {

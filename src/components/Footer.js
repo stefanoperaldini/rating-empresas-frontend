@@ -6,7 +6,7 @@ import imageGitHub from "../img/GitHub-Mark-32px.png";
 export function Footer() {
   const { t } = useTranslation();
   return (
-    <footer class="page-footer">
+    <footer className="page-footer">
       <ul>
         <li>
           <a href="https://github.com/stefanoperaldini/rating-empresas-frontend" target="_blank"> <img

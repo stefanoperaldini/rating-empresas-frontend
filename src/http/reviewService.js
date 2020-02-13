@@ -24,6 +24,12 @@ export function getPositions() {
   );
 }
 
+export function getPositionsCompany(idCompany) {
+  return axios.get(
+    `${process.env.REACT_APP_BACKEND_URL}/v1/positions/company/${idCompany}`
+  );
+}
+
 export function createPosition(dataPosition) {
   return axios.post(
     `${process.env.REACT_APP_BACKEND_URL}/v1/positions`, dataPosition
