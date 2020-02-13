@@ -12,8 +12,8 @@
 
 input {
   font-size: 1rem;
-  border:0;
-  border-bottom: 1px solid var(--dark); 
+  border: 0;
+  border-bottom: 1px solid var(--dark);
   padding: 10px;
   background: transparent;
   outline: none;
@@ -38,3 +38,32 @@ input::placeholder {
   align-items: center;
 }
 
+.password-visible {
+  background-image: url("../img/eye.png");
+  background-size: 1.75rem;
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+  padding: 1rem 1.5rem;
+  float: inline-start;
+  margin-left: 235px;
+  margin-top: -40px;
+  position: relative;
+}
+
+.password-invisible {
+  background-image: url("../img/invisible.png");
+  background-size: 1.5rem;
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+  padding: 1rem 1.5rem;
+  float: inline-start;
+  margin-left: 235px;
+  margin-top: -40px;
+  position: relative;
+}
+
+input[type="file"] {
+  display: none;
+}

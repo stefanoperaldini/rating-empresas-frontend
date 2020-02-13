@@ -32,12 +32,12 @@ export function FileUpload() {
     const data = new FormData();
 
     files.forEach(file => {
-      data.append("files", file);
+      data.append("logo", file);
     });
 
     setUploading(true);
 
-    return uploadLogo()
+    return uploadLogo(data)
       .then(response => {
         console.log(response);
         setFiles([]);
@@ -92,14 +92,3 @@ function getPreview(file) {
     }
   });
 }
-
-// Suponemos un endpoint para crear un perfil con una imagen
-// Primero guardo la imagen en cloudinary y a continuacion el perfil con
-// la URL de la imagen guardada
-// -----------------------------
-// async function createProfile (formData) {
-//   try {
-//     const {data: { url }} = await uploadImage();
-//     const response = await createProfile({ ...formData, avatarUrl: url });
-//   } catch () {}
-// }

@@ -200,17 +200,23 @@ select {
   display: grid;
   justify-items: center;
   row-gap: 0.25rem;
-  grid-template-columns: 300px;
-  grid-template-rows: 12rem 5rem 5rem 5rem;
+  grid-template-columns: 325px;
+  grid-template-rows: 12rem 5rem 5rem 3rem 5rem;
   grid-template-areas:
     "imageHome"
     "searchCompany"
     "buttonSearch"
+    "errorMessageCompany"
     "advancedSearch";
 }
 
 .searchCompany {
   grid-area: searchCompany;
+  background-image: url("../img/search.png");
+  background-size: 1.5rem;
+  background-repeat: no-repeat;
+  background-position: 0.5rem center;
+  padding-left: 2.5rem;
 }
 
 .buttonSearch {
@@ -220,6 +226,12 @@ select {
 
 .advancedSearch {
   grid-area: advancedSearch;
+}
+
+.errorMessageCompany {
+  font-size: 0.8rem;
+  color: var(--ko);
+  grid-area: errorMessageCompany;
 }
 
 .imageHome {
@@ -365,7 +377,7 @@ select {
     display: grid;
     column-gap: 0.25rem;
     row-gap: 0.25rem;
-    grid-template-columns: 18rem 12rem 22rem;
+    grid-template-columns: 20rem 12rem 20rem;
     grid-template-rows: 7rem 5rem 1.5rem;
   }
 
@@ -377,6 +389,13 @@ select {
   .buttonSearch {
     grid-column: 2;
     grid-row: 2;
+  }
+
+  .errorMessageCompany {
+    font-size: 0.8rem;
+    color: var(--ko);
+    grid-column: 1;
+    grid-row: 3;
   }
 
   .advancedSearch {

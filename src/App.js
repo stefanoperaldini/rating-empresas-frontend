@@ -73,7 +73,10 @@ function App() {
               <PrivateRoute path="/review/user" allowedRoles={["1"]}>
                 <ReviewUser />
               </PrivateRoute>
-              <PrivateRoute path="/review/report/:idReview" allowedRoles={["0"]} >
+              <PrivateRoute
+                path="/review/report/:idReview"
+                allowedRoles={["0"]}
+              >
                 <ReviewReport />
               </PrivateRoute>
               <PrivateRoute path="/user/update" allowedRoles={["1", "2"]}>

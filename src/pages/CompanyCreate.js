@@ -139,32 +139,43 @@ export function CompanyCreate() {
   useEffect(() => {
     getCompanies()
       .then(response => {
-        const filteredCompany = response.data.rows_companies.filter((company, index) => {
-          if (currentUserId === company.user_id) {
-            dispatch({ type: "SET_COMPANY", initialCompany: index });
-            dispatch({ type: "DATA_SET", data: { name: company.name } });
-            dispatch({
-              type: "DATA_SET",
-              data: { description: company.description }
-            });
-            dispatch({ type: "DATA_SET", data: { sector: company.sector } });
-            dispatch({ type: "DATA_SET", data: { url_web: company.url_web } });
-            dispatch({
-              type: "DATA_SET",
-              data: { linkedin: company.linkedin }
-            });
-            dispatch({ type: "DATA_SET", data: { address: company.address } });
-            dispatch({ type: "DATA_SET", data: { sede_id: company.sede_id } });
-            return true;
+        const filteredCompany = response.data.rows_companies.filter(
+          (company, index) => {
+            if (currentUserId === company.user_id) {
+              dispatch({ type: "SET_COMPANY", initialCompany: index });
+              dispatch({ type: "DATA_SET", data: { name: company.name } });
+              dispatch({
+                type: "DATA_SET",
+                data: { description: company.description }
+              });
+              dispatch({ type: "DATA_SET", data: { sector: company.sector } });
+              dispatch({
+                type: "DATA_SET",
+                data: { url_web: company.url_web }
+              });
+              dispatch({
+                type: "DATA_SET",
+                data: { linkedin: company.linkedin }
+              });
+              dispatch({
+                type: "DATA_SET",
+                data: { address: company.address }
+              });
+              dispatch({
+                type: "DATA_SET",
+                data: { sede_id: company.sede_id }
+              });
+              return true;
+            }
+            if (
+              company.userRole === "1" ||
+              (company.userRole === "2" && company.userDeleteAt !== null)
+            ) {
+              return true;
+            }
+            return false;
           }
-          if (
-            company.userRole === "1" ||
-            (company.userRole === "2" && company.userDeleteAt !== null)
-          ) {
-            return true;
-          }
-          return false;
-        });
+        );
         dispatch({ type: "GET_COMPANIES", initialCompanies: filteredCompany });
       })
       .catch(error => {
@@ -189,6 +200,7 @@ export function CompanyCreate() {
       <main className="centered-container">
         <h3>{t("My company")}</h3>
         <FileUpload />
+        {/* state.company.url_logo */}
         <img src={defaultImageCompany} alt={t("Default image company")} />
         <form onSubmit={handleSubmit(handleCompanyCreate)} noValidate>
           <div className="form-control">
@@ -256,7 +268,7 @@ export function CompanyCreate() {
             ></input>
             <datalist id="listSectors">
               {state.sectors.map(element => (
-                <option key={element.name} value={element.sector}>
+                <option key={element.sector} value={element.sector}>
                   {element.sector}
                 </option>
               ))}
