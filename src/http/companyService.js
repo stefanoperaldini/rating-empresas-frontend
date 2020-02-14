@@ -1,7 +1,7 @@
 import axios from "axios";
 
-export function getCompanies() {
-  return axios.get(`${process.env.REACT_APP_BACKEND_URL}/v1/companies`);
+export function getCompanies(queryString) {
+  return axios.get(`${process.env.REACT_APP_BACKEND_URL}/v1/companies?${queryString}`);
 }
 
 export function getCompany(idCompany) {

@@ -24,14 +24,6 @@ export function ReviewUser() {
     return;
   }, []);
 
-  if (reviewUserList === null) {
-    return (
-      <div>
-        <h3>{t("You don't have any review")}</h3>
-      </div>
-    );
-  }
-
   return (
     <React.Fragment>
       <Header />
