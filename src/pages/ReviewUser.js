@@ -12,7 +12,7 @@ import { ListReviews } from "../components/ListReviews";
  */
 
 export function ReviewUser() {
-  const [reviewUserList, setReviewUserList] = useState(null);
+  const [reviewUserList, setReviewUserList] = useState([]);
   const { t } = useTranslation();
 
   const location = useLocation();
