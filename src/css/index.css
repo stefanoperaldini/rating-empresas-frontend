@@ -61,13 +61,13 @@ textarea {
 }
 
 select {
-     background: transparent;
-     border: none;
-     border-bottom: 1px solid var(--dark); 
-     height: 30px;
-     padding: 5px;
-     width: 250px;
-  }
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--dark);
+  height: 30px;
+  padding: 5px;
+  width: 250px;
+}
 
 /* CONTAINER
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
@@ -188,7 +188,7 @@ select {
 }
 
 .allWidth {
-  min-width: 100vw;
+  min-width: 95vw;
 }
 
 .minWidth {

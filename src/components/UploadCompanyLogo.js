@@ -56,14 +56,19 @@ export function FileUpload() {
   return (
     <main>
       <div>
-        <input ref={fileInput} type="file" onChange={handleChange} />
+        <input
+          ref={fileInput}
+          type="file"
+          accept="jpg, jpeg, png"
+          onChange={handleChange}
+        />
         <button type="button" onClick={openFileDialog} disabled={uploading}>
           {uploading ? "Uploading files ..." : "Choose File"}
         </button>
         <ul>
           {files.map((file, i) => (
             <li key={file.name}>
-              <img src={previews[i]} alt={file.name} />
+              <img src={previews[i]} width="200" alt={file.name} />
               <span>{file.name}</span>
             </li>
           ))}
