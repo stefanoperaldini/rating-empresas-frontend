@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { Link, useHistory } from "react-router-dom";
@@ -16,10 +16,21 @@ import { signUp } from "../http/authService";
 
 export function AccountCreate() {
   const { t } = useTranslation();
-  const { handleSubmit, register, errors, formState, setError } = useForm({
+  const {
+    handleSubmit,
+    register,
+    errors,
+    formState,
+    setError,
+    watch
+  } = useForm({
     mode: "onBlur"
   });
   const history = useHistory();
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const handleAccountCreate = formData => {
     const formDataFiltered = { ...formData, confirmPassword: undefined };
@@ -105,10 +116,23 @@ export function AccountCreate() {
               <input
                 ref={register(validatorPassword)}
                 name="password"
-                type="password"
+                type={showPassword ? "text" : "password"}
                 id="password"
                 placeholder={t("Enter your password")}
+                value={password}
+                onChange={e => {
+                  setPassword(e.target.value);
+                }}
               ></input>
+              <span
+                className={
+                  showPassword ? "password-visible" : "password-invisible"
+                }
+                onClick={e => {
+                  e.preventDefault();
+                  setShowPassword(!showPassword);
+                }}
+              ></span>
               {errors.password && (
                 <span className="errorMessage">
                   {t(errors.password.message)}
@@ -121,14 +145,31 @@ export function AccountCreate() {
                 {t("Confirm password")} (*)
               </label>
               <input
-                ref={register(validatorPassword)}
+                ref={register({
+                  validate: value => value === watch("newPassword")
+                })}
                 name="confirmPassword"
-                type="password"
+                type={showConfirmPassword ? "text" : "password"}
                 id="confirmPassword"
                 placeholder={t("Confirm your password")}
+                value={confirmPassword}
+                onChange={e => {
+                  setConfirmPassword(e.target.value);
+                }}
               ></input>
+              <span
+                className={
+                  showConfirmPassword
+                    ? "password-visible"
+                    : "password-invisible"
+                }
+                onClick={e => {
+                  e.preventDefault();
+                  setShowConfirmPassword(!showConfirmPassword);
+                }}
+              ></span>
               {errors.confirmPassword && (
-                <span className="error-message">
+                <span className="errorMessage">
                   {t("The password and the confirmation should match")}
                 </span>
               )}
