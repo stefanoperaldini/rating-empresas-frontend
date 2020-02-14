@@ -42,7 +42,6 @@ export function Company() {
   const { currentUserId, role } = useAuth();
 
   const location = useLocation();
-
   useEffect(() => {
     getCompany(idCompany).then(response => {
       setCompany(response.data);
@@ -53,21 +52,25 @@ export function Company() {
     getCompanyCities(idCompany).then(response => {
       setCompanyCities(response.data);
     });
-    getReviewsFilter(idCompany).then(response => {
+    getReviewsFilter(`companyId=${idCompany}`).then(response => {
       setReviewsCompanyList(response.data.reviews);
     });
     return;
   }, [idCompany]);
 
-  if (reviewsCompanyList === null) {
-    return (
-      <div>
-        <h3>{t("This company doesn't have any review")}</h3>
-      </div>
-    );
-  }
   const handleCompanySearch = formData => {
-    console.log("COMPANY SEARCH", formData);
+    let queryString = `companyId=${idCompany}&sortTipe=${formData.sortTipe}`;
+    if (formData.positionId !== "Empty") {
+      queryString = `${queryString}&positionId=${formData.positionId}`
+    }
+    if (formData.cityId !== "Empty") {
+      queryString = `${queryString}&cityId=${formData.cityId}`
+    }
+    getReviewsFilter(queryString).then(response => {
+      setReviewsCompanyList(response.data.reviews);
+    }).catch(error => {
+      setReviewsCompanyList([]);
+    });
   };
 
   return (
@@ -155,6 +158,11 @@ export function Company() {
               />
               <span className="m-l-md">{t("Work&Life balance")}</span>
             </div>
+            <section>
+              <h5 className="m-l-md m-t-xl">
+                {t("Average salary")} {company.avg_salary ? company.avg_salary : "--"} €/{t("month")}
+              </h5>
+            </section>
 
             <section>
               <h5 className="m-l-md m-t-xl"> {company.name} </h5>
@@ -177,7 +185,7 @@ export function Company() {
                   <h4>{t("Search for")}</h4>
                 </legend>
                 <span className="flexRow">
-                  <select name="position" id="position" className="m-r-xs" ref={register}>
+                  <select name="positionId" id="positionId" className="m-r-xs" ref={register}>
                     <option value="Empty">&#60;{t("Position")}&#62;</option>
                     {positionsCompany.map(element => (
                       <option key={element.name} value={element.id}>
@@ -185,7 +193,7 @@ export function Company() {
                       </option>
                     ))}
                   </select>
-                  <select name="city" id="city" ref={register}>
+                  <select name="cityId" id="cityId" ref={register}>
                     <option value="Empty">&#60;{t("City")}&#62;</option>
                     {companyCities.map(element => (
                       <option key={element.name} value={element.id}>
@@ -199,7 +207,7 @@ export function Company() {
                 <legend>
                   <h4>{t("Sort by")}</h4>
                 </legend>
-                <select name="sort" id="sort" ref={register}>
+                <select name="sortTipe" id="sortTipe" ref={register}>
                   <option value="1">{t("Date")}</option>
                   <option value="2">{t("Overall rating")}</option>
                   <option value="3">{t("Salary")}</option>
@@ -217,12 +225,6 @@ export function Company() {
                 {t("Find")}
               </button>
             </form>
-
-            <section>
-              <h5>
-                {t("Average salary")} {company.avg_salary ? company.avg_salary : "--"} €/{t("month")}
-              </h5>
-            </section>
 
             <section>
               <ListReviews

@@ -29,8 +29,7 @@ export function Home() {
   const { currentUserId, role } = useAuth();
 
   useEffect(() => {
-    // FIXME Llamar back con filtro top 10
-    getCompanies()
+    getCompanies(`page=1&row4page=10`)
       .then(response => {
         setCompanies(response.data.rows_companies);
       })

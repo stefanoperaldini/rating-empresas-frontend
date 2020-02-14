@@ -27,7 +27,21 @@ export function AdvancedSearch() {
   const { currentUserId, role } = useAuth();
 
   const handleAdvancedSearch = formData => {
-    console.log("ADVANCED SEARCH", formData);
+    let queryString = `sortTipe=${formData.sortTipe}`;
+    if (formData.sectorId !== "Empty") {
+      queryString = `${queryString}&sectorId=${formData.sectorId}`
+    }
+    if (formData.positionId !== "Empty") {
+      queryString = `${queryString}&positionId=${formData.positionId}`
+    }
+    if (formData.cityId !== "Empty") {
+      queryString = `${queryString}&cityId=${formData.cityId}`
+    }
+    getCompanies(queryString).then(response => {
+      setcompaniesList(response.data.rows_companies);
+    }).catch(error => {
+      setcompaniesList([]);
+    });
   };
 
   useEffect(() => {
@@ -59,7 +73,7 @@ export function AdvancedSearch() {
             </legend>
             <span className="flexRow">
 
-              <select name="sector" id="sector" className="m-r-xs" ref={register}>
+              <select name="sectorId" id="sectorId" className="m-r-xs" ref={register}>
                 <option value="Empty">&#60;{t("Sector")}&#62;</option>
                 {sectors.map(element => (
                   <option key={element.sector} value={element.id}>
@@ -68,7 +82,7 @@ export function AdvancedSearch() {
                 ))}
               </select>
 
-              <select name="position" id="position" className="m-r-xs" ref={register}>
+              <select name="positionId" id="positionId" className="m-r-xs" ref={register}>
                 <option value="Empty">&#60;{t("Position")}&#62;</option>
                 {positions.map(element => (
                   <option key={element.name} value={element.id}>
@@ -76,7 +90,7 @@ export function AdvancedSearch() {
                   </option>
                 ))}
               </select>
-              <select name="cities" id="cities" className="m-r-xs" ref={register}>
+              <select name="cityId" id="cityId" className="m-r-xs" ref={register}>
                 <option value="Empty">&#60;{t("City")}&#62;</option>
                 {cities.map(element => (
                   <option key={element.name} value={element.id}>
@@ -90,7 +104,7 @@ export function AdvancedSearch() {
             <legend>
               <h4>{t("Sort by")}</h4>
             </legend>
-            <select name="sort" id="sort" ref={register}>
+            <select name="sortTipe" id="sortTipe" ref={register}>
               <option value="1">{t("Overall rating")}</option>
               <option value="2">{t("Salary")}</option>
               <option value="3">{t("Internal training")}</option>
