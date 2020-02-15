@@ -26,6 +26,14 @@
   margin-right: var(--space-md);
 }
 
+.m-r-lg {
+  margin-right: var(--space-lg);
+}
+
+.m-r-xl {
+  margin-right: var(--space-xl);
+}
+
 .m-l-md {
   margin-left: var(--space-md);
 }
@@ -34,13 +42,28 @@
   margin-left: var(--space-sm);
 }
 
-.m-r-xl {
-  margin-right: var(--space-xl);
-}
-
-
 .f-s-xs {
   font-size: var(--font-xs);
+}
+
+.f-s-sm {
+  font-size: var(--font-sm);
+}
+
+.f-s-m {
+  font-size: var(--font-m);
+}
+
+.f-s-l {
+  font-size: var(--font-l);
+}
+
+.f-s-xl {
+  font-size: var(--font-xl);
+}
+
+.f-s-xxl {
+  font-size: var(--font-xxl);
 }
 
 .flex {
