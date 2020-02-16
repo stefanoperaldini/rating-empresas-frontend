@@ -45,7 +45,7 @@ export function AdvancedSearch() {
   };
 
   useEffect(() => {
-    getCompanies().then(response => {
+    getCompanies(`sortTipe=1`).then(response => {
       setcompaniesList(response.data.rows_companies);
     });
     getPositions().then(response => {
@@ -111,6 +111,7 @@ export function AdvancedSearch() {
               <option value="4">{t("Growth opportunities")}</option>
               <option value="5">{t("Work environment")}</option>
               <option value="6">{t("Work&Life balance")}</option>
+              <option value="7">{t("Name")}</option>
             </select>
           </fieldset>
           <button
