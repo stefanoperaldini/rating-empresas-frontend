@@ -13,7 +13,6 @@ import {
 } from "../http/companyService";
 
 import { createPosition, createReview } from "../http/reviewService"
-
 import { getPositions } from "../http/reviewService";
 import {
   setErrorMessageCallBackEnd,
@@ -24,7 +23,7 @@ import {
   validatorDescriptionReview,
   validatorPosition,
 } from "./pagesUtils";
-
+import { Cities } from "../components/Cities"
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
 
@@ -65,12 +64,12 @@ export function ReviewCreate() {
   });
 
   const [isToNext, setIsToNext] = useState(false);
+  const [idCity, setIdCity] = useState(null);
   const [sectors, setSectors] = useState([]);
   const [positions, setPositions] = useState([]);
 
-
   useEffect(() => {
-    getCompanies()
+    getCompanies(`sortTipe=7`)
       .then(response => {
         setCompanies(response.data.rows_companies);
       })
@@ -105,8 +104,8 @@ export function ReviewCreate() {
     for (let companyItem of companies) {
       if (company.name === companyItem.name) {
         setCompany({
-          ...company, id: companyItem.id, name: companyItem.name,
-          sectorName: companyItem.sector, sectorId: companyItem.sectorId
+          ...company, id: companyItem.company_id, name: companyItem.name,
+          sectorName: companyItem.sector_name, sectorId: companyItem.sector_id
         });
         break;
       }
@@ -116,6 +115,9 @@ export function ReviewCreate() {
 
   const handleReviewCreate = async (formData) => {
     let companyId = company.id;
+    if (!idCity) {
+      setError("city_id", "backend", t("This field is required"));
+    }
     try {
       if (!companyId) {
         let sectorId = null;
@@ -134,8 +136,10 @@ export function ReviewCreate() {
 
         const formDataCompany = {
           name: formData.companyname,
-          sector_id: sectorId, sede_id: formData.city_id
+          sector_id: sectorId, sede_id: idCity
         };
+
+        console.log(formDataCompany);
 
         const { headers } = await createCompany(formDataCompany);
         const location = headers.location.split("/");
@@ -146,7 +150,6 @@ export function ReviewCreate() {
 
       for (let position of positions) {
         if (formData.position === position.name) {
-
           positionId = position.id;
         }
       }
@@ -162,6 +165,7 @@ export function ReviewCreate() {
       const formDataReview = {
         ...formData, ...valuations, position_id: positionId, company_id: companyId,
         sector: undefined, companyname: undefined, position: undefined, salary: salary,
+        city_id: idCity
       }
       console.log(formDataReview);
 
@@ -176,8 +180,6 @@ export function ReviewCreate() {
       setError("city_id", "backend", setErrorMessageCallBackEnd(error));
     }
   };
-
-
 
   return (
     <React.Fragment>
@@ -244,7 +246,7 @@ export function ReviewCreate() {
                     value={valuations["salary_valuation"]}
                     precision={1}
                     onChange={(event, newValue) => {
-                      setValuations({ ...valuations, salary_valuation: newValue });
+                      setValuations({ ...valuations, salary_valuation: newValue ? newValue : 1 });
                     }}
                   />
                 </div>
@@ -259,7 +261,7 @@ export function ReviewCreate() {
                     value={valuations["inhouse_training"]}
                     precision={1}
                     onChange={(event, newValue) => {
-                      setValuations({ ...valuations, inhouse_training: newValue });
+                      setValuations({ ...valuations, inhouse_training: newValue ? newValue : 1 });
                     }}
                   />
                 </div>
@@ -274,7 +276,7 @@ export function ReviewCreate() {
                     value={valuations["growth_opportunities"]}
                     precision={1}
                     onChange={(event, newValue) => {
-                      setValuations({ ...valuations, growth_opportunities: newValue });
+                      setValuations({ ...valuations, growth_opportunities: newValue ? newValue : 1 });
                     }}
                   />
                 </div>
@@ -289,7 +291,7 @@ export function ReviewCreate() {
                     value={valuations["work_enviroment"]}
                     precision={1}
                     onChange={(event, newValue) => {
-                      setValuations({ ...valuations, work_enviroment: newValue });
+                      setValuations({ ...valuations, work_enviroment: newValue ? newValue : 1 });
                     }}
                   />
                 </div>
@@ -304,7 +306,7 @@ export function ReviewCreate() {
                     value={valuations["personal_life"]}
                     precision={1}
                     onChange={(event, newValue) => {
-                      setValuations({ ...valuations, personal_life: newValue });
+                      setValuations({ ...valuations, personal_life: newValue ? newValue : 1 });
                     }}
                   />
                 </div>
@@ -438,16 +440,7 @@ export function ReviewCreate() {
 
                 <div className="form-control">
                   <label htmlFor="city_id">{t("City")} (*)</label>
-                  <input
-                    ref={register({
-                      required: "Required"
-                    })}
-                    name="city_id"
-                    id="city_id"
-                    type="text"
-                    onChange={e => e.target.value}
-                    placeholder={t("City")}
-                  ></input>
+                  <Cities onClickCity={id => setIdCity(id)} />
                   {errors.city_id && (
                     <span className="errorMessage">{t(errors.city_id.message)}</span>
                   )}

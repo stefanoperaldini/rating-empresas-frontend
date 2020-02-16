@@ -56,7 +56,7 @@ export function Company() {
   const location = useLocation();
   const formFiltros = useRef(null);
 
-  const dataPositionDiagram = {
+  const dataPositionDiagram = (positionsCompany.length !== 0) ? {
     labels: positionsCompany.map(position => position.name),
     datasets: [
       {
@@ -64,9 +64,9 @@ export function Company() {
         backgroundColor: positionsCompany.map(() => getRandomColor()),
         hoverBackgroundColor: positionsCompany.map(() => getRandomColor()),
       }]
-  };
+  } : null;
 
-  const dataSalaryDiagram = {
+  const dataSalaryDiagram = (positionsCompany.length !== 0) ? {
     labels: positionsCompany.map(position => position.name),
     datasets: [
       {
@@ -86,7 +86,9 @@ export function Company() {
         borderWidth: 2
       },
     ]
-  };
+  } : null;
+
+  console.log(dataPositionDiagram, dataSalaryDiagram);
 
   const options = {
     responsive: true,
@@ -286,16 +288,22 @@ export function Company() {
               <p><a href={company.url_web} className="m-l-md">{company.url_web}</a></p>
               <p><a href={company.linkedin} className="m-l-md">{company.linkedin}</a></p>
             </section>
-            <section className="m-l-md m-t-lg">
-              <div style={{ width: 400 }}>
-                <Chart type='doughnut' data={dataPositionDiagram} />
-              </div>
-            </section>
-            <section className="m-t-lg">
-              <div style={{ width: 800 }}>
-                <Chart type='bar' data={dataSalaryDiagram} options={options} />
-              </div>
-            </section>
+            {dataPositionDiagram &&
+              (<section className="m-l-md m-t-lg">
+                <div style={{ width: 400 }}>
+                  <Chart type='doughnut' data={dataPositionDiagram} />
+                </div>
+              </section>
+              )
+            }
+            {dataSalaryDiagram &&
+              (<section className="m-t-lg">
+                <div style={{ width: 800 }}>
+                  <Chart type='bar' data={dataSalaryDiagram} options={options} />
+                </div>
+              </section>
+              )
+            }
           </aside>
 
           <main className="ratingCompany">

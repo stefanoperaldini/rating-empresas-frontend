@@ -137,7 +137,7 @@ export function CompanyCreate() {
   };
 
   useEffect(() => {
-    getCompanies()
+    getCompanies(`sortTipe=7`)
       .then(response => {
         const filteredCompany = response.data.rows_companies.filter(
           (company, index) => {
