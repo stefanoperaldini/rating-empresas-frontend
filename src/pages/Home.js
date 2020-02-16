@@ -18,6 +18,7 @@ import searchingImgSvg from "../img/imageHome.svg";
 
 export function Home() {
   const [companies, setCompanies] = useState([]);
+  const [topCompanies, setTopCompanies] = useState([]);
   const [company, setCompany] = useState("");
 
   const { handleSubmit, register, errors, formState, setError } = useForm({
@@ -29,9 +30,17 @@ export function Home() {
   const { currentUserId, role } = useAuth();
 
   useEffect(() => {
-    getCompanies(`page=1&row4page=10`)
+    getCompanies(`sortTipe=7`)
       .then(response => {
         setCompanies(response.data.rows_companies);
+      })
+      .catch(error => {
+        setError("name", "backend", setErrorMessageCallBackEnd(error));
+      });
+
+    getCompanies(`sortTipe=1&page=1&row4page=10`)
+      .then(response => {
+        setTopCompanies(response.data.rows_companies);
       })
       .catch(error => {
         setError("name", "backend", setErrorMessageCallBackEnd(error));
@@ -121,7 +130,7 @@ export function Home() {
             <h2 className="f-s-l">{t("Top Ten Workplaces")}</h2>
           </header>
           <main className="minWidth">
-            <ListCompanies listCompanies={companies} />
+            <ListCompanies listCompanies={topCompanies} />
           </main>
         </section>
       </main>

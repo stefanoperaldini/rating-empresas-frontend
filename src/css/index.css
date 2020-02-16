@@ -69,6 +69,21 @@ select {
   width: 250px;
 }
 
+.findCity {
+  position: relative;
+}
+
+.resFindCity {
+  position: absolute;
+  height: 8rem;
+	width: 16rem;
+	border: 1px solid #ddd;
+	background: var(--lgray);
+  overflow-y: scroll;
+  top: 2.5rem;
+  z-index:9;
+}
+
 /* CONTAINER
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 .wrapper {
@@ -131,6 +146,10 @@ input:hover ~ span {
 input:checked ~ span {
   color: var(--darkblue);
   text-decoration: underline;
+}
+
+.itemsCities:hover {
+  background-color: var(--blue);
 }
 
 /* MAIN

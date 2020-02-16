@@ -3,9 +3,8 @@ import { useTranslation } from "react-i18next";
 
 import { getCityName, } from "../http/cityService";
 
-export function Cities({ value, onRegister, }) {
-    console.log(value);
-    const [searchTerm, setSearchTerm] = useState(value);
+export function Cities({ onClickCity }) {
+    const [searchTerm, setSearchTerm] = useState("");
     const [cities, setCities] = useState([]);
     const [showResult, setShowResult] = useState(false);
     const { t } = useTranslation();
@@ -14,11 +13,6 @@ export function Cities({ value, onRegister, }) {
         if (searchTerm.length >= 3) {
             getCityName(searchTerm).then(response => {
                 setCities(response.data.rows);
-                if (cities.length !== 0) {
-                    setShowResult(true);
-                } else {
-                    setShowResult(false);
-                }
             });
         }
 
@@ -26,39 +20,41 @@ export function Cities({ value, onRegister, }) {
             setShowResult(false);
         }
 
-    }, [searchTerm, cities]);
+    }, [searchTerm,]);
 
-    console.log(searchTerm);
+    useEffect(() => {
+        if (cities.length !== 0) {
+            setShowResult(true);
+        } else {
+            setShowResult(false);
+        }
+    }, [cities,]);
 
     return (
-        <div className="autocompletamiento">
-            <div className="busqueda">
-                <input ref={onRegister()} type="text" name="cities" id="cities" placeholder={t("Find the city...")} value={searchTerm}
-                    onChange={e => {
-                        setSearchTerm(e.target.value);
-                    }} onKeyDown={e => {
-                        if (e.key === "ArrowDown") {
-                            console.log("arrowDown");
-                        } else if (e.key === "ArrowUp") {
-                            console.log("arrowUp");
-                        }
-                    }} />
-                <div>
-                    {showResult &&
-                        <ul className="resBusqueda">
-                            {cities.map(city => (
-                                <li key={city.name} onClick={e => {
-                                    setSearchTerm(city.name);
-                                    setCities([]);
-                                    setShowResult(false);
-                                }}>
-                                    {city.name}
-                                </li>
-                            ))}
-                        </ul>}
-                </div>
-            </div>
-        </div >
-
+        <div className="findCity">
+            <input type="text" name="city_id" id="city_id" placeholder={t("Find the city...")} value={searchTerm}
+                onChange={e => {
+                    setSearchTerm(e.target.value);
+                }}
+            />
+            {showResult &&
+                <div className="resFindCity" onMouseLeave={e => {
+                    setShowResult(false);
+                }}>
+                    <ul >
+                        {cities.map(city => (
+                            <li key={city.name} className="itemsCities" onClick={e => {
+                                e.stopPropagation();
+                                setSearchTerm(city.name);
+                                onClickCity(city.id)
+                                setCities([]);
+                                setShowResult(false);
+                            }} >
+                                {city.name}
+                            </li>
+                        ))}
+                    </ul>
+                </div>}
+        </div>
     );
 }
