@@ -6,7 +6,7 @@
 
 body {
   font-family: "Noto Sans JP", sans-serif;
-  white-space: nowrap;
+  white-space: normal;
 }
 
 button {
@@ -103,13 +103,36 @@ select {
 }
 
 .page-header ul li:not(:last-child) {
-  padding-right: 15px;
+  padding-right: 12px;
 }
 
 .page-header .cta-contact {
   font-family: inherit;
   font-size: 1rem;
   padding: 5px 18px;
+  color: var(--gray);
+}
+
+.header-item li label {
+  cursor: pointer;
+}
+
+.header-item input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  opacity: 0;
+}
+
+input:hover ~ span {
+  border-color: black;
+  font-weight: bold;
+}
+
+input:checked ~ span {
+  border-color: black;
+  font-weight: bold;
+  text-decoration: underline;
 }
 
 /* MAIN
@@ -164,6 +187,13 @@ select {
   align-items: center;
   min-height: 350px;
   flex-grow: 1;
+}
+
+.centered-container-home h1,
+h2,
+p {
+  padding-right: 0.5rem;
+  padding-left: 0.5rem;
 }
 
 .centeredComponent {
@@ -226,6 +256,12 @@ select {
 
 .advancedSearch {
   grid-area: advancedSearch;
+  font-weight: bold;
+  color: var(--blue);
+}
+
+.advancedSearch:hover {
+  color: var(--darkblue);
 }
 
 .errorMessageCompany {
@@ -341,12 +377,23 @@ select {
   margin-right: 20px;
 }
 
+.page-footer ul li a {
+  color: var(--dark);
+}
+
+.page-footer ul li a:hover {
+  font-weight: bold;
+}
 /* MQ
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 @media screen and (min-width: 550px) {
   .page-header ul {
     width: auto;
     margin-top: 0;
+  }
+
+  .centeredComponentRate p {
+    margin-left: var(--space-xl);
   }
 
   .page-header .cta-contact {
@@ -372,6 +419,15 @@ select {
   .page-main {
     padding-left: 90px;
   }
+
+  /* PATRI */
+
+  .page-header .cta-contact.flexRow {
+    width: 16rem;
+    justify-content: flex-end;
+  }
+
+  /* PATRI */
 
   .searchComponent {
     display: grid;
@@ -418,6 +474,10 @@ select {
     flex-direction: row;
     align-items: center;
     justify-content: center;
+  }
+
+  .centeredComponentRate p {
+    margin-left: var(--space-xl);
   }
 
   .minWidth {

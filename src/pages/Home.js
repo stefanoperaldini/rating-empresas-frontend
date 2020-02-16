@@ -60,10 +60,12 @@ export function Home() {
       <Header />
       <main className="centered-container-home">
         <section className="allWidth centeredComponent">
-          <h2>{t("Find great places to work")}</h2>
-          <p>{t("Get access to rating and company reviews")}</p>
+          <h1 className="f-s-xxl">{t("Find great places to work")}</h1>
+          <p className="f-s-m">
+            {t("Get access to rating and company reviews")}
+          </p>
           <form onSubmit={handleSubmit(handleGetCompanyData)}>
-            <div className="searchComponent">
+            <div className="searchComponent m-t-xl">
               <img
                 className="imageHome"
                 src={searchingImgSvg}
@@ -116,7 +118,7 @@ export function Home() {
 
         <section className="allWidth centered-container-home p-t-md m-t-xl">
           <header>
-            <h3>{t("Top Ten Workplaces")}</h3>
+            <h2 className="f-s-l">{t("Top Ten Workplaces")}</h2>
           </header>
           <main className="minWidth">
             <ListCompanies listCompanies={companies} />
