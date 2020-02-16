@@ -18,7 +18,7 @@ export function RateCompanyLink() {
   const history = useHistory();
 
   return (
-    <section className="allWidth centeredComponentRate p-t-md m-t-xl">
+    <section className="allWidth centeredComponentRate p-t-md">
       <header>
         <h2 className="f-s-l">{t("Do you want to rate a company?")}</h2>
         <p>{t("Your reviews will be anonimous")}</p>
@@ -27,7 +27,7 @@ export function RateCompanyLink() {
         <Rating
           name="vote"
           size="large"
-          value={0}
+          value={3}
           precision={1}
           onChange={() => {
             history.push("/review/create");

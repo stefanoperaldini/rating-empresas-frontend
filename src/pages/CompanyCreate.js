@@ -198,7 +198,7 @@ export function CompanyCreate() {
     <React.Fragment>
       <Header />
       <main className="centered-container">
-        <h3>{t("My company")}</h3>
+        <h1 className="f-s-l">{t("My company")}</h1>
         <FileUpload />
         {/* state.company.url_logo */}
         <img src={defaultImageCompany} alt={t("Default image company")} />

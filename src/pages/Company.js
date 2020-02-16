@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import Rating from "@material-ui/lab/Rating";
-import { Chart } from '@bit/primefaces.primereact.chart';
+import { Chart } from "@bit/primefaces.primereact.chart";
 import { makeStyles } from "@material-ui/core/styles";
 import { useLocation } from "react-router-dom";
 import { useParams } from "react-router";
@@ -28,10 +28,9 @@ const useStyles = makeStyles({
   }
 });
 
-
 function getRandomColor() {
-  var letters = '0123456789ABCDEF';
-  var color = '#';
+  var letters = "0123456789ABCDEF";
+  var color = "#";
   for (let i = 0; i < 6; i++) {
     color += letters[Math.floor(Math.random() * 16)];
   }
@@ -39,12 +38,16 @@ function getRandomColor() {
 }
 
 export function Company() {
-  const { handleSubmit, register, formState, } = useForm({
+  const { handleSubmit, register, formState } = useForm({
     mode: "onSubmit"
   });
   const [company, setCompany] = useState({});
   const [positionsCompany, setPositionsCompany] = useState([]);
-  const [reviewsCompany, setReviewsCompany] = useState({ numsRows: 0, page: 0, reviews: [] });
+  const [reviewsCompany, setReviewsCompany] = useState({
+    numsRows: 0,
+    page: 0,
+    reviews: []
+  });
   const [isFirst, setIsFirst] = useState(true);
   const [isLast, setIsLast] = useState(false);
   const [companyCities, setCompanyCities] = useState([]);
@@ -62,29 +65,30 @@ export function Company() {
       {
         data: positionsCompany.map(position => position.numsReviews),
         backgroundColor: positionsCompany.map(() => getRandomColor()),
-        hoverBackgroundColor: positionsCompany.map(() => getRandomColor()),
-      }]
+        hoverBackgroundColor: positionsCompany.map(() => getRandomColor())
+      }
+    ]
   };
 
   const dataSalaryDiagram = {
-    labels: positionsCompany.map(position => position.name),
+    labels: positionsCompany.map(position => position.name[0]),
     datasets: [
       {
-        type: 'line',
-        label: 'Salary trend',
-        borderColor: '#2196F3',
+        type: "line",
+        label: "Salary trend",
+        borderColor: "#2196F3",
         borderWidth: 2,
         fill: false,
-        data: positionsCompany.map((position) => position.avg_salary)
+        data: positionsCompany.map(position => position.avg_salary)
       },
       {
-        type: 'bar',
-        label: 'Position salary',
-        backgroundColor: '#4CAF50',
-        data: positionsCompany.map((position) => position.avg_salary),
-        borderColor: 'white',
+        type: "bar",
+        label: "Position salary",
+        backgroundColor: "#4CAF50",
+        data: positionsCompany.map(position => position.avg_salary),
+        borderColor: "white",
         borderWidth: 2
-      },
+      }
     ]
   };
 
@@ -92,10 +96,10 @@ export function Company() {
     responsive: true,
     title: {
       display: true,
-      text: 'Combo Bar Line Chart'
+      text: "Combo Bar Line Chart"
     },
     tooltips: {
-      mode: 'index',
+      mode: "index",
       intersect: true
     }
   };
@@ -110,78 +114,83 @@ export function Company() {
     getCompanyCities(idCompany).then(response => {
       setCompanyCities(response.data);
     });
-    getReviewsFilter(`companyId=${idCompany}&page=1&row4page=5`).then(response => {
-      setReviewsCompany(response.data);
-      if ((response.data.page * 5) >= response.data.numsRows) {
-        setIsLast(true);
+    getReviewsFilter(`companyId=${idCompany}&page=1&row4page=5`).then(
+      response => {
+        setReviewsCompany(response.data);
+        if (response.data.page * 5 >= response.data.numsRows) {
+          setIsLast(true);
+        }
       }
-    });
+    );
     return;
   }, [idCompany]);
 
   const handleCompanySearch = (formData, e) => {
     let queryString = `companyId=${idCompany}&page=1&row4page=5&sortTipe=${formData.sortTipe}`;
     if (formData.positionId !== "Empty") {
-      queryString = `${queryString}&positionId=${formData.positionId}`
+      queryString = `${queryString}&positionId=${formData.positionId}`;
     }
     if (formData.cityId !== "Empty") {
-      queryString = `${queryString}&cityId=${formData.cityId}`
+      queryString = `${queryString}&cityId=${formData.cityId}`;
     }
-    getReviewsFilter(queryString).then(response => {
-      setReviewsCompany(response.data);
-      if ((response.data.page * 5) >= response.data.numsRows) {
-        setIsLast(true);
-      }
-      if (parseInt(response.data.page) === 1) {
+    getReviewsFilter(queryString)
+      .then(response => {
+        setReviewsCompany(response.data);
+        if (response.data.page * 5 >= response.data.numsRows) {
+          setIsLast(true);
+        }
+        if (parseInt(response.data.page) === 1) {
+          setIsFirst(true);
+        } else {
+          setIsFirst(false);
+        }
+      })
+      .catch(error => {
+        setReviewsCompany({ numsRows: 0, page: 0, reviews: [] });
         setIsFirst(true);
-      } else {
-        setIsFirst(false);
-      }
-    }).catch(error => {
-      setReviewsCompany({ numsRows: 0, page: 0, reviews: [] });
-      setIsFirst(true);
-      setIsLast(true);
-    });
+        setIsLast(true);
+      });
   };
 
-  const handleClickPaging = (e) => {
-
+  const handleClickPaging = e => {
     window.scrollTo(0, 0);
 
-    const form = formFiltros.current
+    const form = formFiltros.current;
 
     let pageToGet = reviewsCompany.page;
-    if (e.target.matches('button.next')) {
+    if (e.target.matches("button.next")) {
       pageToGet += 1;
     }
-    if (e.target.matches('button.prev')) {
+    if (e.target.matches("button.prev")) {
       pageToGet -= 1;
       setIsLast(false);
     }
 
-    let queryString = `companyId=${idCompany}&page=${pageToGet}&row4page=5&sortTipe=${form['sortTipe'].value}`;
-    if (form['positionId'].value !== "Empty") {
-      queryString = `${queryString}&positionId=${form['positionId'].value}`
+    let queryString = `companyId=${idCompany}&page=${pageToGet}&row4page=5&sortTipe=${form["sortTipe"].value}`;
+    if (form["positionId"].value !== "Empty") {
+      queryString = `${queryString}&positionId=${form["positionId"].value}`;
     }
-    if (form['cityId'].value !== "Empty") {
-      queryString = `${queryString}&cityId=${form['cityId'].value}`
+    if (form["cityId"].value !== "Empty") {
+      queryString = `${queryString}&cityId=${form["cityId"].value}`;
     }
-    getReviewsFilter(queryString).then(response => {
-      setReviewsCompany(response.data);
-      if ((response.data.page * 5) >= response.data.numsRows) {
-        setIsLast(true);
-      }
-      if (parseInt(response.data.page) === 1) {
+    getReviewsFilter(queryString)
+      .then(response => {
+        setReviewsCompany(response.data);
+        if (response.data.page * 5 >= response.data.numsRows) {
+          setIsLast(true);
+        }
+        if (parseInt(response.data.page) === 1) {
+          setIsFirst(true);
+        } else {
+          setIsFirst(false);
+        }
+      })
+      .catch(error => {
+        setReviewsCompany({ numsRows: 0, page: 0, reviews: [] });
         setIsFirst(true);
-      } else {
-        setIsFirst(false);
-      }
-    }).catch(error => {
-      setReviewsCompany({ numsRows: 0, page: 0, reviews: [] });
-      setIsFirst(true);
-      setIsLast(true);
-    });
-  }
+        setIsLast(true);
+      });
+  };
 
   return (
     <React.Fragment>
@@ -191,7 +200,15 @@ export function Company() {
 
         <section className="companyDetail">
           <header className="companyTitle flexRow m-t-lg b-b">
-            <img src={defaultImageCompany} alt={t("Default image company")} />
+            <img
+              height="75"
+              src={company.url_logo ? company.url_logo : defaultImageCompany}
+              alt={
+                company.url_logo
+                  ? t("Image company")
+                  : t("Default image company")
+              }
+            />
             <h2>{company.name}</h2>
           </header>
 
@@ -270,7 +287,8 @@ export function Company() {
             </div>
             <section>
               <h5 className="m-l-md m-t-lg">
-                {t("Average salary")} {company.avg_salary ? company.avg_salary : "--"} €/{t("month")}
+                {t("Average salary")}{" "}
+                {company.avg_salary ? company.avg_salary : "--"} €/{t("month")}
               </h5>
             </section>
 
@@ -283,29 +301,46 @@ export function Company() {
               <p className="m-l-md">
                 {company.address} - {company.sede_name}
               </p>
-              <p><a href={company.url_web} className="m-l-md">{company.url_web}</a></p>
-              <p><a href={company.linkedin} className="m-l-md">{company.linkedin}</a></p>
+              <p>
+                <a href={company.url_web} className="m-l-md">
+                  {company.url_web}
+                </a>
+              </p>
+              <p>
+                <a href={company.linkedin} className="m-l-md">
+                  {company.linkedin}
+                </a>
+              </p>
             </section>
             <section className="m-l-md m-t-lg">
               <div style={{ width: 400 }}>
-                <Chart type='doughnut' data={dataPositionDiagram} />
+                <Chart type="doughnut" data={dataPositionDiagram} />
               </div>
             </section>
             <section className="m-t-lg">
-              <div style={{ width: 800 }}>
-                <Chart type='bar' data={dataSalaryDiagram} options={options} />
+              <div style={{ width: 400 }}>
+                <Chart type="bar" data={dataSalaryDiagram} options={options} />
               </div>
             </section>
           </aside>
 
           <main className="ratingCompany">
-            <form ref={formFiltros} onSubmit={handleSubmit(handleCompanySearch)} noValidate>
-              <fieldset >
+            <form
+              ref={formFiltros}
+              onSubmit={handleSubmit(handleCompanySearch)}
+              noValidate
+            >
+              <fieldset>
                 <legend>
                   <h4>{t("Search for")}</h4>
                 </legend>
                 <span className="flexRow">
-                  <select name="positionId" id="positionId" className="m-r-xs" ref={register}>
+                  <select
+                    name="positionId"
+                    id="positionId"
+                    className="m-r-xs"
+                    ref={register}
+                  >
                     <option value="Empty">&#60;{t("Position")}&#62;</option>
                     {positionsCompany.map(position => (
                       <option key={position.name} value={position.id}>
@@ -352,14 +387,31 @@ export function Company() {
                 listReviews={reviewsCompany.reviews}
               />
               <div>
-                <button name="prev" id="prev" disabled={isFirst} onClick={handleClickPaging} className="m-r-md prev">{t("Previous")}</button>
-                <button name="next" id="next" disabled={isLast} onClick={handleClickPaging} className="m-r-md next"> {t("Next")}</button>
+                <button
+                  name="prev"
+                  id="prev"
+                  disabled={isFirst}
+                  onClick={handleClickPaging}
+                  className="m-r-md prev"
+                >
+                  {t("Previous")}
+                </button>
+                <button
+                  name="next"
+                  id="next"
+                  disabled={isLast}
+                  onClick={handleClickPaging}
+                  className="m-r-md next"
+                >
+                  {" "}
+                  {t("Next")}
+                </button>
               </div>
             </section>
           </main>
         </section>
       </main>
       <Footer />
-    </React.Fragment >
+    </React.Fragment>
   );
 }

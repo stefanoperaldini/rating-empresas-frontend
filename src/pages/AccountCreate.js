@@ -27,8 +27,6 @@ export function AccountCreate() {
     mode: "onBlur"
   });
   const history = useHistory();
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -48,7 +46,7 @@ export function AccountCreate() {
       <Header />
       <main className="centered-container">
         <div className="boxAccount">
-          <h3>{t("Create your account")}</h3>
+          <h1 className="f-s-l">{t("Create your account")}</h1>
           <form onSubmit={handleSubmit(handleAccountCreate)} noValidate>
             <div className="form-control">
               <label>
@@ -119,10 +117,6 @@ export function AccountCreate() {
                 type={showPassword ? "text" : "password"}
                 id="password"
                 placeholder={t("Enter your password")}
-                value={password}
-                onChange={e => {
-                  setPassword(e.target.value);
-                }}
               ></input>
               <span
                 className={
@@ -146,16 +140,12 @@ export function AccountCreate() {
               </label>
               <input
                 ref={register({
-                  validate: value => value === watch("newPassword")
+                  validate: value => value === watch("password")
                 })}
                 name="confirmPassword"
                 type={showConfirmPassword ? "text" : "password"}
                 id="confirmPassword"
                 placeholder={t("Confirm your password")}
-                value={confirmPassword}
-                onChange={e => {
-                  setConfirmPassword(e.target.value);
-                }}
               ></input>
               <span
                 className={
@@ -174,17 +164,19 @@ export function AccountCreate() {
                 </span>
               )}
             </div>
-            <p>(*) {t("Field required")}</p>
-            <p>{t("You will receive an activation e-mail")}</p>
+            <p className="f-s-xs m-t-xl">(*) {t("Field required")}</p>
+            <p className="f-c-gray">
+              {t("You will receive an activation e-mail")}
+            </p>
             <div className="btn-container">
               <button
                 type="submit"
-                className="btn"
+                className="m-t-md btn"
                 disabled={formState.isSubmitting}
               >
                 {t("Create")}
               </button>
-              <div className="m-t-lg btn-container">
+              <div className="m-t-md btn-container">
                 <Link to="/account/Login">{t("Sign in")}</Link>
               </div>
             </div>

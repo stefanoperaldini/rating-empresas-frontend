@@ -2,7 +2,11 @@ import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useForm } from "react-hook-form";
 
-import { getCompanies, getSectors, getCompaniesCities } from "../http/companyService";
+import {
+  getCompanies,
+  getSectors,
+  getCompaniesCities
+} from "../http/companyService";
 import { getPositions } from "../http/reviewService";
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
@@ -15,7 +19,7 @@ import { useAuth } from "../context/auth-context";
  */
 
 export function AdvancedSearch() {
-  const { handleSubmit, register, formState, } = useForm({
+  const { handleSubmit, register, formState } = useForm({
     mode: "onSubmit"
   });
   const [companiesList, setcompaniesList] = useState([]);
@@ -29,19 +33,21 @@ export function AdvancedSearch() {
   const handleAdvancedSearch = formData => {
     let queryString = `sortTipe=${formData.sortTipe}`;
     if (formData.sectorId !== "Empty") {
-      queryString = `${queryString}&sectorId=${formData.sectorId}`
+      queryString = `${queryString}&sectorId=${formData.sectorId}`;
     }
     if (formData.positionId !== "Empty") {
-      queryString = `${queryString}&positionId=${formData.positionId}`
+      queryString = `${queryString}&positionId=${formData.positionId}`;
     }
     if (formData.cityId !== "Empty") {
-      queryString = `${queryString}&cityId=${formData.cityId}`
+      queryString = `${queryString}&cityId=${formData.cityId}`;
     }
-    getCompanies(queryString).then(response => {
-      setcompaniesList(response.data.rows_companies);
-    }).catch(error => {
-      setcompaniesList([]);
-    });
+    getCompanies(queryString)
+      .then(response => {
+        setcompaniesList(response.data.rows_companies);
+      })
+      .catch(error => {
+        setcompaniesList([]);
+      });
   };
 
   useEffect(() => {
@@ -65,15 +71,19 @@ export function AdvancedSearch() {
       <Header />
       <main className="centered-container">
         {(!currentUserId || role === "1") && <RateCompanyLink />}
-        <h3>{t("Advanced search")}</h3>
+        <h1 className="f-s-l">{t("Advanced search")}</h1>
         <form onSubmit={handleSubmit(handleAdvancedSearch)} noValidate>
-          <fieldset >
+          <fieldset>
             <legend>
               <h4>{t("Search for")}</h4>
             </legend>
             <span className="flexRow">
-
-              <select name="sectorId" id="sectorId" className="m-r-xs" ref={register}>
+              <select
+                name="sectorId"
+                id="sectorId"
+                className="m-r-xs"
+                ref={register}
+              >
                 <option value="Empty">&#60;{t("Sector")}&#62;</option>
                 {sectors.map(element => (
                   <option key={element.sector} value={element.id}>
@@ -82,7 +92,12 @@ export function AdvancedSearch() {
                 ))}
               </select>
 
-              <select name="positionId" id="positionId" className="m-r-xs" ref={register}>
+              <select
+                name="positionId"
+                id="positionId"
+                className="m-r-xs"
+                ref={register}
+              >
                 <option value="Empty">&#60;{t("Position")}&#62;</option>
                 {positions.map(element => (
                   <option key={element.name} value={element.id}>
@@ -90,7 +105,12 @@ export function AdvancedSearch() {
                   </option>
                 ))}
               </select>
-              <select name="cityId" id="cityId" className="m-r-xs" ref={register}>
+              <select
+                name="cityId"
+                id="cityId"
+                className="m-r-xs"
+                ref={register}
+              >
                 <option value="Empty">&#60;{t("City")}&#62;</option>
                 {cities.map(element => (
                   <option key={element.name} value={element.id}>

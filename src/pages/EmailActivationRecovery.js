@@ -35,7 +35,7 @@ export function EmailActivationRecovery() {
     <React.Fragment>
       <Header />
       <main className="centered-container">
-        <h3>{t("Lost e-mail activation?")}</h3>
+        <h1 className="f-s-l">{t("Lost e-mail activation?")}</h1>
         <form onSubmit={handleSubmit(handleEmailActivationRecovery)} noValidate>
           <div className="form-control">
             <label htmlFor="email">{t("E-mail")}</label>
@@ -50,16 +50,18 @@ export function EmailActivationRecovery() {
               <span className="errorMessage">{t(errors.email.message)}</span>
             )}
           </div>
-          <p>{t("We will resend you a new activation e-mail")}</p>
+          <p className="f-c-gray">
+            {t("We will resend you a new activation e-mail")}
+          </p>
           <div className="btn-container">
             <button
               type="submit"
-              className="btn"
+              className="m-t-md btn"
               disabled={formState.isSubmitting}
             >
               {t("Send")}
             </button>
-            <div className="m-t-lg btn-container">
+            <div className="m-t-md btn-container">
               <Link to="/account/login">{t("Sign in")}</Link>
             </div>
           </div>

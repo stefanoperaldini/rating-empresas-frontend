@@ -27,9 +27,6 @@ export function AccountPasswordChange() {
   const history = useHistory();
   const { t } = useTranslation();
 
-  const [password, setPassword] = useState("");
-  const [newPassword, setNewPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -50,7 +47,7 @@ export function AccountPasswordChange() {
       <Header />
       <main className="centered-container">
         <div>
-          <h3>{t("Change password")}</h3>
+          <h1 className="f-s-l">{t("Change password")}</h1>
           <form onSubmit={handleSubmit(handlePasswordChange)}>
             <div className="form-control">
               <label htmlFor="oldPassword">{t("Current password")} (*)</label>
@@ -60,10 +57,6 @@ export function AccountPasswordChange() {
                 type={showPassword ? "text" : "password"}
                 id="password"
                 placeholder={t("Enter current password")}
-                value={password}
-                onChange={e => {
-                  setPassword(e.target.value);
-                }}
               ></input>
               <span
                 className={
@@ -88,10 +81,6 @@ export function AccountPasswordChange() {
                 type={showNewPassword ? "text" : "password"}
                 id="newPassword"
                 placeholder={t("Enter new password")}
-                value={newPassword}
-                onChange={e => {
-                  setNewPassword(e.target.value);
-                }}
               ></input>
               <span
                 className={
@@ -121,10 +110,6 @@ export function AccountPasswordChange() {
                 type={showConfirmPassword ? "text" : "password"}
                 id="confirmPassword"
                 placeholder={t("Confirm new password")}
-                value={confirmPassword}
-                onChange={e => {
-                  setConfirmPassword(e.target.value);
-                }}
               ></input>
               <span
                 className={
@@ -143,11 +128,11 @@ export function AccountPasswordChange() {
                 </span>
               )}
             </div>
-            <p>(*) {t("Field required")}</p>
+            <p className="f-s-xs m-t-xl">(*) {t("Field required")}</p>
             <div className="btn-container">
               <button
                 type="submit"
-                className="btn"
+                className="m-t-md btn"
                 disabled={formState.isSubmitting}
               >
                 {t("Save")}
