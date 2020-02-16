@@ -9,7 +9,7 @@ export function Footer() {
     <footer className="page-footer">
       <ul>
         <li>
-          <a href="https://github.com/stefanoperaldini/rating-empresas-frontend" target="_blank"> <img
+          <a href="https://github.com/stefanoperaldini/rating-empresas-frontend"> <img
             src={imageGitHub}
             alt={t("Icon gitHub")}
           /></a>

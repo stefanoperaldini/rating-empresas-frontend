@@ -171,6 +171,5 @@ export function ListReviews({ pathLocation, listReviews }) {
                 </li>
             ))}
         </ul>
-
     );
 }

@@ -27,7 +27,7 @@ export function RateCompanyLink() {
         <Rating
           name="vote"
           size="large"
-          value="0"
+          value={0}
           precision={1}
           onChange={() => {
             history.push("/review/create");

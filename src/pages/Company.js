@@ -1,6 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import Rating from "@material-ui/lab/Rating";
+import { Chart } from '@bit/primefaces.primereact.chart';
+
+import ComposedChart from '@bit/recharts.recharts.composed-chart';
+import Line from '@bit/recharts.recharts.line';
+import Bar from '@bit/recharts.recharts.bar';
+import XAxis from '@bit/recharts.recharts.x-axis';
+import YAxis from '@bit/recharts.recharts.y-axis';
+import CartesianGrid from '@bit/recharts.recharts.cartesian-grid';
+import Tooltip from '@bit/recharts.recharts.tooltip';
+import Legend from '@bit/recharts.recharts.legend';
+
+
 import { makeStyles } from "@material-ui/core/styles";
 import { useLocation } from "react-router-dom";
 import { useParams } from "react-router";
@@ -27,21 +39,68 @@ const useStyles = makeStyles({
   }
 });
 
+
+function getRandomColor() {
+  var letters = '0123456789ABCDEF';
+  var color = '#';
+  for (let i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
+
+
+
 export function Company() {
   const { handleSubmit, register, formState, } = useForm({
     mode: "onSubmit"
   });
   const [company, setCompany] = useState({});
   const [positionsCompany, setPositionsCompany] = useState([]);
-  const [reviewsCompanyList, setReviewsCompanyList] = useState([]);
+  const [reviewsCompany, setReviewsCompany] = useState({ numsRows: 0, page: 0, reviews: [] });
+  const [isFirst, setIsFirst] = useState(true);
+  const [isLast, setIsLast] = useState(false);
   const [companyCities, setCompanyCities] = useState([]);
   const classes = useStyles();
   const { t } = useTranslation();
   const params = useParams();
   const idCompany = params.id;
   const { currentUserId, role } = useAuth();
-
   const location = useLocation();
+  const formFiltros = useRef(null);
+
+  const dataPositionDiagram = {
+    labels: positionsCompany.map(position => position.name),
+    datasets: [
+      {
+        data: positionsCompany.map(position => position.numsReviews),
+        backgroundColor: positionsCompany.map(() => getRandomColor()),
+        hoverBackgroundColor: positionsCompany.map(() => getRandomColor()),
+      }]
+  };
+
+  const dataSalaryDiagram = positionsCompany.map((position) => { return { name: position.name, uv: position.avg_salary, pv: position.avg_salary, amt: position.avg_salary } });
+  // const dataSalaryDiagram = [
+  //   {
+  //     name: 'Page A', uv: 590, pv: 800, amt: 1400,
+  //   },
+  //   {
+  //     name: 'Page B', uv: 868, pv: 967, amt: 1506,
+  //   },
+  //   {
+  //     name: 'Page C', uv: 1397, pv: 1098, amt: 989,
+  //   },
+  //   {
+  //     name: 'Page D', uv: 1480, pv: 1200, amt: 1228,
+  //   },
+  //   {
+  //     name: 'Page E', uv: 1520, pv: 1108, amt: 1100,
+  //   },
+  //   {
+  //     name: 'Page F', uv: 1400, pv: 680, amt: 1700,
+  //   },
+  // ];
+
   useEffect(() => {
     getCompany(idCompany).then(response => {
       setCompany(response.data);
@@ -52,14 +111,17 @@ export function Company() {
     getCompanyCities(idCompany).then(response => {
       setCompanyCities(response.data);
     });
-    getReviewsFilter(`companyId=${idCompany}`).then(response => {
-      setReviewsCompanyList(response.data.reviews);
+    getReviewsFilter(`companyId=${idCompany}&page=1&row4page=5`).then(response => {
+      setReviewsCompany(response.data);
+      if ((response.data.page * 5) >= response.data.numsRows) {
+        setIsLast(true);
+      }
     });
     return;
   }, [idCompany]);
 
-  const handleCompanySearch = formData => {
-    let queryString = `companyId=${idCompany}&sortTipe=${formData.sortTipe}`;
+  const handleCompanySearch = (formData, e) => {
+    let queryString = `companyId=${idCompany}&page=1&row4page=5&sortTipe=${formData.sortTipe}`;
     if (formData.positionId !== "Empty") {
       queryString = `${queryString}&positionId=${formData.positionId}`
     }
@@ -67,11 +129,60 @@ export function Company() {
       queryString = `${queryString}&cityId=${formData.cityId}`
     }
     getReviewsFilter(queryString).then(response => {
-      setReviewsCompanyList(response.data.reviews);
+      setReviewsCompany(response.data);
+      if ((response.data.page * 5) >= response.data.numsRows) {
+        setIsLast(true);
+      }
+      if (parseInt(response.data.page) === 1) {
+        setIsFirst(true);
+      } else {
+        setIsFirst(false);
+      }
     }).catch(error => {
-      setReviewsCompanyList([]);
+      setReviewsCompany({ numsRows: 0, page: 0, reviews: [] });
+      setIsFirst(true);
+      setIsLast(true);
     });
   };
+
+  const handleClickPaging = (e) => {
+
+    window.scrollTo(0, 0);
+
+    const form = formFiltros.current
+
+    let pageToGet = reviewsCompany.page;
+    if (e.target.matches('button.next')) {
+      pageToGet += 1;
+    }
+    if (e.target.matches('button.prev')) {
+      pageToGet -= 1;
+      setIsLast(false);
+    }
+
+    let queryString = `companyId=${idCompany}&page=${pageToGet}&row4page=5&sortTipe=${form['sortTipe'].value}`;
+    if (form['positionId'].value !== "Empty") {
+      queryString = `${queryString}&positionId=${form['positionId'].value}`
+    }
+    if (form['cityId'].value !== "Empty") {
+      queryString = `${queryString}&cityId=${form['cityId'].value}`
+    }
+    getReviewsFilter(queryString).then(response => {
+      setReviewsCompany(response.data);
+      if ((response.data.page * 5) >= response.data.numsRows) {
+        setIsLast(true);
+      }
+      if (parseInt(response.data.page) === 1) {
+        setIsFirst(true);
+      } else {
+        setIsFirst(false);
+      }
+    }).catch(error => {
+      setReviewsCompany({ numsRows: 0, page: 0, reviews: [] });
+      setIsFirst(true);
+      setIsLast(true);
+    });
+  }
 
   return (
     <React.Fragment>
@@ -159,13 +270,13 @@ export function Company() {
               <span className="m-l-md">{t("Work&Life balance")}</span>
             </div>
             <section>
-              <h5 className="m-l-md m-t-xl">
+              <h5 className="m-l-md m-t-lg">
                 {t("Average salary")} {company.avg_salary ? company.avg_salary : "--"} €/{t("month")}
               </h5>
             </section>
 
             <section>
-              <h5 className="m-l-md m-t-xl"> {company.name} </h5>
+              <h5 className="m-l-md m-t-lg"> {company.name} </h5>
               <p className="m-l-md">{company.sector}</p>
               <p className="m-l-md">
                 <textarea value={company.description} readOnly />
@@ -173,13 +284,36 @@ export function Company() {
               <p className="m-l-md">
                 {company.address} - {company.sede_name}
               </p>
-              <p className="m-l-md">{company.url_web}</p>
-              <p className="m-l-md">{company.linkedin}</p>
+              <p><a href={company.url_web} className="m-l-md">{company.url_web}</a></p>
+              <p><a href={company.linkedin} className="m-l-md">{company.linkedin}</a></p>
+            </section>
+            <section className="m-l-md m-t-lg">
+              <div style={{ width: 400 }}>
+                <Chart type='doughnut' data={dataPositionDiagram} />
+              </div>
+            </section>
+            <section className="m-t-lg">
+              <ComposedChart
+                width={400}
+                height={300}
+                data={dataSalaryDiagram}
+                margin={{
+                  top: 20, right: 20, bottom: 20, left: 20,
+                }}
+              >
+                <CartesianGrid stroke="#f5f5f5" />
+                <XAxis dataKey="name" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="uv" barSize={20} fill="#195ff7" />
+                <Line type="monotone" dataKey="uv" stroke="#ff7300" />
+              </ComposedChart>
             </section>
           </aside>
 
           <main className="ratingCompany">
-            <form onSubmit={handleSubmit(handleCompanySearch)} noValidate>
+            <form ref={formFiltros} onSubmit={handleSubmit(handleCompanySearch)} noValidate>
               <fieldset >
                 <legend>
                   <h4>{t("Search for")}</h4>
@@ -187,17 +321,17 @@ export function Company() {
                 <span className="flexRow">
                   <select name="positionId" id="positionId" className="m-r-xs" ref={register}>
                     <option value="Empty">&#60;{t("Position")}&#62;</option>
-                    {positionsCompany.map(element => (
-                      <option key={element.name} value={element.id}>
-                        {element.name}
+                    {positionsCompany.map(position => (
+                      <option key={position.name} value={position.id}>
+                        {position.name}
                       </option>
                     ))}
                   </select>
                   <select name="cityId" id="cityId" ref={register}>
                     <option value="Empty">&#60;{t("City")}&#62;</option>
-                    {companyCities.map(element => (
-                      <option key={element.name} value={element.id}>
-                        {element.name}
+                    {companyCities.map(city => (
+                      <option key={city.name} value={city.id}>
+                        {city.name}
                       </option>
                     ))}
                   </select>
@@ -229,8 +363,12 @@ export function Company() {
             <section>
               <ListReviews
                 pathLocation={location.pathname}
-                listReviews={reviewsCompanyList}
+                listReviews={reviewsCompany.reviews}
               />
+              <div>
+                <button name="prev" id="prev" disabled={isFirst} onClick={handleClickPaging} className="m-r-md prev">{t("Previous")}</button>
+                <button name="next" id="next" disabled={isLast} onClick={handleClickPaging} className="m-r-md next"> {t("Next")}</button>
+              </div>
             </section>
           </main>
         </section>

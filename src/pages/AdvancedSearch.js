@@ -125,10 +125,6 @@ export function AdvancedSearch() {
           <main className="minWidth">
             <ListCompanies listCompanies={companiesList} />
           </main>
-          <div>
-            <button className="m-r-md">{t("Previous")}</button>
-            <button>{t("Next")}</button>
-          </div>
         </section>
       </main>
       <Footer />

@@ -67,3 +67,16 @@ input::placeholder {
 input[type="file"] {
   display: none;
 }
+
+.next {
+  position: relative;
+}
+
+.prev{
+  position: relative;
+}
+
+button:disabled {
+  background: #dddddd;
+  border-color: #dddddd;
+}

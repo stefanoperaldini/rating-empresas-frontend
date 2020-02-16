@@ -34,10 +34,10 @@ export function ListCompanies({ listCompanies }) {
                         <div className={`${classes.rating} item2 f-s-xs`}>
                             {company.everage}
                             <Rating
-                                name={`${company.name}`}
+                                name={company.name}
                                 id={company.name}
                                 size="large"
-                                value={`${company.everage}`}
+                                value={company.everage}
                                 precision={0.5}
                                 readOnly
                             />
