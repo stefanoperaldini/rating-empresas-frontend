@@ -2,17 +2,6 @@ import React, { useState, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import Rating from "@material-ui/lab/Rating";
 import { Chart } from '@bit/primefaces.primereact.chart';
-
-import ComposedChart from '@bit/recharts.recharts.composed-chart';
-import Line from '@bit/recharts.recharts.line';
-import Bar from '@bit/recharts.recharts.bar';
-import XAxis from '@bit/recharts.recharts.x-axis';
-import YAxis from '@bit/recharts.recharts.y-axis';
-import CartesianGrid from '@bit/recharts.recharts.cartesian-grid';
-import Tooltip from '@bit/recharts.recharts.tooltip';
-import Legend from '@bit/recharts.recharts.legend';
-
-
 import { makeStyles } from "@material-ui/core/styles";
 import { useLocation } from "react-router-dom";
 import { useParams } from "react-router";
@@ -49,8 +38,6 @@ function getRandomColor() {
   return color;
 }
 
-
-
 export function Company() {
   const { handleSubmit, register, formState, } = useForm({
     mode: "onSubmit"
@@ -79,27 +66,39 @@ export function Company() {
       }]
   };
 
-  const dataSalaryDiagram = positionsCompany.map((position) => { return { name: position.name, uv: position.avg_salary, pv: position.avg_salary, amt: position.avg_salary } });
-  // const dataSalaryDiagram = [
-  //   {
-  //     name: 'Page A', uv: 590, pv: 800, amt: 1400,
-  //   },
-  //   {
-  //     name: 'Page B', uv: 868, pv: 967, amt: 1506,
-  //   },
-  //   {
-  //     name: 'Page C', uv: 1397, pv: 1098, amt: 989,
-  //   },
-  //   {
-  //     name: 'Page D', uv: 1480, pv: 1200, amt: 1228,
-  //   },
-  //   {
-  //     name: 'Page E', uv: 1520, pv: 1108, amt: 1100,
-  //   },
-  //   {
-  //     name: 'Page F', uv: 1400, pv: 680, amt: 1700,
-  //   },
-  // ];
+  const dataSalaryDiagram = {
+    labels: positionsCompany.map(position => position.name),
+    datasets: [
+      {
+        type: 'line',
+        label: 'Salary trend',
+        borderColor: '#2196F3',
+        borderWidth: 2,
+        fill: false,
+        data: positionsCompany.map((position) => position.avg_salary)
+      },
+      {
+        type: 'bar',
+        label: 'Position salary',
+        backgroundColor: '#4CAF50',
+        data: positionsCompany.map((position) => position.avg_salary),
+        borderColor: 'white',
+        borderWidth: 2
+      },
+    ]
+  };
+
+  const options = {
+    responsive: true,
+    title: {
+      display: true,
+      text: 'Combo Bar Line Chart'
+    },
+    tooltips: {
+      mode: 'index',
+      intersect: true
+    }
+  };
 
   useEffect(() => {
     getCompany(idCompany).then(response => {
@@ -293,22 +292,9 @@ export function Company() {
               </div>
             </section>
             <section className="m-t-lg">
-              <ComposedChart
-                width={400}
-                height={300}
-                data={dataSalaryDiagram}
-                margin={{
-                  top: 20, right: 20, bottom: 20, left: 20,
-                }}
-              >
-                <CartesianGrid stroke="#f5f5f5" />
-                <XAxis dataKey="name" />
-                <YAxis />
-                <Tooltip />
-                <Legend />
-                <Bar dataKey="uv" barSize={20} fill="#195ff7" />
-                <Line type="monotone" dataKey="uv" stroke="#ff7300" />
-              </ComposedChart>
+              <div style={{ width: 800 }}>
+                <Chart type='bar' data={dataSalaryDiagram} options={options} />
+              </div>
             </section>
           </aside>
 
