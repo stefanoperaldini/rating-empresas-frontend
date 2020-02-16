@@ -10,12 +10,16 @@
   padding-top: var(--space-md);
 }
 
-.m-t-xl {
-  margin-top: var(--space-xl);
+.m-t-md {
+  margin-top: var(--space-md);
 }
 
 .m-t-lg {
   margin-top: var(--space-lg);
+}
+
+.m-t-xl {
+  margin-top: var(--space-xl);
 }
 
 .m-r-xs {
@@ -42,16 +46,20 @@
   margin-left: var(--space-sm);
 }
 
+.m-b-md {
+  margin-bottom: var(--space-md);
+}
+
+.m-b-lg {
+  margin-bottom: var(--space-lg);
+}
+
 .f-s-xs {
   font-size: var(--font-xs);
 }
 
 .f-s-sm {
   font-size: var(--font-sm);
-}
-
-.f-s-m {
-  font-size: var(--font-m);
 }
 
 .f-s-l {
@@ -64,6 +72,10 @@
 
 .f-s-xxl {
   font-size: var(--font-xxl);
+}
+
+.f-c-gray {
+  color: var(--gray);
 }
 
 .flex {

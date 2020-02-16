@@ -28,8 +28,11 @@ export function ReviewUser() {
     <React.Fragment>
       <Header />
       <main className="centered-container">
-        <h3>{t("My reviews")}</h3>
-        <ListReviews pathLocation={location.pathname} listReviews={reviewUserList} />
+        <h1 className="f-s-l">{t("My reviews")}</h1>
+        <ListReviews
+          pathLocation={location.pathname}
+          listReviews={reviewUserList}
+        />
       </main>
       <Footer />
     </React.Fragment>

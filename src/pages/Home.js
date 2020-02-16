@@ -70,11 +70,11 @@ export function Home() {
       <main className="centered-container-home">
         <section className="allWidth centeredComponent">
           <h1 className="f-s-xxl">{t("Find great places to work")}</h1>
-          <p className="f-s-m">
+          <p className="f-s-l">
             {t("Get access to rating and company reviews")}
           </p>
           <form onSubmit={handleSubmit(handleGetCompanyData)}>
-            <div className="searchComponent m-t-xl">
+            <div className="searchComponent">
               <img
                 className="imageHome"
                 src={searchingImgSvg}
@@ -125,7 +125,7 @@ export function Home() {
 
         {(!currentUserId || role === "1") && <RateCompanyLink />}
 
-        <section className="allWidth centered-container-home p-t-md m-t-xl">
+        <section className="allWidth centered-container-home p-t-md">
           <header>
             <h2 className="f-s-l">{t("Top Ten Workplaces")}</h2>
           </header>

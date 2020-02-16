@@ -6,10 +6,6 @@
   color: var(--dark);
 }
 
-.form-control.ko {
-  color: var(--ko);
-}
-
 input {
   font-size: 1rem;
   border: 0;
@@ -27,7 +23,7 @@ input::placeholder {
 
 .errorMessage {
   position: absolute;
-  top: 75px;
+  top: 65px;
   font-size: 0.8rem;
   color: var(--ko);
 }
@@ -72,7 +68,7 @@ input[type="file"] {
   position: relative;
 }
 
-.prev{
+.prev {
   position: relative;
 }
 

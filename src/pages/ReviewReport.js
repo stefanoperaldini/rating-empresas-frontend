@@ -13,36 +13,39 @@ import { ListReviews } from "../components/ListReviews";
  */
 
 export function ReviewReport() {
-    const [reviewUserList, setReviewUserList] = useState(null);
-    const { t } = useTranslation();
-    const params = useParams();
-    const idReview = params.idReview;
+  const [reviewUserList, setReviewUserList] = useState(null);
+  const { t } = useTranslation();
+  const params = useParams();
+  const idReview = params.idReview;
 
-    const location = useLocation();
+  const location = useLocation();
 
-    useEffect(() => {
-        getReview(idReview).then(response => {
-            setReviewUserList(response.data);
-        });
-        return;
-    }, [idReview]);
+  useEffect(() => {
+    getReview(idReview).then(response => {
+      setReviewUserList(response.data);
+    });
+    return;
+  }, [idReview]);
 
-    if (reviewUserList === null) {
-        return (
-            <div>
-                <h3>{t("You don't have any review")}</h3>
-            </div>
-        );
-    }
-
+  if (reviewUserList === null) {
     return (
-        <React.Fragment>
-            <Header />
-            <main className="centered-container">
-                <h3>{t("Reported review")}</h3>
-                <ListReviews pathLocation={location.pathname} listReviews={[reviewUserList]} />
-            </main>
-            <Footer />
-        </React.Fragment>
+      <div>
+        <h3>{t("You don't have any review")}</h3>
+      </div>
     );
+  }
+
+  return (
+    <React.Fragment>
+      <Header />
+      <main className="centered-container">
+        <h1 className="f-s-l">{t("Reported review")}</h1>
+        <ListReviews
+          pathLocation={location.pathname}
+          listReviews={[reviewUserList]}
+        />
+      </main>
+      <Footer />
+    </React.Fragment>
+  );
 }

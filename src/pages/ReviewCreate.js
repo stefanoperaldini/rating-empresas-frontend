@@ -1,4 +1,4 @@
-import React, { useEffect, useState, } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -9,10 +9,11 @@ import {
   getCompanies,
   getSectors,
   createCompany,
-  createSector,
+  createSector
 } from "../http/companyService";
 
 import { createPosition, createReview } from "../http/reviewService"
+
 import { getPositions } from "../http/reviewService";
 import {
   setErrorMessageCallBackEnd,
@@ -21,12 +22,11 @@ import {
   validatorSalary,
   validatorTitleReview,
   validatorDescriptionReview,
-  validatorPosition,
+  validatorPosition
 } from "./pagesUtils";
 import { Cities } from "../components/Cities"
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
-
 
 /**
  * Review create
@@ -59,8 +59,10 @@ export function ReviewCreate() {
   const [companies, setCompanies] = useState([]);
 
   const [company, setCompany] = useState({
-    id: null, name: null,
-    sectorName: null, sectorId: null
+    id: null,
+    name: null,
+    sectorName: null,
+    sectorId: null
   });
 
   const [isToNext, setIsToNext] = useState(false);
@@ -97,7 +99,6 @@ export function ReviewCreate() {
       });
 
     return;
-
   }, [setError]);
 
   const handleReviewCreateCompany = formData => {
@@ -113,7 +114,7 @@ export function ReviewCreate() {
     setIsToNext(true);
   };
 
-  const handleReviewCreate = async (formData) => {
+  const handleReviewCreate = async formData => {
     let companyId = company.id;
     if (!idCity) {
       setError("city_id", "backend", t("This field is required"));
@@ -156,7 +157,7 @@ export function ReviewCreate() {
 
       if (!positionId) {
         const { headers } = await createPosition({
-          "name": formData.position
+          name: formData.position
         });
         const location = headers.location.split("/");
         positionId = location[location.length - 1];
@@ -167,6 +168,7 @@ export function ReviewCreate() {
         sector: undefined, companyname: undefined, position: undefined, salary: salary,
         city_id: idCity
       }
+
       console.log(formDataReview);
 
       return createReview(formDataReview)
@@ -175,7 +177,7 @@ export function ReviewCreate() {
         })
         .catch(error => {
           setError("city_id", "backend", setErrorMessageCallBackEnd(error));
-        })
+        });
     } catch (error) {
       setError("city_id", "backend", setErrorMessageCallBackEnd(error));
     }
@@ -185,13 +187,12 @@ export function ReviewCreate() {
     <React.Fragment>
       <Header />
       <main className="centered-container-home">
-        <h3>{t("Create a review")}</h3>
-        <h4>{t("Rate a company you've worked for in the past 3 years.")}</h4>
-        <h4>{t("Reviews published are anonymous.")}</h4>
+        <h1 className="f-s-l">{t("Create a review")}</h1>
+        <p>{t("Rate a company you've worked for in the past 3 years.")}</p>
+        <p>{t("Reviews published are anonymous.")}</p>
 
-        {(!isToNext) ?
-          (<form onSubmit={handleSubmit(handleReviewCreateCompany)} noValidate>
-
+        {!isToNext ? (
+          <form onSubmit={handleSubmit(handleReviewCreateCompany)} noValidate>
             <div className="form-control">
               <label htmlFor="name">{t("Name")} (*)</label>
               <input
@@ -202,9 +203,8 @@ export function ReviewCreate() {
                 type="text"
                 value={company.name}
                 onChange={e => {
-                  setCompany({ ...company, name: e.target.value })
+                  setCompany({ ...company, name: e.target.value });
                   return e.target.value;
-
                 }}
               ></input>
               <datalist id="companyName">
@@ -524,13 +524,11 @@ export function ReviewCreate() {
                 >
                   {t("Save")}
                 </button>
-              </div>
-            </form>
-
-          )
-        }
+            </div>
+          </form>
+        )}
       </main>
       <Footer />
-    </React.Fragment >
+    </React.Fragment>
   );
 }

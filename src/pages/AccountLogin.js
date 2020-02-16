@@ -64,7 +64,7 @@ export function AccountLogin() {
       <Header />
       <main className="centered-container">
         <div className="boxAccount">
-          <h3>{t("Please sign in")}</h3>
+          <h1 className="f-s-l">{t("Please sign in")}</h1>
           <form onSubmit={handleSubmit(handleLogin)} noValidate>
             <div className="form-control">
               <label htmlFor="email">{t("E-mail")}</label>
@@ -111,12 +111,12 @@ export function AccountLogin() {
             <div className="btn-container">
               <button
                 type="submit"
-                className="btn"
+                className="m-t-md btn"
                 disabled={formState.isSubmitting}
               >
                 {t("Sign in")}
               </button>
-              <div className="m-t-lg btn-container">
+              <div className="m-t-md btn-container">
                 <Link to="/account/create">{t("Sign up")}</Link>
                 <Link to="/account/password/recovery">
                   {t("Forgot password?")}

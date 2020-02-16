@@ -34,7 +34,7 @@ export function AccountPasswordRecovery() {
       <Header />
       <main className="centered-container">
         <div className="boxAccount">
-          <h3>{t("Forgot password?")}</h3>
+          <h1 className="f-s-l">{t("Forgot password?")}</h1>
           <form onSubmit={handleSubmit(handleRecoveryPassword)} noValidate>
             <div className="form-control">
               <label htmlFor="email">{t("E-mail")}</label>
@@ -49,16 +49,18 @@ export function AccountPasswordRecovery() {
                 <span className="errorMessage">{t(errors.email.message)}</span>
               )}
             </div>
-            <p>{t("We will send you an e-mail with a new password")}</p>
+            <p className="f-c-gray">
+              {t("We will send you an e-mail with a new password")}
+            </p>
             <div className="btn-container">
               <button
                 type="submit"
-                className="btn"
+                className="m-t-md btn"
                 disabled={formState.isSubmitting}
               >
                 {t("Send")}
               </button>
-              <div className="m-t-lg btn-container">
+              <div className="m-t-md btn-container">
                 <Link to="/account/login">{t("Sign in")}</Link>
               </div>
             </div>

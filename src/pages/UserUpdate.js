@@ -47,7 +47,7 @@ export function UserUpdate() {
     <React.Fragment>
       <Header />
       <main className="centered-container">
-        <h3>{t("Update profile")}</h3>
+        <h1 className="f-s-l">{t("Update profile")}</h1>
         <form onSubmit={handleSubmit(handleLinkedinChange)} noValidate>
           <div className="form-control">
             <label htmlFor="linkedin">{t("LinkedIn")}</label>

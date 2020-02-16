@@ -33,7 +33,7 @@ export function UserDelete() {
     <React.Fragment>
       <Header />
       <main className="centered-container">
-        <h3>{t("Delete account")}</h3>
+        <h1 className="f-s-l">{t("Delete account")}</h1>
         <form onSubmit={handleSubmit(handleUserDelete)}>
           <div className="form-control">
             <label htmlFor="confirm">

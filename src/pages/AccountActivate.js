@@ -6,7 +6,7 @@ import { activateAccount } from "../http/authService";
 import { setErrorMessageCallBackEnd } from "./pagesUtils";
 
 /**
- * Page for sending activation to backend. Show the result.
+ * Page for sending activation to backend. Shows the result.
  */
 
 export function AccountActivate() {
@@ -33,8 +33,8 @@ export function AccountActivate() {
   return (
     <React.Fragment>
       <main className="centered-container">
-        <h2>{t(response)}</h2>
-        <div className="m-t-lg btn-container">
+        <h1>{t(response)}</h1>
+        <div className="m-t-md btn-container">
           <Link to="/account/login">{t("Sign in")}</Link>
         </div>
       </main>
