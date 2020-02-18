@@ -40,39 +40,18 @@ function getColor(numPositions) {
     "#FFCE56",
     "#FF6384"
   ];
-  const hoverBackgroundColor = [
-    "#FF6384",
-    "#36A2EB",
-    "#FFCE56",
-    "#FF6384",
-    "#36A2EB",
-    "#FFCE56",
-    "#FF6384",
-    "#36A2EB",
-    "#FFCE56",
-    "#FF6384"
-  ];
 
   let backgroundColorRes = [];
-  let hoverBackgroundColorRes = [];
 
   for (let index = 1; index <= numPositions; index++) {
     let mIndex = index % 10;
     if (mIndex === 0) {
       backgroundColorRes = [...backgroundColorRes, backgroundColor[9]];
-      hoverBackgroundColorRes = [
-        ...hoverBackgroundColorRes,
-        hoverBackgroundColor[9]
-      ];
     } else {
       backgroundColorRes = [...backgroundColorRes, backgroundColor[mIndex - 1]];
-      hoverBackgroundColorRes = [
-        ...hoverBackgroundColorRes,
-        hoverBackgroundColor[mIndex - 1]
-      ];
     }
   }
-  return { backgroundColorRes, hoverBackgroundColorRes };
+  return backgroundColorRes;
 }
 
 export function Company() {
@@ -96,47 +75,47 @@ export function Company() {
   const { currentUserId, role } = useAuth();
   const formFiltros = useRef(null);
 
-  const { backgroundColorRes, hoverBackgroundColorRes } = getColor(
+  const backgroundColorRes = getColor(
     positionsCompany.length
   );
 
   const dataPositionDiagram =
     positionsCompany.length !== 0
       ? {
-          labels: positionsCompany.map(position => position.name),
-          datasets: [
-            {
-              data: positionsCompany.map(position => position.numsReviews),
-              backgroundColor: backgroundColorRes,
-              hoverBackgroundColor: hoverBackgroundColorRes
-            }
-          ]
-        }
+        labels: positionsCompany.map(position => position.name),
+        datasets: [
+          {
+            data: positionsCompany.map(position => position.numsReviews),
+            backgroundColor: backgroundColorRes,
+            hoverBackgroundColor: backgroundColorRes
+          }
+        ]
+      }
       : null;
 
   const dataSalaryDiagram =
     positionsCompany.length !== 0
       ? {
-          labels: positionsCompany.map((_, index) => index),
-          datasets: [
-            {
-              type: "line",
-              label: t("Salary trend (€)"),
-              borderColor: "#2196F3",
-              borderWidth: 2,
-              fill: false,
-              data: positionsCompany.map(position => position.avg_salary)
-            },
-            {
-              type: "bar",
-              label: t("Position salary (€)"),
-              backgroundColor: "#4CAF50",
-              data: positionsCompany.map(position => position.avg_salary),
-              borderColor: "white",
-              borderWidth: 2
-            }
-          ]
-        }
+        labels: positionsCompany.map((_, index) => index),
+        datasets: [
+          {
+            type: "line",
+            label: t("Salary trend (€)"),
+            borderColor: "#2196F3",
+            borderWidth: 2,
+            fill: false,
+            data: positionsCompany.map(position => position.avg_salary)
+          },
+          {
+            type: "bar",
+            label: t("Position salary (€)"),
+            backgroundColor: "#4CAF50",
+            data: positionsCompany.map(position => position.avg_salary),
+            borderColor: "white",
+            borderWidth: 2
+          }
+        ]
+      }
       : null;
 
   const options = {
