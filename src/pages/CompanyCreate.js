@@ -363,11 +363,11 @@ export function CompanyCreate() {
               <span className="errorMessage">{t(errors.sede_id.message)}</span>
             )}
           </div>
-          <p>(*) {t("Field required")}</p>
+          <p className="f-s-xs">(*) {t("Field required")}</p>
           <div className="btn-container">
             <button
               type="submit"
-              className="btn"
+              className="btn m-t-md"
               disabled={formState.isSubmitting}
             >
               {t("Save")}

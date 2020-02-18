@@ -121,24 +121,24 @@ export function Header() {
 
         <div className="cta-contact flexRow">
           {currentUserId && role === "0" && (
-            <span className="centeredComponent p-t-md m-r-xl">
+            <span className="centeredComponent f-s-xs f-c-gray m-r-md">
               <img src={admin} alt={t("Admin icon")} /> <span>{email}</span>
             </span>
           )}
           {currentUserId && role === "1" && (
-            <span className="centeredComponent p-t-md m-r-xl">
+            <span className="centeredComponent f-s-xs f-c-gray m-r-md">
               <img src={user} alt={t("User icon")} /> <span>{email}</span>
             </span>
           )}
           {currentUserId && role === "2" && (
-            <span className="centeredComponent p-t-md m-r-xl">
+            <span className="centeredComponent f-s-xs f-c-gray m-r-md">
               <img src={company} alt={t("Company icon")} /> <span>{email}</span>
             </span>
           )}
 
           {!currentUserId ? (
             <span className="header-item">
-              <ul className="header">
+              <ul>
                 <li className="header-item">
                   <Link to="/account/login">
                     <p>{t("Sign in")}</p>

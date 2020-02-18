@@ -22,7 +22,7 @@ import { ListReviews } from "../components/ListReviews";
 
 const useStyles = makeStyles({
   rating: {
-    width: 200,
+    width: 300,
     display: "flex",
     alignItems: "center"
   }
@@ -59,37 +59,44 @@ export function Company() {
   const location = useLocation();
   const formFiltros = useRef(null);
 
-  const dataPositionDiagram = (positionsCompany.length !== 0) ? {
-    labels: positionsCompany.map(position => position.name),
-    datasets: [
-      {
-        data: positionsCompany.map(position => position.numsReviews),
-        backgroundColor: positionsCompany.map(() => getRandomColor()),
-        hoverBackgroundColor: positionsCompany.map(() => getRandomColor()),
-      }]
-  } : null;
+  const dataPositionDiagram =
+    positionsCompany.length !== 0
+      ? {
+          labels: positionsCompany.map(position => position.name),
+          datasets: [
+            {
+              data: positionsCompany.map(position => position.numsReviews),
+              backgroundColor: positionsCompany.map(() => getRandomColor()),
+              hoverBackgroundColor: positionsCompany.map(() => getRandomColor())
+            }
+          ]
+        }
+      : null;
 
-  const dataSalaryDiagram = (positionsCompany.length !== 0) ? {
-    labels: positionsCompany.map(position => position.name),
-    datasets: [
-      {
-        type: "line",
-        label: "Salary trend",
-        borderColor: "#2196F3",
-        borderWidth: 2,
-        fill: false,
-        data: positionsCompany.map(position => position.avg_salary)
-      },
-      {
-        type: "bar",
-        label: "Position salary",
-        backgroundColor: "#4CAF50",
-        data: positionsCompany.map(position => position.avg_salary),
-        borderColor: "white",
-        borderWidth: 2
-      }
-    ]
-  } : null;
+  const dataSalaryDiagram =
+    positionsCompany.length !== 0
+      ? {
+          labels: positionsCompany.map(position => position.name),
+          datasets: [
+            {
+              type: "line",
+              label: "Salary trend",
+              borderColor: "#2196F3",
+              borderWidth: 2,
+              fill: false,
+              data: positionsCompany.map(position => position.avg_salary)
+            },
+            {
+              type: "bar",
+              label: "Position salary",
+              backgroundColor: "#4CAF50",
+              data: positionsCompany.map(position => position.avg_salary),
+              borderColor: "white",
+              borderWidth: 2
+            }
+          ]
+        }
+      : null;
 
   console.log(dataPositionDiagram, dataSalaryDiagram);
 
@@ -200,9 +207,10 @@ export function Company() {
         {(!currentUserId || role === "1") && <RateCompanyLink />}
 
         <section className="companyDetail">
-          <header className="companyTitle flexRow m-t-lg b-b">
+          <header className="companyTitle flexRow m-t-lg b-bog">
             <img
-              height="75"
+              className="m-b-md"
+              height="100"
               src={company.url_logo ? company.url_logo : defaultImageCompany}
               alt={
                 company.url_logo
@@ -210,10 +218,10 @@ export function Company() {
                   : t("Default image company")
               }
             />
-            <h2>{company.name}</h2>
+            <h1 className="f-s-xl p-t-lg m-l-lg">{company.name}</h1>
           </header>
 
-          <aside className="asideCompany b-l">
+          <aside className="asideCompany b-log">
             <div className={`${classes.rating} m-l-md`}>
               {company.everage}
               <Rating
@@ -287,17 +295,21 @@ export function Company() {
               <span className="m-l-md">{t("Work&Life balance")}</span>
             </div>
             <section>
-              <h5 className="m-l-md m-t-lg">
+              <h2 className="m-l-md m-t-lg f-s-m">
                 {t("Average salary")}{" "}
                 {company.avg_salary ? company.avg_salary : "--"} €/{t("month")}
-              </h5>
+              </h2>
             </section>
 
             <section>
-              <h5 className="m-l-md m-t-lg"> {company.name} </h5>
+              <h2 className="m-l-md m-t-lg f-s-m"> {company.name} </h2>
               <p className="m-l-md">{company.sector}</p>
               <p className="m-l-md">
-                <textarea value={company.description} readOnly />
+                <textarea
+                  className="descriptionCompany"
+                  value={company.description}
+                  readOnly
+                />
               </p>
               <p className="m-l-md">
                 {company.address} - {company.sede_name}
@@ -313,22 +325,24 @@ export function Company() {
                 </a>
               </p>
             </section>
-            {dataPositionDiagram &&
-              (<section className="m-l-md m-t-lg">
+            {dataPositionDiagram && (
+              <section className="m-l-md m-t-lg">
                 <div style={{ width: 400 }}>
-                  <Chart type='doughnut' data={dataPositionDiagram} />
+                  <Chart type="doughnut" data={dataPositionDiagram} />
                 </div>
               </section>
-              )
-            }
-            {dataSalaryDiagram &&
-              (<section className="m-t-lg">
-                <div style={{ width: 800 }}>
-                  <Chart type='bar' data={dataSalaryDiagram} options={options} />
+            )}
+            {dataSalaryDiagram && (
+              <section className="m-t-lg">
+                <div style={{ width: 600 }}>
+                  <Chart
+                    type="bar"
+                    data={dataSalaryDiagram}
+                    options={options}
+                  />
                 </div>
               </section>
-              )
-            }
+            )}
           </aside>
 
           <main className="ratingCompany">
@@ -339,7 +353,7 @@ export function Company() {
             >
               <fieldset>
                 <legend>
-                  <h4>{t("Search for")}</h4>
+                  <h2 className="f-s-m p-b-sm">{t("Search for")}</h2>
                 </legend>
                 <span className="flexRow">
                   <select
@@ -367,7 +381,7 @@ export function Company() {
               </fieldset>
               <fieldset>
                 <legend>
-                  <h4>{t("Sort by")}</h4>
+                  <h2 className="f-s-m p-t-md p-b-sm">{t("Sort by")}</h2>
                 </legend>
                 <select name="sortTipe" id="sortTipe" ref={register}>
                   <option value="1">{t("Date")}</option>
@@ -381,7 +395,7 @@ export function Company() {
               </fieldset>
               <button
                 type="submit"
-                className="btn"
+                className="btn advSearch"
                 disabled={formState.isSubmitting}
               >
                 {t("Find")}
