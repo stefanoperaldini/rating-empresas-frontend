@@ -100,9 +100,9 @@ select {
   min-height: 100vh;
 }
 
-.wrapper > * {
+/* .wrapper > * {
   padding: 20px;
-}
+} */
 
 /* HEADER
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
@@ -230,13 +230,8 @@ input:checked ~ span {
   justify-content: center;
   flex-direction: row;
   flex-wrap: wrap;
-  margin-left: 1rem;
-  margin-right: 1rem;
-  /* display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  grid-column-gap: 6px;
-  grid-row-gap: 6px;
-  justify-content: center; */
+  /* margin-left: 1rem;
+  margin-right: 1rem; */
 }
 
 .allWidth {
@@ -308,12 +303,6 @@ input:checked ~ span {
   padding: 1rem;
   padding-top: 2rem;
   padding-left: 2rem;
-  grid-template-areas:
-    "imageHome"
-    "searchCompany"
-    "errorMessageCompany"
-    "buttonSearch"
-    "advancedSearch";
 }
 
 .borderGrey {
