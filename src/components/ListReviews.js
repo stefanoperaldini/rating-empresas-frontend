@@ -18,11 +18,11 @@ const useStyles = makeStyles({
   }
 });
 
-export function ListReviews({ pathLocation, listReviews }) {
-  const classes = useStyles();
-  const { currentUserId, role } = useAuth();
-  const { t } = useTranslation();
-  const history = useHistory();
+export function ListReviews({ listReviews }) {
+    const classes = useStyles();
+    const { currentUserId, role } = useAuth();
+    const { t } = useTranslation();
+    const history = useHistory();
 
   const executeReport = reviewId => {
     const sendEmail = window.confirm(t("Do you want to report this review?"));

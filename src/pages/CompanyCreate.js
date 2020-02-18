@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -22,35 +22,11 @@ import {
   validatorAddress,
   validatorSector
 } from "./pagesUtils";
+
+import { Cities } from "../components/Cities"
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
 import { FileUpload } from "../components/UploadCompanyLogo";
-
-function companyReducer(state, action) {
-  switch (action.type) {
-    case "GET_COMPANIES":
-      return { ...state, companies: action.initialCompanies };
-    case "GET_SECTORS":
-      return { ...state, sectors: action.initialSectors };
-
-    case "SET_COMPANY":
-      return {
-        ...state,
-        indexCompany: action.initialCompany,
-        isSavedCompany: true
-      };
-
-    case "DATA_SET":
-      return { ...state, company: { ...state.company, ...action.data } };
-
-    default:
-      return state;
-  }
-}
-
-/**
- * Page for create company
- */
 
 export function CompanyCreate() {
   const { handleSubmit, register, errors, formState, setError } = useForm({
@@ -62,40 +38,35 @@ export function CompanyCreate() {
   const history = useHistory();
   const { t } = useTranslation();
 
-  const [state, dispatch] = useReducer(companyReducer, {
-    companies: [],
-    sectors: [],
-    cities: [],
-    indexCompany: null,
-    company: {
-      name: "",
-      description: "",
-      sector: "",
-      url_web: "",
-      linkedin: "",
-      address: ""
-    },
-    sector: { id: null, name: null },
-    city: { id: null, name: null },
-    isSavedCompany: false
+  const [companies, setCompanies] = useState([]);
+  const [companySelected, setCompanySelected] = useState(null)
+  const [idCity, setIdCity] = useState(null);
+  const [sectors, setSectors] = useState([]);
+  const [company, setCompany] = useState({
+    id: null,
+    name: null,
+    description: null,
+    sector_name: null,
+    url_web: null,
+    linkedin: null,
+    address: null,
+    sede_id: null,
   });
 
   const handleCompanyCreate = async formData => {
+
     let isNewSector = true;
     let sectorId = null;
 
-    for (let sector of state.sectors) {
+    if (!idCity) {
+      setError("sede_id", "frontend", t("This field is required"));
+      return;
+    }
+
+    for (let sector of sectors) {
       if (formData.sector === sector.sector) {
         isNewSector = false;
         sectorId = sector.id;
-      }
-    }
-
-    let companyId = null;
-    for (let company of state.companies) {
-      if (formData.name === company.name) {
-        companyId = company.id;
-        break;
       }
     }
 
@@ -108,24 +79,23 @@ export function CompanyCreate() {
 
       const formDataCompany = {
         ...formData,
+        sede_id: idCity,
         sector: undefined,
         sector_id: sectorId
       };
 
-      if (!companyId) {
+      if (!company.id) {
         createCompany(formDataCompany)
           .then(response => {
-            const location = response.headers.location.split("/");
-            companyId = location[location.length - 1];
-            history.push(`/company/detail/${companyId}`);
+            history.push(`/home`);
           })
           .catch(error => {
             setError("sede_id", "backend", setErrorMessageCallBackEnd(error));
           });
       } else {
-        updateCompany(companyId, formDataCompany)
+        updateCompany(company.id, formDataCompany)
           .then(response => {
-            history.push(`/company/detail/${companyId}`);
+            history.push(`/home`);
           })
           .catch(error => {
             setError("sede_id", "backend", setErrorMessageCallBackEnd(error));
@@ -137,62 +107,66 @@ export function CompanyCreate() {
   };
 
   useEffect(() => {
-    getCompanies(`sortTipe=7`)
+    getCompanies(`filters=no`)
       .then(response => {
-        const filteredCompany = response.data.rows_companies.filter(
-          (company, index) => {
-            if (currentUserId === company.user_id) {
-              dispatch({ type: "SET_COMPANY", initialCompany: index });
-              dispatch({ type: "DATA_SET", data: { name: company.name } });
-              dispatch({
-                type: "DATA_SET",
-                data: { description: company.description }
-              });
-              dispatch({ type: "DATA_SET", data: { sector: company.sector } });
-              dispatch({
-                type: "DATA_SET",
-                data: { url_web: company.url_web }
-              });
-              dispatch({
-                type: "DATA_SET",
-                data: { linkedin: company.linkedin }
-              });
-              dispatch({
-                type: "DATA_SET",
-                data: { address: company.address }
-              });
-              dispatch({
-                type: "DATA_SET",
-                data: { sede_id: company.sede_id }
-              });
-              return true;
-            }
-            if (
-              company.userRole === "1" ||
-              (company.userRole === "2" && company.userDeleteAt !== null)
-            ) {
-              return true;
-            }
-            return false;
+        const filteredCompany = response.data.rows_companies.filter((companyElement, index) => {
+          if (currentUserId === companyElement.user_id) {
+            setCompany({
+              id: companyElement.company_id,
+              name: companyElement.name,
+              description: companyElement.description,
+              sector_name: companyElement.sector_name,
+              url_web: companyElement.url_web,
+              linkedin: companyElement.linkedin,
+              address: companyElement.address,
+              sede_id: companyElement.sede_id,
+              sede_name: companyElement.sede_name,
+
+            });
+            return true;
           }
-        );
-        dispatch({ type: "GET_COMPANIES", initialCompanies: filteredCompany });
-      })
-      .catch(error => {
+
+          if (companyElement.userRole === "1" || (companyElement.userRole === "2" && companyElement.userDeleteAt !== null)) {
+            return true;
+          }
+          return false;
+        })
+        setCompanies(filteredCompany)
+      }).catch(error => {
         setError("sede_id", "backend", setErrorMessageCallBackEnd(error));
         return;
       });
 
     getSectors()
       .then(response => {
-        dispatch({ type: "GET_SECTORS", initialSectors: response.data.rows });
+        setSectors(response.data.rows);
       })
       .catch(error => {
         setError("sector", "backend", setErrorMessageCallBackEnd(error));
         return;
       });
+
     return;
   }, [currentUserId, setError]);
+
+  useEffect(() => {
+    for (let companyElement of companies) {
+      if (companySelected === companyElement.name) {
+        setCompany({
+          id: companyElement.company_id,
+          name: companyElement.name,
+          description: companyElement.description,
+          sector_name: companyElement.sector_name,
+          url_web: companyElement.url_web,
+          linkedin: companyElement.linkedin,
+          address: companyElement.address,
+          sede_id: companyElement.sede_id,
+          sede_name: companyElement.sede_name,
+        });
+        break;
+      }
+    }
+  }, [companySelected, companies]);
 
   return (
     <React.Fragment>
@@ -211,15 +185,17 @@ export function CompanyCreate() {
               name="name"
               id="name"
               type="text"
-              value={state.company.name}
-              onChange={e =>
-                dispatch({ type: "DATA_SET", data: { name: e.target.value } })
+              value={company.name}
+              onChange={e => {
+                setCompany({ ...company, name: e.target.value })
+                setCompanySelected(e.target.value)
+              }
               }
             ></input>
             <datalist id="companyName">
-              {state.companies.map(element => (
-                <option key={element.name} value={element.name}>
-                  {element.name}
+              {companies.map(companyElement => (
+                <option key={companyElement.name} value={companyElement.name}>
+                  {companyElement.name}
                 </option>
               ))}
             </datalist>
@@ -235,13 +211,10 @@ export function CompanyCreate() {
               name="description"
               id="description"
               type="text"
-              value={state.company.description}
+              value={company.description}
               placeholder={t("About my company")}
               onChange={e =>
-                dispatch({
-                  type: "DATA_SET",
-                  data: { description: e.target.value }
-                })
+                setCompany({ ...company, description: e.target.value })
               }
             ></textarea>
             {errors.description && (
@@ -261,15 +234,17 @@ export function CompanyCreate() {
               id="sector"
               type="text"
               placeholder={t("Sector name")}
-              value={state.company.sector}
-              onChange={e =>
-                dispatch({ type: "DATA_SET", data: { sector: e.target.value } })
+              value={company.sector_name}
+              onChange={e => {
+                setCompany({ ...company, sector_name: e.target.value })
+
+              }
               }
             ></input>
             <datalist id="listSectors">
-              {state.sectors.map(element => (
-                <option key={element.sector} value={element.sector}>
-                  {element.sector}
+              {sectors.map(sectorElement => (
+                <option key={sectorElement.sector} value={sectorElement.sector}>
+                  {sectorElement.sector}
                 </option>
               ))}
             </datalist>
@@ -286,12 +261,9 @@ export function CompanyCreate() {
               id="url_web"
               type="url"
               placeholder={t("Website")}
-              value={state.company.url_web}
+              value={company.url_web}
               onChange={e =>
-                dispatch({
-                  type: "DATA_SET",
-                  data: { url_web: e.target.value }
-                })
+                setCompany({ ...company, url_web: e.target.value })
               }
             ></input>
             {errors.url_web && (
@@ -307,12 +279,9 @@ export function CompanyCreate() {
               id="linkedin"
               type="url"
               placeholder={t("LinkedIn address")}
-              value={state.company.linkedin}
+              value={company.linkedin}
               onChange={e =>
-                dispatch({
-                  type: "DATA_SET",
-                  data: { linkedin: e.target.value }
-                })
+                setCompany({ ...company, linkedin: e.target.value })
               }
             ></input>
             {errors.linkedin && (
@@ -327,12 +296,9 @@ export function CompanyCreate() {
               name="address"
               id="address"
               type="text"
-              value={state.company.address}
+              value={company.address}
               onChange={e =>
-                dispatch({
-                  type: "DATA_SET",
-                  data: { address: e.target.value }
-                })
+                setCompany({ ...company, address: e.target.value })
               }
               placeholder={t("Headquarters address")}
             ></input>
@@ -343,22 +309,7 @@ export function CompanyCreate() {
 
           <div className="form-control">
             <label htmlFor="sede_id">{t("Headquarters")} (*)</label>
-            <input
-              ref={register({
-                required: "Required"
-              })}
-              name="sede_id"
-              id="sede_id"
-              type="text"
-              value={state.company.sede_id}
-              onChange={e =>
-                dispatch({
-                  type: "DATA_SET",
-                  data: { sede_id: e.target.value }
-                })
-              }
-              placeholder={t("Headquarters")}
-            ></input>
+            <Cities onClickCity={id => setIdCity(id)} city={company.sede_name} />
             {errors.sede_id && (
               <span className="errorMessage">{t(errors.sede_id.message)}</span>
             )}
@@ -376,6 +327,6 @@ export function CompanyCreate() {
         </form>
       </main>
       <Footer />
-    </React.Fragment>
+    </React.Fragment >
   );
 }

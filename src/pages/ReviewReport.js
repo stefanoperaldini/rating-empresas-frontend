@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router";
-import { useLocation } from "react-router-dom";
 
 import { getReview } from "../http/reviewService";
 import { Header } from "../components/Header";
@@ -18,7 +17,6 @@ export function ReviewReport() {
   const params = useParams();
   const idReview = params.idReview;
 
-  const location = useLocation();
 
   useEffect(() => {
     getReview(idReview).then(response => {
@@ -41,7 +39,6 @@ export function ReviewReport() {
       <main className="centered-container">
         <h1 className="f-s-l">{t("Reported review")}</h1>
         <ListReviews
-          pathLocation={location.pathname}
           listReviews={[reviewUserList]}
         />
       </main>
