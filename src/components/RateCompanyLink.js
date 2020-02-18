@@ -18,9 +18,9 @@ export function RateCompanyLink() {
   const history = useHistory();
 
   return (
-    <section className="allWidth centeredComponentRate p-t-md">
+    <section className="allWidth centeredComponentRate p-b-md">
       <header>
-        <h2 className="f-s-l">{t("Do you want to rate a company?")}</h2>
+        <h1 className="f-s-l">{t("Do you want to rate a company?")}</h1>
         <p>{t("Your reviews will be anonimous")}</p>
       </header>
       <main className={classes.rating}>

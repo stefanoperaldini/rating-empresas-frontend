@@ -67,7 +67,7 @@ export function Home() {
   return (
     <React.Fragment>
       <Header />
-      <main className="centered-container-home">
+      <main className="centered-container-home m-t-md">
         <section className="allWidth centeredComponent">
           <h1 className="f-s-xxl">{t("Find great places to work")}</h1>
           <p className="f-s-l">
@@ -125,9 +125,9 @@ export function Home() {
 
         {(!currentUserId || role === "1") && <RateCompanyLink />}
 
-        <section className="allWidth centered-container-home p-t-md">
+        <section className="allWidth centered-container-home p-t-md m-t-md">
           <header>
-            <h2 className="f-s-l">{t("Top Ten Workplaces")}</h2>
+            <h2 className="f-s-l m-b-md">{t("Top Ten Workplaces")}</h2>
           </header>
           <main className="minWidth">
             <ListCompanies listCompanies={topCompanies} />

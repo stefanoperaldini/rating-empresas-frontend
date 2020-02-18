@@ -12,7 +12,7 @@ import {
   createSector
 } from "../http/companyService";
 
-import { createPosition, createReview } from "../http/reviewService"
+import { createPosition, createReview } from "../http/reviewService";
 
 import { getPositions } from "../http/reviewService";
 import {
@@ -24,7 +24,7 @@ import {
   validatorDescriptionReview,
   validatorPosition
 } from "./pagesUtils";
-import { Cities } from "../components/Cities"
+import { Cities } from "../components/Cities";
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
 
@@ -34,7 +34,7 @@ import { Footer } from "../components/Footer";
 
 const useStyles = makeStyles({
   rating: {
-    width: 200,
+    width: 300,
     display: "flex",
     alignItems: "center"
   }
@@ -105,8 +105,11 @@ export function ReviewCreate() {
     for (let companyItem of companies) {
       if (company.name === companyItem.name) {
         setCompany({
-          ...company, id: companyItem.company_id, name: companyItem.name,
-          sectorName: companyItem.sector_name, sectorId: companyItem.sector_id
+          ...company,
+          id: companyItem.company_id,
+          name: companyItem.name,
+          sectorName: companyItem.sector_name,
+          sectorId: companyItem.sector_id
         });
         break;
       }
@@ -138,7 +141,8 @@ export function ReviewCreate() {
 
         const formDataCompany = {
           name: formData.companyname,
-          sector_id: sectorId, sede_id: idCity
+          sector_id: sectorId,
+          sede_id: idCity
         };
 
         const { headers } = await createCompany(formDataCompany);
@@ -163,10 +167,16 @@ export function ReviewCreate() {
       }
       const salary = formData.salary.length === 0 ? undefined : formData.salary;
       const formDataReview = {
-        ...formData, ...valuations, position_id: positionId, company_id: companyId,
-        sector: undefined, companyname: undefined, position: undefined, salary: salary,
+        ...formData,
+        ...valuations,
+        position_id: positionId,
+        company_id: companyId,
+        sector: undefined,
+        companyname: undefined,
+        position: undefined,
+        salary: salary,
         city_id: idCity
-      }
+      };
 
       console.log(formDataReview);
 
@@ -185,8 +195,8 @@ export function ReviewCreate() {
   return (
     <React.Fragment>
       <Header />
-      <main className="centered-container-home">
-        <h1 className="f-s-l">{t("Create a review")}</h1>
+      <main className="centered-container-home m-t-md">
+        <h1 className="f-s-l p-b-sm">{t("Create a review")}</h1>
         <p>{t("Rate a company you've worked for in the past 3 years.")}</p>
         <p>{t("Reviews published are anonymous.")}</p>
 
@@ -221,7 +231,7 @@ export function ReviewCreate() {
             <div className="btn-container">
               <button
                 type="submit"
-                className="btn"
+                className="m-t-md btn"
                 disabled={formState.isSubmitting}
               >
                 {t("Next")}

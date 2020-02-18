@@ -58,6 +58,14 @@ textarea {
   width: 22rem;
   border: none;
   font-family: inherit;
+  padding-top: 0.25rem;
+}
+
+textarea.descriptionCompany {
+  margin-top: 0.25rem;
+  margin-bottom: 1rem;
+  height: 10rem;
+  width: 22rem;
 }
 
 select {
@@ -76,12 +84,12 @@ select {
 .resFindCity {
   position: absolute;
   height: 8rem;
-	width: 16rem;
-	border: 1px solid #ddd;
-	background: var(--lgray);
+  width: 16rem;
+  border: 1px solid #ddd;
+  background: var(--lgray);
   overflow-y: scroll;
   top: 2.5rem;
-  z-index:9;
+  z-index: 9;
 }
 
 /* CONTAINER
@@ -123,9 +131,8 @@ select {
 
 .page-header .cta-contact {
   font-family: inherit;
-  font-size: 1rem;
+  font-size: var(--font-sm);
   padding: 5px 18px;
-  color: var(--gray);
 }
 
 .header-item li label {
@@ -176,16 +183,12 @@ input:checked ~ span {
   max-width: 500px;
 }
 
-.centered-container h1 {
-  margin-bottom: 20px;
-}
-
 .centered-container p + p {
   margin-top: 10px;
 }
 
 .boxAccount {
-  border: 2px solid var(--lgray);
+  border: 2px solid var(--onegray);
   border-radius: 15px;
   display: flex;
   flex-direction: column;
@@ -196,13 +199,14 @@ input:checked ~ span {
 .boxAccount > * {
   padding: 1rem 3rem;
 }
+
 /* HOME
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 .centered-container-home {
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-height: 350px;
+  min-height: 310px;
   flex-grow: 1;
   flex-wrap: wrap;
 }
@@ -247,6 +251,7 @@ input:checked ~ span {
   position: relative;
   display: grid;
   justify-items: center;
+  padding-bottom: var(--space-lg);
   row-gap: 0.25rem;
   grid-template-columns: 325px;
   grid-template-rows: 12rem 5rem 1.5rem 3.5rem 2rem;
@@ -301,39 +306,72 @@ input:checked ~ span {
   grid-column-gap: 1px;
   grid-row-gap: 1px;
   padding: 1rem;
+  padding-top: 2rem;
+  padding-left: 2rem;
+  grid-template-areas:
+    "imageHome"
+    "searchCompany"
+    "errorMessageCompany"
+    "buttonSearch"
+    "advancedSearch";
 }
 
 .borderGrey {
-  border: 2px solid var(--gray);
+  border: 2px solid var(--onegray);
   border-radius: 5px;
 }
 
 .item1 {
   grid-row: span 2;
+  padding-left: 0.25rem;
 }
 
 .item2 {
   grid-column: 2;
-  margin-left: 0.5rem;
+  margin-left: 0.85rem;
+  font-size: var(--font-m);
 }
+
 .item3 {
-  grid-column: 1;
+  grid-column: span 2;
+  color: var(--fourgray);
+  font-size: var(--font-sm);
+  padding-left: 0.25rem;
 }
 
 .item4 {
   grid-column: 2;
-  margin-left: 0.5rem;
-  color: var(--gray);
+  padding-left: 0.75rem;
+  color: var(--fourgray);
+  font-size: var(--font-sm);
 }
 
 .item5 {
   grid-column: 2;
-  margin-left: 0.5rem;
-  color: var(--gray);
+  padding-left: 0.25rem;
+  color: var(--fourgray);
+  font-size: var(--font-sm);
 }
 
 /* ADVANCED SEARCH
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+span.flexRow {
+  display: flex;
+  flex-direction: column;
+}
+
+#sectorId,
+#positionId,
+#cityId,
+#sortTipe {
+  font-family: inherit;
+}
+
+button.advSearch {
+  margin-left: 4rem;
+  margin-top: 1.2rem;
+}
 
 .buttonSort {
   padding: 0.2rem 1rem;
@@ -363,12 +401,6 @@ input:checked ~ span {
 .flexRow {
   display: flex;
   flex-direction: row;
-  align-items: center;
-}
-
-.flexColumn {
-  display: flex;
-  flex-direction: column;
   align-items: flex-start;
 }
 
@@ -399,7 +431,7 @@ input:checked ~ span {
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 .page-footer {
   display: flex;
-  flex-direction: column-reverse;
+  flex-direction: column;
   background: var(--lgray);
 }
 
@@ -458,7 +490,7 @@ input:checked ~ span {
   /* PATRI */
 
   .page-header .cta-contact.flexRow {
-    width: 16rem;
+    width: 20rem;
     justify-content: flex-end;
   }
 
@@ -472,10 +504,6 @@ input:checked ~ span {
     row-gap: 0.25rem;
     grid-template-columns: 20rem 12rem 20rem;
     grid-template-rows: 7rem 5rem 1.5rem;
-  }
-
-  .centered-container-home {
-    margin-top: var(--space-md);
   }
 
   .containerGrid {
@@ -540,5 +568,10 @@ input:checked ~ span {
       "companyTitle   companyTitle"
       "ratingCompany  asideCompany"
       "ratingCompany  none";
+  }
+
+  span.flexRow {
+    display: flex;
+    flex-direction: row;
   }
 }

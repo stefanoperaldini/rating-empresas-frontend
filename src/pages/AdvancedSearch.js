@@ -71,11 +71,15 @@ export function AdvancedSearch() {
       <Header />
       <main className="centered-container">
         {(!currentUserId || role === "1") && <RateCompanyLink />}
-        <h1 className="f-s-l">{t("Advanced search")}</h1>
-        <form onSubmit={handleSubmit(handleAdvancedSearch)} noValidate>
+        <h1 className="f-s-xl p-t-lg p-b-md">{t("Advanced search")}</h1>
+        <form
+          className="filterSearch"
+          onSubmit={handleSubmit(handleAdvancedSearch)}
+          noValidate
+        >
           <fieldset>
             <legend>
-              <h4>{t("Search for")}</h4>
+              <h2 className="f-s-m p-t-sm p-b-sm">{t("Search for")}</h2>
             </legend>
             <span className="flexRow">
               <select
@@ -122,7 +126,7 @@ export function AdvancedSearch() {
           </fieldset>
           <fieldset>
             <legend>
-              <h4>{t("Sort by")}</h4>
+              <h2 className="f-s-m p-t-md p-b-sm">{t("Sort by")}</h2>
             </legend>
             <select name="sortTipe" id="sortTipe" ref={register}>
               <option value="1">{t("Overall rating")}</option>
@@ -136,13 +140,13 @@ export function AdvancedSearch() {
           </fieldset>
           <button
             type="submit"
-            className="btn"
+            className="btn advSearch"
             disabled={formState.isSubmitting}
           >
             {t("Find")}
           </button>
         </form>
-        <section className="allWidth centered-container-home p-t-md m-t-xl">
+        <section className="allWidth centered-container-home m-t-md">
           <main className="minWidth">
             <ListCompanies listCompanies={companiesList} />
           </main>

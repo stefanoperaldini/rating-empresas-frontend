@@ -49,7 +49,7 @@ export function AccountPasswordRecovery() {
                 <span className="errorMessage">{t(errors.email.message)}</span>
               )}
             </div>
-            <p className="f-c-gray">
+            <p className="f-c-fourgray">
               {t("We will send you an e-mail with a new password")}
             </p>
             <div className="btn-container">

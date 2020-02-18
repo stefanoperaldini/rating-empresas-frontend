@@ -39,10 +39,10 @@ export function ListCompanies({ listCompanies }) {
               }
             />
             <span className="item2">
-              <h4>{company.name}</h4>
+              <h3 className="p-t-md">{company.name}</h3>
             </span>
             {/* <p> {company.sector}</p> */}
-            <div className={`${classes.rating} item3 f-s-xs`}>
+            <div className={`${classes.rating} item3`}>
               {company.everage}
               <Rating
                 name={company.name}
