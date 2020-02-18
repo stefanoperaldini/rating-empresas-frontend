@@ -165,7 +165,7 @@ export function AccountCreate() {
               )}
             </div>
             <p className="f-s-xs m-t-xl">(*) {t("Field required")}</p>
-            <p className="f-c-gray">
+            <p className="f-c-fourgray">
               {t("You will receive an activation e-mail")}
             </p>
             <div className="btn-container">

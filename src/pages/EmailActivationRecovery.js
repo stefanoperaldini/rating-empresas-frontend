@@ -50,7 +50,7 @@ export function EmailActivationRecovery() {
               <span className="errorMessage">{t(errors.email.message)}</span>
             )}
           </div>
-          <p className="f-c-gray">
+          <p className="f-c-fourgray">
             {t("We will resend you a new activation e-mail")}
           </p>
           <div className="btn-container">

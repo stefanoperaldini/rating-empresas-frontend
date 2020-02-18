@@ -6,6 +6,12 @@
   color: var(--dark);
 }
 
+.form-control.reviewCreate {
+  align-items: flex-start;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
 input {
   font-size: 1rem;
   border: 0;
@@ -66,6 +72,7 @@ input[type="file"] {
 
 .next {
   position: relative;
+  margin-top: 0.5rem;
 }
 
 .prev {
