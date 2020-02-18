@@ -21,19 +21,58 @@ import { ListReviews } from "../components/ListReviews";
 
 const useStyles = makeStyles({
   rating: {
-    width: 300,
+    width: 405,
     display: "flex",
     alignItems: "center"
   }
 });
 
-function getRandomColor() {
-  var letters = "0123456789ABCDEF";
-  var color = "#";
-  for (let i = 0; i < 6; i++) {
-    color += letters[Math.floor(Math.random() * 16)];
+function getColor(numPositions) {
+  const backgroundColor = [
+    "#FF6384",
+    "#36A2EB",
+    "#FFCE56",
+    "#FF6384",
+    "#36A2EB",
+    "#FFCE56",
+    "#FF6384",
+    "#36A2EB",
+    "#FFCE56",
+    "#FF6384"
+  ];
+  const hoverBackgroundColor = [
+    "#FF6384",
+    "#36A2EB",
+    "#FFCE56",
+    "#FF6384",
+    "#36A2EB",
+    "#FFCE56",
+    "#FF6384",
+    "#36A2EB",
+    "#FFCE56",
+    "#FF6384"
+  ];
+
+  let backgroundColorRes = [];
+  let hoverBackgroundColorRes = [];
+
+  for (let index = 1; index <= numPositions; index++) {
+    let mIndex = index % 10;
+    if (mIndex === 0) {
+      backgroundColorRes = [...backgroundColorRes, backgroundColor[9]];
+      hoverBackgroundColorRes = [
+        ...hoverBackgroundColorRes,
+        hoverBackgroundColor[9]
+      ];
+    } else {
+      backgroundColorRes = [...backgroundColorRes, backgroundColor[mIndex - 1]];
+      hoverBackgroundColorRes = [
+        ...hoverBackgroundColorRes,
+        hoverBackgroundColor[mIndex - 1]
+      ];
+    }
   }
-  return color;
+  return { backgroundColorRes, hoverBackgroundColorRes };
 }
 
 export function Company() {
@@ -57,6 +96,10 @@ export function Company() {
   const { currentUserId, role } = useAuth();
   const formFiltros = useRef(null);
 
+  const { backgroundColorRes, hoverBackgroundColorRes } = getColor(
+    positionsCompany.length
+  );
+
   const dataPositionDiagram =
     positionsCompany.length !== 0
       ? {
@@ -64,8 +107,8 @@ export function Company() {
           datasets: [
             {
               data: positionsCompany.map(position => position.numsReviews),
-              backgroundColor: positionsCompany.map(() => getRandomColor()),
-              hoverBackgroundColor: positionsCompany.map(() => getRandomColor())
+              backgroundColor: backgroundColorRes,
+              hoverBackgroundColor: hoverBackgroundColorRes
             }
           ]
         }
@@ -74,11 +117,11 @@ export function Company() {
   const dataSalaryDiagram =
     positionsCompany.length !== 0
       ? {
-          labels: positionsCompany.map(position => position.name),
+          labels: positionsCompany.map((_, index) => index),
           datasets: [
             {
               type: "line",
-              label: "Salary trend",
+              label: t("Salary trend (€)"),
               borderColor: "#2196F3",
               borderWidth: 2,
               fill: false,
@@ -86,7 +129,7 @@ export function Company() {
             },
             {
               type: "bar",
-              label: "Position salary",
+              label: t("Position salary (€)"),
               backgroundColor: "#4CAF50",
               data: positionsCompany.map(position => position.avg_salary),
               borderColor: "white",
@@ -96,14 +139,8 @@ export function Company() {
         }
       : null;
 
-  console.log(dataPositionDiagram, dataSalaryDiagram);
-
   const options = {
     responsive: true,
-    title: {
-      display: true,
-      text: "Combo Bar Line Chart"
-    },
     tooltips: {
       mode: "index",
       intersect: true
@@ -325,20 +362,29 @@ export function Company() {
             </section>
             {dataPositionDiagram && (
               <section className="m-l-md m-t-lg">
-                <div style={{ width: 400 }}>
+                <h2 className="f-s-m">{t("Reviews for job title")}</h2>
+                <div style={{ width: 360 }}>
                   <Chart type="doughnut" data={dataPositionDiagram} />
                 </div>
               </section>
             )}
             {dataSalaryDiagram && (
               <section className="m-t-lg">
-                <div style={{ width: 600 }}>
+                <h2 className="f-s-m m-l-md">{t("Average salary")}</h2>
+                <div style={{ width: 360 }}>
                   <Chart
                     type="bar"
                     data={dataSalaryDiagram}
                     options={options}
                   />
                 </div>
+                <ul className="m-t-lg">
+                  {positionsCompany.map((position, index) => (
+                    <li>
+                      {index} - {position.name}
+                    </li>
+                  ))}
+                </ul>
               </section>
             )}
           </aside>
@@ -401,9 +447,7 @@ export function Company() {
             </form>
 
             <section>
-              <ListReviews
-                listReviews={reviewsCompany.reviews}
-              />
+              <ListReviews listReviews={reviewsCompany.reviews} />
               <div>
                 <button
                   name="prev"

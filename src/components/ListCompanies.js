@@ -24,7 +24,7 @@ export function ListCompanies({ listCompanies }) {
       {listCompanies.map(company => (
         <li
           key={company.id}
-          className="m-r-md m-b-md borderGrey cursorPointer"
+          className="m-b-md borderGrey cursorPointer"
           onClick={e => history.push(`/company/detail/${company.company_id}`)}
         >
           <article className="summaryCompany">
