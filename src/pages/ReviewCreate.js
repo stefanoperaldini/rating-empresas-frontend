@@ -71,7 +71,7 @@ export function ReviewCreate() {
   const [positions, setPositions] = useState([]);
 
   useEffect(() => {
-    getCompanies(`sortTipe=7`)
+    getCompanies(`filters=no`)
       .then(response => {
         setCompanies(response.data.rows_companies);
       })
@@ -117,7 +117,8 @@ export function ReviewCreate() {
   const handleReviewCreate = async formData => {
     let companyId = company.id;
     if (!idCity) {
-      setError("city_id", "backend", t("This field is required"));
+      setError("city_id", "frontend", t("This field is required"));
+      return;
     }
     try {
       if (!companyId) {
@@ -139,8 +140,6 @@ export function ReviewCreate() {
           name: formData.companyname,
           sector_id: sectorId, sede_id: idCity
         };
-
-        console.log(formDataCompany);
 
         const { headers } = await createCompany(formDataCompany);
         const location = headers.location.split("/");
@@ -439,7 +438,7 @@ export function ReviewCreate() {
                 </div>
 
                 <div className="form-control">
-                  <label htmlFor="city_id">{t("City")} (*)</label>
+                  <label>{t("City")} (*)</label>
                   <Cities onClickCity={id => setIdCity(id)} />
                   {errors.city_id && (
                     <span className="errorMessage">{t(errors.city_id.message)}</span>
@@ -524,9 +523,9 @@ export function ReviewCreate() {
                 >
                   {t("Save")}
                 </button>
-            </div>
-          </form>
-        )}
+              </div>
+            </form>
+          )}
       </main>
       <Footer />
     </React.Fragment>

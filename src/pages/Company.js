@@ -3,7 +3,6 @@ import { useTranslation } from "react-i18next";
 import Rating from "@material-ui/lab/Rating";
 import { Chart } from "@bit/primefaces.primereact.chart";
 import { makeStyles } from "@material-ui/core/styles";
-import { useLocation } from "react-router-dom";
 import { useParams } from "react-router";
 import { useForm } from "react-hook-form";
 
@@ -56,7 +55,6 @@ export function Company() {
   const params = useParams();
   const idCompany = params.id;
   const { currentUserId, role } = useAuth();
-  const location = useLocation();
   const formFiltros = useRef(null);
 
   const dataPositionDiagram = (positionsCompany.length !== 0) ? {
@@ -390,7 +388,6 @@ export function Company() {
 
             <section>
               <ListReviews
-                pathLocation={location.pathname}
                 listReviews={reviewsCompany.reviews}
               />
               <div>

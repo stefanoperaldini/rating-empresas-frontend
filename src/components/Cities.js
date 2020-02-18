@@ -3,11 +3,15 @@ import { useTranslation } from "react-i18next";
 
 import { getCityName, } from "../http/cityService";
 
-export function Cities({ onClickCity }) {
-    const [searchTerm, setSearchTerm] = useState("");
+export function Cities({ onClickCity, city = "" }) {
+    const [searchTerm, setSearchTerm] = useState(city);
     const [cities, setCities] = useState([]);
     const [showResult, setShowResult] = useState(false);
     const { t } = useTranslation();
+
+    useEffect(() => {
+        setSearchTerm(city);
+    }, [city]);
 
     useEffect(() => {
         if (searchTerm.length >= 3) {

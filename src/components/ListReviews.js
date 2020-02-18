@@ -18,7 +18,7 @@ const useStyles = makeStyles({
     }
 });
 
-export function ListReviews({ pathLocation, listReviews }) {
+export function ListReviews({ listReviews }) {
     const classes = useStyles();
     const { currentUserId, role } = useAuth();
     const { t } = useTranslation();
