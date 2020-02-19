@@ -19,6 +19,12 @@ export function ListCompanies({ listCompanies }) {
   const { t } = useTranslation();
   const history = useHistory();
 
+  if (listCompanies.length === 0) {
+    return (
+      <h2 className="containerGrid">{t("No companies yet")}</h2>
+    );
+  }
+
   return (
     <ul className="containerGrid">
       {listCompanies.map(company => (

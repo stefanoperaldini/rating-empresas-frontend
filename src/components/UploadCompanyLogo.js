@@ -1,30 +1,16 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, } from "react";
 import { uploadLogo } from "../http/companyService";
 
-export function FileUpload() {
+export function FileUpload({ onUploadLogo }) {
   const [files, setFiles] = useState([]);
   const [uploading, setUploading] = useState(false);
-  const [previews, setPreviews] = useState([]);
   const fileInput = useRef();
 
-  useEffect(() => {
-    async function getPreviews() {
-      const promises = files.map(getPreview);
-      setPreviews(await Promise.all(promises));
-    }
-
-    getPreviews();
-  }, [files]);
-
   const handleChange = e => {
-    if (files.length === 0) {
-      setFiles([...Array.from(e.target.files), ...files]);
-    } else if (files.length === 1) {
-      setFiles([...Array.from(e.target.files)]);
-    }
+    setFiles([...Array.from(e.target.files)]);
   };
 
-  const handleUpload = () => {
+  const handleUpload = async () => {
     if (!files) {
       return;
     }
@@ -37,16 +23,14 @@ export function FileUpload() {
 
     setUploading(true);
 
-    return uploadLogo(data)
-      .then(response => {
-        console.log(response);
-        setFiles([]);
-        setUploading(false);
-      })
-      .catch(error => {
-        setUploading(false);
-        console.log(error);
-      });
+    try {
+      const { headers } = await uploadLogo(data);
+      onUploadLogo(headers.location);
+      setFiles([]);
+      setUploading(false);
+    } catch (error) {
+      setUploading(false);
+    };
   };
 
   const openFileDialog = () => {
@@ -54,46 +38,19 @@ export function FileUpload() {
   };
 
   return (
-    <main>
-      <div>
-        <input
-          ref={fileInput}
-          type="file"
-          accept="jpg, jpeg, png"
-          onChange={handleChange}
-        />
-        <button type="button" onClick={openFileDialog} disabled={uploading}>
-          {uploading ? "Uploading files ..." : "Choose File"}
-        </button>
-        <ul>
-          {files.map((file, i) => (
-            <li key={file.name}>
-              <img src={previews[i]} width="200" alt={file.name} />
-              <span>{file.name}</span>
-            </li>
-          ))}
-        </ul>
-      </div>
-
+    <div>
+      <input
+        ref={fileInput}
+        type="file"
+        accept="png"
+        onChange={handleChange}
+      />
+      <button type="button" onClick={openFileDialog} disabled={uploading}>
+        {uploading ? "Uploading files ..." : "Choose File"}
+      </button>
       <button type="button" onClick={handleUpload} disabled={uploading}>
         Upload
       </button>
-    </main>
+    </div>
   );
-}
-
-function getPreview(file) {
-  return new Promise(resolve => {
-    if (file && file.type.includes("image")) {
-      let reader = new FileReader();
-
-      reader.onloadend = function() {
-        resolve(reader.result);
-      };
-
-      reader.readAsDataURL(file);
-    } else {
-      resolve("http://via.placeholder.com/50x50");
-    }
-  });
 }

@@ -18,18 +18,17 @@ const useStyles = makeStyles({
   }
 });
 
-export function ListReviews({ listReviews }) {
-    const classes = useStyles();
-    const { currentUserId, role } = useAuth();
-    const { t } = useTranslation();
-    const history = useHistory();
+export function ListReviews({ listReviews, onReviewDeleted = null }) {
+  const classes = useStyles();
+  const { currentUserId, role } = useAuth();
+  const { t } = useTranslation();
+  const history = useHistory();
 
   const executeReport = reviewId => {
     const sendEmail = window.confirm(t("Do you want to report this review?"));
     if (sendEmail) {
       return reportReview(reviewId).then(response => {
-        // FIXME tengo que quedar en esta pagina
-        history.push("/home");
+        return;
       });
     }
   };
@@ -40,11 +39,23 @@ export function ListReviews({ listReviews }) {
     );
     if (deleteReviewConfirm) {
       return deleteReview(reviewId).then(response => {
-        // FIXME tengo que quedar en esta pagina
-        history.push("/home");
+        if (!onReviewDeleted) {
+          // if from admin ReviewReport, go to home
+          history.push("/home");
+          return;
+        }
+        // render origin page
+        onReviewDeleted(reviewId);
+        return;
       });
     }
   };
+
+  if (listReviews.length === 0) {
+    return (
+      <h2>{t("No reviews")}</h2>
+    );
+  }
 
   return (
     <ul>
@@ -64,8 +75,8 @@ export function ListReviews({ listReviews }) {
                   {review.end_year ? (
                     <span>{review.end_year}</span>
                   ) : (
-                    <span>{t("today")}</span>
-                  )}
+                      <span>{t("today")}</span>
+                    )}
                 </li>
                 <li className="f-c-fourgray">{review.city_name}</li>
                 <li className="f-c-fourgray">{review.created_at}</li>
@@ -147,7 +158,7 @@ export function ListReviews({ listReviews }) {
                 <span className="m-l-md">{t("Work&Life balance")}</span>
               </div>
 
-              {currentUserId && role !== "0" && (
+              {currentUserId && review.user_id !== currentUserId && role !== "0" && (
                 <React.Fragment>
                   <img
                     className="p-t-md"

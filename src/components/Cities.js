@@ -3,27 +3,46 @@ import { useTranslation } from "react-i18next";
 
 import { getCityName } from "../http/cityService";
 
-export function Cities({ onClickCity, city = "" }) {
-    const [searchTerm, setSearchTerm] = useState(city);
-    const [cities, setCities] = useState([]);
-    const [showResult, setShowResult] = useState(false);
-    const { t } = useTranslation();
+function filterCities(nameCity, cities) {
+  if (nameCity.length === 0) {
+    return cities;
+  }
+  const filterdCities = cities.filter((cityElement) => cityElement.name === nameCity);
+  if (filterdCities.length === 0) {
+    return cities;
+  }
+  return filterdCities;
+}
 
-    useEffect(() => {
-        setSearchTerm(city);
-    }, [city]);
+export function Cities({ onClickCity, cityToSet = "" }) {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [cityParam, setCityParam] = useState(cityToSet);
+  const [cities, setCities] = useState([]);
+  const [showResult, setShowResult] = useState(false);
+  const { t } = useTranslation();
 
-    useEffect(() => {
-        if (searchTerm.length >= 3) {
-            getCityName(searchTerm).then(response => {
-                setCities(response.data.rows);
-            });
+  useEffect(() => {
+    setSearchTerm(cityToSet);
+
+  }, [cityToSet,]);
+
+  useEffect(() => {
+    if (searchTerm.length >= 3) {
+      getCityName(searchTerm).then(response => {
+        const filterdCities = filterCities(cityParam, response.data.rows);
+        if (cityParam.length !== 0 && filterdCities.length === 1) {
+          onClickCity(filterdCities[0].id);
+          setCityParam("");
+        } else {
+          setCities(response.data.rows);
         }
-
+        setShowResult(false);
+      })
+    }
     if (searchTerm.length < 3) {
       setShowResult(false);
     }
-  }, [searchTerm]);
+  }, [searchTerm, onClickCity, cityParam]);
 
   useEffect(() => {
     if (cities.length !== 0) {
