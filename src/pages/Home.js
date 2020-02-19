@@ -11,6 +11,7 @@ import { setErrorMessageCallBackEnd, validatorCompanyName } from "./pagesUtils";
 import { useAuth } from "../context/auth-context";
 import { ListCompanies } from "../components/ListCompanies";
 import searchingImgSvg from "../img/imageHome.svg";
+import { DotsYellow } from "../components/AppLottie";
 
 /**
  * Home page
@@ -18,7 +19,7 @@ import searchingImgSvg from "../img/imageHome.svg";
 
 export function Home() {
   const [companies, setCompanies] = useState([]);
-  const [topCompanies, setTopCompanies] = useState([]);
+  const [topCompanies, setTopCompanies] = useState(null);
   const [company, setCompany] = useState("");
 
   const { handleSubmit, register, errors, formState, setError } = useForm({
@@ -44,6 +45,7 @@ export function Home() {
       })
       .catch(error => {
         setError("name", "backend", setErrorMessageCallBackEnd(error));
+        setTopCompanies([]);
       });
 
     return;
@@ -126,12 +128,22 @@ export function Home() {
         {(!currentUserId || role === "1") && <RateCompanyLink />}
 
         <section className="allWidth centered-container-home p-t-md m-t-md">
-          <header>
-            <h2 className="f-s-l m-b-md">{t("Top Ten Workplaces")}</h2>
-          </header>
-          <main className="minWidth">
-            <ListCompanies listCompanies={topCompanies} />
-          </main>
+          {!topCompanies ? (
+            <div className="flexRow">
+              <DotsYellow />
+            </div>
+          ) :
+            (
+              <React.Fragment>
+                <header>
+                  <h2 className="f-s-l m-b-md">{t("Top Ten Workplaces")}</h2>
+                </header>
+                <main className="minWidth">
+                  <ListCompanies listCompanies={topCompanies} />
+                </main>
+              </React.Fragment>
+            )
+          }
         </section>
       </main>
       <Footer />

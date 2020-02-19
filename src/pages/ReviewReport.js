@@ -8,7 +8,7 @@ import { Footer } from "../components/Footer";
 import { ListReviews } from "../components/ListReviews";
 
 /**
- * Page for user reviews
+ * Page for admin delete review
  */
 
 export function ReviewReport() {
@@ -24,14 +24,6 @@ export function ReviewReport() {
     });
     return;
   }, [idReview]);
-
-  if (reviewUserList === null) {
-    return (
-      <div>
-        <h3>{t("You don't have any review")}</h3>
-      </div>
-    );
-  }
 
   return (
     <React.Fragment>
