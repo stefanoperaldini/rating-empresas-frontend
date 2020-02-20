@@ -25,10 +25,8 @@ export function ReviewUser() {
     <React.Fragment>
       <Header />
       <main className="centered-container">
-        <h1 className="f-s-l">{t("My reviews")}</h1>
-        <ListReviews
-          listReviews={reviewUserList}
-        />
+        <h1 className="f-s-l m-t-xl m-b-md">{t("My reviews")}</h1>
+        <ListReviews listReviews={reviewUserList} />
       </main>
       <Footer />
     </React.Fragment>

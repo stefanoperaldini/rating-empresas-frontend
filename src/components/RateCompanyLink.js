@@ -20,8 +20,10 @@ export function RateCompanyLink() {
   return (
     <section className="allWidth centeredComponentRate p-b-md">
       <header>
-        <h1 className="f-s-l">{t("Do you want to rate a company?")}</h1>
-        <p>{t("Your reviews will be anonimous")}</p>
+        <h1 className="f-s-l txtCenter">
+          {t("Do you want to rate a company?")}
+        </h1>
+        <p className="txtCenter">{t("Your reviews will be anonimous")}</p>
       </header>
       <main className={classes.rating}>
         <Rating

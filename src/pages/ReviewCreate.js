@@ -34,9 +34,9 @@ import { Footer } from "../components/Footer";
 
 const useStyles = makeStyles({
   rating: {
-    width: 300,
+    width: 360,
     display: "flex",
-    alignItems: "center"
+    alignItems: "flex-start"
   }
 });
 
@@ -196,9 +196,11 @@ export function ReviewCreate() {
     <React.Fragment>
       <Header />
       <main className="centered-container-home m-t-md">
-        <h1 className="f-s-l p-b-sm">{t("Create a review")}</h1>
-        <p>{t("Rate a company you've worked for in the past 3 years.")}</p>
-        <p>{t("Reviews published are anonymous.")}</p>
+        <h1 className="f-s-l txtCenter p-b-sm">{t("Create a review")}</h1>
+        <p className="txtCenter">
+          {t("Rate a company you've worked for in the past 3 years.")}
+        </p>
+        <p className="txtCenter">{t("Reviews published are anonymous.")}</p>
 
         {!isToNext ? (
           <form onSubmit={handleSubmit(handleReviewCreateCompany)} noValidate>
@@ -244,15 +246,12 @@ export function ReviewCreate() {
             onSubmit={handleSubmit(handleReviewCreate)}
             noValidate
           >
-            <fieldset>
+            <fieldset className="reviewCreate">
               <legend>
-                <h2 className="f-s-sm">{t("Rate company")}</h2>
+                <h2 className="f-s-sm marginBottom">{t("Rate company")}</h2>
               </legend>
 
               <div className={`form-control reviewCreate ${classes.rating}`}>
-                <label className="itemsReview" htmlFor="salary_valuation">
-                  {t("Salary")}
-                </label>
                 <Rating
                   name="salary_valuation"
                   id="salary_valuation"
@@ -265,12 +264,12 @@ export function ReviewCreate() {
                     });
                   }}
                 />
+                <label htmlFor="salary_valuation" className="m-l-md">
+                  {t("Salary")}
+                </label>
               </div>
 
               <div className={`form-control reviewCreate ${classes.rating}`}>
-                <label className="itemsReview" htmlFor="inhouse_training">
-                  {t("Internal training")}
-                </label>
                 <Rating
                   name="inhouse_training"
                   id="inhouse_training"
@@ -283,12 +282,12 @@ export function ReviewCreate() {
                     });
                   }}
                 />
+                <label htmlFor="inhouse_training" className="m-l-md">
+                  {t("Internal training")}
+                </label>
               </div>
 
               <div className={`form-control reviewCreate ${classes.rating}`}>
-                <label className="itemsReview" htmlFor="growth_opportunities">
-                  {t("Growth opportunities")}
-                </label>
                 <Rating
                   name="growth_opportunities"
                   id="growth_opportunities"
@@ -301,12 +300,12 @@ export function ReviewCreate() {
                     });
                   }}
                 />
+                <label htmlFor="growth_opportunities" className="m-l-md">
+                  {t("Growth opportunities")}
+                </label>
               </div>
 
               <div className={`form-control reviewCreate ${classes.rating}`}>
-                <label className="itemsReview" htmlFor="work_enviroment">
-                  {t("Work environment")}
-                </label>
                 <Rating
                   name="work_enviroment"
                   id="work_enviroment"
@@ -319,12 +318,12 @@ export function ReviewCreate() {
                     });
                   }}
                 />
+                <label htmlFor="work_enviroment" className="m-l-md">
+                  {t("Work environment")}
+                </label>
               </div>
 
               <div className={`form-control reviewCreate ${classes.rating}`}>
-                <label className="itemsReview" htmlFor="personal_life">
-                  {t("Work&Life balance")}
-                </label>
                 <Rating
                   name="personal_life"
                   id="personal_life"
@@ -337,12 +336,15 @@ export function ReviewCreate() {
                     });
                   }}
                 />
+                <label htmlFor="personal_life" className="m-l-md">
+                  {t("Work&Life balance")}
+                </label>
               </div>
             </fieldset>
 
-            <fieldset>
+            <fieldset className="reviewCreate">
               <legend>
-                <h2 className="f-s-sm">{t("Salary")}</h2>
+                <h2 className="f-s-sm marginTop">{t("Salary")}</h2>
               </legend>
 
               <div className="form-control">
@@ -364,7 +366,7 @@ export function ReviewCreate() {
               </div>
             </fieldset>
 
-            <fieldset>
+            <fieldset className="reviewCreate">
               <legend>
                 <h2 className="f-s-sm">
                   {t("Could you add something else to your rating?")}
@@ -402,7 +404,7 @@ export function ReviewCreate() {
               </div>
             </fieldset>
 
-            <fieldset>
+            <fieldset className="reviewCreate">
               <legend>
                 <h2 className="f-s-sm">{t("Tell us about your job")}</h2>
               </legend>
