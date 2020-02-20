@@ -29,7 +29,7 @@ export function ListCompanies({ listCompanies }) {
     <ul className="containerGrid">
       {listCompanies.map(company => (
         <li
-          key={company.id}
+          key={company.company_id}
           className="m-b-md borderGrey cursorPointer"
           onClick={e => history.push(`/company/detail/${company.company_id}`)}
         >

@@ -193,10 +193,6 @@ input:checked ~ span {
 .opacity-container.activated {
   opacity: 0.5;
 }
-/* 
-.centered-container div {
-  max-width: 500px;
-} */
 
 .centered-container p + p {
   margin-top: 10px;
@@ -436,7 +432,7 @@ button.searchFilter {
 }
 
 .diagramWidth {
-  width: 360;
+  width: 360px;
 }
 
 /* LIST REVIEWS
@@ -502,10 +498,6 @@ button.searchFilter {
   html {
     font-size: 16px;
   }
-
-  /* body {
-    font-size: 1rem;
-  } */
 
   /* HEADER */
 
@@ -607,7 +599,7 @@ button.searchFilter {
   }
 
   .diagramWidth {
-    width: 480;
+    width: 480px;
   }
 
   /* ADVANCED SEARCH*/

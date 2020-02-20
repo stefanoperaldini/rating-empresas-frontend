@@ -36,8 +36,7 @@ export function AccountPasswordRecovery() {
         <div className="boxAccount">
           <h1 className="f-s-l">{t("Forgot password?")}</h1>
           <form onSubmit={handleSubmit(handleRecoveryPassword)} noValidate>
-            <div className="form-control">
-              <label htmlFor="email">{t("E-mail")}</label>
+            <label className="form-control">{t("E-mail")}
               <input
                 ref={register(validatorEmail)}
                 name="email"
@@ -48,7 +47,8 @@ export function AccountPasswordRecovery() {
               {errors.email && (
                 <span className="errorMessage">{t(errors.email.message)}</span>
               )}
-            </div>
+            </label>
+
             <p className="f-c-fourgray">
               {t("We will send you an e-mail with a new password")}
             </p>
