@@ -5,18 +5,21 @@ import { getReviewUserList } from "../http/reviewService";
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
 import { ListReviews } from "../components/ListReviews";
+import { DotsYellow } from "../components/AppLottie";
 
 /**
  * Page for user reviews
  */
 
 export function ReviewUser() {
-  const [reviewUserList, setReviewUserList] = useState([]);
+  const [reviewUserList, setReviewUserList] = useState(null);
   const { t } = useTranslation();
 
   useEffect(() => {
     getReviewUserList().then(response => {
       setReviewUserList(response.data);
+    }).catch(error => {
+      setReviewUserList([]);
     });
     return;
   }, []);
@@ -26,7 +29,16 @@ export function ReviewUser() {
       <Header />
       <main className="centered-container">
         <h1 className="f-s-l m-t-xl m-b-md">{t("My reviews")}</h1>
-        <ListReviews listReviews={reviewUserList} />
+        {!reviewUserList ?
+          (
+            <div className="flexRow">
+              <DotsYellow />
+            </div>
+          ) :
+          (
+            <ListReviews listReviews={reviewUserList} />
+          )
+        }
       </main>
       <Footer />
     </React.Fragment>

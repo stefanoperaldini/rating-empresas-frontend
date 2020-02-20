@@ -13,6 +13,7 @@ import { Footer } from "../components/Footer";
 import { RateCompanyLink } from "../components/RateCompanyLink";
 import { ListCompanies } from "../components/ListCompanies";
 import { useAuth } from "../context/auth-context";
+import { DotsYellow } from "../components/AppLottie";
 
 /**
  * Page advanced search
@@ -22,7 +23,7 @@ export function AdvancedSearch() {
   const { handleSubmit, register, formState } = useForm({
     mode: "onSubmit"
   });
-  const [companiesList, setcompaniesList] = useState([]);
+  const [companiesList, setcompaniesList] = useState(null);
   const [positions, setPositions] = useState([]);
   const [sectors, setSectors] = useState([]);
   const [cities, setCities] = useState([]);
@@ -53,7 +54,9 @@ export function AdvancedSearch() {
   useEffect(() => {
     getCompanies(`sortTipe=1`).then(response => {
       setcompaniesList(response.data.rows_companies);
-    });
+    }).catch(error => {
+      setcompaniesList([]);
+    });;
     getPositions().then(response => {
       setPositions(response.data.rows);
     });
@@ -147,9 +150,17 @@ export function AdvancedSearch() {
           </button>
         </form>
         <section className="allWidth centered-container-home m-t-md">
-          <main className="minWidth">
-            <ListCompanies listCompanies={companiesList} />
-          </main>
+          {!companiesList ? (
+            <div className="flexRow">
+              <DotsYellow />
+            </div>
+          ) :
+            (
+              <main className="minWidth">
+                <ListCompanies listCompanies={companiesList} />
+              </main>
+            )
+          }
         </section>
       </main>
       <Footer />

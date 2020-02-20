@@ -14,6 +14,7 @@ import { RateCompanyLink } from "../components/RateCompanyLink";
 import { useAuth } from "../context/auth-context";
 import defaultImageCompany from "../img/company-default.png";
 import { ListReviews } from "../components/ListReviews";
+import { DotsYellow } from "../components/AppLottie";
 
 /**
  * Page company detail
@@ -58,16 +59,13 @@ export function Company() {
   const { handleSubmit, register, formState } = useForm({
     mode: "onSubmit"
   });
-  const [company, setCompany] = useState({});
+  const [company, setCompany] = useState(null);
   const [positionsCompany, setPositionsCompany] = useState([]);
-  const [reviewsCompany, setReviewsCompany] = useState({
-    numsRows: 0,
-    page: 0,
-    reviews: []
-  });
+  const [reviewsCompany, setReviewsCompany] = useState(null);
   const [isFirst, setIsFirst] = useState(true);
   const [isLast, setIsLast] = useState(false);
   const [companyCities, setCompanyCities] = useState([]);
+  const [idReviewDeleted, setIdReviewDeleted] = useState(null);
   const classes = useStyles();
   const { t } = useTranslation();
   const params = useParams();
@@ -127,6 +125,8 @@ export function Company() {
   useEffect(() => {
     getCompany(idCompany).then(response => {
       setCompany(response.data);
+    }).catch(error => {
+      setCompany({});
     });
     getPositionsCompany(idCompany).then(response => {
       setPositionsCompany(response.data);
@@ -143,7 +143,7 @@ export function Company() {
       }
     );
     return;
-  }, [idCompany]);
+  }, [idCompany, idReviewDeleted]);
 
   const handleCompanySearch = (formData, e) => {
     let queryString = `companyId=${idCompany}&page=1&row4page=5&sortTipe=${formData.sortTipe}`;
@@ -217,239 +217,259 @@ export function Company() {
       <Header />
       <main className="centered-container-home">
         {(!currentUserId || role === "1") && <RateCompanyLink />}
-
-        <section className="companyDetail">
-          <header className="companyTitle flexRow m-t-lg b-bog">
-            <img
-              height="75"
-              src={company.url_logo ? company.url_logo : defaultImageCompany}
-              alt={
-                company.url_logo
-                  ? t("Image company")
-                  : t("Default image company")
-              }
-            />
-            <h1 className="f-s-xl m-l-xl">{company.name}</h1>
-          </header>
-          <aside className="asideCompany">
-            <div className={`${classes.rating}`}>
-              {company.everage}
-              <Rating
-                name="overall_rating"
-                id="overall_rating"
-                size="large"
-                value={`${company.everage}`}
-                precision={0.5}
-                readOnly
-                className="m-l-xs"
-              />
-              <span className="m-l-md">{t("Overall rating")}</span>
-            </div>
-            <div className={`${classes.rating}`}>
-              {company.avg_salary_valuation}
-              <Rating
-                name="salary_valuation"
-                id="salary_valuation"
-                size="small"
-                value={`${company.avg_salary_valuation}`}
-                precision={0.5}
-                readOnly
-                className="m-l-sm"
-              />
-              <span className="m-l-md">{t("Salary")}</span>
-            </div>
-            <div className={`${classes.rating}`}>
-              {company.avg_inhouse_training}
-              <Rating
-                name="inhouse_training"
-                id="inhouse_training"
-                size="small"
-                value={`${company.avg_inhouse_training}`}
-                precision={0.5}
-                readOnly
-                className="m-l-sm"
-              />
-              <span className="m-l-md"> {t("Internal training")}</span>
-            </div>
-            <div className={`${classes.rating}`}>
-              {company.avg_growth_opportunities}
-              <Rating
-                name="growth_opportunities"
-                id="growth_opportunities"
-                size="small"
-                value={`${company.avg_growth_opportunities}`}
-                precision={0.5}
-                readOnly
-                className="m-l-sm"
-              />
-              <span className="m-l-md">{t("Growth opportunities")}</span>
-            </div>
-            <div className={`${classes.rating}`}>
-              {company.avg_work_enviroment}
-              <Rating
-                name="work_enviroment"
-                id="work_enviroment"
-                size="small"
-                value={`${company.avg_work_enviroment}`}
-                precision={0.5}
-                readOnly
-                className="m-l-sm"
-              />
-              <span className="m-l-md">{t("Work environment")}</span>
-            </div>
-            <div className={`${classes.rating}`}>
-              {company.avg_personal_life}
-              <Rating
-                name="personal_life"
-                id="personal_life"
-                size="small"
-                value={`${company.avg_personal_life}`}
-                precision={0.5}
-                readOnly
-                className="m-l-sm"
-              />
-              <span className="m-l-md">{t("Work&Life balance")}</span>
-            </div>
-            <section>
-              <h2 className="m-t-lg f-s-m">
-                {t("Average salary")}{" "}
-                {company.avg_salary ? company.avg_salary : "--"} €/{t("month")}
-              </h2>
-            </section>
-
-            <section>
-              <h2 className="m-t-lg f-s-m"> {company.name} </h2>
-              <p>{company.sector}</p>
-              <p>
-                <textarea
-                  className="descriptionCompany"
-                  value={company.description}
-                  readOnly
+        {!company ? (
+          <div className="flexRow">
+            <DotsYellow />
+          </div>
+        ) :
+          (
+            <section className="companyDetail">
+              <header className="companyTitle flexRow m-t-lg b-bog">
+                <img
+                  height="75"
+                  src={company.url_logo ? company.url_logo : defaultImageCompany}
+                  alt={
+                    company.url_logo
+                      ? t("Image company")
+                      : t("Default image company")
+                  }
                 />
-              </p>
-              <p>
-                {company.address} - {company.sede_name}
-              </p>
-              <p>
-                <a href={company.url_web}>{company.url_web}</a>
-              </p>
-              <p>
-                <a href={company.linkedin}>{company.linkedin}</a>
-              </p>
-            </section>
+                <h1 className="f-s-xl m-l-xl">{company.name}</h1>
+              </header>
 
-            {dataPositionDiagram && (
-              <section className="m-t-lg">
-                <h2 className="f-s-m">{t("Reviews for job title")}</h2>
-                <div className="diagramWidth">
-                  <Chart type="doughnut" data={dataPositionDiagram} />
-                </div>
-              </section>
-            )}
-            {dataSalaryDiagram && (
-              <section className="m-t-lg">
-                <h2 className="f-s-m">{t("Average salary")}</h2>
-                <div className="diagramWidth">
-                  <Chart
-                    type="bar"
-                    data={dataSalaryDiagram}
-                    options={options}
+              <aside className="asideCompany">
+                <div className={`${classes.rating}`}>
+                  {company.everage}
+                  <Rating
+                    name="overall_rating"
+                    id="overall_rating"
+                    size="large"
+                    value={`${company.everage}`}
+                    precision={0.5}
+                    readOnly
+                    className="m-l-xs"
                   />
+                  <span className="m-l-md">{t("Overall rating")}</span>
                 </div>
-                <ul className="m-t-lg">
-                  {positionsCompany.map((position, index) => (
-                    <li className="f-s-xs f-c-fourgray">
-                      {index} - {position.name}
-                    </li>
-                  ))}
-                </ul>
-              </section>
-            )}
-          </aside>
+                <div className={`${classes.rating}`}>
+                  {company.avg_salary_valuation}
+                  <Rating
+                    name="salary_valuation"
+                    id="salary_valuation"
+                    size="small"
+                    value={`${company.avg_salary_valuation}`}
+                    precision={0.5}
+                    readOnly
+                    className="m-l-sm"
+                  />
+                  <span className="m-l-md">{t("Salary")}</span>
+                </div>
 
-          <main className="ratingCompany">
-            <form
-              ref={formFiltros}
-              onSubmit={handleSubmit(handleCompanySearch)}
-              noValidate
-            >
-              <fieldset>
-                <legend>
-                  <h2 className="f-s-m p-b-sm">{t("Search for")}</h2>
-                </legend>
-                <span className="flexRow">
-                  <select
-                    name="positionId"
-                    id="positionId"
-                    className="m-r-xs"
-                    ref={register}
+                <div className={`${classes.rating}`}>
+                  {company.avg_inhouse_training}
+                  <Rating
+                    name="inhouse_training"
+                    id="inhouse_training"
+                    size="small"
+                    value={`${company.avg_inhouse_training}`}
+                    precision={0.5}
+                    readOnly
+                    className="m-l-sm"
+                  />
+                  <span className="m-l-md"> {t("Internal training")}</span>
+                </div>
+                <div className={`${classes.rating}`}>
+                  {company.avg_growth_opportunities}
+                  <Rating
+                    name="growth_opportunities"
+                    id="growth_opportunities"
+                    size="small"
+                    value={`${company.avg_growth_opportunities}`}
+                    precision={0.5}
+                    readOnly
+                    className="m-l-sm"
+                  />
+                  <span className="m-l-md">{t("Growth opportunities")}</span>
+                </div>
+                <div className={`${classes.rating}`}>
+                  {company.avg_work_enviroment}
+                  <Rating
+                    name="work_enviroment"
+                    id="work_enviroment"
+                    size="small"
+                    value={`${company.avg_work_enviroment}`}
+                    precision={0.5}
+                    readOnly
+                    className="m-l-sm"
+                  />
+                  <span className="m-l-md">{t("Work environment")}</span>
+                </div>
+                <div className={`${classes.rating}`}>
+                  {company.avg_personal_life}
+                  <Rating
+                    name="personal_life"
+                    id="personal_life"
+                    size="small"
+                    value={`${company.avg_personal_life}`}
+                    precision={0.5}
+                    readOnly
+                    className="m-l-sm"
+                  />
+                  <span className="m-l-md">{t("Work&Life balance")}</span>
+                </div>
+                <section>
+                  <h2 className="m-t-lg f-s-m">
+                    {t("Average salary")}{" "}
+                    {company.avg_salary ? company.avg_salary : "--"} €/{t("month")}
+                  </h2>
+                </section>
+
+                <section>
+                  <h2 className="m-t-lg f-s-m"> {company.name} </h2>
+                  <p>{company.sector}</p>
+                  <p>
+                    <textarea
+                      className="descriptionCompany"
+                      value={company.description}
+                      readOnly
+                    className="m-l-sm"
+                    />
+                  </p>
+                  <p>
+                    {company.address} - {company.sede_name}
+                  </p>
+                  <p>
+                    <a href={company.url_web}>{company.url_web}</a>
+                  </p>
+                  <p>
+                    <a href={company.linkedin}>{company.linkedin}</a>
+                  </p>
+                </section>
+                {dataPositionDiagram && (
+                  <section className="m-t-lg">
+                    <h2 className="f-s-m">{t("Reviews for job title")}</h2>
+                    <div className="diagramWidth">
+                      <Chart type="doughnut" data={dataPositionDiagram} />
+                    </div>
+                  </section>
+                )}
+                {dataSalaryDiagram && (
+                  <section className="m-t-lg">
+                    <h2 className="f-s-m">{t("Average salary")}</h2>
+                    <div className="diagramWidth">
+                      <Chart
+                        type="bar"
+                        data={dataSalaryDiagram}
+                        options={options}
+                      />
+                    </div>
+                    <ul className="m-t-lg">
+                      {positionsCompany.map((position, index) => (
+                        <li className="f-s-xs f-c-fourgray">
+                          {index} - {position.name}
+                        </li>
+                      ))}
+                    </ul>
+                  </section>
+                )}
+              </aside>
+
+              <main className="ratingCompany">
+                <form
+                  ref={formFiltros}
+                  onSubmit={handleSubmit(handleCompanySearch)}
+                  noValidate
+                >
+                  <fieldset>
+                    <legend>
+                      <h2 className="f-s-m p-b-sm">{t("Search for")}</h2>
+                    </legend>
+                    <span className="flexRow">
+                      <select
+                        name="positionId"
+                        id="positionId"
+                        className="m-r-xs"
+                        ref={register}
+                      >
+                        <option value="Empty">&#60;{t("Position")}&#62;</option>
+                        {positionsCompany.map(position => (
+                          <option key={position.name} value={position.id}>
+                            {position.name}
+                          </option>
+                        ))}
+                      </select>
+                      <select name="cityId" id="cityId" ref={register}>
+                        <option value="Empty">&#60;{t("City")}&#62;</option>
+                        {companyCities.map(city => (
+                          <option key={city.name} value={city.id}>
+                            {city.name}
+                          </option>
+                        ))}
+                      </select>
+                    </span>
+                  </fieldset>
+                  <fieldset className="sortAndButton">
+                    <legend>
+                      <h2 className="f-s-m p-t-md p-b-sm">{t("Sort by")}</h2>
+                    </legend>
+                    <select name="sortTipe" id="sortTipe" ref={register}>
+                      <option value="1">{t("Date")}</option>
+                      <option value="2">{t("Overall rating")}</option>
+                      <option value="3">{t("Salary")}</option>
+                      <option value="4">{t("Internal training")}</option>
+                      <option value="5">{t("Growth opportunities")}</option>
+                      <option value="6">{t("Work environment")}</option>
+                      <option value="7">{t("Work&Life balance")}</option>
+                    </select>
+                  </fieldset>
+                  <button
+                    type="submit"
+                    className="btn searchFilter"
+                    disabled={formState.isSubmitting}
                   >
-                    <option value="Empty">&#60;{t("Position")}&#62;</option>
-                    {positionsCompany.map(position => (
-                      <option key={position.name} value={position.id}>
-                        {position.name}
-                      </option>
-                    ))}
-                  </select>
-                  <select name="cityId" id="cityId" ref={register}>
-                    <option value="Empty">&#60;{t("City")}&#62;</option>
-                    {companyCities.map(city => (
-                      <option key={city.name} value={city.id}>
-                        {city.name}
-                      </option>
-                    ))}
-                  </select>
-                </span>
-              </fieldset>
-              <fieldset className="sortAndButton">
-                <legend>
-                  <h2 className="f-s-m p-t-md p-b-sm">{t("Sort by")}</h2>
-                </legend>
-                <select name="sortTipe" id="sortTipe" ref={register}>
-                  <option value="1">{t("Date")}</option>
-                  <option value="2">{t("Overall rating")}</option>
-                  <option value="3">{t("Salary")}</option>
-                  <option value="4">{t("Internal training")}</option>
-                  <option value="5">{t("Growth opportunities")}</option>
-                  <option value="6">{t("Work environment")}</option>
-                  <option value="7">{t("Work&Life balance")}</option>
-                </select>
-              </fieldset>
-              <button
-                type="submit"
-                className="btn searchFilter"
-                disabled={formState.isSubmitting}
-              >
-                {t("Find")}
-              </button>
-            </form>
+                    {t("Find")}
+                  </button>
+                </form>
 
-            <section>
-              <ListReviews listReviews={reviewsCompany.reviews} />
-              <div>
-                <button
-                  name="prev"
-                  id="prev"
-                  disabled={isFirst}
-                  onClick={handleClickPaging}
-                  className="m-r-md prev"
-                >
-                  {t("Previous")}
-                </button>
-                <button
-                  name="next"
-                  id="next"
-                  disabled={isLast}
-                  onClick={handleClickPaging}
-                  className="m-r-md next"
-                >
-                  {" "}
-                  {t("Next")}
-                </button>
-              </div>
+                <section>
+                  {!reviewsCompany ? (
+                    <div className="flexRow">
+                      <DotsYellow />
+                    </div>
+                  ) :
+                    (
+                      <React.Fragment>
+                        <ListReviews listReviews={reviewsCompany.reviews}
+                          onReviewDeleted={idReview => setIdReviewDeleted(idReview)}
+                        />
+                        <div>
+                          <button
+                            name="prev"
+                            id="prev"
+                            disabled={isFirst}
+                            onClick={handleClickPaging}
+                            className="m-r-md prev"
+                          >
+                            {t("Previous")}
+                          </button>
+                          <button
+                            name="next"
+                            id="next"
+                            disabled={isLast}
+                            onClick={handleClickPaging}
+                            className="m-r-md next"
+                          >
+                            {t("Next")}
+                          </button>
+                        </div>
+                      </React.Fragment>
+                    )
+                  }
+                </section>
+              </main>
             </section>
-          </main>
-        </section>
+          )
+        }
       </main>
       <Footer />
     </React.Fragment>
