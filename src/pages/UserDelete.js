@@ -35,10 +35,8 @@ export function UserDelete() {
       <main className="centered-container">
         <h1 className="f-s-l">{t("Delete account")}</h1>
         <form onSubmit={handleSubmit(handleUserDelete)}>
-          <div className="form-control">
-            <label htmlFor="confirm">
-              {t("For deleting your account, please type")}: CONFIRM DELETE
-            </label>
+          <label className="form-control">
+            {t("For deleting your account, please type")}: CONFIRM DELETE
             <input
               ref={register(validatorDelete)}
               name="confirm"
@@ -49,7 +47,7 @@ export function UserDelete() {
             {errors.confirm && (
               <span className="errorMessage">{t(errors.confirm.message)}</span>
             )}
-          </div>
+          </label>
 
           <div className="btn-container">
             <button

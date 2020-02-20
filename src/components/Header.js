@@ -137,7 +137,7 @@ export function Header() {
           )}
 
           {!currentUserId ? (
-            <span className="header-item">
+            <div className="header-item">
               <ul>
                 <li className="header-item ">
                   <Link to="/account/login">
@@ -150,20 +150,16 @@ export function Header() {
                   </Link>
                 </li>
               </ul>
-            </span>
+            </div>
           ) : role === "0" ? (
-            <span
-              className="header-item signOut"
+            <span className="header-item signOut"
               onClick={() => executeLogout()}
             >
               <Link to="/">{t("Sign out")}</Link>
             </span>
           ) : (
-            // <span className="menu header-item" onClick={() => executeLogout()}>
-            //   {t("Sign out")}
-            // </span>
-            <AppMenu />
-          )}
+                <AppMenu />
+              )}
         </div>
       </nav>
     </header>

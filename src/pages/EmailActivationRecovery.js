@@ -37,8 +37,7 @@ export function EmailActivationRecovery() {
       <main className="centered-container">
         <h1 className="f-s-l">{t("Lost e-mail activation?")}</h1>
         <form onSubmit={handleSubmit(handleEmailActivationRecovery)} noValidate>
-          <div className="form-control">
-            <label htmlFor="email">{t("E-mail")}</label>
+          <label className="form-control">{t("E-mail")}
             <input
               ref={register(validatorEmail)}
               name="email"
@@ -49,7 +48,7 @@ export function EmailActivationRecovery() {
             {errors.email && (
               <span className="errorMessage">{t(errors.email.message)}</span>
             )}
-          </div>
+          </label>
           <p className="f-c-fourgray">
             {t("We will resend you a new activation e-mail")}
           </p>

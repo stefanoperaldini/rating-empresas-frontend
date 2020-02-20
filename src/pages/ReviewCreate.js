@@ -17,6 +17,7 @@ import { createPosition, createReview } from "../http/reviewService";
 import { getPositions } from "../http/reviewService";
 import {
   setErrorMessageCallBackEnd,
+  getArrayYears,
   validatorCompanyName,
   validatorSector,
   validatorSalary,
@@ -202,8 +203,7 @@ export function ReviewCreate() {
 
         {!isToNext ? (
           <form onSubmit={handleSubmit(handleReviewCreateCompany)} noValidate>
-            <div className="form-control">
-              <label htmlFor="name">{t("Name")} (*)</label>
+            <label className="form-control">{t("Name")} (*)
               <input
                 list="companyName"
                 ref={register(validatorCompanyName)}
@@ -226,7 +226,7 @@ export function ReviewCreate() {
               {errors.name && (
                 <span className="errorMessage">{t(errors.name.message)}</span>
               )}
-            </div>
+            </label>
 
             <div className="btn-container">
               <button
@@ -340,13 +340,12 @@ export function ReviewCreate() {
                 </label>
               </fieldset>
 
-              <fieldset className="reviewCreate"
+              <fieldset className="reviewCreate">
                 <legend>
                   <h2 className="f-s-sm marginTop">{t("Salary")}</h2>
                 </legend>
 
-                <div className="form-control">
-                  <label htmlFor="salary">{t("Your salary")}</label>
+                <label className="form-control">{t("Your salary")}
                   <input
                     className="salary-ammount"
                     ref={register(validatorSalary)}
@@ -361,7 +360,7 @@ export function ReviewCreate() {
                       {t(errors.salary.message)}
                     </span>
                   )}
-                </div>
+                </label>
               </fieldset>
 
               <fieldset className="reviewCreate">
@@ -370,8 +369,7 @@ export function ReviewCreate() {
                     {t("Could you add something else to your rating?")}
                   </h2>
                 </legend>
-                <div className="form-control">
-                  <label htmlFor="comment_title">{t("Review summary")} (*)</label>
+                <label className="form-control">{t("Review summary")} (*)
                   <input
                     ref={register(validatorTitleReview)}
                     name="comment_title"
@@ -384,10 +382,9 @@ export function ReviewCreate() {
                       {t(errors.comment_title.message)}
                     </span>
                   )}
-                </div>
+                </label>
 
-                <div className="form-control">
-                  <label htmlFor="comment">{t("Your review")} (*)</label>
+                <label className="form-control">{t("Your review")} (*)
                   <textarea
                     ref={register(validatorDescriptionReview)}
                     name="comment"
@@ -399,15 +396,14 @@ export function ReviewCreate() {
                       {t(errors.comment.message)}
                     </span>
                   )}
-                </div>
+                </label>
               </fieldset>
 
               <fieldset className="reviewCreate">
                 <legend>
                   <h2 className="f-s-sm">{t("Tell us about your job")}</h2>
                 </legend>
-                <div className="form-control">
-                  <label htmlFor="name">{t("Name")} (*)</label>
+                <label className="form-control">{t("Name")} (*)
                   <input
                     ref={register(validatorCompanyName)}
                     name="companyname"
@@ -422,10 +418,9 @@ export function ReviewCreate() {
                       {t(errors.companyname.message)}
                     </span>
                   )}
-                </div>
+                </label>
 
-                <div className="form-control">
-                  <label htmlFor="sector">{t("Sector")} (*)</label>
+                <label className="form-control">{t("Sector")} (*)
                   <input
                     list="listSectors"
                     ref={register(validatorSector)}
@@ -449,10 +444,9 @@ export function ReviewCreate() {
                       {t(errors.sector.message)}
                     </span>
                   )}
-                </div>
+                </label>
 
-                <div className="form-control">
-                  <label htmlFor="position">{t("Position")} (*)</label>
+                <label className="form-control">{t("Position")} (*)
                   <input
                     list="listPositions"
                     ref={register(validatorPosition)}
@@ -474,20 +468,18 @@ export function ReviewCreate() {
                       {t(errors.position.message)}
                     </span>
                   )}
-                </div>
+                </label>
 
-                <div className="form-control">
-                  <label>{t("City")} (*)</label>
+                <label className="form-control">{t("City")} (*)
                   <Cities onClickCity={id => setIdCity(id)} />
                   {errors.city_id && (
                     <span className="errorMessage">
                       {t(errors.city_id.message)}
                     </span>
                   )}
-                </div>
+                </label>
 
-                <div className="form-control">
-                  <label htmlFor="start_year">{t("Start year")} (*)</label>
+                <label className="form-control">{t("Start year")} (*)
                   <select
                     name="start_year"
                     id="start_year"
@@ -495,60 +487,21 @@ export function ReviewCreate() {
                       required: "Required"
                     })}
                   >
-                    <option value="2020">2020</option>
-                    <option value="2019">2019</option>
-                    <option value="2018">2018</option>
-                    <option value="2017">2017</option>
-                    <option value="2016">2016</option>
-                    <option value="2015">2015</option>
-                    <option value="2014">2014</option>
-                    <option value="2013">2013</option>
-                    <option value="2012">2012</option>
-                    <option value="2011">2011</option>
-                    <option value="2010">2010</option>
-                    <option value="2009">2009</option>
-                    <option value="2008">2008</option>
-                    <option value="2007">2007</option>
-                    <option value="2006">2006</option>
-                    <option value="2005">2005</option>
-                    <option value="2004">2004</option>
-                    <option value="2003">2003</option>
-                    <option value="2002">2002</option>
-                    <option value="2001">2001</option>
-                    <option value="2000">2000</option>
-                    <option value="1999">1999</option>
-                    <option value="1998">1998</option>
-                    <option value="1997">1997</option>
-                    <option value="1996">1996</option>
-                    <option value="1995">1995</option>
-                    <option value="1994">1994</option>
-                    <option value="1993">1993</option>
-                    <option value="1992">1992</option>
-                    <option value="1991">1991</option>
-                    <option value="1990">1990</option>
-                    <option value="1989">1989</option>
-                    <option value="1988">1988</option>
-                    <option value="1987">1987</option>
-                    <option value="1986">1986</option>
-                    <option value="1985">1985</option>
-                    <option value="1984">1984</option>
-                    <option value="1983">1983</option>
-                    <option value="1982">1982</option>
-                    <option value="1981">1981</option>
-                    <option value="1980">1980</option>
+                    {getArrayYears(1980, 2020).map(year =>
+                      (<option value={year}>{year}</option>)
+                    )}
                   </select>
                   {errors.start_year && (
                     <span className="errorMessage">{t(errors.start_year)}</span>
                   )}
-                </div>
+                </label>
                 <div className="form-control">
                   <label htmlFor="end_year">{t("End year")} (*)</label>
                   <select name="end_year" id="end_year" ref={register()}>
                     <option value="null">{t("I currently work here")}</option>
-                    <option value="2020">2020</option>
-                    <option value="2019">2019</option>
-                    <option value="2018">2018</option>
-                    <option value="2017">2017</option>
+                    {getArrayYears(2017, 2020).map(year =>
+                      (<option value={year}>{year}</option>)
+                    )}
                   </select>
                   {errors.end_year && (
                     <span className="errorMessage">{t(errors.end_year)}</span>

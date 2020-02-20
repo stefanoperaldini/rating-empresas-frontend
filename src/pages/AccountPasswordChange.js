@@ -49,8 +49,7 @@ export function AccountPasswordChange() {
         <div>
           <h1 className="f-s-l">{t("Change password")}</h1>
           <form onSubmit={handleSubmit(handlePasswordChange)}>
-            <div className="form-control">
-              <label htmlFor="oldPassword">{t("Current password")} (*)</label>
+            <label className="form-control">{t("Current password")} (*)
               <input
                 ref={register(validatorPassword)}
                 name="oldPassword"
@@ -72,9 +71,9 @@ export function AccountPasswordChange() {
                   {t(errors.oldPassword.message)}
                 </span>
               )}
-            </div>
-            <div className="form-control">
-              <label htmlFor="newPassword">{t("New password")} (*)</label>
+            </label>
+
+            <label className="form-control">{t("New password")} (*)
               <input
                 ref={register(validatorPassword)}
                 name="newPassword"
@@ -96,12 +95,9 @@ export function AccountPasswordChange() {
                   {t(errors.newPassword.message)}
                 </span>
               )}
-            </div>
+            </label>
 
-            <div className="form-control">
-              <label htmlFor="confirmPassword">
-                {t("Confirm new password")} (*)
-              </label>
+            <label className="form-control">{t("Confirm new password")} (*)
               <input
                 ref={register({
                   validate: value => value === watch("newPassword")
@@ -127,7 +123,7 @@ export function AccountPasswordChange() {
                   {t("The password and the confirmation should match")}
                 </span>
               )}
-            </div>
+            </label>
             <p className="f-s-xs m-t-xl">(*) {t("Field required")}</p>
             <div className="btn-container">
               <button

@@ -9,7 +9,7 @@ function DotsYellow() {
         animationData: dotsYellowData
     };
 
-    return <Lottie options={defaultOptions} height={50} width={50} />;
+    return <Lottie options={defaultOptions} height={200} width={200} />;
 }
 
 DotsYellow.displayName = 'YellowDots';

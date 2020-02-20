@@ -15,8 +15,6 @@ const AboutButton = withStyles({
     textTransform: "none",
     fontSize: "1rem",
     padding: "0px 6px",
-    // border: "1px solid",
-    // lineHeight: 1.5,
     backgroundColor: "#f8f8f8",
     borderColor: "#f8f8f8",
     fontFamily: ["inherit"].join(","),

@@ -78,40 +78,40 @@ export function Company() {
   const dataPositionDiagram =
     positionsCompany.length !== 0
       ? {
-          labels: positionsCompany.map(position => position.name),
-          datasets: [
-            {
-              data: positionsCompany.map(position => position.numsReviews),
-              backgroundColor: backgroundColorRes,
-              hoverBackgroundColor: backgroundColorRes
-            }
-          ]
-        }
+        labels: positionsCompany.map(position => position.name),
+        datasets: [
+          {
+            data: positionsCompany.map(position => position.numsReviews),
+            backgroundColor: backgroundColorRes,
+            hoverBackgroundColor: backgroundColorRes
+          }
+        ]
+      }
       : null;
 
   const dataSalaryDiagram =
     positionsCompany.length !== 0
       ? {
-          labels: positionsCompany.map((_, index) => index),
-          datasets: [
-            {
-              type: "line",
-              label: t("Salary trend (€)"),
-              borderColor: "#2196F3",
-              borderWidth: 2,
-              fill: false,
-              data: positionsCompany.map(position => position.avg_salary)
-            },
-            {
-              type: "bar",
-              label: t("Position salary (€)"),
-              backgroundColor: "#4CAF50",
-              data: positionsCompany.map(position => position.avg_salary),
-              borderColor: "white",
-              borderWidth: 2
-            }
-          ]
-        }
+        labels: positionsCompany.map((_, index) => index),
+        datasets: [
+          {
+            type: "line",
+            label: t("Salary trend (€)"),
+            borderColor: "#2196F3",
+            borderWidth: 2,
+            fill: false,
+            data: positionsCompany.map(position => position.avg_salary)
+          },
+          {
+            type: "bar",
+            label: t("Position salary (€)"),
+            backgroundColor: "#4CAF50",
+            data: positionsCompany.map(position => position.avg_salary),
+            borderColor: "white",
+            borderWidth: 2
+          }
+        ]
+      }
       : null;
 
   const options = {
@@ -244,7 +244,7 @@ export function Company() {
                     name="overall_rating"
                     id="overall_rating"
                     size="large"
-                    value={`${company.everage}`}
+                    value={parseFloat(company.everage)}
                     precision={0.5}
                     readOnly
                     className="m-l-xs"
@@ -257,7 +257,7 @@ export function Company() {
                     name="salary_valuation"
                     id="salary_valuation"
                     size="small"
-                    value={`${company.avg_salary_valuation}`}
+                    value={parseFloat(company.avg_salary_valuation)}
                     precision={0.5}
                     readOnly
                     className="m-l-sm"
@@ -271,7 +271,7 @@ export function Company() {
                     name="inhouse_training"
                     id="inhouse_training"
                     size="small"
-                    value={`${company.avg_inhouse_training}`}
+                    value={parseFloat(company.avg_inhouse_training)}
                     precision={0.5}
                     readOnly
                     className="m-l-sm"
@@ -284,7 +284,7 @@ export function Company() {
                     name="growth_opportunities"
                     id="growth_opportunities"
                     size="small"
-                    value={`${company.avg_growth_opportunities}`}
+                    value={parseFloat(company.avg_growth_opportunities)}
                     precision={0.5}
                     readOnly
                     className="m-l-sm"
@@ -297,7 +297,7 @@ export function Company() {
                     name="work_enviroment"
                     id="work_enviroment"
                     size="small"
-                    value={`${company.avg_work_enviroment}`}
+                    value={parseFloat(company.avg_work_enviroment)}
                     precision={0.5}
                     readOnly
                     className="m-l-sm"
@@ -310,7 +310,7 @@ export function Company() {
                     name="personal_life"
                     id="personal_life"
                     size="small"
-                    value={`${company.avg_personal_life}`}
+                    value={parseFloat(company.avg_personal_life)}
                     precision={0.5}
                     readOnly
                     className="m-l-sm"
@@ -332,7 +332,6 @@ export function Company() {
                       className="descriptionCompany"
                       value={company.description}
                       readOnly
-                    className="m-l-sm"
                     />
                   </p>
                   <p>
@@ -365,7 +364,7 @@ export function Company() {
                     </div>
                     <ul className="m-t-lg">
                       {positionsCompany.map((position, index) => (
-                        <li className="f-s-xs f-c-fourgray">
+                        <li key={position.name} className="f-s-xs f-c-fourgray">
                           {index} - {position.name}
                         </li>
                       ))}

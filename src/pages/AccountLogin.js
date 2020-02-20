@@ -66,8 +66,7 @@ export function AccountLogin() {
         <div className="boxAccount">
           <h1 className="f-s-l">{t("Please sign in")}</h1>
           <form onSubmit={handleSubmit(handleLogin)} noValidate>
-            <div className="form-control">
-              <label htmlFor="email">{t("E-mail")}</label>
+            <label className="form-control">{t("E-mail")}
               <input
                 ref={register(validatorEmail)}
                 name="email"
@@ -78,9 +77,9 @@ export function AccountLogin() {
               {errors.email && (
                 <span className="errorMessage">{t(errors.email.message)}</span>
               )}
-            </div>
-            <div className="form-control">
-              <label htmlFor="password">{t("Password")}</label>
+            </label>
+
+            <label className="form-control">{t("Password")}
               <input
                 id="password"
                 ref={register(validatorPassword)}
@@ -106,7 +105,7 @@ export function AccountLogin() {
                   {t(errors.password.message)}
                 </span>
               )}
-            </div>
+            </label>
 
             <div className="btn-container">
               <button

@@ -74,8 +74,8 @@ export function ListReviews({ listReviews, onReviewDeleted = null }) {
                   {review.end_year ? (
                     <span>{review.end_year}</span>
                   ) : (
-                    <span>{t("today")}</span>
-                  )}
+                      <span>{t("today")}</span>
+                    )}
                   ) - {review.city_name}
                 </li>
                 <li className="f-c-fourgray f-s-xs">
@@ -92,7 +92,7 @@ export function ListReviews({ listReviews, onReviewDeleted = null }) {
                   name={review.id["overall_rating"]}
                   id={review.id["overall_rating"]}
                   size="large"
-                  value={`${review.everage}`}
+                  value={parseFloat(review.everage)}
                   precision={0.5}
                   readOnly
                   className="m-l-xs"
@@ -105,7 +105,7 @@ export function ListReviews({ listReviews, onReviewDeleted = null }) {
                   name={review.id["salary_valuation"]}
                   id={review.id[" salary_valuation"]}
                   size="small"
-                  value={review.salary_valuation}
+                  value={parseInt(review.salary_valuation)}
                   precision={0.5}
                   readOnly
                   className="m-l-sm"
@@ -118,7 +118,7 @@ export function ListReviews({ listReviews, onReviewDeleted = null }) {
                   name={review.id["inhouse_training"]}
                   id={review.id[" inhouse_training"]}
                   size="small"
-                  value={review.inhouse_training}
+                  value={parseInt(review.inhouse_training)}
                   precision={0.5}
                   readOnly
                   className="m-l-sm"
@@ -131,7 +131,7 @@ export function ListReviews({ listReviews, onReviewDeleted = null }) {
                   name={review.id["growth_opportunities"]}
                   id={review.id["growth_opportunities"]}
                   size="small"
-                  value={review.growth_opportunities}
+                  value={parseInt(review.growth_opportunities)}
                   precision={0.5}
                   readOnly
                   className="m-l-sm"
@@ -144,7 +144,7 @@ export function ListReviews({ listReviews, onReviewDeleted = null }) {
                   name={review.id["work_enviroment"]}
                   id={review.id["work_enviroment"]}
                   size="small"
-                  value={review.work_enviroment}
+                  value={parseInt(review.work_enviroment)}
                   precision={0.5}
                   readOnly
                   className="m-l-sm"
@@ -157,7 +157,7 @@ export function ListReviews({ listReviews, onReviewDeleted = null }) {
                   name={review.id["personal_life"]}
                   id={review.id["personal_life"]}
                   size="small"
-                  value={review.personal_life}
+                  value={parseInt(review.personal_life)}
                   precision={0.5}
                   readOnly
                   className="m-l-sm"

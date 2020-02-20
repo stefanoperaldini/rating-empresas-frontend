@@ -65,8 +65,7 @@ export function AccountCreate() {
               </label>
             </div>
 
-            <div className="form-control">
-              <label htmlFor="name">{t("Name")} (*)</label>
+            <label className="form-control">{t("Name")} (*)
               <input
                 ref={register(validatorUserName)}
                 name="name"
@@ -77,10 +76,9 @@ export function AccountCreate() {
               {errors.name && (
                 <span className="errorMessage">{t(errors.name.message)}</span>
               )}
-            </div>
+            </label>
 
-            <div className="form-control">
-              <label htmlFor="email">{t("E-mail")} (*)</label>
+            <label className="form-control">{t("E-mail")} (*)
               <input
                 ref={register(validatorEmail)}
                 name="email"
@@ -91,10 +89,9 @@ export function AccountCreate() {
               {errors.email && (
                 <span className="errorMessage">{t(errors.email.message)}</span>
               )}
-            </div>
+            </label>
 
-            <div className="form-control">
-              <label htmlFor="linkedin">{t("LinkedIn")}</label>
+            <label className="form-control">{t("LinkedIn")}
               <input
                 ref={register(validatorLinkedin)}
                 name="linkedin"
@@ -107,10 +104,9 @@ export function AccountCreate() {
                   {t(errors.linkedin.message)}
                 </span>
               )}
-            </div>
+            </label>
 
-            <div className="form-control">
-              <label htmlFor="password">{t("Password")} (*)</label>
+            <label className="form-control">{t("Password")} (*)
               <input
                 ref={register(validatorPassword)}
                 name="password"
@@ -132,12 +128,9 @@ export function AccountCreate() {
                   {t(errors.password.message)}
                 </span>
               )}
-            </div>
+            </label>
 
-            <div className="form-control">
-              <label htmlFor="confirmPassword">
-                {t("Confirm password")} (*)
-              </label>
+            <label className="form-control">{t("Confirm password")} (*)
               <input
                 ref={register({
                   validate: value => value === watch("password")
@@ -163,7 +156,7 @@ export function AccountCreate() {
                   {t("The password and the confirmation should match")}
                 </span>
               )}
-            </div>
+            </label>
             <p className="f-s-xs m-t-xl">(*) {t("Field required")}</p>
             <p className="f-c-fourgray">
               {t("You will receive an activation e-mail")}
