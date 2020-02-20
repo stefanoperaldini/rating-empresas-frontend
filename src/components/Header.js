@@ -52,7 +52,7 @@ export function Header() {
         <Link to="/" className="header-item">
           <img src={logo} alt={t("Logo app")} width="230" />
         </Link>
-        <ul className="header header-item f-s-xs">
+        <ul className="header-item f-s-xs">
           <li className="header-item">
             <label>
               <input
@@ -119,19 +119,19 @@ export function Header() {
           </li>
         </ul>
 
-        <div className="cta-contact flexRow">
+        <div className="cta-contact headerFlexRow">
           {currentUserId && role === "0" && (
-            <span className="centeredComponent f-s-xs f-c-gray m-r-md">
+            <span className="centeredComponent f-s-xs f-c-fourgray m-r-xl">
               <img src={admin} alt={t("Admin icon")} /> <span>{email}</span>
             </span>
           )}
           {currentUserId && role === "1" && (
-            <span className="centeredComponent f-s-xs f-c-gray m-r-md">
+            <span className="centeredComponent f-s-xs f-c-fourgray m-r-xl">
               <img src={user} alt={t("User icon")} /> <span>{email}</span>
             </span>
           )}
           {currentUserId && role === "2" && (
-            <span className="centeredComponent f-s-xs f-c-gray m-r-md">
+            <span className="centeredComponent f-s-xs f-c-fourgray m-r-xl">
               <img src={company} alt={t("Company icon")} /> <span>{email}</span>
             </span>
           )}
@@ -139,7 +139,7 @@ export function Header() {
           {!currentUserId ? (
             <span className="header-item">
               <ul>
-                <li className="header-item">
+                <li className="header-item ">
                   <Link to="/account/login">
                     <p>{t("Sign in")}</p>
                   </Link>
@@ -152,10 +152,16 @@ export function Header() {
               </ul>
             </span>
           ) : role === "0" ? (
-            <span className="menu header-item" onClick={() => executeLogout()}>
-              {t("Sign out")}
+            <span
+              className="header-item signOut"
+              onClick={() => executeLogout()}
+            >
+              <Link to="/">{t("Sign out")}</Link>
             </span>
           ) : (
+            // <span className="menu header-item" onClick={() => executeLogout()}>
+            //   {t("Sign out")}
+            // </span>
             <AppMenu />
           )}
         </div>

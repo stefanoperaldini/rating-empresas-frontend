@@ -71,8 +71,10 @@ export function Home() {
       <Header />
       <main className="centered-container-home m-t-md">
         <section className="allWidth centeredComponent">
-          <h1 className="f-s-xxl">{t("Find great places to work")}</h1>
-          <p className="f-s-l">
+          <h1 className="f-s-xxl txtCenter">
+            {t("Find great places to work")}
+          </h1>
+          <p className="f-s-l txtCenter">
             {t("Get access to rating and company reviews")}
           </p>
           <form onSubmit={handleSubmit(handleGetCompanyData)}>
@@ -136,7 +138,7 @@ export function Home() {
             (
               <React.Fragment>
                 <header>
-                  <h2 className="f-s-l m-b-md">{t("Top Ten Workplaces")}</h2>
+                  <h2 className="f-s-l txtCenter m-b-md">{t("Top Ten Workplaces")}</h2>
                 </header>
                 <main className="minWidth">
                   <ListCompanies listCompanies={topCompanies} />

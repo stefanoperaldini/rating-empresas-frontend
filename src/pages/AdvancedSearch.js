@@ -127,7 +127,7 @@ export function AdvancedSearch() {
               </select>
             </span>
           </fieldset>
-          <fieldset>
+          <fieldset className="sortAndButton">
             <legend>
               <h2 className="f-s-m p-t-md p-b-sm">{t("Sort by")}</h2>
             </legend>

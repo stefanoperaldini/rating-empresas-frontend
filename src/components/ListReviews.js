@@ -12,7 +12,7 @@ import deleteReviewImg from "../img/delete.png";
 
 const useStyles = makeStyles({
   rating: {
-    width: 425,
+    width: 360,
     display: "flex",
     alignItems: "flex-start"
   }
@@ -69,17 +69,18 @@ export function ListReviews({ listReviews, onReviewDeleted = null }) {
                     <strong>{review.company_name}</strong>
                   )}
                 </li>
-                <li className="f-c-fourgray">{review.name}</li>
                 <li className="f-c-fourgray">
-                  {review.start_year} -{" "}
+                  {review.name} - ({review.start_year} -{" "}
                   {review.end_year ? (
                     <span>{review.end_year}</span>
                   ) : (
-                      <span>{t("today")}</span>
-                    )}
+                    <span>{t("today")}</span>
+                  )}
+                  ) - {review.city_name}
                 </li>
-                <li className="f-c-fourgray">{review.city_name}</li>
-                <li className="f-c-fourgray">{review.created_at}</li>
+                <li className="f-c-fourgray f-s-xs">
+                  {t("Review date")}: {review.created_at}
+                </li>
               </ul>
             </header>
             <main>
@@ -94,6 +95,7 @@ export function ListReviews({ listReviews, onReviewDeleted = null }) {
                   value={`${review.everage}`}
                   precision={0.5}
                   readOnly
+                  className="m-l-xs"
                 />
                 <span className="m-l-md">{t("Overall rating")}</span>
               </div>
@@ -106,6 +108,7 @@ export function ListReviews({ listReviews, onReviewDeleted = null }) {
                   value={review.salary_valuation}
                   precision={0.5}
                   readOnly
+                  className="m-l-sm"
                 />
                 <span className="m-l-md">{t("Salary")}</span>
               </div>
@@ -118,6 +121,7 @@ export function ListReviews({ listReviews, onReviewDeleted = null }) {
                   value={review.inhouse_training}
                   precision={0.5}
                   readOnly
+                  className="m-l-sm"
                 />
                 <span className="m-l-md"> {t("Internal training")}</span>
               </div>
@@ -130,6 +134,7 @@ export function ListReviews({ listReviews, onReviewDeleted = null }) {
                   value={review.growth_opportunities}
                   precision={0.5}
                   readOnly
+                  className="m-l-sm"
                 />
                 <span className="m-l-md">{t("Growth opportunities")}</span>
               </div>
@@ -142,6 +147,7 @@ export function ListReviews({ listReviews, onReviewDeleted = null }) {
                   value={review.work_enviroment}
                   precision={0.5}
                   readOnly
+                  className="m-l-sm"
                 />
                 <span className="m-l-md">{t("Work environment")}</span>
               </div>
@@ -154,49 +160,56 @@ export function ListReviews({ listReviews, onReviewDeleted = null }) {
                   value={review.personal_life}
                   precision={0.5}
                   readOnly
+                  className="m-l-sm"
                 />
                 <span className="m-l-md">{t("Work&Life balance")}</span>
               </div>
 
               {currentUserId && review.user_id !== currentUserId && role !== "0" && (
                 <React.Fragment>
-                  <img
-                    className="p-t-md"
-                    src={denounceReviewImg}
-                    alt={t("Icon for reporting a review")}
-                  />
-                  <a
-                    className="f-c-fourgray m-l-sm p-t-md"
-                    href="/"
-                    title={t(
-                      "Link for sending e-mail to the web administrator"
-                    )}
-                    onClick={e => {
-                      e.preventDefault();
-                      executeReport(review.id);
-                    }}
-                  >
-                    {t("Report")}
-                  </a>
+                  <div className="reporting">
+                    <img
+                      className="p-t-md"
+                      src={denounceReviewImg}
+                      alt={t("Icon for reporting a review")}
+                    />
+                    <a
+                      className="f-c-fourgray m-l-sm m-r-md p-t-md"
+                      href="/"
+                      title={t(
+                        "Link for sending e-mail to the web administrator"
+                      )}
+                      onClick={e => {
+                        e.preventDefault();
+                        executeReport(review.id);
+                      }}
+                    >
+                      {t("Report")}
+                    </a>
+                  </div>
                 </React.Fragment>
               )}
 
               {currentUserId && role === "0" && (
                 <React.Fragment>
-                  <img
-                    src={deleteReviewImg}
-                    alt={t("Icon for delete a review")}
-                  />
-                  <a
-                    href="/"
-                    title={t("Link for deleting a review")}
-                    onClick={e => {
-                      e.preventDefault();
-                      executeDelete(review.id);
-                    }}
-                  >
-                    {t("Delete")}
-                  </a>
+                  <div className="reporting">
+                    <img
+                      className="p-t-md"
+                      src={deleteReviewImg}
+                      alt={t("Icon for delete a review")}
+                    />
+                    <a
+                      className="f-c-ko m-l-sm m-r-md p-t-md"
+                      href="/"
+                      title={t("Link for deleting a review")}
+                      onClick={e => {
+                        e.preventDefault();
+                        executeDelete(review.id);
+                      }}
+                    >
+                      {t("Delete")}
+                    </a>
+                  </div>
                 </React.Fragment>
               )}
             </main>
