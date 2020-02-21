@@ -52,7 +52,9 @@ export function ListReviews({ listReviews, onReviewDeleted = null }) {
   };
 
   if (listReviews.length === 0) {
-    return <h2>{t("No reviews")}</h2>;
+    return (
+      <p>{t("No reviews")}</p>
+    );
   }
 
   return (
@@ -77,7 +79,7 @@ export function ListReviews({ listReviews, onReviewDeleted = null }) {
                   ) - {review.city_name}
                 </li>
                 <li className="f-c-fourgray f-s-xs">
-                  {t("Review date")}: {review.created_at}
+                  {t("Review date")}: {(new Date(review.created_at)).toLocaleString().split(",")[0]}
                 </li>
               </ul>
             </header>

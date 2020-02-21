@@ -5,6 +5,7 @@ import { Chart } from "@bit/primefaces.primereact.chart";
 import { makeStyles } from "@material-ui/core/styles";
 import { useParams } from "react-router";
 import { useForm } from "react-hook-form";
+import { useHistory } from "react-router-dom";
 
 import { getCompany, getCompanyCities } from "../http/companyService";
 import { getReviewsFilter, getPositionsCompany } from "../http/reviewService";
@@ -72,6 +73,7 @@ export function Company() {
   const idCompany = params.id;
   const { currentUserId, role } = useAuth();
   const formFiltros = useRef(null);
+  const history = useHistory();
 
   const backgroundColorRes = getColor(positionsCompany.length);
 
@@ -123,13 +125,14 @@ export function Company() {
   };
 
   useEffect(() => {
-    getCompany(idCompany)
-      .then(response => {
-        setCompany(response.data);
-      })
-      .catch(error => {
-        setCompany({});
-      });
+    getCompany(idCompany).then(response => {
+      setCompany(response.data);
+    }).catch(error => {
+      setCompany({});
+      //if error o not reviews for the company
+      history.push("/home");
+      return;
+    });
     getPositionsCompany(idCompany).then(response => {
       setPositionsCompany(response.data);
     });
@@ -145,7 +148,7 @@ export function Company() {
       }
     );
     return;
-  }, [idCompany, idReviewDeleted]);
+  }, [idCompany, idReviewDeleted, history]);
 
   const handleCompanySearch = (formData, e) => {
     let queryString = `companyId=${idCompany}&page=1&row4page=5&sortTipe=${formData.sortTipe}`;
