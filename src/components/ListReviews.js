@@ -12,7 +12,7 @@ import deleteReviewImg from "../img/delete.png";
 
 const useStyles = makeStyles({
   rating: {
-    width: 360,
+    // width: 348,
     display: "flex",
     alignItems: "flex-start"
   }
@@ -53,7 +53,7 @@ export function ListReviews({ listReviews, onReviewDeleted = null }) {
 
   if (listReviews.length === 0) {
     return (
-      <p className="f-s-l">{t("No reviews")}</p>
+      <p>{t("No reviews")}</p>
     );
   }
 
@@ -74,8 +74,8 @@ export function ListReviews({ listReviews, onReviewDeleted = null }) {
                   {review.end_year ? (
                     <span>{review.end_year}</span>
                   ) : (
-                      <span>{t("today")}</span>
-                    )}
+                    <span>{t("today")}</span>
+                  )}
                   ) - {review.city_name}
                 </li>
                 <li className="f-c-fourgray f-s-xs">
@@ -85,7 +85,11 @@ export function ListReviews({ listReviews, onReviewDeleted = null }) {
             </header>
             <main>
               <h1 className="f-s-sm p-t-sm">{review.comment_title}</h1>
-              <textarea value={review.comment} readOnly></textarea>
+              <textarea
+                className="f-s-sm m-b-md"
+                value={review.comment}
+                readOnly
+              ></textarea>
               <div className={classes.rating}>
                 {review.everage}
                 <Rating
@@ -165,30 +169,32 @@ export function ListReviews({ listReviews, onReviewDeleted = null }) {
                 <span className="m-l-md">{t("Work&Life balance")}</span>
               </div>
 
-              {currentUserId && review.user_id !== currentUserId && role !== "0" && (
-                <React.Fragment>
-                  <div className="reporting">
-                    <img
-                      className="p-t-md"
-                      src={denounceReviewImg}
-                      alt={t("Icon for reporting a review")}
-                    />
-                    <a
-                      className="f-c-fourgray m-l-sm m-r-md p-t-md"
-                      href="/"
-                      title={t(
-                        "Link for sending e-mail to the web administrator"
-                      )}
-                      onClick={e => {
-                        e.preventDefault();
-                        executeReport(review.id);
-                      }}
-                    >
-                      {t("Report")}
-                    </a>
-                  </div>
-                </React.Fragment>
-              )}
+              {currentUserId &&
+                review.user_id !== currentUserId &&
+                role !== "0" && (
+                  <React.Fragment>
+                    <div className="reporting">
+                      <img
+                        className="p-t-md"
+                        src={denounceReviewImg}
+                        alt={t("Icon for reporting a review")}
+                      />
+                      <a
+                        className="f-c-fourgray m-l-sm m-r-md p-t-md"
+                        href="/"
+                        title={t(
+                          "Link for sending e-mail to the web administrator"
+                        )}
+                        onClick={e => {
+                          e.preventDefault();
+                          executeReport(review.id);
+                        }}
+                      >
+                        {t("Report")}
+                      </a>
+                    </div>
+                  </React.Fragment>
+                )}
 
               {currentUserId && role === "0" && (
                 <React.Fragment>

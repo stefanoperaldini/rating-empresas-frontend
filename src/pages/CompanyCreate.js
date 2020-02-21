@@ -23,7 +23,7 @@ import {
   validatorSector
 } from "./pagesUtils";
 
-import { Cities } from "../components/Cities"
+import { Cities } from "../components/Cities";
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
 import { FileUpload } from "../components/UploadCompanyLogo";
@@ -39,7 +39,7 @@ export function CompanyCreate() {
   const { t } = useTranslation();
 
   const [companies, setCompanies] = useState([]);
-  const [companySelected, setCompanySelected] = useState(null)
+  const [companySelected, setCompanySelected] = useState(null);
   const [idCity, setIdCity] = useState(null);
   const [sectors, setSectors] = useState([]);
   const [company, setCompany] = useState({
@@ -56,7 +56,6 @@ export function CompanyCreate() {
   });
 
   const handleCompanyCreate = async formData => {
-
     let isNewSector = true;
     let sectorId = null;
 
@@ -84,7 +83,7 @@ export function CompanyCreate() {
         sede_id: idCity,
         sector: undefined,
         sector_id: sectorId,
-        url_logo: company.url_logo,
+        url_logo: company.url_logo
       };
 
       if (!company.id) {
@@ -128,14 +127,19 @@ export function CompanyCreate() {
             });
             return true;
           }
-
-          if (companyElement.userRole === "1" || (companyElement.userRole === "2" && companyElement.userDeleteAt !== null)) {
-            return true;
+            if (
+              companyElement.userRole === "1" ||
+              (companyElement.userRole === "2" &&
+                companyElement.userDeleteAt !== null)
+            ) {
+              return true;
+            }
+            return false;
           }
-          return false;
-        })
-        setCompanies(filteredCompany)
-      }).catch(error => {
+        );
+        setCompanies(filteredCompany);
+      })
+      .catch(error => {
         setError("sede_id", "backend", setErrorMessageCallBackEnd(error));
         return;
       });
@@ -165,7 +169,7 @@ export function CompanyCreate() {
           linkedin: companyElement.linkedin,
           address: companyElement.address,
           sede_id: companyElement.sede_id,
-          sede_name: companyElement.sede_name,
+          sede_name: companyElement.sede_name
         });
         break;
       }
@@ -327,6 +331,6 @@ export function CompanyCreate() {
         </form>
       </main>
       <Footer />
-    </React.Fragment >
+    </React.Fragment>
   );
 }

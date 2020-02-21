@@ -67,10 +67,24 @@ export function ContactUs() {
           {t("We are here!")}
         </DialogTitle>
         <DialogContent>
-          <DialogContentText>e-mail:</DialogContentText>
-          <DialogContentText>stefano.peraldini@gmail.com</DialogContentText>
-          <DialogContentText>patorive@gmail.com</DialogContentText>
-          <DialogContentText>linkedIn:</DialogContentText>
+          <DialogContentText style={{ color: "black" }}>
+            e-mail:
+          </DialogContentText>
+          <DialogContentText style={{ color: "black" }}>
+            stefano.peraldini@gmail.com
+          </DialogContentText>
+          <DialogContentText style={{ color: "black" }}>
+            patorive@gmail.com
+          </DialogContentText>
+          <DialogContentText style={{ color: "black" }}>
+            linkedIn:
+          </DialogContentText>
+          <DialogContentText style={{ color: "black" }}>
+            https://www.linkedin.com/in/stefano-peraldini-software-developer/
+          </DialogContentText>
+          <DialogContentText style={{ color: "black" }}>
+            https://www.linkedin.com/in/patricia-orive-a-developer/
+          </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button autoFocus onClick={handleClose} color="primary">

@@ -16,29 +16,28 @@ export function ReviewUser() {
   const { t } = useTranslation();
 
   useEffect(() => {
-    getReviewUserList().then(response => {
-      setReviewUserList(response.data);
-    }).catch(error => {
-      setReviewUserList([]);
-    });
+    getReviewUserList()
+      .then(response => {
+        setReviewUserList(response.data);
+      })
+      .catch(error => {
+        setReviewUserList([]);
+      });
     return;
   }, []);
 
   return (
     <React.Fragment>
       <Header />
-      <main className="centered-container">
+      <main className="centered-container p-r-md p-l-md">
         <h1 className="f-s-l m-t-xl m-b-md">{t("My reviews")}</h1>
-        {!reviewUserList ?
-          (
-            <div className="flexRow">
-              <DotsYellow />
-            </div>
-          ) :
-          (
-            <ListReviews listReviews={reviewUserList} />
-          )
-        }
+        {!reviewUserList ? (
+          <div className="flexRow">
+            <DotsYellow />
+          </div>
+        ) : (
+          <ListReviews listReviews={reviewUserList} />
+        )}
       </main>
       <Footer />
     </React.Fragment>

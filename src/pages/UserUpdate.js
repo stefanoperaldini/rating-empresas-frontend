@@ -25,8 +25,9 @@ export function UserUpdate() {
   useEffect(() => {
     getUser()
       .then(response => {
-        response.data.linkedin ?
-          setlinkedinUser(response.data.linkedin) : setlinkedinUser("");
+        response.data.linkedin
+          ? setlinkedinUser(response.data.linkedin)
+          : setlinkedinUser("");
       })
       .catch(error => {
         setError("linkedin", "backend", setErrorMessageCallBackEnd(error));
@@ -49,8 +50,13 @@ export function UserUpdate() {
       <Header />
       <main className="centered-container">
         <h1 className="f-s-l">{t("Update profile")}</h1>
-        <form onSubmit={handleSubmit(handleLinkedinChange)} noValidate>
-          <label className="form-control">{t("LinkedIn")}
+        <form
+          className="linkedIn"
+          onSubmit={handleSubmit(handleLinkedinChange)}
+          noValidate
+        >
+          <label className="form-control">
+            {t("LinkedIn")}
             <input
               ref={register(validatorLinkedin)}
               name="linkedin"

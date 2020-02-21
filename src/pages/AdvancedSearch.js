@@ -52,11 +52,13 @@ export function AdvancedSearch() {
   };
 
   useEffect(() => {
-    getCompanies(`sortTipe=1`).then(response => {
-      setcompaniesList(response.data.rows_companies);
-    }).catch(error => {
-      setcompaniesList([]);
-    });;
+    getCompanies(`sortTipe=1`)
+      .then(response => {
+        setcompaniesList(response.data.rows_companies);
+      })
+      .catch(error => {
+        setcompaniesList([]);
+      });
     getPositions().then(response => {
       setPositions(response.data.rows);
     });
@@ -72,11 +74,11 @@ export function AdvancedSearch() {
   return (
     <React.Fragment>
       <Header />
-      <main className="centered-container">
+      <main className="centered-container p-t-md p-r-md p-l-md">
         {(!currentUserId || role === "1") && <RateCompanyLink />}
         <h1 className="f-s-xl p-t-lg p-b-md">{t("Advanced search")}</h1>
         <form
-          className="filterSearch"
+          className="filterSearch m-b-md"
           onSubmit={handleSubmit(handleAdvancedSearch)}
           noValidate
         >
@@ -154,13 +156,11 @@ export function AdvancedSearch() {
             <div className="flexRow">
               <DotsYellow />
             </div>
-          ) :
-            (
-              <main className="minWidth">
-                <ListCompanies listCompanies={companiesList} />
-              </main>
-            )
-          }
+          ) : (
+            <main className="minWidth">
+              <ListCompanies listCompanies={companiesList} />
+            </main>
+          )}
         </section>
       </main>
       <Footer />

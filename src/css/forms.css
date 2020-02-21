@@ -80,16 +80,7 @@ input[type="file"] {
   display: none;
 }
 
-.next {
-  position: relative;
-  margin-top: 0.5rem;
-  padding: 0.4rem 2.5rem;
-  border: 2px solid var(--blue);
-  border-radius: 15px;
-  font-weight: 400;
-}
-
-.prev {
+.advance {
   position: relative;
   margin-top: 0.5rem;
   padding: 0.4rem 2.5rem;

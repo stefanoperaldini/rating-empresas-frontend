@@ -38,14 +38,11 @@ ul {
 
 a {
   text-decoration: none;
-  /* font-size: 1rem;
-  font-weight: 300; */
 }
 
 nav > a {
   text-decoration: none;
   color: inherit;
-  /* font-weight: 900; */
 }
 
 .cursorPointer {
@@ -64,7 +61,7 @@ fieldset.reviewCreate {
 
 textarea {
   height: 6rem;
-  width: 30rem;
+  width: 28rem;
   border: none;
   font-family: inherit;
   padding-top: 0.25rem;
@@ -74,7 +71,11 @@ textarea.descriptionCompany {
   margin-top: 0.25rem;
   margin-bottom: 1rem;
   height: 10rem;
-  width: 30rem;
+  width: 28rem;
+}
+
+.linkedIn {
+  min-width: 28rem;
 }
 
 select {
@@ -101,6 +102,12 @@ select {
   z-index: 9;
 }
 
+.buttonsPrevNext {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
 /* CONTAINER
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 .wrapper {
@@ -108,10 +115,6 @@ select {
   flex-direction: column;
   min-height: 100vh;
 }
-
-/* .wrapper > * {
-  padding: 20px;
-} */
 
 /* HEADER
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
@@ -123,15 +126,15 @@ select {
 
 .page-header nav {
   display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
-  justify-content: space-between;
   align-items: center;
 }
 
 .page-header ul {
   display: flex;
   order: 1;
-  width: 100%;
+  /* width: 100%; */
   margin-top: 15px;
 }
 
@@ -161,7 +164,7 @@ select {
   opacity: 0;
 }
 
-input:hover ~ span {
+header input:hover ~ span {
   color: var(--darkblue);
 }
 
@@ -241,12 +244,11 @@ input:checked ~ span {
   justify-content: center;
   flex-direction: row;
   flex-wrap: wrap;
-  /* margin-left: 1rem;
-  margin-right: 1rem; */
+  margin-top: 0.5rem;
 }
 
 .allWidth {
-  min-width: 95vw;
+  min-width: 90vw;
 }
 
 .minWidth {
@@ -307,7 +309,7 @@ input:checked ~ span {
 
 .summaryCompany {
   display: grid;
-  grid-template-columns: 10rem 10rem;
+  grid-template-columns: 9rem 11rem;
   grid-template-rows: repeat(3, 1fr);
   grid-column-gap: 1px;
   grid-row-gap: 1px;
@@ -322,11 +324,14 @@ input:checked ~ span {
 .item1 {
   grid-row: span 2;
   padding-left: 0.25rem;
+  height: 6rem;
+  width: 6rem;
+  object-fit: cover;
 }
 
 .item2 {
   grid-column: 2;
-  margin-left: 0.85rem;
+  grid-row: span 2;
   font-size: var(--font-m);
 }
 
@@ -334,7 +339,7 @@ input:checked ~ span {
   grid-column: span 2;
   color: var(--fourgray);
   font-size: var(--font-sm);
-  padding-left: 0.25rem;
+  padding-left: 0.5rem;
 }
 
 .item4 {
@@ -374,7 +379,6 @@ button.advSearch {
 .buttonSort {
   padding: 0.2rem 1rem;
   border-radius: 0;
-  /* 15px; */
   font-weight: 300;
   transition-duration: 0.4s;
 }
@@ -420,10 +424,22 @@ button.advSearch {
 
 .asideCompany {
   grid-area: asideCompany;
+  margin-top: var(--space-md);
 }
 
 .ratingCompany {
   grid-area: ratingCompany;
+}
+
+.ratingCompanyForm {
+  margin-top: var(--space-xl);
+  margin-bottom: var(--space-xl);
+}
+
+.companyTitle img {
+  height: 6rem;
+  width: 6rem;
+  object-fit: cover;
 }
 
 button.searchFilter {
@@ -432,7 +448,7 @@ button.searchFilter {
 }
 
 .diagramWidth {
-  width: 360px;
+  width: 337px;
 }
 
 /* LIST REVIEWS
@@ -445,6 +461,15 @@ button.searchFilter {
   align-items: baseline;
 }
 
+/* COMPANY CREATE
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+img.companyLogo {
+  height: 8rem;
+  width: 8rem;
+  object-fit: cover;
+}
+
 /* FOOTER
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 .page-footer {
@@ -452,6 +477,7 @@ button.searchFilter {
   flex-direction: column;
   background: var(--lgray);
   padding: 20px;
+  align-items: center;
 }
 
 .page-footer ul {
@@ -471,17 +497,19 @@ button.searchFilter {
   color: var(--darkblue);
 }
 
+.dialogContent {
+  color: var(--dark);
+}
+
 /* MQ
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
-@media screen and (min-width: 550px) {
-  .page-header ul {
-    width: auto;
-    margin-top: 0;
+
+@media screen and (min-width: 928px) {
+  html {
+    font-size: 16px;
   }
 
-  .page-header .cta-contact {
-    order: 1;
-  }
+  /* FOOTER */
 
   .page-footer {
     flex-direction: row;
@@ -492,14 +520,21 @@ button.searchFilter {
   .page-footer ul {
     margin-bottom: 0;
   }
-}
 
-@media screen and (min-width: 800px) {
-  html {
-    font-size: 16px;
+  .containerGrid {
+    margin-top: var(--space-sm);
   }
 
   /* HEADER */
+
+  .page-header ul {
+    width: auto;
+    margin-top: 0;
+  }
+
+  .page-header .cta-contact {
+    order: 1;
+  }
 
   .page-main {
     padding-left: 90px;
@@ -508,7 +543,22 @@ button.searchFilter {
   .page-header .cta-contact.headerFlexRow {
     width: 20rem;
     justify-content: flex-end;
+    padding-right: 12px;
   }
+
+  .page-header ul li:last-child {
+    padding-right: 12px;
+  }
+
+  .page-header nav {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  /* HOME */
 
   .searchComponent {
     margin-top: var(--space-xl);
@@ -521,7 +571,11 @@ button.searchFilter {
   }
 
   .containerGrid {
-    margin-top: var(--space-xl);
+    margin-top: var(--space-sm);
+  }
+
+  .containerGrid li {
+    margin-right: var(--space-md);
   }
 
   .searchCompany {
@@ -575,12 +629,16 @@ button.searchFilter {
   .companyDetail {
     display: grid;
     grid-gap: 2rem;
-    grid-template-columns: 2fr, 1fr;
-    grid-template-rows: 1fr, 1fr, 1fr;
+    grid-template-columns: 2fr 30rem;
     grid-template-areas:
       "companyTitle   companyTitle"
       "ratingCompany  asideCompany"
       "ratingCompany  none";
+  }
+
+  .ratingCompanyForm {
+    margin-top: 0;
+    margin-bottom: var(--space-xl);
   }
 
   .asideCompany {
@@ -611,5 +669,24 @@ button.searchFilter {
   button.advSearch {
     margin-left: 6.5rem;
     margin-top: 0rem;
+  }
+
+  textarea {
+    height: 6rem;
+    width: 33.5rem;
+    border: none;
+    font-family: inherit;
+    padding-top: 0.25rem;
+  }
+
+  textarea.descriptionCompany {
+    margin-top: 0.25rem;
+    margin-bottom: 1rem;
+    height: 10rem;
+    width: 30rem;
+  }
+
+  .linkedIn {
+    min-width: 30rem;
   }
 }

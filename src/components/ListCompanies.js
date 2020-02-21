@@ -8,7 +8,7 @@ import defaultImageCompany from "../img/company-default.png";
 
 const useStyles = makeStyles({
   rating: {
-    width: 200,
+    // width: 200,
     display: "flex",
     alignItems: "center"
   }
@@ -21,8 +21,9 @@ export function ListCompanies({ listCompanies }) {
 
   if (listCompanies.length === 0) {
     return (
-      <p className="containerGrid f-s-l">{t("No companies yet")}</p>
+      <p className="containerGrid">{t("No companies yet")}</p>
     );
+
   }
 
   return (
@@ -36,7 +37,6 @@ export function ListCompanies({ listCompanies }) {
           <article className="summaryCompany">
             <img
               className="item1"
-              height="75"
               src={company.url_logo ? company.url_logo : defaultImageCompany}
               alt={
                 company.url_logo
@@ -47,7 +47,6 @@ export function ListCompanies({ listCompanies }) {
             <span className="item2">
               <h3 className="p-t-md">{company.name}</h3>
             </span>
-            {/* <p> {company.sector}</p> */}
             <div className={`${classes.rating} item3`}>
               {company.everage}
               <Rating

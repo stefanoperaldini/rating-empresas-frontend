@@ -14,7 +14,7 @@
   "Delete account": "Delete account",
   "About": "About",
   "Contact": "Contact",
-  "Find the city ...": "Find the city ...",
+  "Find the city...": "Find the city...",
   "Find great places to work": "Find great places to work",
   "Get access to rating and company reviews": "Get access to rating and company reviews",
   "Company name": "Company name",
@@ -23,7 +23,7 @@
   "Advanced search": "Advanced search",
   "Do you want to rate a company?": "Do you want to rate a company?",
   "Your reviews will be anonimous": "Your reviews will be anonimous",
-  "Top Ten Workplaces": "Top Ten Workplaces",
+  "Best regarded workplaces": "Best regarded workplaces",
   "Company logo": "Company logo",
   "Default image company": "Default image company",
   "reviews": "reviews",
@@ -144,5 +144,9 @@
   "Image company": "Image company",
   "Review date": "Review date",
   "No reviews": "No reviews",
-  "No companies yet": "No companies yet"
+  "No companies yet": "No companies yet",
+  "Do you want to evaluate your current or previous job? Are you looking for the best company to work for?": "Do you want to evaluate your current or previous job? Are you looking for the best company to work for?",
+  "You are in the right place...": "You are in the right place...",
+  "We are here!": "We are here!",
+  "Close": "Close"
 }
