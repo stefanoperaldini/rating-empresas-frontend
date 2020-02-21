@@ -16,7 +16,7 @@ function setErrorMessageCallBackEnd(error) {
 function getArrayYears(start, end) {
   let arrayYears = [];
   for (let i = end; i >= start; i--) {
-    arrayYears = [...arrayYears, i]
+    arrayYears = [...arrayYears, i];
   }
   return arrayYears;
 }

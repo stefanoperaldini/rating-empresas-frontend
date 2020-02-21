@@ -49,9 +49,7 @@ export function ListReviews({ listReviews, onReviewDeleted = null }) {
   };
 
   if (listReviews.length === 0) {
-    return (
-      <p>{t("No reviews")}</p>
-    );
+    return <p>{t("No reviews")}</p>;
   }
 
   return (
@@ -71,12 +69,13 @@ export function ListReviews({ listReviews, onReviewDeleted = null }) {
                   {review.end_year ? (
                     <span>{review.end_year}</span>
                   ) : (
-                      <span>{t("today")}</span>
-                    )}
+                    <span>{t("today")}</span>
+                  )}
                   ) - {review.city_name}
                 </li>
                 <li className="f-c-fourgray f-s-xs">
-                  {t("Review date")}: {(new Date(review.created_at)).toLocaleString().split(",")[0]}
+                  {t("Review date")}:{" "}
+                  {new Date(review.created_at).toLocaleString().split(",")[0]}
                 </li>
               </ul>
             </header>
@@ -98,7 +97,9 @@ export function ListReviews({ listReviews, onReviewDeleted = null }) {
                   readOnly
                   className="m-l-xs"
                 />
-                <span className="m-l-md">{t("Overall rating")}</span>
+                <span className="m-l-md f-c-fourgray">
+                  {t("Overall rating")}
+                </span>
               </div>
               <div className={classes.rating}>
                 {review.salary_valuation}
@@ -111,7 +112,7 @@ export function ListReviews({ listReviews, onReviewDeleted = null }) {
                   readOnly
                   className="m-l-sm"
                 />
-                <span className="m-l-md">{t("Salary")}</span>
+                <span className="m-l-md f-c-fourgray">{t("Salary")}</span>
               </div>
               <div className={classes.rating}>
                 {review.inhouse_training}
@@ -124,7 +125,10 @@ export function ListReviews({ listReviews, onReviewDeleted = null }) {
                   readOnly
                   className="m-l-sm"
                 />
-                <span className="m-l-md"> {t("Internal training")}</span>
+                <span className="m-l-md f-c-fourgray">
+                  {" "}
+                  {t("Internal training")}
+                </span>
               </div>
               <div className={classes.rating}>
                 {review.growth_opportunities}
@@ -137,7 +141,9 @@ export function ListReviews({ listReviews, onReviewDeleted = null }) {
                   readOnly
                   className="m-l-sm"
                 />
-                <span className="m-l-md">{t("Growth opportunities")}</span>
+                <span className="m-l-md f-c-fourgray">
+                  {t("Growth opportunities")}
+                </span>
               </div>
               <div className={classes.rating}>
                 {review.work_enviroment}
@@ -150,7 +156,9 @@ export function ListReviews({ listReviews, onReviewDeleted = null }) {
                   readOnly
                   className="m-l-sm"
                 />
-                <span className="m-l-md">{t("Work environment")}</span>
+                <span className="m-l-md f-c-fourgray">
+                  {t("Work environment")}
+                </span>
               </div>
               <div className={classes.rating}>
                 {review.personal_life}
@@ -163,7 +171,9 @@ export function ListReviews({ listReviews, onReviewDeleted = null }) {
                   readOnly
                   className="m-l-sm"
                 />
-                <span className="m-l-md">{t("Work&Life balance")}</span>
+                <span className="m-l-md f-c-fourgray">
+                  {t("Work&Life balance")}
+                </span>
               </div>
 
               {currentUserId &&

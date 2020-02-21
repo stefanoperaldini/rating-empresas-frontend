@@ -6,7 +6,9 @@ function filterCities(nameCity, cities) {
   if (nameCity.length === 0) {
     return cities;
   }
-  const filterdCities = cities.filter((cityElement) => cityElement.name === nameCity);
+  const filterdCities = cities.filter(
+    cityElement => cityElement.name === nameCity
+  );
   if (filterdCities.length === 0) {
     return cities;
   }
@@ -22,8 +24,7 @@ export function Cities({ onClickCity, cityToSet = "" }) {
 
   useEffect(() => {
     setSearchTerm(cityToSet);
-
-  }, [cityToSet,]);
+  }, [cityToSet]);
 
   useEffect(() => {
     if (searchTerm.length >= 3) {
@@ -36,7 +37,7 @@ export function Cities({ onClickCity, cityToSet = "" }) {
           setCities(response.data.rows);
         }
         setShowResult(false);
-      })
+      });
     }
     if (searchTerm.length < 3) {
       setShowResult(false);
@@ -57,7 +58,7 @@ export function Cities({ onClickCity, cityToSet = "" }) {
         type="text"
         name="city_id"
         id="city_id"
-        placeholder={t("Find the city ...")}
+        placeholder={t("Find the city...")}
         value={searchTerm}
         onChange={e => {
           setSearchTerm(e.target.value);

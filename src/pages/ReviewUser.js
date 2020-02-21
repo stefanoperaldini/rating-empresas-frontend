@@ -28,15 +28,15 @@ export function ReviewUser() {
   return (
     <React.Fragment>
       <Header />
-      <main className="centered-container p-r-md p-l-md">
+      <main className="centered-container p-r-md p-l-md m-b-lg">
         <h1 className="f-s-l m-t-xl m-b-md">{t("My reviews")}</h1>
         {!reviewUserList ? (
           <div className="flexRow">
             <DotsYellow />
           </div>
         ) : (
-            <ListReviews listReviews={reviewUserList} />
-          )}
+          <ListReviews listReviews={reviewUserList} />
+        )}
       </main>
       <Footer />
     </React.Fragment>
