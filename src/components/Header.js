@@ -152,14 +152,15 @@ export function Header() {
               </ul>
             </div>
           ) : role === "0" ? (
-            <span className="header-item signOut"
+            <span
+              className="header-item signOut"
               onClick={() => executeLogout()}
             >
               <Link to="/">{t("Sign out")}</Link>
             </span>
           ) : (
-                <AppMenu />
-              )}
+            <AppMenu />
+          )}
         </div>
       </nav>
     </header>

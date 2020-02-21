@@ -24,7 +24,7 @@ import {
   validatorSector
 } from "./pagesUtils";
 
-import { Cities } from "../components/Cities"
+import { Cities } from "../components/Cities";
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
 import { FileUpload } from "../components/UploadCompanyLogo";
@@ -40,13 +40,12 @@ export function CompanyCreate() {
   const { t } = useTranslation();
 
   const [companies, setCompanies] = useState([]);
-  const [companySelected, setCompanySelected] = useState(null)
+  const [companySelected, setCompanySelected] = useState(null);
   const [idCity, setIdCity] = useState(null);
   const [sectors, setSectors] = useState([]);
   const [company, setCompany] = useState(null);
 
   const handleCompanyCreate = async formData => {
-
     let isNewSector = true;
     let sectorId = null;
 
@@ -74,7 +73,7 @@ export function CompanyCreate() {
         sede_id: idCity,
         sector: undefined,
         sector_id: sectorId,
-        url_logo: company.url_logo,
+        url_logo: company.url_logo
       };
 
       if (!company.id) {
@@ -102,31 +101,37 @@ export function CompanyCreate() {
   useEffect(() => {
     getCompanies(`filters=no`)
       .then(response => {
-        const filteredCompany = response.data.rows_companies.filter((companyElement, index) => {
-          if (currentUserId === companyElement.user_id) {
-            setCompany({
-              id: companyElement.company_id,
-              name: companyElement.name,
-              description: companyElement.description,
-              sector_name: companyElement.sector_name,
-              url_web: companyElement.url_web,
-              url_logo: companyElement.url_logo,
-              linkedin: companyElement.linkedin,
-              address: companyElement.address,
-              sede_id: companyElement.sede_id,
-              sede_name: companyElement.sede_name,
+        const filteredCompany = response.data.rows_companies.filter(
+          (companyElement, index) => {
+            if (currentUserId === companyElement.user_id) {
+              setCompany({
+                id: companyElement.company_id,
+                name: companyElement.name,
+                description: companyElement.description,
+                sector_name: companyElement.sector_name,
+                url_web: companyElement.url_web,
+                url_logo: companyElement.url_logo,
+                linkedin: companyElement.linkedin,
+                address: companyElement.address,
+                sede_id: companyElement.sede_id,
+                sede_name: companyElement.sede_name
+              });
+              return true;
+            }
 
-            });
-            return true;
+            if (
+              companyElement.userRole === "1" ||
+              (companyElement.userRole === "2" &&
+                companyElement.userDeleteAt !== null)
+            ) {
+              return true;
+            }
+            return false;
           }
-
-          if (companyElement.userRole === "1" || (companyElement.userRole === "2" && companyElement.userDeleteAt !== null)) {
-            return true;
-          }
-          return false;
-        })
-        setCompanies(filteredCompany)
-      }).catch(error => {
+        );
+        setCompanies(filteredCompany);
+      })
+      .catch(error => {
         setError("sede_id", "backend", setErrorMessageCallBackEnd(error));
         return;
       });
@@ -156,7 +161,7 @@ export function CompanyCreate() {
           linkedin: companyElement.linkedin,
           address: companyElement.address,
           sede_id: companyElement.sede_id,
-          sede_name: companyElement.sede_name,
+          sede_name: companyElement.sede_name
         });
         break;
       }
@@ -169,164 +174,195 @@ export function CompanyCreate() {
       <main className="centered-container">
         {!company ? (
           <DotsYellow />
-        ) :
-          (
-            <React.Fragment>
-
-              <h1 className="f-s-l">{t("My company")}</h1>
-              {company.url_logo ?
-                (<img height="100" src={company.url_logo} alt={t("Image company")} />)
-                :
-                (<img height="100" src={defaultImageCompany} alt={t("Default image company")} />)
+        ) : (
+          <React.Fragment>
+            <h1 className="f-s-l">{t("My company")}</h1>
+            {company.url_logo ? (
+              <img
+                className="companyLogo"
+                src={company.url_logo}
+                alt={t("Image company")}
+              />
+            ) : (
+              <img
+                className="companyLogo"
+                src={defaultImageCompany}
+                alt={t("Default image company")}
+              />
+            )}
+            <FileUpload
+              onUploadLogo={urlLogo =>
+                setCompany({ ...company, url_logo: urlLogo })
               }
-              <FileUpload onUploadLogo={urlLogo => setCompany({ ...company, url_logo: urlLogo })} />
-              <form onSubmit={handleSubmit(handleCompanyCreate)} noValidate>
+            />
+            <form onSubmit={handleSubmit(handleCompanyCreate)} noValidate>
+              <label className="form-control">
+                {t("Name")} (*)
+                <input
+                  list="companyName"
+                  ref={register(validatorCompanyName)}
+                  name="name"
+                  id="name"
+                  type="text"
+                  value={company.name}
+                  onChange={e => {
+                    setCompany({ ...company, name: e.target.value });
+                    setCompanySelected(e.target.value);
+                  }}
+                ></input>
+                <datalist id="companyName">
+                  {companies.map(companyElement => (
+                    <option
+                      key={companyElement.name}
+                      value={companyElement.name}
+                    >
+                      {companyElement.name}
+                    </option>
+                  ))}
+                </datalist>
+                {errors.name && (
+                  <span className="errorMessage">{t(errors.name.message)}</span>
+                )}
+              </label>
 
-                <label className="form-control">{t("Name")} (*)
-                  <input
-                    list="companyName"
-                    ref={register(validatorCompanyName)}
-                    name="name"
-                    id="name"
-                    type="text"
-                    value={company.name}
-                    onChange={e => {
-                      setCompany({ ...company, name: e.target.value })
-                      setCompanySelected(e.target.value)
-                    }
-                    }
-                  ></input>
-                  <datalist id="companyName">
-                    {companies.map(companyElement => (
-                      <option key={companyElement.name} value={companyElement.name}>
-                        {companyElement.name}
-                      </option>
-                    ))}
-                  </datalist>
-                  {errors.name && (
-                    <span className="errorMessage">{t(errors.name.message)}</span>
-                  )}
-                </label>
+              <label className="form-control">
+                {t("Description")}
+                <textarea
+                  ref={register(validatorDescription)}
+                  name="description"
+                  id="description"
+                  type="text"
+                  value={company.description}
+                  placeholder={t("About my company")}
+                  onChange={e =>
+                    setCompany({ ...company, description: e.target.value })
+                  }
+                ></textarea>
+                {errors.description && (
+                  <span className="errorMessage">
+                    {t(errors.description.message)}
+                  </span>
+                )}
+              </label>
 
-                <label className="form-control">{t("Description")}
-                  <textarea
-                    ref={register(validatorDescription)}
-                    name="description"
-                    id="description"
-                    type="text"
-                    value={company.description}
-                    placeholder={t("About my company")}
-                    onChange={e =>
-                      setCompany({ ...company, description: e.target.value })
-                    }
-                  ></textarea>
-                  {errors.description && (
-                    <span className="errorMessage">
-                      {t(errors.description.message)}
-                    </span>
-                  )}
-                </label>
+              <label className="form-control">
+                {t("Sector")} (*)
+                <input
+                  list="listSectors"
+                  ref={register(validatorSector)}
+                  name="sector"
+                  id="sector"
+                  type="text"
+                  placeholder={t("Sector name")}
+                  value={company.sector_name}
+                  onChange={e => {
+                    setCompany({ ...company, sector_name: e.target.value });
+                  }}
+                ></input>
+                <datalist id="listSectors">
+                  {sectors.map(sectorElement => (
+                    <option
+                      key={sectorElement.sector}
+                      value={sectorElement.sector}
+                    >
+                      {sectorElement.sector}
+                    </option>
+                  ))}
+                </datalist>
+                {errors.sector && (
+                  <span className="errorMessage">
+                    {t(errors.sector.message)}
+                  </span>
+                )}
+              </label>
 
-                <label className="form-control">{t("Sector")} (*)
-                  <input
-                    list="listSectors"
-                    ref={register(validatorSector)}
-                    name="sector"
-                    id="sector"
-                    type="text"
-                    placeholder={t("Sector name")}
-                    value={company.sector_name}
-                    onChange={e => {
-                      setCompany({ ...company, sector_name: e.target.value })
+              <label className="form-control">
+                {t("URL")}
+                <input
+                  ref={register(validatorUrl)}
+                  name="url_web"
+                  id="url_web"
+                  type="url"
+                  placeholder={t("Website")}
+                  value={company.url_web}
+                  onChange={e =>
+                    setCompany({ ...company, url_web: e.target.value })
+                  }
+                ></input>
+                {errors.url_web && (
+                  <span className="errorMessage">
+                    {t(errors.url_web.message)}
+                  </span>
+                )}
+              </label>
 
-                    }
-                    }
-                  ></input>
-                  <datalist id="listSectors">
-                    {sectors.map(sectorElement => (
-                      <option key={sectorElement.sector} value={sectorElement.sector}>
-                        {sectorElement.sector}
-                      </option>
-                    ))}
-                  </datalist>
-                  {errors.sector && (
-                    <span className="errorMessage">{t(errors.sector.message)}</span>
-                  )}
-                </label>
+              <label className="form-control">
+                {t("LinkedIn")}
+                <input
+                  ref={register(validatorLinkedin)}
+                  name="linkedin"
+                  id="linkedin"
+                  type="url"
+                  placeholder={t("LinkedIn address")}
+                  value={company.linkedin}
+                  onChange={e =>
+                    setCompany({ ...company, linkedin: e.target.value })
+                  }
+                ></input>
+                {errors.linkedin && (
+                  <span className="errorMessage">
+                    {t(errors.linkedin.message)}
+                  </span>
+                )}
+              </label>
 
-                <label className="form-control">{t("URL")}
-                  <input
-                    ref={register(validatorUrl)}
-                    name="url_web"
-                    id="url_web"
-                    type="url"
-                    placeholder={t("Website")}
-                    value={company.url_web}
-                    onChange={e =>
-                      setCompany({ ...company, url_web: e.target.value })
-                    }
-                  ></input>
-                  {errors.url_web && (
-                    <span className="errorMessage">{t(errors.url_web.message)}</span>
-                  )}
-                </label>
+              <label className="form-control">
+                {t("Headquarters address")}
+                <input
+                  ref={register(validatorAddress)}
+                  name="address"
+                  id="address"
+                  type="text"
+                  value={company.address}
+                  onChange={e =>
+                    setCompany({ ...company, address: e.target.value })
+                  }
+                  placeholder={t("Headquarters address")}
+                ></input>
+                {errors.address && (
+                  <span className="errorMessage">
+                    {t(errors.address.message)}
+                  </span>
+                )}
+              </label>
 
-                <label className="form-control">{t("LinkedIn")}
-                  <input
-                    ref={register(validatorLinkedin)}
-                    name="linkedin"
-                    id="linkedin"
-                    type="url"
-                    placeholder={t("LinkedIn address")}
-                    value={company.linkedin}
-                    onChange={e =>
-                      setCompany({ ...company, linkedin: e.target.value })
-                    }
-                  ></input>
-                  {errors.linkedin && (
-                    <span className="errorMessage">{t(errors.linkedin.message)}</span>
-                  )}
-                </label>
-
-                <label className="form-control">{t("Headquarters address")}
-                  <input
-                    ref={register(validatorAddress)}
-                    name="address"
-                    id="address"
-                    type="text"
-                    value={company.address}
-                    onChange={e =>
-                      setCompany({ ...company, address: e.target.value })
-                    }
-                    placeholder={t("Headquarters address")}
-                  ></input>
-                  {errors.address && (
-                    <span className="errorMessage">{t(errors.address.message)}</span>
-                  )}
-                </label>
-
-                <label className="form-control">{t("Headquarters")} (*)
-                  <Cities onClickCity={id => setIdCity(id)} cityToSet={company.sede_name} />
-                  {errors.sede_id && (
-                    <span className="errorMessage">{t(errors.sede_id.message)}</span>
-                  )}
-                </label>
-                <p className="f-s-xs">(*) {t("Field required")}</p>
-                <div className="btn-container">
-                  <button
-                    type="submit"
-                    className="btn m-t-md"
-                    disabled={formState.isSubmitting}
-                  >
-                    {t("Save")}
-                  </button>
-                </div>
-              </form>
-            </React.Fragment>
-          )
-        }
+              <label className="form-control">
+                {t("Headquarters")} (*)
+                <Cities
+                  onClickCity={id => setIdCity(id)}
+                  cityToSet={company.sede_name}
+                />
+                {errors.sede_id && (
+                  <span className="errorMessage">
+                    {t(errors.sede_id.message)}
+                  </span>
+                )}
+              </label>
+              <p className="f-s-xs">(*) {t("Field required")}</p>
+              <div className="btn-container">
+                <button
+                  type="submit"
+                  className="btn m-t-md"
+                  disabled={formState.isSubmitting}
+                >
+                  {t("Save")}
+                </button>
+              </div>
+            </form>
+          </React.Fragment>
+        )}
       </main>
       <Footer />
-    </React.Fragment >
+    </React.Fragment>
   );
 }

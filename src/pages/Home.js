@@ -69,7 +69,7 @@ export function Home() {
   return (
     <React.Fragment>
       <Header />
-      <main className="centered-container-home m-t-md">
+      <main className="centered-container-home m-t-md p-r-md p-l-md">
         <section className="allWidth centeredComponent">
           <h1 className="f-s-xxl txtCenter">
             {t("Find great places to work")}
@@ -129,23 +129,23 @@ export function Home() {
 
         {(!currentUserId || role === "1") && <RateCompanyLink />}
 
-        <section className="allWidth centered-container-home p-t-md m-t-md">
+        <section className="allWidth centered-container-home p-t-md">
           {!topCompanies ? (
             <div className="flexRow">
               <DotsYellow />
             </div>
-          ) :
-            (
-              <React.Fragment>
-                <header>
-                  <h2 className="f-s-l txtCenter m-b-md">{t("Top Ten Workplaces")}</h2>
-                </header>
-                <main className="minWidth">
-                  <ListCompanies listCompanies={topCompanies} />
-                </main>
-              </React.Fragment>
-            )
-          }
+          ) : (
+            <React.Fragment>
+              <header>
+                <h2 className="f-s-l txtCenter m-b-md">
+                  {t("Best regarded workplaces")}
+                </h2>
+              </header>
+              <main className="minWidth">
+                <ListCompanies listCompanies={topCompanies} />
+              </main>
+            </React.Fragment>
+          )}
         </section>
       </main>
       <Footer />

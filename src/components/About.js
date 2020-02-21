@@ -65,13 +65,13 @@ export function AboutUs() {
       >
         <DialogTitle id="responsive-dialog-title">WorkPlace</DialogTitle>
         <DialogContent>
-          <DialogContentText>
+          <DialogContentText style={{ color: "black" }}>
             {t(
-              "¿Quieres evaluar tu puesto de trabajo actual o alguno anterior? ¿Buscas la mejor empresa para trabajar?"
+              "Do you want to evaluate your current or previous job? Are you looking for the best company to work for?"
             )}
           </DialogContentText>
-          <DialogContentText>
-            {t("Estás en el lugar indicado ...")}
+          <DialogContentText style={{ color: "black" }}>
+            {t("You are in the right place...")}
           </DialogContentText>
         </DialogContent>
         <DialogActions>

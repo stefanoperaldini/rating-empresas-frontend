@@ -14,7 +14,7 @@
   "Delete account": "Eliminare account",
   "About": "About",
   "Contact": "Contacto",
-  "Find the city ...": "Cerca la città ...",
+  "Find the city...": "Cerca la città...",
   "Find great places to work": "Cerca la miglior impresa per lavorare",
   "Get access to rating and company reviews": "Accedi alle valorazioni e valutazioni delle imprese",
   "Company name": "Nome dell'impresa",
@@ -23,7 +23,7 @@
   "Advanced search": "Ricerca avanzata",
   "Do you want to rate a company?": "¿Vuoi valutare un'impresa?",
   "Your reviews will be anonimous": "Le tue risposte saranno anonime",
-  "Top Ten Workplaces": "Le dieci imprese miglior valutate",
+  "Best regarded workplaces": "Imprese miglior valutate",
   "Company logo": "Logo dell'impresa",
   "Default image company": "Immagine di default dell'impresa",
   "reviews": "valutazioni",
@@ -144,5 +144,9 @@
   "Image company": "Immagine dell'impresa",
   "Review date": "Data valutazione",
   "No reviews": "Non ci sono valutazioni",
-  "No companies yet": "Non ci sono ancora imprese"
+  "No companies yet": "Non ci sono ancora imprese",
+  "Do you want to evaluate your current or previous job? Are you looking for the best company to work for?": "Vuoi valutare il tuo posto di lavoro attuale o uno anteriore? Cerchi la miglior impresa dove lavorare?",
+  "You are in the right place...": "Sei nel posto giusto...",
+  "We are here!": "Siamo qui!",
+  "Close": "Chiudi"
 }
