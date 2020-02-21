@@ -6,6 +6,7 @@ import { getReview } from "../http/reviewService";
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
 import { ListReviews } from "../components/ListReviews";
+import { DotsYellow } from "../components/AppLottie";
 
 /**
  * Page for admin delete review
@@ -30,9 +31,17 @@ export function ReviewReport() {
       <Header />
       <main className="centered-container">
         <h1 className="f-s-l">{t("Reported review")}</h1>
-        <ListReviews
-          listReviews={[reviewUserList]}
-        />
+        {!reviewUserList ? (
+          <div className="flexRow">
+            <DotsYellow />
+          </div>
+        ) :
+          (
+            <ListReviews
+              listReviews={[reviewUserList]}
+            />
+          )
+        }
       </main>
       <Footer />
     </React.Fragment>
