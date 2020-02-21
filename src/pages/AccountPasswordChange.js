@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
-
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
 import { passwordChange } from "../http/authService";
@@ -26,7 +25,6 @@ export function AccountPasswordChange() {
 
   const history = useHistory();
   const { t } = useTranslation();
-
   const [showPassword, setShowPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -72,7 +70,6 @@ export function AccountPasswordChange() {
                 </span>
               )}
             </label>
-
             <label className="form-control">{t("New password")} (*)
               <input
                 ref={register(validatorPassword)}
@@ -96,7 +93,6 @@ export function AccountPasswordChange() {
                 </span>
               )}
             </label>
-
             <label className="form-control">{t("Confirm new password")} (*)
               <input
                 ref={register({

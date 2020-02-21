@@ -144,7 +144,6 @@ const validatorDescriptionReview = {
   }
 };
 
-
 const validatorSector = {
   required: "This field is required",
   minLength: {

@@ -13,7 +13,6 @@ export function AccountActivate() {
   const params = useParams();
   const [response, setResponse] = useState(null);
   const { t } = useTranslation();
-
   const verificationCode = params.verification_code;
 
   useEffect(() => {

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
-
 import { getCompanies } from "../http/companyService";
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
@@ -21,11 +20,9 @@ export function Home() {
   const [companies, setCompanies] = useState([]);
   const [topCompanies, setTopCompanies] = useState(null);
   const [company, setCompany] = useState("");
-
   const { handleSubmit, register, errors, formState, setError } = useForm({
     mode: "onBlur"
   });
-
   const { t } = useTranslation();
   const history = useHistory();
   const { currentUserId, role } = useAuth();
@@ -126,26 +123,24 @@ export function Home() {
             </div>
           </form>
         </section>
-
         {(!currentUserId || role === "1") && <RateCompanyLink />}
-
         <section className="allWidth centered-container-home p-t-md">
           {!topCompanies ? (
             <div className="flexRow">
               <DotsYellow />
             </div>
           ) : (
-            <React.Fragment>
-              <header>
-                <h2 className="f-s-l txtCenter m-b-md">
-                  {t("Best regarded workplaces")}
-                </h2>
-              </header>
-              <main className="minWidth">
-                <ListCompanies listCompanies={topCompanies} />
-              </main>
-            </React.Fragment>
-          )}
+              <React.Fragment>
+                <header>
+                  <h2 className="f-s-l txtCenter m-b-md">
+                    {t("Best regarded workplaces")}
+                  </h2>
+                </header>
+                <main className="minWidth">
+                  <ListCompanies listCompanies={topCompanies} />
+                </main>
+              </React.Fragment>
+            )}
         </section>
       </main>
       <Footer />

@@ -1,6 +1,5 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-
 import imageGitHub from "../img/GitHub-Mark-32px.png";
 import { AboutUs } from "./About";
 import { ContactUs } from "./Contact";

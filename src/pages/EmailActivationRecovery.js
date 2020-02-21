@@ -2,9 +2,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
-
 import { mailActivationRecovery } from "../http/authService";
-
 import { Header } from "../components/Header";
 import { setErrorMessageCallBackEnd, validatorEmail } from "./pagesUtils";
 

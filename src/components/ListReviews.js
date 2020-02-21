@@ -1,10 +1,8 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-
 import Rating from "@material-ui/lab/Rating";
 import { makeStyles } from "@material-ui/core/styles";
-
 import { useAuth } from "../context/auth-context";
 import { reportReview, deleteReview } from "../http/reviewService";
 import denounceReviewImg from "../img/denounce.png";
@@ -12,7 +10,6 @@ import deleteReviewImg from "../img/delete.png";
 
 const useStyles = makeStyles({
   rating: {
-    // width: 348,
     display: "flex",
     alignItems: "flex-start"
   }
@@ -74,8 +71,8 @@ export function ListReviews({ listReviews, onReviewDeleted = null }) {
                   {review.end_year ? (
                     <span>{review.end_year}</span>
                   ) : (
-                    <span>{t("today")}</span>
-                  )}
+                      <span>{t("today")}</span>
+                    )}
                   ) - {review.city_name}
                 </li>
                 <li className="f-c-fourgray f-s-xs">

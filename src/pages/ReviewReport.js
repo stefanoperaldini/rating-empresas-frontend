@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router";
-
 import { getReview } from "../http/reviewService";
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
@@ -17,7 +16,6 @@ export function ReviewReport() {
   const { t } = useTranslation();
   const params = useParams();
   const idReview = params.idReview;
-
 
   useEffect(() => {
     getReview(idReview).then(response => {

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
-
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
 import { setErrorMessageCallBackEnd, validatorLinkedin } from "./pagesUtils";
@@ -16,10 +15,8 @@ export function UserUpdate() {
   const { handleSubmit, register, errors, formState, setError } = useForm({
     mode: "onBlur"
   });
-
   const history = useHistory();
   const { t } = useTranslation();
-
   const [linkedinUser, setlinkedinUser] = useState("");
 
   useEffect(() => {
@@ -69,7 +66,6 @@ export function UserUpdate() {
               <span className="errorMessage">{t(errors.linkedin.message)}</span>
             )}
           </label>
-
           <div className="btn-container">
             <button
               type="submit"

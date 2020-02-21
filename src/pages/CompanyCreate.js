@@ -2,10 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
-
 import { useAuth } from "../context/auth-context";
 import defaultImageCompany from "../img/company-default.png"
-
 import {
   getCompanies,
   getSectors,
@@ -22,7 +20,6 @@ import {
   validatorAddress,
   validatorSector
 } from "./pagesUtils";
-
 import { Cities } from "../components/Cities";
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
@@ -32,12 +29,9 @@ export function CompanyCreate() {
   const { handleSubmit, register, errors, formState, setError } = useForm({
     mode: "onBlur"
   });
-
   const { currentUserId } = useAuth();
-
   const history = useHistory();
   const { t } = useTranslation();
-
   const [companies, setCompanies] = useState([]);
   const [companySelected, setCompanySelected] = useState(null);
   const [idCity, setIdCity] = useState(null);
@@ -127,15 +121,15 @@ export function CompanyCreate() {
             });
             return true;
           }
-            if (
-              companyElement.userRole === "1" ||
-              (companyElement.userRole === "2" &&
-                companyElement.userDeleteAt !== null)
-            ) {
-              return true;
-            }
-            return false;
+          if (
+            companyElement.userRole === "1" ||
+            (companyElement.userRole === "2" &&
+              companyElement.userDeleteAt !== null)
+          ) {
+            return true;
           }
+          return false;
+        }
         );
         setCompanies(filteredCompany);
       })
@@ -188,7 +182,6 @@ export function CompanyCreate() {
         }
         <FileUpload onUploadLogo={urlLogo => setCompany({ ...company, url_logo: urlLogo })} />
         <form onSubmit={handleSubmit(handleCompanyCreate)} noValidate>
-
           <label className="form-control">{t("Name")} (*)
                   <input
               list="companyName"
@@ -214,7 +207,6 @@ export function CompanyCreate() {
               <span className="errorMessage">{t(errors.name.message)}</span>
             )}
           </label>
-
           <label className="form-control">{t("Description")}
             <textarea
               ref={register(validatorDescription)}
@@ -233,7 +225,6 @@ export function CompanyCreate() {
               </span>
             )}
           </label>
-
           <label className="form-control">{t("Sector")} (*)
                   <input
               list="listSectors"
@@ -260,7 +251,6 @@ export function CompanyCreate() {
               <span className="errorMessage">{t(errors.sector.message)}</span>
             )}
           </label>
-
           <label className="form-control">{t("URL")}
             <input
               ref={register(validatorUrl)}
@@ -277,7 +267,6 @@ export function CompanyCreate() {
               <span className="errorMessage">{t(errors.url_web.message)}</span>
             )}
           </label>
-
           <label className="form-control">{t("LinkedIn")}
             <input
               ref={register(validatorLinkedin)}
@@ -294,7 +283,6 @@ export function CompanyCreate() {
               <span className="errorMessage">{t(errors.linkedin.message)}</span>
             )}
           </label>
-
           <label className="form-control">{t("Headquarters address")}
             <input
               ref={register(validatorAddress)}
@@ -311,7 +299,6 @@ export function CompanyCreate() {
               <span className="errorMessage">{t(errors.address.message)}</span>
             )}
           </label>
-
           <label className="form-control">{t("Headquarters")} (*)
                   <Cities onClickCity={id => setIdCity(id)} cityToSet={company.sede_name} />
             {errors.sede_id && (

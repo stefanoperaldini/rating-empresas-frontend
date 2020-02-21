@@ -4,7 +4,6 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { useTranslation } from "react-i18next";
 import { useHistory, } from "react-router-dom";
-
 import { useAuth } from "../context/auth-context";
 import { executeLogout } from "../utils";
 import menu from "../img/menu-black.png";

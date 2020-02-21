@@ -2,7 +2,6 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
-
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
 import { setErrorMessageCallBackEnd, validatorDelete } from "./pagesUtils";
@@ -48,7 +47,6 @@ export function UserDelete() {
               <span className="errorMessage">{t(errors.confirm.message)}</span>
             )}
           </label>
-
           <div className="btn-container">
             <button
               type="submit"

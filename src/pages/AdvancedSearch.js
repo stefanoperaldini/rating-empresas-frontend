@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useForm } from "react-hook-form";
-
 import {
   getCompanies,
   getSectors,
@@ -27,7 +26,6 @@ export function AdvancedSearch() {
   const [positions, setPositions] = useState([]);
   const [sectors, setSectors] = useState([]);
   const [cities, setCities] = useState([]);
-
   const { t } = useTranslation();
   const { currentUserId, role } = useAuth();
 
@@ -100,7 +98,6 @@ export function AdvancedSearch() {
                   </option>
                 ))}
               </select>
-
               <select
                 name="positionId"
                 id="positionId"
@@ -157,10 +154,10 @@ export function AdvancedSearch() {
               <DotsYellow />
             </div>
           ) : (
-            <main className="minWidth">
-              <ListCompanies listCompanies={companiesList} />
-            </main>
-          )}
+              <main className="minWidth">
+                <ListCompanies listCompanies={companiesList} />
+              </main>
+            )}
         </section>
       </main>
       <Footer />

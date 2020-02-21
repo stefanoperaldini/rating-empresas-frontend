@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-
 import { getReviewUserList } from "../http/reviewService";
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
@@ -36,8 +35,8 @@ export function ReviewUser() {
             <DotsYellow />
           </div>
         ) : (
-          <ListReviews listReviews={reviewUserList} />
-        )}
+            <ListReviews listReviews={reviewUserList} />
+          )}
       </main>
       <Footer />
     </React.Fragment>

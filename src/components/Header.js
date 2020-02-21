@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-
 import admin from "../img/admin-user.png";
 import user from "../img/user.png";
 import company from "../img/company.png";
 import logo from "../img/Logo.png";
 import { useAuth } from "../context/auth-context";
 import { executeLogout } from "../utils";
-
 import { AppMenu } from "../components/AppMenu";
 
 export function Header() {
@@ -118,7 +116,6 @@ export function Header() {
             </label>
           </li>
         </ul>
-
         <div className="cta-contact headerFlexRow">
           {currentUserId && role === "0" && (
             <span className="centeredComponent f-s-xs f-c-fourgray m-r-xl">
@@ -135,7 +132,6 @@ export function Header() {
               <img src={company} alt={t("Company icon")} /> <span>{email}</span>
             </span>
           )}
-
           {!currentUserId ? (
             <div className="header-item">
               <ul>
@@ -159,8 +155,8 @@ export function Header() {
               <Link to="/">{t("Sign out")}</Link>
             </span>
           ) : (
-            <AppMenu />
-          )}
+                <AppMenu />
+              )}
         </div>
       </nav>
     </header>

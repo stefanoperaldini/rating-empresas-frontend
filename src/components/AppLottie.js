@@ -8,7 +8,6 @@ function DotsYellow() {
         autoplay: true,
         animationData: dotsYellowData
     };
-
     return <Lottie options={defaultOptions} height={200} width={200} />;
 }
 

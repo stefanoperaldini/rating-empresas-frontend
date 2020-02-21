@@ -3,12 +3,10 @@ import { useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Rating from "@material-ui/lab/Rating";
 import { makeStyles } from "@material-ui/core/styles";
-
 import defaultImageCompany from "../img/company-default.png";
 
 const useStyles = makeStyles({
   rating: {
-    // width: 200,
     display: "flex",
     alignItems: "center"
   }

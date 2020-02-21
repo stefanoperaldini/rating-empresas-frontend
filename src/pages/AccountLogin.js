@@ -3,7 +3,6 @@ import { useTranslation } from "react-i18next";
 import { Link, useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import jwt from "jsonwebtoken";
-
 import { signIn } from "../http/authService";
 import {
   setErrorMessageCallBackEnd,

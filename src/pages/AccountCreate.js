@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-
 import { Link, useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
-
 import { Header } from "../components/Header";
 import {
   setErrorMessageCallBackEnd,
@@ -64,7 +62,6 @@ export function AccountCreate() {
                 {t("Company")}
               </label>
             </div>
-
             <label className="form-control">{t("Name")} (*)
               <input
                 ref={register(validatorUserName)}
@@ -77,7 +74,6 @@ export function AccountCreate() {
                 <span className="errorMessage">{t(errors.name.message)}</span>
               )}
             </label>
-
             <label className="form-control">{t("E-mail")} (*)
               <input
                 ref={register(validatorEmail)}
@@ -90,7 +86,6 @@ export function AccountCreate() {
                 <span className="errorMessage">{t(errors.email.message)}</span>
               )}
             </label>
-
             <label className="form-control">{t("LinkedIn")}
               <input
                 ref={register(validatorLinkedin)}
@@ -105,7 +100,6 @@ export function AccountCreate() {
                 </span>
               )}
             </label>
-
             <label className="form-control">{t("Password")} (*)
               <input
                 ref={register(validatorPassword)}
@@ -129,7 +123,6 @@ export function AccountCreate() {
                 </span>
               )}
             </label>
-
             <label className="form-control">{t("Confirm password")} (*)
               <input
                 ref={register({

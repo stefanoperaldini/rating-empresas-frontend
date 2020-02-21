@@ -2,7 +2,6 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
-
 import { passwordRecovery } from "../http/authService";
 import { Header } from "../components/Header";
 import { setErrorMessageCallBackEnd, validatorEmail } from "./pagesUtils";
@@ -15,7 +14,6 @@ export function AccountPasswordRecovery() {
   const { handleSubmit, register, errors, formState, setError } = useForm({
     mode: "onBlur"
   });
-
   const history = useHistory();
   const { t } = useTranslation();
 
@@ -48,7 +46,6 @@ export function AccountPasswordRecovery() {
                 <span className="errorMessage">{t(errors.email.message)}</span>
               )}
             </label>
-
             <p className="f-c-fourgray">
               {t("We will send you an e-mail with a new password")}
             </p>
