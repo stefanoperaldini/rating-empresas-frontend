@@ -1,4 +1,4 @@
-import React, { useState, useRef, } from "react";
+import React, { useState, useRef } from "react";
 import { uploadLogo } from "../http/companyService";
 
 export function FileUpload({ onUploadLogo }) {
@@ -30,7 +30,7 @@ export function FileUpload({ onUploadLogo }) {
       setUploading(false);
     } catch (error) {
       setUploading(false);
-    };
+    }
   };
 
   const openFileDialog = () => {
@@ -39,16 +39,21 @@ export function FileUpload({ onUploadLogo }) {
 
   return (
     <div>
-      <input
-        ref={fileInput}
-        type="file"
-        accept="png"
-        onChange={handleChange}
-      />
-      <button type="button" onClick={openFileDialog} disabled={uploading}>
+      <input ref={fileInput} type="file" accept="png" onChange={handleChange} />
+      <button
+        className="upload"
+        type="button"
+        onClick={openFileDialog}
+        disabled={uploading}
+      >
         {uploading ? "Uploading files ..." : "Choose File"}
       </button>
-      <button type="button" onClick={handleUpload} disabled={uploading}>
+      <button
+        className="upload"
+        type="button"
+        onClick={handleUpload}
+        disabled={uploading}
+      >
         Upload
       </button>
     </div>

@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useAuth } from "../context/auth-context";
-import defaultImageCompany from "../img/company-default.png"
+import defaultImageCompany from "../img/company-default.png";
 import {
   getCompanies,
   getSectors,
@@ -46,7 +46,7 @@ export function CompanyCreate() {
     linkedin: null,
     address: null,
     sede_id: null,
-    sede_name: "",
+    sede_name: ""
   });
 
   const handleCompanyCreate = async formData => {
@@ -105,31 +105,32 @@ export function CompanyCreate() {
   useEffect(() => {
     getCompanies(`filters=no`)
       .then(response => {
-        const filteredCompany = response.data.rows_companies.filter((companyElement, index) => {
-          if (currentUserId === companyElement.user_id) {
-            setCompany({
-              id: companyElement.company_id,
-              name: companyElement.name,
-              description: companyElement.description,
-              sector_name: companyElement.sector_name,
-              url_web: companyElement.url_web,
-              url_logo: companyElement.url_logo,
-              linkedin: companyElement.linkedin,
-              address: companyElement.address,
-              sede_id: companyElement.sede_id,
-              sede_name: companyElement.sede_name,
-            });
-            return true;
+        const filteredCompany = response.data.rows_companies.filter(
+          (companyElement, index) => {
+            if (currentUserId === companyElement.user_id) {
+              setCompany({
+                id: companyElement.company_id,
+                name: companyElement.name,
+                description: companyElement.description,
+                sector_name: companyElement.sector_name,
+                url_web: companyElement.url_web,
+                url_logo: companyElement.url_logo,
+                linkedin: companyElement.linkedin,
+                address: companyElement.address,
+                sede_id: companyElement.sede_id,
+                sede_name: companyElement.sede_name
+              });
+              return true;
+            }
+            if (
+              companyElement.userRole === "1" ||
+              (companyElement.userRole === "2" &&
+                companyElement.userDeleteAt !== null)
+            ) {
+              return true;
+            }
+            return false;
           }
-          if (
-            companyElement.userRole === "1" ||
-            (companyElement.userRole === "2" &&
-              companyElement.userDeleteAt !== null)
-          ) {
-            return true;
-          }
-          return false;
-        }
         );
         setCompanies(filteredCompany);
       })
@@ -159,7 +160,9 @@ export function CompanyCreate() {
           description: companyElement.description,
           sector_name: companyElement.sector_name,
           url_web: companyElement.url_web,
-          url_logo: companyElement.url_logo ? companyElement.url_logo : undefined,
+          url_logo: companyElement.url_logo
+            ? companyElement.url_logo
+            : undefined,
           linkedin: companyElement.linkedin,
           address: companyElement.address,
           sede_id: companyElement.sede_id,
@@ -173,17 +176,30 @@ export function CompanyCreate() {
   return (
     <React.Fragment>
       <Header />
-      <main className="centered-container">
-        <h1 className="f-s-l">{t("My company")}</h1>
-        {company.url_logo ?
-          (<img height="100" src={company.url_logo} alt={t("Image company")} />)
-          :
-          (<img height="100" src={defaultImageCompany} alt={t("Default image company")} />)
-        }
-        <FileUpload onUploadLogo={urlLogo => setCompany({ ...company, url_logo: urlLogo })} />
+      <main className="centered-container p-r-md p-l-md m-b-lg">
+        <h1 className="f-s-l m-t-xl m-b-lg">{t("My company")}</h1>
+        {company.url_logo ? (
+          <img
+            className="companyLogo"
+            src={company.url_logo}
+            alt={t("Image company")}
+          />
+        ) : (
+          <img
+            className="companyLogo"
+            src={defaultImageCompany}
+            alt={t("Default image company")}
+          />
+        )}
+        <FileUpload
+          onUploadLogo={urlLogo =>
+            setCompany({ ...company, url_logo: urlLogo })
+          }
+        />
         <form onSubmit={handleSubmit(handleCompanyCreate)} noValidate>
-          <label className="form-control">{t("Name")} (*)
-                  <input
+          <label className="form-control">
+            {t("Name")} (*)
+            <input
               list="companyName"
               ref={register(validatorCompanyName)}
               name="name"
@@ -191,10 +207,9 @@ export function CompanyCreate() {
               type="text"
               value={company.name}
               onChange={e => {
-                setCompany({ ...company, name: e.target.value })
-                setCompanySelected(e.target.value)
-              }
-              }
+                setCompany({ ...company, name: e.target.value });
+                setCompanySelected(e.target.value);
+              }}
             ></input>
             <datalist id="companyName">
               {companies.map(companyElement => (
@@ -207,8 +222,10 @@ export function CompanyCreate() {
               <span className="errorMessage">{t(errors.name.message)}</span>
             )}
           </label>
-          <label className="form-control">{t("Description")}
+          <label className="form-control">
+            {t("Description")}
             <textarea
+              className="m-t-sm f-s-sm"
               ref={register(validatorDescription)}
               name="description"
               id="description"
@@ -225,8 +242,9 @@ export function CompanyCreate() {
               </span>
             )}
           </label>
-          <label className="form-control">{t("Sector")} (*)
-                  <input
+          <label className="form-control">
+            {t("Sector")} (*)
+            <input
               list="listSectors"
               ref={register(validatorSector)}
               name="sector"
@@ -235,10 +253,8 @@ export function CompanyCreate() {
               placeholder={t("Sector name")}
               value={company.sector_name}
               onChange={e => {
-                setCompany({ ...company, sector_name: e.target.value })
-
-              }
-              }
+                setCompany({ ...company, sector_name: e.target.value });
+              }}
             ></input>
             <datalist id="listSectors">
               {sectors.map(sectorElement => (
@@ -251,7 +267,8 @@ export function CompanyCreate() {
               <span className="errorMessage">{t(errors.sector.message)}</span>
             )}
           </label>
-          <label className="form-control">{t("URL")}
+          <label className="form-control">
+            {t("URL")}
             <input
               ref={register(validatorUrl)}
               name="url_web"
@@ -267,7 +284,8 @@ export function CompanyCreate() {
               <span className="errorMessage">{t(errors.url_web.message)}</span>
             )}
           </label>
-          <label className="form-control">{t("LinkedIn")}
+          <label className="form-control">
+            {t("LinkedIn")}
             <input
               ref={register(validatorLinkedin)}
               name="linkedin"
@@ -283,7 +301,8 @@ export function CompanyCreate() {
               <span className="errorMessage">{t(errors.linkedin.message)}</span>
             )}
           </label>
-          <label className="form-control">{t("Headquarters address")}
+          <label className="form-control">
+            {t("Headquarters address")}
             <input
               ref={register(validatorAddress)}
               name="address"
@@ -299,8 +318,12 @@ export function CompanyCreate() {
               <span className="errorMessage">{t(errors.address.message)}</span>
             )}
           </label>
-          <label className="form-control">{t("Headquarters")} (*)
-                  <Cities onClickCity={id => setIdCity(id)} cityToSet={company.sede_name} />
+          <label className="form-control">
+            {t("Headquarters")} (*)
+            <Cities
+              onClickCity={id => setIdCity(id)}
+              cityToSet={company.sede_name}
+            />
             {errors.sede_id && (
               <span className="errorMessage">{t(errors.sede_id.message)}</span>
             )}

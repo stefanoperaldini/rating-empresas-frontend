@@ -1,3 +1,59 @@
+.advance {
+  position: relative;
+  margin-top: var(--space-md);
+  margin-bottom: var(--space-md);
+  padding: 0.4rem 2.5rem;
+  border: 2px solid var(--blue);
+  border-radius: 15px;
+  font-weight: 400;
+}
+
+.btn-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+button:disabled {
+  background: #dddddd;
+  border-color: #dddddd;
+}
+
+.buttonsPrevNext {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.errorMessage {
+  position: absolute;
+  top: 65px;
+  font-size: 0.8rem;
+  color: var(--ko);
+}
+
+.errorMessageTextArea {
+  position: absolute;
+  top: 125px;
+  font-size: 0.8rem;
+  color: var(--ko);
+}
+
+.findCity {
+  position: relative;
+}
+
+.resFindCity {
+  position: absolute;
+  height: 8rem;
+  width: 16rem;
+  border: 1px solid #ddd;
+  background: var(--lgray);
+  overflow-y: scroll;
+  top: 2.5rem;
+  z-index: 9;
+}
+
 .form-control {
   display: flex;
   flex-direction: column;
@@ -15,7 +71,7 @@
 }
 
 h2.marginBottom {
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 }
 
 h2.marginTop {
@@ -37,17 +93,8 @@ input::placeholder {
   opacity: 0.5;
 }
 
-.errorMessage {
-  position: absolute;
-  top: 65px;
-  font-size: 0.8rem;
-  color: var(--ko);
-}
-
-.btn-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+input[type="file"] {
+  display: none;
 }
 
 .password-visible {
@@ -76,20 +123,8 @@ input::placeholder {
   position: relative;
 }
 
-input[type="file"] {
-  display: none;
-}
-
-.advance {
-  position: relative;
-  margin-top: 0.5rem;
-  padding: 0.4rem 2.5rem;
-  border: 2px solid var(--blue);
-  border-radius: 15px;
+.upload {
+  margin: var(--space-lg);
+  padding: 0.25rem 1.5rem;
   font-weight: 400;
-}
-
-button:disabled {
-  background: #dddddd;
-  border-color: #dddddd;
 }
