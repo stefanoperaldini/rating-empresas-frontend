@@ -21,7 +21,7 @@ export function ListCompanies({ listCompanies }) {
 
   if (listCompanies.length === 0) {
     return (
-      <h2 className="containerGrid">{t("No companies yet")}</h2>
+      <p className="containerGrid f-s-l">{t("No companies yet")}</p>
     );
   }
 
