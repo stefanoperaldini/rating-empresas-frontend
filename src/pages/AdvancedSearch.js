@@ -81,9 +81,8 @@ export function AdvancedSearch() {
           noValidate
         >
           <fieldset>
-            <legend>
-              <h2 className="f-s-m p-t-sm p-b-sm">{t("Search for")}</h2>
-            </legend>
+            <legend>{t("Search for")}</legend>
+            <h2 className="f-s-m p-t-sm p-b-sm">{t("Search for")}</h2>
             <span className="flexRow">
               <select
                 name="sectorId"
@@ -127,9 +126,8 @@ export function AdvancedSearch() {
             </span>
           </fieldset>
           <fieldset className="sortAndButton">
-            <legend>
-              <h2 className="f-s-m p-t-md p-b-sm">{t("Sort by")}</h2>
-            </legend>
+            <legend>{t("Sort by")}</legend>
+            <h2 className="f-s-m p-t-md p-b-sm">{t("Sort by")}</h2>
             <select name="sortTipe" id="sortTipe" ref={register}>
               <option value="1">{t("Overall rating")}</option>
               <option value="2">{t("Salary")}</option>
@@ -154,9 +152,7 @@ export function AdvancedSearch() {
               <DotsYellow />
             </div>
           ) : (
-              <main className="minWidth">
-                <ListCompanies listCompanies={companiesList} />
-              </main>
+              <ListCompanies className="minWidth" listCompanies={companiesList} />
             )}
         </section>
       </main>

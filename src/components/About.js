@@ -29,7 +29,7 @@ const AboutButton = withStyles({
       borderColor: "#f8f8f8"
     },
     "&:focus": {
-      boxShadow: "#f8f8f8"
+      boxShadow: '0 0 0 0.2rem rgba(248,248,248,.5)'
     }
   }
 })(Button);

@@ -42,14 +42,12 @@ export function ListCompanies({ listCompanies }) {
                   : t("Default image company")
               }
             />
-            <span className="item2">
-              <h3 className="p-t-md">{company.name}</h3>
-            </span>
+            <h3 className="item2 p-t-md">{company.name}</h3>
             <div className={`${classes.rating} item3`}>
               {company.everage}
               <Rating
                 name={company.name}
-                id={company.name}
+                id={company.name.replace(" ", "")}
                 size="large"
                 value={company.everage}
                 precision={0.5}

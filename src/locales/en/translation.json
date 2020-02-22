@@ -60,6 +60,7 @@
   "Job title": "Job title",
   "City": "City",
   "Average salary": "Average salary",
+  "Reviews for job title": "Reviews for job title",
   "month": "month",
   "Sort by": "Sort by",
   "Create a review": "Create a review",
@@ -148,5 +149,8 @@
   "Do you want to evaluate your current or previous job? Are you looking for the best company to work for?": "Do you want to evaluate your current or previous job? Are you looking for the best company to work for?",
   "You are in the right place...": "You are in the right place...",
   "We are here!": "We are here!",
-  "Close": "Close"
+  "Close": "Close",
+  "Uploading files...": "Uploading files...",
+  "Choose File": "Choose File",
+  "Upload": "Upload"
 }

@@ -60,6 +60,7 @@
   "Job title": "Ruolo",
   "City": "Città",
   "Average salary": "Stipendio medio",
+  "Reviews for job title": "Valutazione per ruolo",
   "month": "mese",
   "Sort by": "Ordina per",
   "Create a review": "Crea una valutazione",
@@ -148,5 +149,8 @@
   "Do you want to evaluate your current or previous job? Are you looking for the best company to work for?": "Vuoi valutare il tuo posto di lavoro attuale o uno anteriore? Cerchi la miglior impresa dove lavorare?",
   "You are in the right place...": "Sei nel posto giusto...",
   "We are here!": "Siamo qui!",
-  "Close": "Chiudi"
+  "Close": "Chiudi",
+  "Uploading files...": "Uploading...",
+  "Choose File": "Scegli",
+  "Upload": "Upload"
 }
