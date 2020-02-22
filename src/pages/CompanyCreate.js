@@ -1,11 +1,9 @@
-import React, { useEffect, useReducer } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
-
 import { useAuth } from "../context/auth-context";
 import defaultImageCompany from "../img/company-default.png";
-
 import {
   getCompanies,
   getSectors,
@@ -22,79 +20,48 @@ import {
   validatorAddress,
   validatorSector
 } from "./pagesUtils";
+import { Cities } from "../components/Cities";
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
-
-function companyReducer(state, action) {
-  switch (action.type) {
-    case "GET_COMPANIES":
-      return { ...state, companies: action.initialCompanies };
-    case "GET_SECTORS":
-      return { ...state, sectors: action.initialSectors };
-
-    case "SET_COMPANY":
-      return {
-        ...state,
-        indexCompany: action.initialCompany,
-        isSavedCompany: true
-      };
-
-    case "DATA_SET":
-      return { ...state, company: { ...state.company, ...action.data } };
-
-    default:
-      return state;
-  }
-}
-
-/**
- * Page for create company
- */
+import { FileUpload } from "../components/UploadCompanyLogo";
 
 export function CompanyCreate() {
   const { handleSubmit, register, errors, formState, setError } = useForm({
     mode: "onBlur"
   });
-
   const { currentUserId } = useAuth();
-
   const history = useHistory();
   const { t } = useTranslation();
-
-  const [state, dispatch] = useReducer(companyReducer, {
-    companies: [],
-    sectors: [],
-    cities: [],
-    indexCompany: null,
-    company: {
-      name: "",
-      description: "",
-      sector: "",
-      url_web: "",
-      linkedin: "",
-      address: ""
-    },
-    sector: { id: null, name: null },
-    city: { id: null, name: null },
-    isSavedCompany: false
+  const [companies, setCompanies] = useState([]);
+  const [companySelected, setCompanySelected] = useState(null);
+  const [idCity, setIdCity] = useState(null);
+  const [sectors, setSectors] = useState([]);
+  const [company, setCompany] = useState({
+    id: null,
+    name: null,
+    description: null,
+    sector_name: null,
+    url_web: null,
+    url_logo: "",
+    linkedin: null,
+    address: null,
+    sede_id: null,
+    sede_name: ""
   });
 
   const handleCompanyCreate = async formData => {
     let isNewSector = true;
     let sectorId = null;
 
-    for (let sector of state.sectors) {
+    if (!idCity) {
+      setError("sede_id", "frontend", t("This field is required"));
+      return;
+    }
+
+    for (let sector of sectors) {
       if (formData.sector === sector.sector) {
         isNewSector = false;
         sectorId = sector.id;
-      }
-    }
-
-    let companyId = null;
-    for (let company of state.companies) {
-      if (formData.name === company.name) {
-        companyId = company.id;
-        break;
       }
     }
 
@@ -107,24 +74,24 @@ export function CompanyCreate() {
 
       const formDataCompany = {
         ...formData,
+        sede_id: idCity,
         sector: undefined,
-        sector_id: sectorId
+        sector_id: sectorId,
+        url_logo: company.url_logo
       };
 
-      if (!companyId) {
+      if (!company.id) {
         createCompany(formDataCompany)
           .then(response => {
-            const location = response.headers.location.split("/");
-            companyId = location[location.length - 1];
-            history.push(`/company/detail/${companyId}`);
+            history.push(`/home`);
           })
           .catch(error => {
             setError("sede_id", "backend", setErrorMessageCallBackEnd(error));
           });
       } else {
-        updateCompany(companyId, formDataCompany)
+        updateCompany(company.id, formDataCompany)
           .then(response => {
-            history.push(`/company/detail/${companyId}`);
+            history.push(`/home`);
           })
           .catch(error => {
             setError("sede_id", "backend", setErrorMessageCallBackEnd(error));
@@ -136,35 +103,36 @@ export function CompanyCreate() {
   };
 
   useEffect(() => {
-    getCompanies()
+    getCompanies(`filters=no`)
       .then(response => {
-        const filteredCompany = response.data.rows.filter((company, index) => {
-          if (currentUserId === company.user_id) {
-            dispatch({ type: "SET_COMPANY", initialCompany: index });
-            dispatch({ type: "DATA_SET", data: { name: company.name } });
-            dispatch({
-              type: "DATA_SET",
-              data: { description: company.description }
-            });
-            dispatch({ type: "DATA_SET", data: { sector: company.sector } });
-            dispatch({ type: "DATA_SET", data: { url_web: company.url_web } });
-            dispatch({
-              type: "DATA_SET",
-              data: { linkedin: company.linkedin }
-            });
-            dispatch({ type: "DATA_SET", data: { address: company.address } });
-            dispatch({ type: "DATA_SET", data: { sede_id: company.sede_id } });
-            return true;
+        const filteredCompany = response.data.rows_companies.filter(
+          (companyElement, index) => {
+            if (currentUserId === companyElement.user_id) {
+              setCompany({
+                id: companyElement.company_id,
+                name: companyElement.name,
+                description: companyElement.description,
+                sector_name: companyElement.sector_name,
+                url_web: companyElement.url_web,
+                url_logo: companyElement.url_logo,
+                linkedin: companyElement.linkedin,
+                address: companyElement.address,
+                sede_id: companyElement.sede_id,
+                sede_name: companyElement.sede_name
+              });
+              return true;
+            }
+            if (
+              companyElement.userRole === "1" ||
+              (companyElement.userRole === "2" &&
+                companyElement.userDeleteAt !== null)
+            ) {
+              return true;
+            }
+            return false;
           }
-          if (
-            company.userRole === "1" ||
-            (company.userRole === "2" && company.userDeleteAt !== null)
-          ) {
-            return true;
-          }
-          return false;
-        });
-        dispatch({ type: "GET_COMPANIES", initialCompanies: filteredCompany });
+        );
+        setCompanies(filteredCompany);
       })
       .catch(error => {
         setError("sede_id", "backend", setErrorMessageCallBackEnd(error));
@@ -173,64 +141,99 @@ export function CompanyCreate() {
 
     getSectors()
       .then(response => {
-        dispatch({ type: "GET_SECTORS", initialSectors: response.data.rows });
+        setSectors(response.data.rows);
       })
       .catch(error => {
         setError("sector", "backend", setErrorMessageCallBackEnd(error));
         return;
       });
+
     return;
   }, [currentUserId, setError]);
+
+  useEffect(() => {
+    for (let companyElement of companies) {
+      if (companySelected === companyElement.name) {
+        setCompany({
+          id: companyElement.company_id,
+          name: companyElement.name,
+          description: companyElement.description,
+          sector_name: companyElement.sector_name,
+          url_web: companyElement.url_web,
+          url_logo: companyElement.url_logo
+            ? companyElement.url_logo
+            : undefined,
+          linkedin: companyElement.linkedin,
+          address: companyElement.address,
+          sede_id: companyElement.sede_id,
+          sede_name: companyElement.sede_name
+        });
+        break;
+      }
+    }
+  }, [companySelected, companies]);
 
   return (
     <React.Fragment>
       <Header />
-      <main className="centered-container">
-        <h3>{t("My company")}</h3>
-        <img
-          src={defaultImageCompany}
-          alt={t("Default image company")}
+      <main className="centered-container p-r-md p-l-md m-b-lg">
+        <h1 className="f-s-l m-t-xl m-b-lg">{t("My company")}</h1>
+        {company.url_logo ? (
+          <img
+            className="companyLogo"
+            src={company.url_logo}
+            alt={t("Image company")}
+          />
+        ) : (
+          <img
+            className="companyLogo"
+            src={defaultImageCompany}
+            alt={t("Default image company")}
+          />
+        )}
+        <FileUpload
+          onUploadLogo={urlLogo =>
+            setCompany({ ...company, url_logo: urlLogo })
+          }
         />
         <form onSubmit={handleSubmit(handleCompanyCreate)} noValidate>
-          <div className="form-control">
-            <label htmlFor="name">{t("Name")} (*)</label>
+          <label className="form-control">
+            {t("Name")} (*)
             <input
               list="companyName"
               ref={register(validatorCompanyName)}
               name="name"
               id="name"
               type="text"
-              value={state.company.name}
-              onChange={e =>
-                dispatch({ type: "DATA_SET", data: { name: e.target.value } })
-              }
+              value={company.name}
+              onChange={e => {
+                setCompany({ ...company, name: e.target.value });
+                setCompanySelected(e.target.value);
+              }}
             ></input>
             <datalist id="companyName">
-              {state.companies.map(element => (
-                <option key={element.name} value={element.name}>
-                  {element.name}
+              {companies.map(companyElement => (
+                <option key={companyElement.name} value={companyElement.name}>
+                  {companyElement.name}
                 </option>
               ))}
             </datalist>
             {errors.name && (
               <span className="errorMessage">{t(errors.name.message)}</span>
             )}
-          </div>
-
-          <div className="form-control">
-            <label htmlFor="description">{t("Description")}</label>
+          </label>
+          <label className="form-control">
+            {t("Description")}
             <textarea
+              className="m-t-sm f-s-sm"
               ref={register(validatorDescription)}
               name="description"
               id="description"
               type="text"
-              value={state.company.description}
+              value={company.description}
               placeholder={t("About my company")}
               onChange={e =>
-                dispatch({
-                  type: "DATA_SET",
-                  data: { description: e.target.value }
-                })
+                setCompany({ ...company, description: e.target.value })
               }
             ></textarea>
             {errors.description && (
@@ -238,11 +241,9 @@ export function CompanyCreate() {
                 {t(errors.description.message)}
               </span>
             )}
-          </div>
-
-          <div className="form-control">
-            <label htmlFor="sector">{t("Sector")} (*)</label>
-
+          </label>
+          <label className="form-control">
+            {t("Sector")} (*)
             <input
               list="listSectors"
               ref={register(validatorSector)}
@@ -250,113 +251,88 @@ export function CompanyCreate() {
               id="sector"
               type="text"
               placeholder={t("Sector name")}
-              value={state.company.sector}
-              onChange={e =>
-                dispatch({ type: "DATA_SET", data: { sector: e.target.value } })
-              }
+              value={company.sector_name}
+              onChange={e => {
+                setCompany({ ...company, sector_name: e.target.value });
+              }}
             ></input>
             <datalist id="listSectors">
-              {state.sectors.map(element => (
-                <option key={element.name} value={element.sector}>
-                  {element.sector}
+              {sectors.map(sectorElement => (
+                <option key={sectorElement.sector} value={sectorElement.sector}>
+                  {sectorElement.sector}
                 </option>
               ))}
             </datalist>
             {errors.sector && (
               <span className="errorMessage">{t(errors.sector.message)}</span>
             )}
-          </div>
-
-          <div className="form-control">
-            <label htmlFor="url_web">{t("URL")}</label>
+          </label>
+          <label className="form-control">
+            {t("URL")}
             <input
               ref={register(validatorUrl)}
               name="url_web"
               id="url_web"
               type="url"
               placeholder={t("Website")}
-              value={state.company.url_web}
+              value={company.url_web}
               onChange={e =>
-                dispatch({
-                  type: "DATA_SET",
-                  data: { url_web: e.target.value }
-                })
+                setCompany({ ...company, url_web: e.target.value })
               }
             ></input>
             {errors.url_web && (
               <span className="errorMessage">{t(errors.url_web.message)}</span>
             )}
-          </div>
-
-          <div className="form-control">
-            <label htmlFor="linkedin">{t("LinkedIn")}</label>
+          </label>
+          <label className="form-control">
+            {t("LinkedIn")}
             <input
               ref={register(validatorLinkedin)}
               name="linkedin"
               id="linkedin"
               type="url"
               placeholder={t("LinkedIn address")}
-              value={state.company.linkedin}
+              value={company.linkedin}
               onChange={e =>
-                dispatch({
-                  type: "DATA_SET",
-                  data: { linkedin: e.target.value }
-                })
+                setCompany({ ...company, linkedin: e.target.value })
               }
             ></input>
             {errors.linkedin && (
               <span className="errorMessage">{t(errors.linkedin.message)}</span>
             )}
-          </div>
-
-          <div className="form-control">
-            <label htmlFor="address">{t("Headquarters address")}</label>
+          </label>
+          <label className="form-control">
+            {t("Headquarters address")}
             <input
               ref={register(validatorAddress)}
               name="address"
               id="address"
               type="text"
-              value={state.company.address}
+              value={company.address}
               onChange={e =>
-                dispatch({
-                  type: "DATA_SET",
-                  data: { address: e.target.value }
-                })
+                setCompany({ ...company, address: e.target.value })
               }
               placeholder={t("Headquarters address")}
             ></input>
             {errors.address && (
               <span className="errorMessage">{t(errors.address.message)}</span>
             )}
-          </div>
-
-          <div className="form-control">
-            <label htmlFor="sede_id">{t("Headquarters")} (*)</label>
-            <input
-              ref={register({
-                required: "Required"
-              })}
-              name="sede_id"
-              id="sede_id"
-              type="text"
-              value={state.company.sede_id}
-              onChange={e =>
-                dispatch({
-                  type: "DATA_SET",
-                  data: { sede_id: e.target.value }
-                })
-              }
-              placeholder={t("Headquarters")}
-            ></input>
+          </label>
+          <label className="form-control">
+            {t("Headquarters")} (*)
+            <Cities
+              onClickCity={id => setIdCity(id)}
+              cityToSet={company.sede_name}
+            />
             {errors.sede_id && (
               <span className="errorMessage">{t(errors.sede_id.message)}</span>
             )}
-          </div>
-          <p>(*) {t("Field required")}</p>
+          </label>
+          <p className="f-s-xs">(*) {t("Field required")}</p>
           <div className="btn-container">
             <button
               type="submit"
-              className="btn"
+              className="btn m-t-md"
               disabled={formState.isSubmitting}
             >
               {t("Save")}

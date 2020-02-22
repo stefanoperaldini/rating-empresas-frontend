@@ -2,7 +2,6 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
-
 import { passwordRecovery } from "../http/authService";
 import { Header } from "../components/Header";
 import { setErrorMessageCallBackEnd, validatorEmail } from "./pagesUtils";
@@ -15,7 +14,6 @@ export function AccountPasswordRecovery() {
   const { handleSubmit, register, errors, formState, setError } = useForm({
     mode: "onBlur"
   });
-
   const history = useHistory();
   const { t } = useTranslation();
 
@@ -34,10 +32,9 @@ export function AccountPasswordRecovery() {
       <Header />
       <main className="centered-container">
         <div className="boxAccount">
-          <h3>{t("Forgot password?")}</h3>
+          <h1 className="f-s-l">{t("Forgot password?")}</h1>
           <form onSubmit={handleSubmit(handleRecoveryPassword)} noValidate>
-            <div className="form-control">
-              <label htmlFor="email">{t("E-mail")}</label>
+            <label className="form-control">{t("E-mail")}
               <input
                 ref={register(validatorEmail)}
                 name="email"
@@ -48,17 +45,19 @@ export function AccountPasswordRecovery() {
               {errors.email && (
                 <span className="errorMessage">{t(errors.email.message)}</span>
               )}
-            </div>
-            <p>{t("We will send you an e-mail with a new password")}</p>
+            </label>
+            <p className="f-c-fourgray">
+              {t("We will send you an e-mail with a new password")}
+            </p>
             <div className="btn-container">
               <button
                 type="submit"
-                className="btn"
+                className="m-t-md btn"
                 disabled={formState.isSubmitting}
               >
                 {t("Send")}
               </button>
-              <div className="m-t-lg btn-container">
+              <div className="m-t-md btn-container">
                 <Link to="/account/login">{t("Sign in")}</Link>
               </div>
             </div>

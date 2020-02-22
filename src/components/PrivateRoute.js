@@ -2,7 +2,6 @@ import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { useAuth } from '../context/auth-context';
 
-// props = { children, exact, path }  others = { exact, path }
 export function PrivateRoute({ children, allowedRoles, ...others }) {
     const { role } = useAuth();
 

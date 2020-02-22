@@ -1,10 +1,8 @@
 import React from "react";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
-
 import { I18nextProvider } from "react-i18next";
 import i18n from "./i18n";
 import { AuthProvider } from "./context/auth-context";
-
 import { Home } from "./pages/Home";
 import { AccountActivate } from "./pages/AccountActivate";
 import { AccountCreate } from "./pages/AccountCreate";
@@ -73,7 +71,10 @@ function App() {
               <PrivateRoute path="/review/user" allowedRoles={["1"]}>
                 <ReviewUser />
               </PrivateRoute>
-              <PrivateRoute path="/review/report/:idReview" allowedRoles={["0"]} >
+              <PrivateRoute
+                path="/review/report/:idReview"
+                allowedRoles={["0"]}
+              >
                 <ReviewReport />
               </PrivateRoute>
               <PrivateRoute path="/user/update" allowedRoles={["1", "2"]}>

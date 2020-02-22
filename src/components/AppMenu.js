@@ -4,7 +4,6 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { useTranslation } from "react-i18next";
 import { useHistory, } from "react-router-dom";
-
 import { useAuth } from "../context/auth-context";
 import { executeLogout } from "../utils";
 import menu from "../img/menu-black.png";
@@ -61,10 +60,10 @@ export function AppMenu() {
             >
                 {role === "2" && (<MenuItem onClick={handleCompanyCreate}>{t("My company")}</MenuItem>)}
                 {role === "1" && (
-                    <React.Fragment>
+                    <div>
                         <MenuItem onClick={handleReviewCreate}>{t("Create review")}</MenuItem>
                         <MenuItem onClick={handleMyReviews}>{t("My reviews")}</MenuItem>
-                    </React.Fragment>
+                    </div>
                 )}
                 <MenuItem onClick={handleProfile}>{t("Profile")}</MenuItem>
                 <MenuItem onClick={handlePasswordChange}>{t("Change password")}</MenuItem>
@@ -74,44 +73,3 @@ export function AppMenu() {
         </div>
     );
 }
-
-// (
-//         <img src={menu} alt={t("Menu icon")} />
-//             <div>
-//                 <ul>
-//                     {role === "2" && (
-//                         <li>
-//                             <Link to="/company/create">{t("My company")}</Link>
-//                         </li>
-//                     )}
-//                     {role === "1" && (
-//                         <React.Fragment>
-//                             <li>
-//                                 <Link to="/review/create">{t("Create review")}</Link>
-//                             </li>
-//                             <li>
-//                                 <Link to="/review/user">{t("My reviews")}</Link>
-//                             </li>
-//                         </React.Fragment>
-//                     )}
-//                     {(role === "1" || role === "2") && (
-//                         <React.Fragment>
-//                             <li>
-//                                 <Link to="/user/update">{t("Profile")}</Link>
-//                             </li>
-//                             <li>
-//                                 <Link to="/account/password/change">
-//                                     {t("Change password")}
-//                                 </Link>
-//                             </li>
-//                             <li>
-//                                 <Link to="/user/delete">{t("Delete account")}</Link>
-//                             </li>
-//                         </React.Fragment>
-//                     )}
-//                     <li onClick={() => executeLogout()}>{t("Sign out")}</li>
-//                 </ul>
-//             </div>
-//         )}
-//     </span>
-// )

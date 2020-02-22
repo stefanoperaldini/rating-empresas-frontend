@@ -1,64 +1,95 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { getCityName } from "../http/cityService";
 
-import { getCityName, } from "../http/cityService";
+function filterCities(nameCity, cities) {
+  if (nameCity.length === 0) {
+    return cities;
+  }
+  const filterdCities = cities.filter(
+    cityElement => cityElement.name === nameCity
+  );
+  if (filterdCities.length === 0) {
+    return cities;
+  }
+  return filterdCities;
+}
 
-export function Cities({ value, onRegister, }) {
-    console.log(value);
-    const [searchTerm, setSearchTerm] = useState(value);
-    const [cities, setCities] = useState([]);
-    const [showResult, setShowResult] = useState(false);
-    const { t } = useTranslation();
+export function Cities({ onClickCity, cityToSet = "" }) {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [cityParam, setCityParam] = useState(cityToSet);
+  const [cities, setCities] = useState([]);
+  const [showResult, setShowResult] = useState(false);
+  const { t } = useTranslation();
 
-    useEffect(() => {
-        if (searchTerm.length >= 3) {
-            getCityName(searchTerm).then(response => {
-                setCities(response.data.rows);
-                if (cities.length !== 0) {
-                    setShowResult(true);
-                } else {
-                    setShowResult(false);
-                }
-            });
+  useEffect(() => {
+    setSearchTerm(cityToSet);
+  }, [cityToSet]);
+
+  useEffect(() => {
+    if (searchTerm.length >= 3) {
+      getCityName(searchTerm).then(response => {
+        const filterdCities = filterCities(cityParam, response.data.rows);
+        if (cityParam.length !== 0 && filterdCities.length === 1) {
+          onClickCity(filterdCities[0].id);
+          setCityParam("");
+        } else {
+          setCities(response.data.rows);
         }
+        setShowResult(false);
+      });
+    }
+    if (searchTerm.length < 3) {
+      setShowResult(false);
+    }
+  }, [searchTerm, onClickCity, cityParam]);
 
-        if (searchTerm.length < 3) {
+  useEffect(() => {
+    if (cities.length !== 0) {
+      setShowResult(true);
+    } else {
+      setShowResult(false);
+    }
+  }, [cities]);
+
+  return (
+    <div className="findCity">
+      <input
+        type="text"
+        name="city_id"
+        id="city_id"
+        placeholder={t("Find the city...")}
+        value={searchTerm}
+        onChange={e => {
+          setSearchTerm(e.target.value);
+        }}
+      />
+      {showResult && (
+        <div
+          className="resFindCity"
+          onMouseLeave={e => {
             setShowResult(false);
-        }
-
-    }, [searchTerm, cities]);
-
-    console.log(searchTerm);
-
-    return (
-        <div className="autocompletamiento">
-            <div className="busqueda">
-                <input ref={onRegister()} type="text" name="cities" id="cities" placeholder={t("Find the city...")} value={searchTerm}
-                    onChange={e => {
-                        setSearchTerm(e.target.value);
-                    }} onKeyDown={e => {
-                        if (e.key === "ArrowDown") {
-                            console.log("arrowDown");
-                        } else if (e.key === "ArrowUp") {
-                            console.log("arrowUp");
-                        }
-                    }} />
-                <div>
-                    {showResult &&
-                        <ul className="resBusqueda">
-                            {cities.map(city => (
-                                <li key={city.name} onClick={e => {
-                                    setSearchTerm(city.name);
-                                    setCities([]);
-                                    setShowResult(false);
-                                }}>
-                                    {city.name}
-                                </li>
-                            ))}
-                        </ul>}
-                </div>
-            </div>
-        </div >
-
-    );
+          }}
+        >
+          <ul>
+            {cities.map(city => (
+              <li
+                key={city.name}
+                className="itemsCities"
+                onClick={e => {
+                  e.stopPropagation();
+                  setSearchTerm(city.name);
+                  onClickCity(city.id);
+                  setCities([]);
+                  setShowResult(false);
+                }}
+              >
+                {city.name}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </div>
+  );
 }

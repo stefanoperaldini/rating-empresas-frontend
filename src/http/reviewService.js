@@ -12,15 +12,21 @@ export function deleteReview(idReview) {
   return axios.delete(`${process.env.REACT_APP_BACKEND_URL}/v1/reviews/${idReview}`);
 }
 
-export function getReviewsFilter(id) {
+export function getReviewsFilter(queryString) {
   return axios.get(
-    `${process.env.REACT_APP_BACKEND_URL}/v1/reviews/filter/all?companyId=${id}`
+    `${process.env.REACT_APP_BACKEND_URL}/v1/reviews/filter/all?${queryString}`
   );
 }
 
 export function getPositions() {
   return axios.get(
     `${process.env.REACT_APP_BACKEND_URL}/v1/positions`
+  );
+}
+
+export function getPositionsCompany(idCompany) {
+  return axios.get(
+    `${process.env.REACT_APP_BACKEND_URL}/v1/positions/company/${idCompany}`
   );
 }
 

@@ -13,6 +13,14 @@ function setErrorMessageCallBackEnd(error) {
   return messageResponse;
 }
 
+function getArrayYears(start, end) {
+  let arrayYears = [];
+  for (let i = end; i >= start; i--) {
+    arrayYears = [...arrayYears, i];
+  }
+  return arrayYears;
+}
+
 const validatorEmail = {
   required: "The e-mail is required",
   pattern: {
@@ -136,7 +144,6 @@ const validatorDescriptionReview = {
   }
 };
 
-
 const validatorSector = {
   required: "This field is required",
   minLength: {
@@ -175,6 +182,7 @@ const validatorCity = {
 
 export {
   setErrorMessageCallBackEnd,
+  getArrayYears,
   validatorEmail,
   validatorPassword,
   validatorLinkedin,

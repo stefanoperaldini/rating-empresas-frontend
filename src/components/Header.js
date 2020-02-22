@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-
 import admin from "../img/admin-user.png";
 import user from "../img/user.png";
 import company from "../img/company.png";
 import logo from "../img/Logo.png";
 import { useAuth } from "../context/auth-context";
 import { executeLogout } from "../utils";
-
-import { AppMenu } from "../components/AppMenu"
+import { AppMenu } from "../components/AppMenu";
 
 export function Header() {
   const [lang, setLang] = useState("en");
@@ -50,17 +48,12 @@ export function Header() {
     <header className="page-header">
       <nav>
         <Link to="/" className="header-item">
-          <img
-            src={logo}
-            alt={t("Logo app")}
-            width="230"
-          />
+          <img src={logo} alt={t("Logo app")} width="230" />
         </Link>
-        <ul className="header header-item f-s-xs">
+        <ul className="header-item f-s-xs">
           <li className="header-item">
             <label>
-              English
-            <input
+              <input
                 type="radio"
                 name="language"
                 value="en"
@@ -71,12 +64,12 @@ export function Header() {
                   setLang("en");
                 }}
               />
+              <span>English</span>
             </label>
           </li>
           <li className="header-item">
             <label>
-              Español
-            <input
+              <input
                 type="radio"
                 name="language"
                 value="es"
@@ -87,12 +80,12 @@ export function Header() {
                   setLang("es");
                 }}
               />
+              <span>Español</span>
             </label>
           </li>
           <li className="header-item">
             <label>
-              Italiano
-            <input
+              <input
                 type="radio"
                 name="language"
                 value="it"
@@ -103,12 +96,12 @@ export function Header() {
                   setLang("it");
                 }}
               />
+              <span>Italiano</span>
             </label>
           </li>
           <li className="header-item">
             <label>
-              Galego
-            <input
+              <input
                 type="radio"
                 name="language"
                 value="gl"
@@ -119,32 +112,30 @@ export function Header() {
                   setLang("gl");
                 }}
               />
+              <span>Galego</span>
             </label>
           </li>
         </ul>
-
-        <div className="cta-contact flexRow">
+        <div className="cta-contact headerFlexRow">
           {currentUserId && role === "0" && (
-            <span className="centeredComponent m-r-xl">
+            <span className="centeredComponent f-s-xs f-c-fourgray m-r-xl">
               <img src={admin} alt={t("Admin icon")} /> <span>{email}</span>
             </span>
           )}
           {currentUserId && role === "1" && (
-            <span className="centeredComponent m-r-xl">
+            <span className="centeredComponent f-s-xs f-c-fourgray m-r-xl">
               <img src={user} alt={t("User icon")} /> <span>{email}</span>
             </span>
           )}
           {currentUserId && role === "2" && (
-            <span className="centeredComponent m-r-xl">
-              <img src={company} alt={t("Company icon")} />{" "}
-              <span>{email}</span>
+            <span className="centeredComponent f-s-xs f-c-fourgray m-r-xl">
+              <img src={company} alt={t("Company icon")} /> <span>{email}</span>
             </span>
           )}
-
           {!currentUserId ? (
-            <span className="header-item">
-              <ul className="header">
-                <li className="header-item">
+            <div className="header-item">
+              <ul>
+                <li className="header-item ">
                   <Link to="/account/login">
                     <p>{t("Sign in")}</p>
                   </Link>
@@ -155,14 +146,17 @@ export function Header() {
                   </Link>
                 </li>
               </ul>
-            </span>
+            </div>
           ) : role === "0" ? (
-            <span className="menu header-item" onClick={() => executeLogout()}>
-              {t("Sign out")}
+            <span
+              className="header-item signOut"
+              onClick={() => executeLogout()}
+            >
+              <Link to="/">{t("Sign out")}</Link>
             </span>
-          ) :
-              <AppMenu />
-          }
+          ) : (
+                <AppMenu />
+              )}
         </div>
       </nav>
     </header>

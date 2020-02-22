@@ -2,7 +2,6 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
-
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
 import { setErrorMessageCallBackEnd, validatorDelete } from "./pagesUtils";
@@ -33,12 +32,10 @@ export function UserDelete() {
     <React.Fragment>
       <Header />
       <main className="centered-container">
-        <h3>{t("Delete account")}</h3>
+        <h1 className="f-s-l">{t("Delete account")}</h1>
         <form onSubmit={handleSubmit(handleUserDelete)}>
-          <div className="form-control">
-            <label htmlFor="confirm">
-              {t("For deleting your account, please type")}: CONFIRM DELETE
-            </label>
+          <label className="form-control">
+            {t("For deleting your account, please type")}: CONFIRM DELETE
             <input
               ref={register(validatorDelete)}
               name="confirm"
@@ -49,8 +46,7 @@ export function UserDelete() {
             {errors.confirm && (
               <span className="errorMessage">{t(errors.confirm.message)}</span>
             )}
-          </div>
-
+          </label>
           <div className="btn-container">
             <button
               type="submit"

@@ -1,9 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-
 import { Link, useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
-
 import { Header } from "../components/Header";
 import {
   setErrorMessageCallBackEnd,
@@ -16,10 +14,19 @@ import { signUp } from "../http/authService";
 
 export function AccountCreate() {
   const { t } = useTranslation();
-  const { handleSubmit, register, errors, formState, setError } = useForm({
+  const {
+    handleSubmit,
+    register,
+    errors,
+    formState,
+    setError,
+    watch
+  } = useForm({
     mode: "onBlur"
   });
   const history = useHistory();
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const handleAccountCreate = formData => {
     const formDataFiltered = { ...formData, confirmPassword: undefined };
@@ -37,7 +44,7 @@ export function AccountCreate() {
       <Header />
       <main className="centered-container">
         <div className="boxAccount">
-          <h3>{t("Create your account")}</h3>
+          <h1 className="f-s-l">{t("Create your account")}</h1>
           <form onSubmit={handleSubmit(handleAccountCreate)} noValidate>
             <div className="form-control">
               <label>
@@ -55,9 +62,7 @@ export function AccountCreate() {
                 {t("Company")}
               </label>
             </div>
-
-            <div className="form-control">
-              <label htmlFor="name">{t("Name")} (*)</label>
+            <label className="form-control">{t("Name")} (*)
               <input
                 ref={register(validatorUserName)}
                 name="name"
@@ -68,10 +73,8 @@ export function AccountCreate() {
               {errors.name && (
                 <span className="errorMessage">{t(errors.name.message)}</span>
               )}
-            </div>
-
-            <div className="form-control">
-              <label htmlFor="email">{t("E-mail")} (*)</label>
+            </label>
+            <label className="form-control">{t("E-mail")} (*)
               <input
                 ref={register(validatorEmail)}
                 name="email"
@@ -82,10 +85,8 @@ export function AccountCreate() {
               {errors.email && (
                 <span className="errorMessage">{t(errors.email.message)}</span>
               )}
-            </div>
-
-            <div className="form-control">
-              <label htmlFor="linkedin">{t("LinkedIn")}</label>
+            </label>
+            <label className="form-control">{t("LinkedIn")}
               <input
                 ref={register(validatorLinkedin)}
                 name="linkedin"
@@ -98,52 +99,70 @@ export function AccountCreate() {
                   {t(errors.linkedin.message)}
                 </span>
               )}
-            </div>
-
-            <div className="form-control">
-              <label htmlFor="password">{t("Password")} (*)</label>
+            </label>
+            <label className="form-control">{t("Password")} (*)
               <input
                 ref={register(validatorPassword)}
                 name="password"
-                type="password"
+                type={showPassword ? "text" : "password"}
                 id="password"
                 placeholder={t("Enter your password")}
               ></input>
+              <span
+                className={
+                  showPassword ? "password-visible" : "password-invisible"
+                }
+                onClick={e => {
+                  e.preventDefault();
+                  setShowPassword(!showPassword);
+                }}
+              ></span>
               {errors.password && (
                 <span className="errorMessage">
                   {t(errors.password.message)}
                 </span>
               )}
-            </div>
-
-            <div className="form-control">
-              <label htmlFor="confirmPassword">
-                {t("Confirm password")} (*)
-              </label>
+            </label>
+            <label className="form-control">{t("Confirm password")} (*)
               <input
-                ref={register(validatorPassword)}
+                ref={register({
+                  validate: value => value === watch("password")
+                })}
                 name="confirmPassword"
-                type="password"
+                type={showConfirmPassword ? "text" : "password"}
                 id="confirmPassword"
                 placeholder={t("Confirm your password")}
               ></input>
+              <span
+                className={
+                  showConfirmPassword
+                    ? "password-visible"
+                    : "password-invisible"
+                }
+                onClick={e => {
+                  e.preventDefault();
+                  setShowConfirmPassword(!showConfirmPassword);
+                }}
+              ></span>
               {errors.confirmPassword && (
-                <span className="error-message">
+                <span className="errorMessage">
                   {t("The password and the confirmation should match")}
                 </span>
               )}
-            </div>
-            <p>(*) {t("Field required")}</p>
-            <p>{t("You will receive an activation e-mail")}</p>
+            </label>
+            <p className="f-s-xs m-t-xl">(*) {t("Field required")}</p>
+            <p className="f-c-fourgray">
+              {t("You will receive an activation e-mail")}
+            </p>
             <div className="btn-container">
               <button
                 type="submit"
-                className="btn"
+                className="m-t-md btn"
                 disabled={formState.isSubmitting}
               >
                 {t("Create")}
               </button>
-              <div className="m-t-lg btn-container">
+              <div className="m-t-md btn-container">
                 <Link to="/account/Login">{t("Sign in")}</Link>
               </div>
             </div>

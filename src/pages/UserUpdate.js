@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
-
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
 import { setErrorMessageCallBackEnd, validatorLinkedin } from "./pagesUtils";
@@ -16,16 +15,16 @@ export function UserUpdate() {
   const { handleSubmit, register, errors, formState, setError } = useForm({
     mode: "onBlur"
   });
-
   const history = useHistory();
   const { t } = useTranslation();
-
-  const [linkedinUser, setlinkedinUser] = useState(null);
+  const [linkedinUser, setlinkedinUser] = useState("");
 
   useEffect(() => {
     getUser()
       .then(response => {
-        setlinkedinUser(response.data.linkedin);
+        response.data.linkedin
+          ? setlinkedinUser(response.data.linkedin)
+          : setlinkedinUser("");
       })
       .catch(error => {
         setError("linkedin", "backend", setErrorMessageCallBackEnd(error));
@@ -47,10 +46,14 @@ export function UserUpdate() {
     <React.Fragment>
       <Header />
       <main className="centered-container">
-        <h3>{t("Update profile")}</h3>
-        <form onSubmit={handleSubmit(handleLinkedinChange)} noValidate>
-          <div className="form-control">
-            <label htmlFor="linkedin">{t("LinkedIn")}</label>
+        <h1 className="f-s-l">{t("Update profile")}</h1>
+        <form
+          className="linkedIn"
+          onSubmit={handleSubmit(handleLinkedinChange)}
+          noValidate
+        >
+          <label className="form-control">
+            {t("LinkedIn")}
             <input
               ref={register(validatorLinkedin)}
               name="linkedin"
@@ -62,8 +65,7 @@ export function UserUpdate() {
             {errors.linkedin && (
               <span className="errorMessage">{t(errors.linkedin.message)}</span>
             )}
-          </div>
-
+          </label>
           <div className="btn-container">
             <button
               type="submit"

@@ -1,33 +1,30 @@
-import React, { useEffect, useState, } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { makeStyles } from "@material-ui/core/styles";
 import Rating from "@material-ui/lab/Rating";
-
 import {
   getCompanies,
   getSectors,
   createCompany,
-  createSector,
+  createSector
 } from "../http/companyService";
-
-import { createPosition, createReview } from "../http/reviewService"
-
+import { createPosition, createReview } from "../http/reviewService";
 import { getPositions } from "../http/reviewService";
 import {
   setErrorMessageCallBackEnd,
+  getArrayYears,
   validatorCompanyName,
   validatorSector,
   validatorSalary,
   validatorTitleReview,
   validatorDescriptionReview,
-  validatorPosition,
+  validatorPosition
 } from "./pagesUtils";
-
+import { Cities } from "../components/Cities";
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
-
 
 /**
  * Review create
@@ -35,9 +32,8 @@ import { Footer } from "../components/Footer";
 
 const useStyles = makeStyles({
   rating: {
-    width: 200,
     display: "flex",
-    alignItems: "center"
+    alignItems: "flex-start"
   }
 });
 
@@ -60,19 +56,21 @@ export function ReviewCreate() {
   const [companies, setCompanies] = useState([]);
 
   const [company, setCompany] = useState({
-    id: null, name: null,
-    sectorName: null, sectorId: null
+    id: null,
+    name: null,
+    sectorName: null,
+    sectorId: null
   });
 
   const [isToNext, setIsToNext] = useState(false);
+  const [idCity, setIdCity] = useState(null);
   const [sectors, setSectors] = useState([]);
   const [positions, setPositions] = useState([]);
 
-
   useEffect(() => {
-    getCompanies()
+    getCompanies(`filters=no`)
       .then(response => {
-        setCompanies(response.data.rows);
+        setCompanies(response.data.rows_companies);
       })
       .catch(error => {
         setError("name", "backend", setErrorMessageCallBackEnd(error));
@@ -98,15 +96,17 @@ export function ReviewCreate() {
       });
 
     return;
-
   }, [setError]);
 
   const handleReviewCreateCompany = formData => {
     for (let companyItem of companies) {
       if (company.name === companyItem.name) {
         setCompany({
-          ...company, id: companyItem.id, name: companyItem.name,
-          sectorName: companyItem.sector, sectorId: companyItem.sectorId
+          ...company,
+          id: companyItem.company_id,
+          name: companyItem.name,
+          sectorName: companyItem.sector_name,
+          sectorId: companyItem.sector_id
         });
         break;
       }
@@ -114,8 +114,12 @@ export function ReviewCreate() {
     setIsToNext(true);
   };
 
-  const handleReviewCreate = async (formData) => {
+  const handleReviewCreate = async formData => {
     let companyId = company.id;
+    if (!idCity) {
+      setError("city_id", "frontend", t("This field is required"));
+      return;
+    }
     try {
       if (!companyId) {
         let sectorId = null;
@@ -134,7 +138,8 @@ export function ReviewCreate() {
 
         const formDataCompany = {
           name: formData.companyname,
-          sector_id: sectorId, sede_id: formData.city_id
+          sector_id: sectorId,
+          sede_id: idCity
         };
 
         const { headers } = await createCompany(formDataCompany);
@@ -146,24 +151,29 @@ export function ReviewCreate() {
 
       for (let position of positions) {
         if (formData.position === position.name) {
-
           positionId = position.id;
         }
       }
 
       if (!positionId) {
         const { headers } = await createPosition({
-          "name": formData.position
+          name: formData.position
         });
         const location = headers.location.split("/");
         positionId = location[location.length - 1];
       }
       const salary = formData.salary.length === 0 ? undefined : formData.salary;
       const formDataReview = {
-        ...formData, ...valuations, position_id: positionId, company_id: companyId,
-        sector: undefined, companyname: undefined, position: undefined, salary: salary,
-      }
-      console.log(formDataReview);
+        ...formData,
+        ...valuations,
+        position_id: positionId,
+        company_id: companyId,
+        sector: undefined,
+        companyname: undefined,
+        position: undefined,
+        salary: salary,
+        city_id: idCity
+      };
 
       return createReview(formDataReview)
         .then(response => {
@@ -171,38 +181,40 @@ export function ReviewCreate() {
         })
         .catch(error => {
           setError("city_id", "backend", setErrorMessageCallBackEnd(error));
-        })
+        });
     } catch (error) {
       setError("city_id", "backend", setErrorMessageCallBackEnd(error));
     }
   };
 
-
-
   return (
     <React.Fragment>
       <Header />
-      <main className="centered-container-home">
-        <h3>{t("Create a review")}</h3>
-        <h4>{t("Rate a company you've worked for in the past 3 years.")}</h4>
-        <h4>{t("Reviews published are anonymous.")}</h4>
+      <main className="centered-container-home m-t-md p-r-md p-l-md">
+        <h1 className="f-s-l txtCenter m-t-lg p-b-sm">
+          {t("Create a review")}
+        </h1>
+        <p className="txtCenter">
+          {t("Rate a company you've worked for in the past 3 years.")}
+        </p>
+        <p className="txtCenter m-b-md">
+          {t("Reviews published are anonymous.")}
+        </p>
 
-        {(!isToNext) ?
-          (<form onSubmit={handleSubmit(handleReviewCreateCompany)} noValidate>
-
-            <div className="form-control">
-              <label htmlFor="name">{t("Name")} (*)</label>
+        {!isToNext ? (
+          <form onSubmit={handleSubmit(handleReviewCreateCompany)} noValidate>
+            <label className="form-control">
+              {t("Name")} (*)
               <input
                 list="companyName"
                 ref={register(validatorCompanyName)}
                 name="name"
                 id="name"
                 type="text"
-                value={company.name}
+                value={company.name ? company.name : ""}
                 onChange={e => {
-                  setCompany({ ...company, name: e.target.value })
+                  setCompany({ ...company, name: e.target.value });
                   return e.target.value;
-
                 }}
               ></input>
               <datalist id="companyName">
@@ -215,108 +227,118 @@ export function ReviewCreate() {
               {errors.name && (
                 <span className="errorMessage">{t(errors.name.message)}</span>
               )}
-            </div>
+            </label>
 
             <div className="btn-container">
               <button
                 type="submit"
-                className="btn"
+                className="m-t-md btn"
                 disabled={formState.isSubmitting}
               >
                 {t("Next")}
               </button>
             </div>
-          </form>)
-          : (
-            <form onSubmit={handleSubmit(handleReviewCreate)} noValidate>
-              <fieldset>
-                <legend>
-                  <h4>{t("Rate company")}</h4>
-                </legend>
-
-                <div className={`form-control ${classes.rating}`}>
-                  <label className="itemsReview" htmlFor="salary_valuation">
-                    {t("Salary")}
-                  </label>
+          </form>
+        ) : (
+            <form
+              className="m-t-md"
+              onSubmit={handleSubmit(handleReviewCreate)}
+              noValidate
+            >
+              <fieldset className="reviewCreate">
+                <legend>{t("Rate company")}</legend>
+                <h2 className="f-s-sm marginBottom">{t("Rate company")}</h2>
+                <div className={`form-control reviewCreate ${classes.rating}`}>
                   <Rating
                     name="salary_valuation"
                     id="salary_valuation"
                     value={valuations["salary_valuation"]}
                     precision={1}
                     onChange={(event, newValue) => {
-                      setValuations({ ...valuations, salary_valuation: newValue });
+                      setValuations({
+                        ...valuations,
+                        salary_valuation: newValue ? newValue : 1
+                      });
                     }}
                   />
-                </div>
-
-                <div className={`form-control ${classes.rating}`}>
-                  <label className="itemsReview" htmlFor="inhouse_training">
-                    {t("Internal training")}
+                  <label htmlFor="salary_valuation" className="m-l-md">
+                    {t("Salary")}
                   </label>
+                </div>
+                <div className={`form-control reviewCreate ${classes.rating}`}>
                   <Rating
                     name="inhouse_training"
                     id="inhouse_training"
                     value={valuations["inhouse_training"]}
                     precision={1}
                     onChange={(event, newValue) => {
-                      setValuations({ ...valuations, inhouse_training: newValue });
+                      setValuations({
+                        ...valuations,
+                        inhouse_training: newValue ? newValue : 1
+                      });
                     }}
                   />
-                </div>
-
-                <div className={`form-control ${classes.rating}`}>
-                  <label className="itemsReview" htmlFor="growth_opportunities">
-                    {t("Growth opportunities")}
+                  <label htmlFor="inhouse_training" className="m-l-md">
+                    {t("Internal training")}
                   </label>
+                </div>
+                <div className={`form-control reviewCreate ${classes.rating}`}>
                   <Rating
                     name="growth_opportunities"
                     id="growth_opportunities"
                     value={valuations["growth_opportunities"]}
                     precision={1}
                     onChange={(event, newValue) => {
-                      setValuations({ ...valuations, growth_opportunities: newValue });
+                      setValuations({
+                        ...valuations,
+                        growth_opportunities: newValue ? newValue : 1
+                      });
                     }}
                   />
-                </div>
-
-                <div className={`form-control ${classes.rating}`}>
-                  <label className="itemsReview" htmlFor="work_enviroment">
-                    {t("Work environment")}
+                  <label htmlFor="growth_opportunities" className="m-l-md">
+                    {t("Growth opportunities")}
                   </label>
+                </div>
+                <div className={`form-control reviewCreate ${classes.rating}`}>
                   <Rating
                     name="work_enviroment"
                     id="work_enviroment"
                     value={valuations["work_enviroment"]}
                     precision={1}
                     onChange={(event, newValue) => {
-                      setValuations({ ...valuations, work_enviroment: newValue });
+                      setValuations({
+                        ...valuations,
+                        work_enviroment: newValue ? newValue : 1
+                      });
                     }}
                   />
-                </div>
-
-                <div className={`form-control ${classes.rating}`}>
-                  <label className="itemsReview" htmlFor="personal_life">
-                    {t("Work&Life balance")}
+                  <label htmlFor="work_enviroment" className="m-l-md">
+                    {t("Work environment")}
                   </label>
+                </div>
+                <div className={`form-control reviewCreate ${classes.rating}`}>
                   <Rating
                     name="personal_life"
                     id="personal_life"
                     value={valuations["personal_life"]}
                     precision={1}
                     onChange={(event, newValue) => {
-                      setValuations({ ...valuations, personal_life: newValue });
+                      setValuations({
+                        ...valuations,
+                        personal_life: newValue ? newValue : 1
+                      });
                     }}
                   />
+                  <label htmlFor="personal_life" className="m-l-md">
+                    {t("Work&Life balance")}
+                  </label>
                 </div>
               </fieldset>
-
-              <fieldset>
-                <legend>
-                  <h4>{t("Salary")}</h4>
-                </legend>
-
-                <div className="form-control">
-                  <label htmlFor="salary">{t("Your salary")}</label>
+              <fieldset className="reviewCreate">
+                <legend>{t("Salary")}</legend>
+                <h2 className="f-s-sm marginTop">{t("Salary")}</h2>
+                <label className="form-control">
+                  {t("Your salary")}
                   <input
                     className="salary-ammount"
                     ref={register(validatorSalary)}
@@ -327,18 +349,20 @@ export function ReviewCreate() {
                   ></input>
                   <label htmlFor="salary">€ / {t("month")}</label>
                   {errors.salary && (
-                    <span className="errorMessage">{t(errors.salary.message)}</span>
+                    <span className="errorMessage">
+                      {t(errors.salary.message)}
+                    </span>
                   )}
-                </div>
+                </label>
               </fieldset>
-
-              <fieldset>
-                <legend>
-                  <h4>{t("Could you add something else to your rating?")}</h4>
-                </legend>
-                <div className="form-control">
-                  <label htmlFor="comment_title">{t("Review summary")}</label>
-                  <input
+              <fieldset className="reviewCreate">
+                <legend>{t("Could you add something else to your rating?")}</legend>
+                <h2 className="f-s-sm">
+                  {t("Could you add something else to your rating?")}
+                </h2>
+                <label className="form-control">
+                  {t("Review summary")} (*)
+                <input
                     ref={register(validatorTitleReview)}
                     name="comment_title"
                     id="comment_title"
@@ -350,31 +374,28 @@ export function ReviewCreate() {
                       {t(errors.comment_title.message)}
                     </span>
                   )}
-                </div>
-
-                <div className="form-control">
-                  <label htmlFor="comment">{t("Your review")}</label>
-                  <textarea
+                </label>
+                <label className="form-control">
+                  {t("Your review")} (*)
+                <textarea
                     ref={register(validatorDescriptionReview)}
                     name="comment"
                     id="comment"
                     type="text"
                   ></textarea>
                   {errors.comment && (
-                    <span className="errorMessage">
+                    <span className="errorMessageTextArea">
                       {t(errors.comment.message)}
                     </span>
                   )}
-                </div>
+                </label>
               </fieldset>
-
-              <fieldset>
-                <legend>
-                  <h4>{t("Tell us about your job")}</h4>
-                </legend>
-                <div className="form-control">
-                  <label htmlFor="name">{t("Name")} (*)</label>
-                  <input
+              <fieldset className="reviewCreate">
+                <legend>{t("Tell us about your job")}</legend>
+                <h2 className="f-s-sm">{t("Tell us about your job")}</h2>
+                <label className="form-control">
+                  {t("Name")} (*)
+                <input
                     ref={register(validatorCompanyName)}
                     name="companyname"
                     id="companyname"
@@ -384,13 +405,14 @@ export function ReviewCreate() {
                     readOnly={company.id}
                   ></input>
                   {errors.companyname && (
-                    <span className="errorMessage">{t(errors.companyname.message)}</span>
+                    <span className="errorMessage">
+                      {t(errors.companyname.message)}
+                    </span>
                   )}
-                </div>
-
-                <div className="form-control">
-                  <label htmlFor="sector">{t("Sector")} (*)</label>
-                  <input
+                </label>
+                <label className="form-control">
+                  {t("Sector")} (*)
+                <input
                     list="listSectors"
                     ref={register(validatorSector)}
                     name="sector"
@@ -409,13 +431,14 @@ export function ReviewCreate() {
                     ))}
                   </datalist>
                   {errors.sector && (
-                    <span className="errorMessage">{t(errors.sector.message)}</span>
+                    <span className="errorMessage">
+                      {t(errors.sector.message)}
+                    </span>
                   )}
-                </div>
-
-                <div className="form-control">
-                  <label htmlFor="position">{t("Position")} (*)</label>
-                  <input
+                </label>
+                <label className="form-control">
+                  {t("Position")} (*)
+                <input
                     list="listPositions"
                     ref={register(validatorPosition)}
                     name="position"
@@ -432,112 +455,68 @@ export function ReviewCreate() {
                     ))}
                   </datalist>
                   {errors.position && (
-                    <span className="errorMessage">{t(errors.position.message)}</span>
+                    <span className="errorMessage">
+                      {t(errors.position.message)}
+                    </span>
                   )}
-                </div>
-
-                <div className="form-control">
-                  <label htmlFor="city_id">{t("City")} (*)</label>
-                  <input
-                    ref={register({
-                      required: "Required"
-                    })}
-                    name="city_id"
-                    id="city_id"
-                    type="text"
-                    onChange={e => e.target.value}
-                    placeholder={t("City")}
-                  ></input>
+                </label>
+                <label className="form-control">
+                  {t("City")} (*)
+                <Cities onClickCity={id => setIdCity(id)} />
                   {errors.city_id && (
-                    <span className="errorMessage">{t(errors.city_id.message)}</span>
+                    <span className="errorMessage">
+                      {t(errors.city_id.message)}
+                    </span>
                   )}
-                </div>
-
-                <div className="form-control">
-                  <label htmlFor="start_year">{t("Start year")} (*)</label>
-                  <select
+                </label>
+                <label className="form-control">
+                  {t("Start year")} (*)
+                <select
                     name="start_year"
                     id="start_year"
                     ref={register({
                       required: "Required"
                     })}
                   >
-                    <option value="2020">2020</option>
-                    <option value="2019">2019</option>
-                    <option value="2018">2018</option>
-                    <option value="2017">2017</option>
-                    <option value="2016">2016</option>
-                    <option value="2015">2015</option>
-                    <option value="2014">2014</option>
-                    <option value="2013">2013</option>
-                    <option value="2012">2012</option>
-                    <option value="2011">2011</option>
-                    <option value="2010">2010</option>
-                    <option value="2009">2009</option>
-                    <option value="2008">2008</option>
-                    <option value="2007">2007</option>
-                    <option value="2006">2006</option>
-                    <option value="2005">2005</option>
-                    <option value="2004">2004</option>
-                    <option value="2003">2003</option>
-                    <option value="2002">2002</option>
-                    <option value="2001">2001</option>
-                    <option value="2000">2000</option>
-                    <option value="1999">1999</option>
-                    <option value="1998">1998</option>
-                    <option value="1997">1997</option>
-                    <option value="1996">1996</option>
-                    <option value="1995">1995</option>
-                    <option value="1994">1994</option>
-                    <option value="1993">1993</option>
-                    <option value="1992">1992</option>
-                    <option value="1991">1991</option>
-                    <option value="1990">1990</option>
-                    <option value="1989">1989</option>
-                    <option value="1988">1988</option>
-                    <option value="1987">1987</option>
-                    <option value="1986">1986</option>
-                    <option value="1985">1985</option>
-                    <option value="1984">1984</option>
-                    <option value="1983">1983</option>
-                    <option value="1982">1982</option>
-                    <option value="1981">1981</option>
-                    <option value="1980">1980</option>
+                    {getArrayYears(1980, 2020).map(year => (
+                      <option key={year} value={year}>
+                        {year}
+                      </option>
+                    ))}
                   </select>
                   {errors.start_year && (
                     <span className="errorMessage">{t(errors.start_year)}</span>
                   )}
-                </div>
+                </label>
                 <div className="form-control">
                   <label htmlFor="end_year">{t("End year")} (*)</label>
                   <select name="end_year" id="end_year" ref={register()}>
                     <option value="null">{t("I currently work here")}</option>
-                    <option value="2020">2020</option>
-                    <option value="2019">2019</option>
-                    <option value="2018">2018</option>
-                    <option value="2017">2017</option>
+                    {getArrayYears(2017, 2020).map(year => (
+                      <option key={`-${year}`} value={year}>
+                        {year}
+                      </option>
+                    ))}
                   </select>
                   {errors.end_year && (
                     <span className="errorMessage">{t(errors.end_year)}</span>
                   )}
                 </div>
               </fieldset>
-              <p>(*) {t("Field required")}</p>
+              <p className="f-s-xs">(*) {t("Field required")}</p>
               <div className="btn-container">
                 <button
                   type="submit"
-                  className="btn"
+                  className="m-t-md m-b-md btn"
                   disabled={formState.isSubmitting}
                 >
                   {t("Save")}
                 </button>
               </div>
             </form>
-
-          )
-        }
+          )}
       </main>
       <Footer />
-    </React.Fragment >
+    </React.Fragment>
   );
 }
