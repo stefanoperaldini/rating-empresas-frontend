@@ -1,6 +1,7 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
+import { Header } from "../components/Header";
 
 /**
  * Page route not found
@@ -10,6 +11,7 @@ export function NotFound() {
   const { t } = useTranslation();
   return (
     <React.Fragment>
+      <Header className="hiddenHeader" />
       <main className="centered-container">
         <section className="boxAccount">
           <h1>{t("Page not found")}</h1>

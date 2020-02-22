@@ -136,9 +136,7 @@ export function Home() {
                     {t("Best regarded workplaces")}
                   </h2>
                 </header>
-                <main className="minWidth">
-                  <ListCompanies listCompanies={topCompanies} />
-                </main>
+                <ListCompanies className="minWidth" listCompanies={topCompanies} />
               </React.Fragment>
             )}
         </section>

@@ -1,7 +1,9 @@
 import React, { useState, useRef } from "react";
+import { useTranslation } from "react-i18next";
 import { uploadLogo } from "../http/companyService";
 
 export function FileUpload({ onUploadLogo }) {
+  const { t } = useTranslation();
   const [files, setFiles] = useState([]);
   const [uploading, setUploading] = useState(false);
   const fileInput = useRef();
@@ -46,7 +48,7 @@ export function FileUpload({ onUploadLogo }) {
         onClick={openFileDialog}
         disabled={uploading}
       >
-        {uploading ? "Uploading files ..." : "Choose File"}
+        {uploading ? t("Uploading files...") : t("Choose File")}
       </button>
       <button
         className="upload"
@@ -54,7 +56,7 @@ export function FileUpload({ onUploadLogo }) {
         onClick={handleUpload}
         disabled={uploading}
       >
-        Upload
+        {t("Upload")}
       </button>
     </div>
   );
