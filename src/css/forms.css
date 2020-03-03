@@ -34,7 +34,7 @@ button:disabled {
 
 .errorMessageTextArea {
   position: absolute;
-  top: 125px;
+  top: 100px;
   font-size: 0.8rem;
   color: var(--ko);
 }

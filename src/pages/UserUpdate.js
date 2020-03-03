@@ -46,36 +46,40 @@ export function UserUpdate() {
     <React.Fragment>
       <Header />
       <main className="centered-container">
-        <h1 className="f-s-l">{t("Update profile")}</h1>
-        <form
-          className="linkedIn"
-          onSubmit={handleSubmit(handleLinkedinChange)}
-          noValidate
-        >
-          <label className="form-control">
-            {t("LinkedIn")}
-            <input
-              ref={register(validatorLinkedin)}
-              name="linkedin"
-              id="linkedin"
-              type="url"
-              value={linkedinUser}
-              onChange={e => setlinkedinUser(e.target.value)}
-            ></input>
-            {errors.linkedin && (
-              <span className="errorMessage">{t(errors.linkedin.message)}</span>
-            )}
-          </label>
-          <div className="btn-container">
-            <button
-              type="submit"
-              className="btn"
-              disabled={formState.isSubmitting}
-            >
-              {t("Save")}
-            </button>
-          </div>
-        </form>
+        <div className="boxAccount">
+          <h1 className="f-s-l">{t("Update profile")}</h1>
+          <form
+            className="linkedIn"
+            onSubmit={handleSubmit(handleLinkedinChange)}
+            noValidate
+          >
+            <label className="form-control">
+              {t("LinkedIn")}
+              <input
+                ref={register(validatorLinkedin)}
+                name="linkedin"
+                id="linkedin"
+                type="url"
+                value={linkedinUser}
+                onChange={e => setlinkedinUser(e.target.value)}
+              ></input>
+              {errors.linkedin && (
+                <span className="errorMessage">
+                  {t(errors.linkedin.message)}
+                </span>
+              )}
+            </label>
+            <div className="btn-container">
+              <button
+                type="submit"
+                className="btn"
+                disabled={formState.isSubmitting}
+              >
+                {t("Save")}
+              </button>
+            </div>
+          </form>
+        </div>
       </main>
       <Footer />
     </React.Fragment>

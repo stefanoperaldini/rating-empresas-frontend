@@ -32,31 +32,35 @@ export function UserDelete() {
     <React.Fragment>
       <Header />
       <main className="centered-container">
-        <h1 className="f-s-l">{t("Delete account")}</h1>
-        <form onSubmit={handleSubmit(handleUserDelete)}>
-          <label className="form-control">
-            {t("For deleting your account, please type")}: CONFIRM DELETE
-            <input
-              ref={register(validatorDelete)}
-              name="confirm"
-              type="text"
-              id="confirm"
-              placeholder={t("CONFIRM DELETE")}
-            ></input>
-            {errors.confirm && (
-              <span className="errorMessage">{t(errors.confirm.message)}</span>
-            )}
-          </label>
-          <div className="btn-container">
-            <button
-              type="submit"
-              className="btn"
-              disabled={formState.isSubmitting}
-            >
-              {t("Delete")}
-            </button>
-          </div>
-        </form>
+        <div className="boxAccount">
+          <h1 className="f-s-l">{t("Delete account")}</h1>
+          <form onSubmit={handleSubmit(handleUserDelete)}>
+            <label className="form-control">
+              {t("For deleting your account, please type")}: CONFIRM DELETE
+              <input
+                ref={register(validatorDelete)}
+                name="confirm"
+                type="text"
+                id="confirm"
+                placeholder={t("CONFIRM DELETE")}
+              ></input>
+              {errors.confirm && (
+                <span className="errorMessage">
+                  {t(errors.confirm.message)}
+                </span>
+              )}
+            </label>
+            <div className="btn-container">
+              <button
+                type="submit"
+                className="btn"
+                disabled={formState.isSubmitting}
+              >
+                {t("Delete")}
+              </button>
+            </div>
+          </form>
+        </div>
       </main>
       <Footer />
     </React.Fragment>
