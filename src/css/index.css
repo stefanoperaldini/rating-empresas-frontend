@@ -180,6 +180,31 @@ input:checked ~ span {
 
 /* HOME
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
+.page-main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-grow: 1;
+  min-height: 350px;
+  background: var(--blue)
+    url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/city.jpg) no-repeat
+    center / cover;
+  background-blend-mode: luminosity;
+  color: white;
+  padding-left: 10px;
+}
+
+.page-main div {
+  max-width: 500px;
+}
+
+.page-main h1 {
+  margin-bottom: 20px;
+}
+
+.page-main p + p {
+  margin-top: 10px;
+}
 
 .centered-container-home {
   display: flex;
@@ -498,6 +523,16 @@ fieldset.reviewCreate {
   }
 
   /* HEADER */
+  .page-header {
+    position: fixed;
+    width: 100%;
+    z-index: 100;
+    opacity: .98;
+  }
+  
+  main {
+    padding-top: 100px;
+  }
 
   .page-header ul {
     width: auto;
@@ -506,10 +541,6 @@ fieldset.reviewCreate {
 
   .page-header .cta-contact {
     order: 1;
-  }
-
-  .page-main {
-    padding-left: 90px;
   }
 
   .page-header .cta-contact.headerFlexRow {
@@ -547,6 +578,10 @@ fieldset.reviewCreate {
   }
 
   /* HOME */
+
+  .page-main {
+    padding-left: 90px;
+  }
 
   .searchComponent {
     margin-top: var(--space-xl);

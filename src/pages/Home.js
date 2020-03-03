@@ -17,6 +17,7 @@ import { DotsYellow } from "../components/AppLottie";
  */
 
 export function Home() {
+  const [isFirstTime, setIsFirstTime] = useState(true);
   const [companies, setCompanies] = useState([]);
   const [topCompanies, setTopCompanies] = useState(null);
   const [company, setCompany] = useState("");
@@ -66,7 +67,19 @@ export function Home() {
   return (
     <React.Fragment>
       <Header />
-      <main className="centered-container-home m-t-md p-r-md p-l-md">
+      {isFirstTime ? (
+        <main class="page-main">
+          <div>
+            <h1>We are here to help you</h1>
+            <p>Portal web de evaluación de empresas mediante valoraciones de puestos de trabajo realizadas por empleados o exempleados.</p>
+            <p>It wasn't a dream. His room, a proper human. 
+              <span onClick={() => setIsFirstTime(false)}>
+                {t("Enter...")}
+              </span>
+            </p>
+          </div>
+        </main> ) :
+      (<main className="centered-container-home m-t-md p-r-md p-l-md">
         <section className="allWidth centeredComponent">
           <h1 className="f-s-xxl txtCenter">
             {t("Find great places to work")}
@@ -140,7 +153,7 @@ export function Home() {
               </React.Fragment>
             )}
         </section>
-      </main>
+      </main>)}
       <Footer />
     </React.Fragment>
   );
