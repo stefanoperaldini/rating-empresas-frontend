@@ -190,58 +190,59 @@ export function ReviewCreate() {
   return (
     <React.Fragment>
       <Header />
-      <main className="centered-container-home m-t-md p-r-md p-l-md">
-        <h1 className="f-s-l txtCenter m-t-lg p-b-sm">
-          {t("Create a review")}
-        </h1>
-        <p className="txtCenter">
-          {t("Rate a company you've worked for in the past 3 years.")}
-        </p>
-        <p className="txtCenter m-b-md">
-          {t("Reviews published are anonymous.")}
-        </p>
+      <main className="centered-container-home m-t-md m-b-md p-r-md p-l-md">
+        <div className="boxAccountReview">
+          <h1 className="f-s-l txtCenter m-t-lg p-b-sm m-r-xs m-l-xs">
+            {t("Create a review")}
+          </h1>
+          <p className="txtCenter m-r-xs m-l-xs">
+            {t("Rate a company you've worked for in the past 3 years.")}
+          </p>
+          <p className="txtCenter m-b-md">
+            {t("Reviews published are anonymous.")}
+          </p>
 
-        {!isToNext ? (
-          <form onSubmit={handleSubmit(handleReviewCreateCompany)} noValidate>
-            <label className="form-control">
-              {t("Name")} (*)
-              <input
-                list="companyName"
-                ref={register(validatorCompanyName)}
-                name="name"
-                id="name"
-                type="text"
-                value={company.name ? company.name : ""}
-                onChange={e => {
-                  setCompany({ ...company, name: e.target.value });
-                  return e.target.value;
-                }}
-              ></input>
-              <datalist id="companyName">
-                {companies.map(element => (
-                  <option key={element.name} value={element.name}>
-                    {element.name}
-                  </option>
-                ))}
-              </datalist>
-              {errors.name && (
-                <span className="errorMessage">{t(errors.name.message)}</span>
-              )}
-            </label>
+          {!isToNext ? (
+            <form onSubmit={handleSubmit(handleReviewCreateCompany)} noValidate>
+              <label className="form-control">
+                {t("Name")} (*)
+                <input
+                  list="companyName"
+                  ref={register(validatorCompanyName)}
+                  name="name"
+                  id="name"
+                  type="text"
+                  value={company.name ? company.name : ""}
+                  onChange={e => {
+                    setCompany({ ...company, name: e.target.value });
+                    return e.target.value;
+                  }}
+                ></input>
+                <datalist id="companyName">
+                  {companies.map(element => (
+                    <option key={element.name} value={element.name}>
+                      {element.name}
+                    </option>
+                  ))}
+                </datalist>
+                {errors.name && (
+                  <span className="errorMessage">{t(errors.name.message)}</span>
+                )}
+              </label>
 
-            <div className="btn-container">
-              <button
-                type="submit"
-                className="m-t-md btn"
-                disabled={formState.isSubmitting}
-              >
-                {t("Next")}
-              </button>
-            </div>
-          </form>
-        ) : (
+              <div className="btn-container">
+                <button
+                  type="submit"
+                  className="btn m-t-md m-b-md"
+                  disabled={formState.isSubmitting}
+                >
+                  {t("Next")}
+                </button>
+              </div>
+            </form>
+          ) : (
             <form
-              className="m-t-md"
+              className="m-t-md m-r-xs m-l-xs"
               onSubmit={handleSubmit(handleReviewCreate)}
               noValidate
             >
@@ -356,13 +357,15 @@ export function ReviewCreate() {
                 </label>
               </fieldset>
               <fieldset className="reviewCreate">
-                <legend>{t("Could you add something else to your rating?")}</legend>
+                <legend>
+                  {t("Could you add something else to your rating?")}
+                </legend>
                 <h2 className="f-s-sm">
                   {t("Could you add something else to your rating?")}
                 </h2>
                 <label className="form-control">
                   {t("Review summary")} (*)
-                <input
+                  <input
                     ref={register(validatorTitleReview)}
                     name="comment_title"
                     id="comment_title"
@@ -377,7 +380,7 @@ export function ReviewCreate() {
                 </label>
                 <label className="form-control">
                   {t("Your review")} (*)
-                <textarea
+                  <textarea
                     ref={register(validatorDescriptionReview)}
                     name="comment"
                     id="comment"
@@ -395,7 +398,7 @@ export function ReviewCreate() {
                 <h2 className="f-s-sm">{t("Tell us about your job")}</h2>
                 <label className="form-control">
                   {t("Name")} (*)
-                <input
+                  <input
                     ref={register(validatorCompanyName)}
                     name="companyname"
                     id="companyname"
@@ -412,7 +415,7 @@ export function ReviewCreate() {
                 </label>
                 <label className="form-control">
                   {t("Sector")} (*)
-                <input
+                  <input
                     list="listSectors"
                     ref={register(validatorSector)}
                     name="sector"
@@ -438,7 +441,7 @@ export function ReviewCreate() {
                 </label>
                 <label className="form-control">
                   {t("Position")} (*)
-                <input
+                  <input
                     list="listPositions"
                     ref={register(validatorPosition)}
                     name="position"
@@ -462,7 +465,7 @@ export function ReviewCreate() {
                 </label>
                 <label className="form-control">
                   {t("City")} (*)
-                <Cities onClickCity={id => setIdCity(id)} />
+                  <Cities onClickCity={id => setIdCity(id)} />
                   {errors.city_id && (
                     <span className="errorMessage">
                       {t(errors.city_id.message)}
@@ -471,7 +474,7 @@ export function ReviewCreate() {
                 </label>
                 <label className="form-control">
                   {t("Start year")} (*)
-                <select
+                  <select
                     name="start_year"
                     id="start_year"
                     ref={register({
@@ -515,6 +518,7 @@ export function ReviewCreate() {
               </div>
             </form>
           )}
+        </div>
       </main>
       <Footer />
     </React.Fragment>

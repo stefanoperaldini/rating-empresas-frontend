@@ -43,7 +43,7 @@ export function AccountCreate() {
     <React.Fragment>
       <Header />
       <main className="centered-container">
-        <div className="boxAccount">
+        <div className="boxAccount m-t-md m-b-md">
           <h1 className="f-s-l">{t("Create your account")}</h1>
           <form onSubmit={handleSubmit(handleAccountCreate)} noValidate>
             <div className="form-control">
@@ -62,7 +62,8 @@ export function AccountCreate() {
                 {t("Company")}
               </label>
             </div>
-            <label className="form-control">{t("Name")} (*)
+            <label className="form-control">
+              {t("Name")} (*)
               <input
                 ref={register(validatorUserName)}
                 name="name"
@@ -74,7 +75,8 @@ export function AccountCreate() {
                 <span className="errorMessage">{t(errors.name.message)}</span>
               )}
             </label>
-            <label className="form-control">{t("E-mail")} (*)
+            <label className="form-control">
+              {t("E-mail")} (*)
               <input
                 ref={register(validatorEmail)}
                 name="email"
@@ -86,7 +88,8 @@ export function AccountCreate() {
                 <span className="errorMessage">{t(errors.email.message)}</span>
               )}
             </label>
-            <label className="form-control">{t("LinkedIn")}
+            <label className="form-control">
+              {t("LinkedIn")}
               <input
                 ref={register(validatorLinkedin)}
                 name="linkedin"
@@ -100,7 +103,8 @@ export function AccountCreate() {
                 </span>
               )}
             </label>
-            <label className="form-control">{t("Password")} (*)
+            <label className="form-control">
+              {t("Password")} (*)
               <input
                 ref={register(validatorPassword)}
                 name="password"
@@ -123,7 +127,8 @@ export function AccountCreate() {
                 </span>
               )}
             </label>
-            <label className="form-control">{t("Confirm password")} (*)
+            <label className="form-control">
+              {t("Confirm password")} (*)
               <input
                 ref={register({
                   validate: value => value === watch("password")

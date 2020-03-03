@@ -44,10 +44,11 @@ export function AccountPasswordChange() {
     <React.Fragment>
       <Header />
       <main className="centered-container">
-        <div>
+        <div className="boxAccount">
           <h1 className="f-s-l">{t("Change password")}</h1>
           <form onSubmit={handleSubmit(handlePasswordChange)}>
-            <label className="form-control">{t("Current password")} (*)
+            <label className="form-control">
+              {t("Current password")} (*)
               <input
                 ref={register(validatorPassword)}
                 name="oldPassword"
@@ -70,7 +71,8 @@ export function AccountPasswordChange() {
                 </span>
               )}
             </label>
-            <label className="form-control">{t("New password")} (*)
+            <label className="form-control">
+              {t("New password")} (*)
               <input
                 ref={register(validatorPassword)}
                 name="newPassword"
@@ -93,7 +95,8 @@ export function AccountPasswordChange() {
                 </span>
               )}
             </label>
-            <label className="form-control">{t("Confirm new password")} (*)
+            <label className="form-control">
+              {t("Confirm new password")} (*)
               <input
                 ref={register({
                   validate: value => value === watch("newPassword")

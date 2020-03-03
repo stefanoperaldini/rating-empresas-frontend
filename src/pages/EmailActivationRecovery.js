@@ -33,36 +33,42 @@ export function EmailActivationRecovery() {
     <React.Fragment>
       <Header />
       <main className="centered-container">
-        <h1 className="f-s-l">{t("Lost e-mail activation?")}</h1>
-        <form onSubmit={handleSubmit(handleEmailActivationRecovery)} noValidate>
-          <label className="form-control">{t("E-mail")}
-            <input
-              ref={register(validatorEmail)}
-              name="email"
-              id="email"
-              type="email"
-              placeholder={t("Enter your e-mail")}
-            ></input>
-            {errors.email && (
-              <span className="errorMessage">{t(errors.email.message)}</span>
-            )}
-          </label>
-          <p className="f-c-fourgray">
-            {t("We will resend you a new activation e-mail")}
-          </p>
-          <div className="btn-container">
-            <button
-              type="submit"
-              className="m-t-md btn"
-              disabled={formState.isSubmitting}
-            >
-              {t("Send")}
-            </button>
-            <div className="m-t-md btn-container">
-              <Link to="/account/login">{t("Sign in")}</Link>
+        <div className="boxAccount">
+          <h1 className="f-s-l">{t("Lost e-mail activation?")}</h1>
+          <form
+            onSubmit={handleSubmit(handleEmailActivationRecovery)}
+            noValidate
+          >
+            <label className="form-control">
+              {t("E-mail")}
+              <input
+                ref={register(validatorEmail)}
+                name="email"
+                id="email"
+                type="email"
+                placeholder={t("Enter your e-mail")}
+              ></input>
+              {errors.email && (
+                <span className="errorMessage">{t(errors.email.message)}</span>
+              )}
+            </label>
+            <p className="f-c-fourgray">
+              {t("We will resend you a new activation e-mail")}
+            </p>
+            <div className="btn-container">
+              <button
+                type="submit"
+                className="m-t-md btn"
+                disabled={formState.isSubmitting}
+              >
+                {t("Send")}
+              </button>
+              <div className="m-t-md btn-container">
+                <Link to="/account/login">{t("Sign in")}</Link>
+              </div>
             </div>
-          </div>
-        </form>
+          </form>
+        </div>
       </main>
     </React.Fragment>
   );

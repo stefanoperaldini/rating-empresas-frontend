@@ -22,7 +22,7 @@ export function RateCompanyLink() {
         <h2 className="f-s-l txtCenter">
           {t("Do you want to rate a company?")}
         </h2>
-        <p className="txtCenter">{t("Your reviews will be anonimous")}</p>
+        <p className="txtCenter">{t("Your reviews will be anonymous")}</p>
       </header>
       <Rating
         className={classes.rating}
