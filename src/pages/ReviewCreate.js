@@ -205,7 +205,7 @@ export function ReviewCreate() {
           {!isToNext ? (
             <form onSubmit={handleSubmit(handleReviewCreateCompany)} noValidate>
               <label className="form-control">
-                {t("Name")} (*)
+                {t("Company name")} (*)
                 <input
                   list="companyName"
                   ref={register(validatorCompanyName)}

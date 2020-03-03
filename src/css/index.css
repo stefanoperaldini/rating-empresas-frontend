@@ -202,19 +202,19 @@ input:checked ~ span {
 .page-main {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: top;
   flex-grow: 1;
   min-height: 350px;
-  background: var(--blue)
-    url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/city.jpg) no-repeat
-    center / cover;
+  background: var(--blue) url("../img/image_home.jpg") no-repeat center / cover;
   background-blend-mode: luminosity;
   color: white;
   padding-left: 10px;
+  /* padding-top: var(--space-lg); */
 }
 
 .page-main div {
   max-width: 500px;
+  margin-top: var(--space-lg);
 }
 
 .page-main h1 {
@@ -223,6 +223,11 @@ input:checked ~ span {
 
 .page-main p + p {
   margin-top: 10px;
+}
+
+.enterBold {
+  font-weight: bold;
+  cursor: pointer;
 }
 
 .centered-container-home {
@@ -565,9 +570,9 @@ fieldset.reviewCreate {
     position: fixed;
     width: 100%;
     z-index: 100;
-    opacity: .98;
+    opacity: 0.98;
   }
-  
+
   main {
     padding-top: 100px;
   }
@@ -582,7 +587,7 @@ fieldset.reviewCreate {
   }
 
   .page-header .cta-contact.headerFlexRow {
-    width: 20rem;
+    width: 22rem;
     justify-content: flex-end;
     padding-right: 12px;
   }
@@ -616,6 +621,12 @@ fieldset.reviewCreate {
   }
 
   /* HOME */
+
+  /* .page-main {
+    padding-left: 10px;
+    padding-top: 0;
+    margin-top: var(--space-lg);
+  } */
 
   .page-main {
     padding-left: 90px;
@@ -746,6 +757,10 @@ fieldset.reviewCreate {
     height: 10rem;
     width: 30rem;
     resize: none;
+  }
+
+  .m-t-Rating {
+    margin-top: var(--space-xl);
   }
 
   /* USER UPDATE */

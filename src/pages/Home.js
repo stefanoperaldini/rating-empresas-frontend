@@ -17,7 +17,7 @@ import { DotsYellow } from "../components/AppLottie";
  */
 
 export function Home() {
-  const [isFirstTime, setIsFirstTime] = useState(true);
+  const [isImageHidden, setIsImageHidden] = useState(false);
   const [companies, setCompanies] = useState([]);
   const [topCompanies, setTopCompanies] = useState(null);
   const [company, setCompany] = useState("");
@@ -64,96 +64,121 @@ export function Home() {
     }
   };
 
+  useEffect(() => {
+    if (isImageHidden) {
+      localStorage.setItem("isImageHidden", isImageHidden);
+      return;
+    }
+
+    const isImageHiddenStored = localStorage.getItem("isImageHidden");
+    if (isImageHiddenStored) {
+      setIsImageHidden(true);
+    }
+    return;
+  }, [isImageHidden]);
+
   return (
     <React.Fragment>
       <Header />
-      {isFirstTime ? (
-        <main class="page-main">
+      {!isImageHidden ? (
+        <main className="page-main">
           <div>
-            <h1>We are here to help you</h1>
-            <p>Portal web de evaluación de empresas mediante valoraciones de puestos de trabajo realizadas por empleados o exempleados.</p>
-            <p>It wasn't a dream. His room, a proper human. 
-              <span onClick={() => setIsFirstTime(false)}>
-                {t("Enter...")}
+            <h1>{t("Find great places to work")}</h1>
+            <p>
+              {t(
+                "Web portal for rating companies through job reviews carried out by employees or former employees."
+              )}{" "}
+            </p>
+            <p>
+              <span
+                className="enterBold"
+                onClick={() => setIsImageHidden(true)}
+              >
+                {t("Please, come in...")}
               </span>
             </p>
           </div>
-        </main> ) :
-      (<main className="centered-container-home m-t-md p-r-md p-l-md">
-        <section className="allWidth centeredComponent">
-          <h1 className="f-s-xxl txtCenter">
-            {t("Find great places to work")}
-          </h1>
-          <p className="f-s-l txtCenter">
-            {t("Get access to rating and company reviews")}
-          </p>
-          <form onSubmit={handleSubmit(handleGetCompanyData)}>
-            <div className="searchComponent">
-              <img
-                className="imageHome"
-                src={searchingImgSvg}
-                alt={t("Person searching with a flashlight")}
-              />
-              <input
-                className="searchCompany"
-                list="companyName"
-                ref={register(validatorCompanyName)}
-                name="name"
-                id="name"
-                type="text"
-                value={company}
-                placeholder={t("Company name")}
-                onChange={e => setCompany(e.target.value)}
-              ></input>
-              <datalist id="companyName">
-                {companies.map(element => (
-                  <option key={element.name} value={element.name}>
-                    {element.name}
-                  </option>
-                ))}
-              </datalist>
-              {errors.name && (
-                <span className="errorMessageCompany">
-                  {t(errors.name.message)}
-                </span>
-              )}
-              <div className="btn-container buttonSearch">
-                <button
-                  type="submit"
-                  className="btn"
-                  disabled={formState.isSubmitting}
+        </main>
+      ) : (
+        <main className="centered-container-home m-t-md p-r-md p-l-md">
+          <section className="allWidth centeredComponent">
+            <h1 className="f-s-xxl txtCenter">
+              {t("Find great places to work")}
+            </h1>
+            <p className="f-s-l txtCenter">
+              {t("Get access to rating and company reviews")}
+            </p>
+            <form onSubmit={handleSubmit(handleGetCompanyData)}>
+              <div className="searchComponent">
+                <img
+                  className="imageHome"
+                  src={searchingImgSvg}
+                  alt={t("Person searching with a flashlight")}
+                />
+                <input
+                  className="searchCompany"
+                  list="companyName"
+                  ref={register(validatorCompanyName)}
+                  name="name"
+                  id="name"
+                  type="text"
+                  value={company}
+                  placeholder={t("Company name")}
+                  onChange={e => setCompany(e.target.value)}
+                ></input>
+                <datalist id="companyName">
+                  {companies.map(element => (
+                    <option key={element.name} value={element.name}>
+                      {element.name}
+                    </option>
+                  ))}
+                </datalist>
+                {errors.name && (
+                  <span className="errorMessageCompany">
+                    {t(errors.name.message)}
+                  </span>
+                )}
+                <div className="btn-container buttonSearch">
+                  <button
+                    type="submit"
+                    className="btn"
+                    disabled={formState.isSubmitting}
+                  >
+                    {t("Find")}
+                  </button>
+                </div>
+                <a
+                  className="advancedSearch"
+                  href="/advanced-search"
+                  title={t("Link to Advanced search page")}
                 >
-                  {t("Find")}
-                </button>
+                  {t("Advanced search")}
+                </a>
               </div>
-              <a
-                className="advancedSearch"
-                href="/advanced-search"
-                title={t("Link to Advanced search page")}
-              >
-                {t("Advanced search")}
-              </a>
-            </div>
-          </form>
-        </section>
-        {(!currentUserId || role === "1") && <RateCompanyLink />}
-        <section className="allWidth centered-container-home p-t-md">
-          {!topCompanies ? (
-            <div className="flexRow">
-              <DotsYellow />
-            </div>
-          ) : (
+            </form>
+          </section>
+          {(!currentUserId || role === "1") && <RateCompanyLink />}
+          <section className="allWidth centered-container-home p-t-md">
+            {!topCompanies ? (
+              <div className="flexRow">
+                <DotsYellow />
+              </div>
+            ) : (
               <React.Fragment>
                 <header>
                   <h2 className="f-s-l txtCenter m-b-md">
                     {t("Best regarded workplaces")}
                   </h2>
                 </header>
-                <ListCompanies className="minWidth" listCompanies={topCompanies} />
+                <ListCompanies
+                  className="minWidth"
+                  listCompanies={topCompanies}
+                />
               </React.Fragment>
             )}
-        </section>
-      </main>)}
+          </section>
+        </main>
+      )}
       <Footer />
     </React.Fragment>
   );

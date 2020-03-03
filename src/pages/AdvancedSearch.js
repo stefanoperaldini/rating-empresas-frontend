@@ -72,7 +72,7 @@ export function AdvancedSearch() {
   return (
     <React.Fragment>
       <Header />
-      <main className="centered-container p-t-md p-r-md p-l-md">
+      <main className="centered-container m-t-Rating p-t-md p-r-md p-l-md">
         {(!currentUserId || role === "1") && <RateCompanyLink />}
         <h1 className="f-s-xl p-t-lg p-b-md">{t("Advanced search")}</h1>
         <form
@@ -152,8 +152,8 @@ export function AdvancedSearch() {
               <DotsYellow />
             </div>
           ) : (
-              <ListCompanies className="minWidth" listCompanies={companiesList} />
-            )}
+            <ListCompanies className="minWidth" listCompanies={companiesList} />
+          )}
         </section>
       </main>
       <Footer />
