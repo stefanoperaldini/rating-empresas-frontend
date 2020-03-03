@@ -18,7 +18,7 @@ export function Footer() {
         <li>{<AboutUs />}</li>
         <li>{<ContactUs />}</li>
       </ul>
-      <small className="txtRight">&copy; 2020 WORKPLACE</small>
+      <small className="txtRight">2020 WorkPlace</small>
     </footer>
   );
 }
